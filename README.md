@@ -9,3 +9,7 @@ Together with ITEA for Classification and Regression, we provide a model-specifi
 ## Documentation
 
 Documentation is available [here](https://galdeia.github.io/itea-python/).
+
+## Installation
+
+ITEA is currently in tests and available [at test.pypi](https://test.pypi.org/project/itea/0.1.0/)
