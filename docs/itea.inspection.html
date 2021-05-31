@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea.inspection &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="itea.classification" href="itea.classification.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="_base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">itea.inspection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#itexpr-explainer">ITExpr_explainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itexpr-inspector">ITExpr_inspector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itexpr-texifier">ITExpr_texifier</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>itea.inspection</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/itea.inspection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="itea-inspection">
+<h1>itea.inspection<a class="headerlink" href="#itea-inspection" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#itexpr-explainer" id="id1">ITExpr_explainer</a></p></li>
+<li><p><a class="reference internal" href="#itexpr-inspector" id="id2">ITExpr_inspector</a></p></li>
+<li><p><a class="reference internal" href="#itexpr-texifier" id="id3">ITExpr_texifier</a></p></li>
+</ul>
+</div>
+<div class="section" id="itexpr-explainer">
+<h2><a class="toc-backref" href="#id1">ITExpr_explainer</a><a class="headerlink" href="#itexpr-explainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="itea.inspection.ITExpr_explainer">
+<em class="property">class </em><code class="sig-prename descclassname">itea.inspection.</code><code class="sig-name descname">ITExpr_explainer</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">itexpr</em>, <em class="sig-param">tfuncs</em>, <em class="sig-param">tfuncs_dx=None</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to explain ITExpr expressions.</p>
+<p>Constructor method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>itexpr</strong> (<a class="reference internal" href="itea.regression.html#itea.regression.ITExpr_regressor" title="itea.regression.ITExpr_regressor"><em>ITExpr_regressor</em></a><em> or </em><a class="reference internal" href="itea.classification.html#itea.classification.ITExpr_classifier" title="itea.classification.ITExpr_classifier"><em>ITExpr_classifier</em></a>) – fitted instance of an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> class to be explained.</p></li>
+<li><p><strong>tfuncs</strong> (<em>dict</em>) – transformations functions. Should always
+be a dict where the keys are the names of the transformation
+functions and the values are unary vectorized functions.</p></li>
+<li><p><strong>tfuncs_dx</strong> (<em>dict</em><em>, </em><em>default=None</em>) – derivatives of the
+given transformations functions, the same scheme.
+When set to None, the itea package will use automatic
+differentiation  through jax to create the derivatives.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.average_partial_effects">
+<code class="sig-name descname">average_partial_effects</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.average_partial_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feature importance estimation through the Partial Effects method.</p>
+<p>This method attributes the importance to the i-th variable by
+using the mean value of the partial derivative w.r.t. i, evaluated for
+all data in X.</p>
+<p>This method assumes that every feature is continuous.</p>
+<p>The partial effect of a given variable for a funcfion <span class="math notranslate nohighlight">\(f\)</span> is
+calculated by:</p>
+<p><span class="math notranslate nohighlight">\(PE_j = \frac{\partial \widehat{f}}{\partial x_j}
+(\mathbf{x}, \mathbf{\beta}).\)</span></p>
+<p>The IT expression can be automatically differentiated:</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial  \widehat{f}(x)}{\partial x_j} = w_1
+\cdot it'_1(x) + \ldots + w_m \cdot it'_m(x),\)</span></p>
+<p>where</p>
+<p><span class="math notranslate nohighlight">\(it'_i(x) = g'_i(p_i(x)) \cdot p'_i(x),\)</span></p>
+<p><span class="math notranslate nohighlight">\(p'_i(x) = k_j\frac{p_i(x)}{x_j}.\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importances for
+the predicted outcomes of the model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>ape</strong> – the importance of each feature of X.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array of shape (n_features, )</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This feature importance measure is based on the paper:
+“Aldeia, G. &amp; Franca, F. (2021).
+Measuring Feature Importance of Symbolic Regression Models
+GECCO.”</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit method to store the data used in the training of the given
+itexpr instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data used to train the itexpr model.</p></li>
+<li><p><strong>y</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>)</em>) – target data used to train the itexpr model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>self</strong> – explainer with calculated covariance matrix, ready to generate
+plots and explanations.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#itea.inspection.ITExpr_explainer" title="itea.inspection.ITExpr_explainer">ITExpr_explainer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.plot_feature_importances">
+<code class="sig-name descname">plot_feature_importances</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">barh_kw=None</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">grouping_threshold=0.05</em>, <em class="sig-param">target=None</em>, <em class="sig-param">importance_method='pe'</em>, <em class="sig-param">show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_feature_importances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bar plot of the feature importances, that can be calculated with
+the Partial effects (PE) or Shapley Values (shapley).</p>
+<img alt="_images/plot_feature_importances_1.png" class="align-center" src="_images/plot_feature_importances_1.png" />
+<img alt="_images/plot_feature_importances_2.png" class="align-center" src="_images/plot_feature_importances_2.png" />
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bar_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – dictionary with keywords to be used when generating the plots.
+When set to None, then <code class="docutils literal notranslate"><span class="pre">bar_kw=</span> <span class="pre">{'alpha':1.0,</span> <span class="pre">'align':'center'}</span></code>.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is
+created. if is a single axis, the plot will be drawn within the
+given axis.</p></li>
+<li><p><strong>grouping_threshold</strong> (<em>float</em><em>, </em><em>default = 0.05</em>) – The features will be iterated in order of importance, from the
+smallest to the highest importance, and a group of the smallest
+features that sum up less than the given percentage of importance
+will be grouped together to reduce the plot information.
+To disable the creation of the group, set <code class="docutils literal notranslate"><span class="pre">grouping_threshol=0</span></code>.</p></li>
+<li><p><strong>target</strong> (<em>string</em><em>, </em><em>int</em><em>, </em><em>list</em><em>[</em><em>strings</em><em>]</em><em>, </em><em>list</em><em>[</em><em>ints</em><em>] or </em><em>None</em><em>, </em><em>default=None</em>) – The targets to be considered when generating the plot for
+<code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code>. If the training data used strings as targets
+on <code class="docutils literal notranslate"><span class="pre">y</span></code>, then target must be a string of a valid class or a list
+of valid classes. If the training data was encoded as integers,
+then target must be a int or a list of integers.
+This argument is ignored if the itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>.</p></li>
+<li><p><strong>importance_method</strong> (<em>string</em><em>, </em><em>default='pe'</em>) – string specifying which method should be used to estimate feature
+importances. Available methods are: <code class="docutils literal notranslate"><span class="pre">['pe',</span> <span class="pre">'shapley']</span></code>.</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot shoud be displayed
+or not.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This plot is heavily inspired by the <a class="reference external" href="https://shap.readthedocs.io/en/latest/example_notebooks/api_examples/plots/bar.html">bar plot from the SHAP package</a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.plot_normalized_partial_effects">
+<code class="sig-name descname">plot_normalized_partial_effects</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">num_points=20</em>, <em class="sig-param">grouping_threshold=0.05</em>, <em class="sig-param">stack_kw=None</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_normalized_partial_effects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partial effects plots, separing the training data into discrete
+intervals.</p>
+<p>First, the output interval is dicretized. Then, for each interval,
+the partial effect of the sample data that evaluation is within the
+interval are calculated. Finally, they are normalized in order to
+make the total contribution be 100%.</p>
+<img alt="_images/plot_normalized_partial_effects_1.png" class="align-center" src="_images/plot_normalized_partial_effects_1.png" />
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_points</strong> (<em>int</em><em>, </em><em>default = 20</em>) – the number of points to divide the interval when generating the
+plots. This is ignored if <code class="docutils literal notranslate"><span class="pre">itexpr</span> <span class="pre">==</span> <span class="pre">ITExpr_classifier</span></code></p></li>
+<li><p><strong>grouping_threshold</strong> (<em>float</em><em>, </em><em>default = 0.05</em>) – The features will be iterated in order of importance, from the
+smallest to the highest importance, and a group of the smallest
+features that sum up less than the given percentage of importance
+will be grouped together to reduce the plot information.
+To disable the creation of the group, set <code class="docutils literal notranslate"><span class="pre">grouping_threshol=0</span></code>.</p></li>
+<li><p><strong>stack_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – dictionary with keywords to be used when generating the plots.
+When set to None, then stack_kw is <code class="docutils literal notranslate"><span class="pre">{'baseline':</span> <span class="pre">'zero',</span>
+<span class="pre">'labels':</span> <span class="pre">labels,</span> <span class="pre">'edgecolor':</span> <span class="pre">'k',</span> <span class="pre">'alpha':</span> <span class="pre">0.75}</span></code>.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is
+created. if is a single axis, the plot will be drawn within the
+given axis.</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot shoud be displayed
+or not.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This plot was inspired on the relative feature contribution plot
+reported in the paper:
+“R. M. Filho, A. Lacerda and G. L. Pappa, “Explaining Symbolic
+Regression Predictions,” 2020 IEEE Congress on Evolutionary Computation
+(CEC)”.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.plot_partial_effects_at_means">
+<code class="sig-name descname">plot_partial_effects_at_means</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">X</em>, <em class="sig-param">features</em>, <em class="sig-param">percentiles=(5</em>, <em class="sig-param">95)</em>, <em class="sig-param">num_points=100</em>, <em class="sig-param">n_cols=3</em>, <em class="sig-param">target=None</em>, <em class="sig-param">line_kw=None</em>, <em class="sig-param">fill_kw=None</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">show_err=True</em>, <em class="sig-param">share_y=True</em>, <em class="sig-param">show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_partial_effects_at_means" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partial effects plots for the given features, when their
+co-variables are fixed at the mean.</p>
+<img alt="_images/plot_partial_effects_at_means_1.png" class="align-center" src="_images/plot_partial_effects_at_means_1.png" />
+<img alt="_images/plot_partial_effects_at_means_2.png" class="align-center" src="_images/plot_partial_effects_at_means_2.png" />
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importances for
+the predicted outcomes of the model.</p></li>
+<li><p><strong>features</strong> (<em>string</em><em>, </em><em>list</em><em>[</em><em>string</em><em>]</em><em>, </em><em>int</em><em>, </em><em>list</em><em>[</em><em>int</em><em>] or </em><em>None</em><em>, </em><em>default=None</em>) – the features to generate the plots. It can be a single feature
+refered by its label or its index, or a list of features.</p></li>
+<li><p><strong>percentiles</strong> (<em>tuple of ints</em><em>, </em><em>default=</em><em>(</em><em>5</em><em>, </em><em>95</em><em>)</em>) – the quartiles interval to generate the plot.</p></li>
+<li><p><strong>num_points</strong> (<em>int</em><em>, </em><em>default = 100</em>) – the number of points to divide the interval when generating the
+plots.</p></li>
+<li><p><strong>n_cols</strong> (<em>int</em><em>, </em><em>default=3</em>) – number of columns to be used when creating the plot grids if
+ax is None.</p></li>
+<li><p><strong>target</strong> (<em>string</em><em>, </em><em>int</em><em>, </em><em>list</em><em>[</em><em>strings</em><em>]</em><em>, </em><em>list</em><em>[</em><em>ints</em><em>] or </em><em>None</em><em>, </em><em>default=None</em>) – The targets to be considered when generating the plot for
+<code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code>. If the training data used strings as targets
+on <code class="docutils literal notranslate"><span class="pre">y</span></code>, then target must be a string of a valid class or a list
+of valid classes. If the training data was encoded as integers,
+then target must be a int or a list of integers.
+This argument is ignored if the itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>.</p></li>
+<li><p><strong>line_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – dictionary with keywords to be used when generating the plots.
+When set to None, then <code class="docutils literal notranslate"><span class="pre">line_kw=</span> <span class="pre">{}</span></code>.</p></li>
+<li><p><strong>fill_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – dictionary with keywords to be used when generating the plots.
+When set to None, then <code class="docutils literal notranslate"><span class="pre">fill_kw=</span> <span class="pre">{'alpha'</span> <span class="pre">:</span> <span class="pre">0.15}</span></code>.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>list of matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is
+created. If is a single axis, the plot will be drawn within the
+given axis. If ax is a list, then it must have the same number of
+elements as <code class="docutils literal notranslate"><span class="pre">features</span></code>.</p></li>
+<li><p><strong>show_err</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean variable indicating if the standard error should be ploted.</p></li>
+<li><p><strong>share_y</strong> (<em>bool</em><em>, </em><em>default True</em>) – boolean variable to specify if the axis should have the same
+interval on the y axis.</p></li>
+<li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot shoud be displayed
+or not.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This plot is heavily inspired by the <a class="reference external" href="https://scikit-learn.org/stable/modules/partial_dependence.html">Partial Dependency Plot from
+scikit-learn</a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.selected_features">
+<code class="sig-name descname">selected_features</code><span class="sig-paren">(</span><em class="sig-param">idx=False</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.selected_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to identify if any of the original features was left out
+of the IT expression during the evolution of the exponents array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>idx</strong> (<em>bool</em><em>, </em><em>default=False</em>) – boolean variable specifying if the method should return a list
+with the labels of the features or their indexes.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>selected</strong> – array containing the labels of the features that are present in
+the model, or their indexes if <code class="docutils literal notranslate"><span class="pre">idx=True</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array of shape (n_selected_features)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_explainer.shapley_values">
+<code class="sig-name descname">shapley_values</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.shapley_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feature importance estimation through approximation of the
+shapley values with the gradient informations.</p>
+<p>The shapley values comes from the coalitional game theory and were
+proposed as a feature importance measures by Scott Lundberg in
+“Scott M. Lundberg and Su-In Lee. 2017. A unified approach to
+interpreting model predictions. NIPS”. The equation:</p>
+<p><span class="math notranslate nohighlight">\(\phi_j(x) = \sum_{Q \subseteq S \setminus \left\{j\right\}}
+{\frac{|Q|!(|S| - |Q| - 1)!}{|S|!}
+(\Delta_{Q \cup \{j\}}(x) - \Delta_{Q}(x))},\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(S\)</span> is the set of variables, <span class="math notranslate nohighlight">\(\Delta_Q\)</span> is the
+contribution of the set <span class="math notranslate nohighlight">\(Q\)</span>, the difference between the
+prediction when we fix the values of <span class="math notranslate nohighlight">\(Q\)</span>, and the expected
+prediction.</p>
+<p>It is possible to approximate this values by the equation:</p>
+<p><span class="math notranslate nohighlight">\(\widehat{\phi_j}(x) = \mathbb{E}[PE_j]
+\cdot (x_j - \mathbb{E}[x_j]),\)</span></p>
+<p>Where <span class="math notranslate nohighlight">\(PE_j\)</span> is the partial effect w.r.t <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importances for
+the predicted outcomes of the model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>shapley_values</strong> – the importance of each feature of X.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array of shape (n_features, )</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The shapley values are described and explained in:
+“Scott M. Lundberg and Su-In Lee. 2017. A unified approach to
+interpreting model predictions. NIPS”</p>
+<p>The approximation of shapley values by means of the partial effect
+was studied in the paper:
+This feature importance measure is based on the paper:
+“Aldeia, G. &amp; Franca, F. (2021).
+Measuring Feature Importance of Symbolic Regression Models
+GECCO.”</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itexpr-inspector">
+<h2><a class="toc-backref" href="#id2">ITExpr_inspector</a><a class="headerlink" href="#itexpr-inspector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="itea.inspection.ITExpr_inspector">
+<em class="property">class </em><code class="sig-prename descclassname">itea.inspection.</code><code class="sig-name descname">ITExpr_inspector</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">itexpr</em>, <em class="sig-param">tfuncs</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_inspector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class ITExpr_inspector.</p>
+<p>Based on a more statistical approach, this class
+implements methods to measure the quality of the final expression by
+calculating informations between individual terms.</p>
+<p>Constructur method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>itexpr</strong> (<a class="reference internal" href="itea.regression.html#itea.regression.ITExpr_regressor" title="itea.regression.ITExpr_regressor"><em>ITExpr_regressor</em></a><em> or </em><a class="reference internal" href="itea.classification.html#itea.classification.ITExpr_classifier" title="itea.classification.ITExpr_classifier"><em>ITExpr_classifier</em></a>) – fitted instance of an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> class to be explained.</p></li>
+<li><p><strong>tfuncs</strong> (<em>dict</em>) – transformations functions. Should always
+be a dict where the keys are the names of the transformation
+functions and the values are unary vectorized functions.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="itea.inspection.ITExpr_inspector.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_inspector.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit method to store the data used in the training of the given
+itexpr instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data used to train the itexpr model.</p></li>
+<li><p><strong>y</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>)</em>) – target data used to train the itexpr model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>self</strong> – inspector with calculated covariance matrix.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#itea.inspection.ITExpr_inspector" title="itea.inspection.ITExpr_inspector">ITExpr_inspector</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_inspector.terms_analysis">
+<code class="sig-name descname">terms_analysis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_inspector.terms_analysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to calculate different metrics for the terms composing
+the IT expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><p><strong>analysis</strong> – returns a dictionary containing several term informations
+and metrics calculated for each term:</p>
+<ul class="simple">
+<li><p>coef: coefficient of each term (or coefficients, if the
+itexpr is an instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code>);</p></li>
+<li><p>func: transformation function of each term;</p></li>
+<li><p>strengths: the exponents of each term;</p></li>
+<li><p>coef stderr.: the standard error of the coefficients;</p></li>
+<li><p>mean pairwise disentanglement: the mean disentanglement between
+each term when compared with the others;</p></li>
+<li><p>mean mutual information: the mean continuous mutual information
+between each term when compared with the others;</p></li>
+<li><p>prediction var.: the variance of the predicted outcomes for
+each term when predicting the training data.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itexpr-texifier">
+<h2><a class="toc-backref" href="#id3">ITExpr_texifier</a><a class="headerlink" href="#itexpr-texifier" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="itea.inspection.ITExpr_texifier">
+<em class="property">class </em><code class="sig-prename descclassname">itea.inspection.</code><code class="sig-name descname">ITExpr_texifier</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">itexpr</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_texifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class containing static methods to create LaTeX representations of the
+expression, and a method to automatically generate a pdf file reporting
+several interpretability plots for the expression.</p>
+<p>Constructor method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>itexpr</strong> (<a class="reference internal" href="itea.classification.html#itea.classification.ITExpr_classifier" title="itea.classification.ITExpr_classifier"><em>ITExpr_classifier</em></a><em> or </em><a class="reference internal" href="itea.regression.html#itea.regression.ITExpr_regressor" title="itea.regression.ITExpr_regressor"><em>ITExpr_regressor</em></a>) – </p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="itea.inspection.ITExpr_texifier.autoreport">
+<code class="sig-name descname">autoreport</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_texifier.autoreport" title="Permalink to this definition">¶</a></dt>
+<dd><p>automatically generate a pdf using the methods implemented in
+<code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code>, <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_texifier</span></code>.</p>
+<p>TODO.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_texifier.derivatives_to_latex">
+<em class="property">static </em><code class="sig-name descname">derivatives_to_latex</code><span class="sig-paren">(</span><em class="sig-param">itexpr</em>, <em class="sig-param">term_separator=' + '</em>, <em class="sig-param">term_wrapper=None</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_texifier.derivatives_to_latex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method that takes a instance of an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> and returns
+a list containing a latex representation of each partial derivative
+of the expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>itexpr</strong> (<a class="reference internal" href="itea.classification.html#itea.classification.ITExpr_classifier" title="itea.classification.ITExpr_classifier"><em>ITExpr_classifier</em></a><em> or </em><a class="reference internal" href="itea.regression.html#itea.regression.ITExpr_regressor" title="itea.regression.ITExpr_regressor"><em>ITExpr_regressor</em></a>) – instance of itexpr to be texified.</p></li>
+<li><p><strong>term_separator</strong> (<em>string</em><em>, </em><em>default=' + '</em>) – string to be used to concatenate each term.</p></li>
+<li><p><strong>term_wrapper</strong> (<em>None</em><em> or </em><em>Callable</em><em>, </em><em>default=None</em>) – <p>function that takes two arguments: <code class="docutils literal notranslate"><span class="pre">i</span></code> the index of the term
+and <code class="docutils literal notranslate"><span class="pre">term</span></code> the term itself, and returns a string. This can be
+used to add special formatations to the terms. Examples are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">i,</span> <span class="pre">term:</span> <span class="pre">r'\underbrace{'+term+r'}</span>
+<span class="pre">_{\text{term</span> <span class="pre">'+str(i)+'}}'</span></code> to add a underbracket with the
+index of the term;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">i,</span> <span class="pre">term:</span> <span class="pre">term</span></code> to do nothing;</p></li>
+</ul>
+<p>When set to None, then the latter expression will be used.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>itexpr_latexs</strong> – list of strings, where each string is a latex representation
+of the partial derivative of the given itexpr.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[string]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_texifier.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_texifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit method to store the data used in the training of the given
+itexpr instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data used to train the itexpr model.</p></li>
+<li><p><strong>y</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>)</em>) – target data used to train the itexpr model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>self</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#itea.inspection.ITExpr_texifier" title="itea.inspection.ITExpr_texifier">ITExpr_texifier</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="itea.inspection.ITExpr_texifier.to_latex">
+<em class="property">static </em><code class="sig-name descname">to_latex</code><span class="sig-paren">(</span><em class="sig-param">itexpr</em>, <em class="sig-param">term_separator=' + '</em>, <em class="sig-param">term_wrapper=None</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_texifier.to_latex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method that takes a instance of an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> and returns
+a latex representation of the expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>itexpr</strong> (<a class="reference internal" href="itea.classification.html#itea.classification.ITExpr_classifier" title="itea.classification.ITExpr_classifier"><em>ITExpr_classifier</em></a><em> or </em><a class="reference internal" href="itea.regression.html#itea.regression.ITExpr_regressor" title="itea.regression.ITExpr_regressor"><em>ITExpr_regressor</em></a>) – instance of itexpr to be texified.</p></li>
+<li><p><strong>term_separator</strong> (<em>string</em><em>, </em><em>default=' + '</em>) – string to be used to concatenate each term.</p></li>
+<li><p><strong>term_wrapper</strong> (<em>None</em><em> or </em><em>Callable</em><em>, </em><em>default=None</em>) – <p>function that takes two arguments: <code class="docutils literal notranslate"><span class="pre">i</span></code> the index of the term
+and <code class="docutils literal notranslate"><span class="pre">term</span></code> the term itself, and returns a string. This can be
+used to add special formatations to the terms. Examples are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">i,</span> <span class="pre">term:</span> <span class="pre">r'\underbrace{'+term+r'}</span>
+<span class="pre">_{\text{term</span> <span class="pre">'+str(i)+'}}'</span></code> to add a underbracket with the
+index of the term;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">i,</span> <span class="pre">term:</span> <span class="pre">term</span></code> to do nothing;</p></li>
+</ul>
+<p>When set to None, then the latter expression will be used.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>itexpr_latex</strong> – latex expression representing the given itexpr.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="itea.classification.html" class="btn btn-neutral float-left" title="itea.classification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

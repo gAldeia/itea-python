@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Welcome to itea’s documentation! &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="itea._base" href="_base.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Welcome to itea’s documentation!</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-itea-s-documentation">
+<h1>Welcome to itea’s documentation!<a class="headerlink" href="#welcome-to-itea-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>itea is a python implementation of the Interaction-Transformation Evolutionary
+Algorithm described in the paper “Franca, F., &amp; Aldeia, G. (2020).
+Interaction-Transformation Evolutionary Algorithm for Symbolic Regression.
+Evolutionary Computation, 1-25.”</p>
+<p>The Interaction-Transformation (IT) representation is a step towards obtaining
+simpler and more interpretable results, searching in the mathematical
+equations space by means of an evolutionary strategy.</p>
+<p>Together with ITEA for Classification and Regression, we provide a
+model-specific explainer based on the Partial Effects to help users get a
+better understanding of the resulting expressions.</p>
+<p>This implementation is based on scikit-learn package and the implementations
+of the estimators follows their guidelines.</p>
+<div class="section" id="instalation">
+<h2>Instalation<a class="headerlink" href="#instalation" title="Permalink to this headline">¶</a></h2>
+<p>The package can be installed via pip:</p>
+<p>$ python3 -m pip install itea</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_base.html">itea._base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_base.html#baseitea">BaseITEA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_base.html#baseitexpr">BaseITExpr</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="itea.regression.html#itea-regressor">ITEA_regressor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="itea.regression.html#itexpr-regressor">ITExpr_regressor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="itea.classification.html#itea-classifier">ITEA_classifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="itea.classification.html#itexpr-classifier">ITExpr_classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="itea.inspection.html#itexpr-explainer">ITExpr_explainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="itea.inspection.html#itexpr-inspector">ITExpr_inspector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="itea.inspection.html#itexpr-texifier">ITExpr_texifier</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="_base.html" class="btn btn-neutral float-right" title="itea._base" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
