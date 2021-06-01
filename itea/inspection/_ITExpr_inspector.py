@@ -105,6 +105,22 @@ class ITExpr_inspector():
         
         The mean disentanglement is the mean Pearson's correlation between
         the term of interest and the remaining terms.
+
+        The disentanglement (measured by the collinearity between the generated
+        features) was proposed in "Learning feature spaces for regression with
+        genetic programming". The idea is that, when creating new features, a
+        disentangled representation ideally contains a minimal set of features.
+        In this paper, the authors tries to minimize collinearity between
+        features in order to promote disentanglement.
+
+        This metric is reported to indicate if there is a high degree of
+        disentanglement on the expression.
+
+        Notes
+        -----
+        This calculation was proposed in
+        "La Cava, W., Moore, J.H. Learning feature spaces for regression with
+        genetic programming. Genet Program Evolvable Mach 21, 433–467 (2020)"
         """
         
         if self.itexpr.n_terms == 1:
