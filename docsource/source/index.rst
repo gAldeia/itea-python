@@ -6,6 +6,8 @@
 Welcome to itea's documentation!
 ================================
 
+.. image:: assets/images/coverage.svg
+
 itea is a python implementation of the Interaction-Transformation Evolutionary
 Algorithm described in the paper "Franca, F., & Aldeia, G. (2020).
 Interaction-Transformation Evolutionary Algorithm for Symbolic Regression.
@@ -21,18 +23,6 @@ better understanding of the resulting expressions.
 
 This implementation is based on scikit-learn package and the implementations
 of the estimators follows their guidelines.
-
-
-Instalation
------------
-
-The package can be installed via pip:
-
-.. highlight:: shell
-
-$ python3 -m pip install itea
-
-.. highlight:: none
 
 
 .. toctree::
