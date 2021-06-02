@@ -28,7 +28,7 @@ release = '1.0.0'
 html_title = 'Interaction-Transformation Evolutionary Algorithm'
 html_short_title = 'itea'
 html_logo = 'assets/images/itea-logo.png'
-html_favicon = 'assets/images/favicon.ico'
+html_favicon = 'assets/images/favicon.png'
 autoclass_content = 'both'
 
 # -- General configuration ---------------------------------------------------

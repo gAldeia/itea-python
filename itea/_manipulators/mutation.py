@@ -15,7 +15,7 @@ not an instance of ``ITExpr``), and does not change the expr list passed as
 argument. Instead, it should create a new list to avoid collateral effects.
 
 For more informations, please see the original itea paper:
-"Franca, F., & Aldeia, G. (2020).
+"França, F., & Aldeia, G. (2020).
 Interaction-Transformation Evolutionary Algorithm for Symbolic Regression.
 Evolutionary Computation, 1-25."
 """

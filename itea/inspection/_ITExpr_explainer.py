@@ -180,7 +180,7 @@ class ITExpr_explainer():
         Notes
         -----
         This feature importance measure is based on the paper:
-        "Aldeia, G. & Franca, F. (2021).
+        "Aldeia, G. & França, F. (2021).
         Measuring Feature Importance of Symbolic Regression Models
         GECCO."
         """
@@ -240,7 +240,7 @@ class ITExpr_explainer():
         The approximation of shapley values by means of the partial effect
         was studied in the paper:
         This feature importance measure is based on the paper:
-        "Aldeia, G. & Franca, F. (2021).
+        "Aldeia, G. & França, F. (2021).
         Measuring Feature Importance of Symbolic Regression Models
         GECCO."
         """

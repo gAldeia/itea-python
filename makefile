@@ -11,7 +11,6 @@ coverage:
 	coverage erase
 
 doc:
-
 	cp ./examples/regression_example.ipynb ./docsource/source
 	cp ./examples/multiclass_example.ipynb ./docsource/source
 
@@ -22,8 +21,12 @@ doc:
 	rm ./docsource/source/multiclass_example.ipynb
 
 build: 
-	${PYTHON} setup.py bdist_wheel
+	rm -r ./dist/*
+	${PYTHON} -B setup.py bdist_wheel
+	${PYTHON} -B -m pip install ./dist/*
 
 clean:
 	rm -r .pytest_cache
 	rm -r itea.egg-info
+
+# python3 -m twine upload --repository testpypi dist/*
