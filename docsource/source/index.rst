@@ -26,13 +26,20 @@ of the estimators follows their guidelines.
 
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: ITEA package documentation:
 
    _base
    itea.regression
    itea.classification
    itea.inspection
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples
+
+   regression_example
+   multiclass_example
 
 
 

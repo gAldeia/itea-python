@@ -10,10 +10,16 @@ coverage:
 	coverage-badge > ./docsource/source/assets/images/coverage.svg
 	coverage erase
 
-doc:  
-	cd docsource
+doc:
+
+	cp ./examples/regression_example.ipynb ./docsource/source
+	cp ./examples/multiclass_example.ipynb ./docsource/source
+
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
+
+	rm ./docsource/source/regression_example.ipynb
+	rm ./docsource/source/multiclass_example.ipynb
 
 build: 
 	${PYTHON} setup.py bdist_wheel
