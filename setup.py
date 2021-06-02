@@ -7,15 +7,25 @@ with open(path.join(root, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name             = "itea",
-    packages         = find_packages(include=["itea"]),
-    version          = "1.0.0",
-    description      = "Interaction-Transformation Evolutionary Algorithm for Symbolic Regression.",
+    packages         = find_packages(include=['itea', 'itea.*']),
+    version          = "1.0.5",
+    description      = ("Interaction-Transformation Evolutionary Algorithm "
+                        "for Symbolic Regression."),
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     author           = "Guilherme Aldeia",
     license          = "MIT",
-    install_requires = ["numpy", "scikit-learn", "matplotlib", "pandas", "jax", "jaxlib", "scipy"],
-    setup_requires   = ["pytest-runner", "coverage", "coverage-badge"],
-    tests_require    = ["pytest"],
-    test_suite       = "tests",
+    install_requires = [
+        "numpy",
+        "scikit-learn",
+        "matplotlib",
+        "pandas",
+        "jax",
+        "jaxlib",
+        "scipy"
+    ],
+    python_requires = '>=3',
+    setup_requires  = ["pytest-runner", "coverage", "coverage-badge"],
+    tests_require   = ["pytest"],
+    test_suite      = "tests",
 )

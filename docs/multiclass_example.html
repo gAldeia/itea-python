@@ -442,12 +442,134 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Iris-classification">
 <h1>Iris classification<a class="headerlink" href="#Iris-classification" title="Permalink to this headline">¶</a></h1>
+<p>This notebook will walk through the process of using the ITEA for classification (<code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code>) and interpreting the final expression with the <code class="docutils literal notranslate"><span class="pre">itea.inspection</span></code> tools.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>import numpy as np
+import pandas as pd
+
+# automatically differentiable implementation of numpy
+import jax.numpy as jnp
+
+from sklearn import datasets
+
+from sklearn.model_selection import train_test_split
+from IPython.display         import display, Math, Latex
+
+from itea.classification import ITEA_classifier
+from itea.inspection     import *
+</pre></div>
+</div>
+</div>
+<p>We will use the Iris data set in this example.</p>
+<p>This data set contains 3 different classes of Iris flowers and have 4 features: sepal width, sepal length, petal width and petal length.</p>
+<p>One example of each flower is illustred in the figure below.</p>
+<p><img alt="image0" src="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" /></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>iris_data = datasets.load_iris()
+X, y      = iris_data[&#39;data&#39;], iris_data[&#39;target&#39;]
+labels    = iris_data[&#39;feature_names&#39;]
+targets   = iris_data[&#39;target_names&#39;]
+
+# changing numbers to the class names
+y_targets = [targets[yi] for yi in y]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y_targets, test_size=0.33, random_state=42)
+
+# Creating transformation functions for ITEA using jax.numpy
+# (so we don&#39;t need to analytically calculate its derivatives)
+tfuncs = {
+    &#39;log&#39;      : jnp.log,
+    &#39;sqrt.abs&#39; : lambda x: jnp.sqrt(jnp.abs(x)),
+    &#39;id&#39;       : lambda x: x
+}
+
+clf = ITEA_classifier(
+    gens         = 50,
+    popsize      = 50,
+    max_terms    = 5,
+    expolim      = (-2, -2),
+    verbose      = 5,
+    tfuncs       = tfuncs,
+    labels       = labels,
+    random_state = 42,
+).fit(X_train, y_train)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+gen      min_fitness     mean_fitness    max_fitness     remaining (s)
+0        0.37    0.8675999999999999      0.93    1min1seg
+5        0.93    0.93    0.93    0min52seg
+10       0.93    0.93    0.93    0min51seg
+15       0.61    0.9236          0.93    0min46seg
+20       0.61    0.9236          0.93    0min38seg
+25       0.93    0.93    0.93    0min31seg
+30       0.93    0.93    0.93    0min26seg
+35       0.93    0.93    0.93    0min18seg
+40       0.93    0.93    0.93    0min12seg
+45       0.93    0.93    0.93    0min5seg
+/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/inspection/_ITExpr_explainer.py:61: UserWarning: It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
+  warnings.warn(&#34;It wasn&#39;t specified a dict for tfuncs_dx. &#34;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-3-c35ea52f87ae&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     27</span>     labels       <span class="ansi-blue-fg">=</span> labels<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     28</span>     random_state <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">42</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">---&gt; 29</span><span class="ansi-red-fg"> ).fit(X_train, y_train)
+</span>
+<span class="ansi-green-fg">/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/classification/_ITEA_classifier.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-fg">(self, X, y)</span>
+<span class="ansi-green-intense-fg ansi-bold">    180</span>         self<span class="ansi-blue-fg">.</span>classes_ <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>bestsol_<span class="ansi-blue-fg">.</span>classes_
+<span class="ansi-green-intense-fg ansi-bold">    181</span>
+<span class="ansi-green-fg">--&gt; 182</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_explain_bestsol<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>bestsol_<span class="ansi-blue-fg">,</span> X<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    183</span>
+<span class="ansi-green-intense-fg ansi-bold">    184</span>         <span class="ansi-green-fg">return</span> self
+
+<span class="ansi-green-fg">/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/_base/_BaseITEA.py</span> in <span class="ansi-cyan-fg">_explain_bestsol</span><span class="ansi-blue-fg">(self, itexpr, X, y)</span>
+<span class="ansi-green-intense-fg ansi-bold">    368</span>         ).fit(X, y)
+<span class="ansi-green-intense-fg ansi-bold">    369</span>
+<span class="ansi-green-fg">--&gt; 370</span><span class="ansi-red-fg">         </span>itexpr<span class="ansi-blue-fg">.</span>selected_features_ <span class="ansi-blue-fg">=</span> explainer<span class="ansi-blue-fg">.</span>selected_features<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    371</span>
+<span class="ansi-green-intense-fg ansi-bold">    372</span>         itexpr<span class="ansi-blue-fg">.</span>feature_importances_ <span class="ansi-blue-fg">=</span> explainer<span class="ansi-blue-fg">.</span>average_partial_effects<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/inspection/_ITExpr_explainer.py</span> in <span class="ansi-cyan-fg">selected_features</span><span class="ansi-blue-fg">(self, idx)</span>
+<span class="ansi-green-intense-fg ansi-bold">    136</span>
+<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-green-fg">if</span> len<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>itexpr<span class="ansi-blue-fg">.</span>labels<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">and</span> <span class="ansi-green-fg">not</span> idx<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 138</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>itexpr<span class="ansi-blue-fg">.</span>labels<span class="ansi-blue-fg">[</span>selected<span class="ansi-blue-fg">]</span>
+<span class="ansi-green-intense-fg ansi-bold">    139</span>
+<span class="ansi-green-intense-fg ansi-bold">    140</span>         <span class="ansi-green-fg">return</span> selected
+
+<span class="ansi-red-fg">TypeError</span>: only integer scalar arrays can be converted to a scalar index
+</pre></div></div>
+</div>
+<p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is an fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>final_itexpr = clf.bestsol_
+
+final_itexpr.to_str(term_separator=&#39;\n&#39;)
 </pre></div>
 </div>
 </div>

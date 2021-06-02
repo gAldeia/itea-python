@@ -1,6 +1,6 @@
 PYTHON = python3
 
-all: test coverage doc build clean
+all: test coverage doc build-dist clean
 
 test:
 	${PYTHON} -B setup.py pytest
@@ -20,13 +20,12 @@ doc:
 	rm ./docsource/source/regression_example.ipynb
 	rm ./docsource/source/multiclass_example.ipynb
 
-build: 
-	rm -r ./dist/*
+build-dist: 
+	rm -r ./dist/*.whl
 	${PYTHON} -B setup.py bdist_wheel
 	${PYTHON} -B -m pip install ./dist/*
 
 clean:
 	rm -r .pytest_cache
-	rm -r itea.egg-info
 
 # python3 -m twine upload --repository testpypi dist/*

@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-31-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-02-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -135,7 +135,7 @@ class ITExpr_explainer():
         selected = np.where(np.sum(np.abs(terms), axis=0) != 0)[0]
 
         if len(self.itexpr.labels) > 0 and not idx:
-            return self.itexpr.labels[selected]
+            return np.array(self.itexpr.labels)[selected]
 
         return selected
 
@@ -248,10 +248,9 @@ class ITExpr_explainer():
         check_is_fitted(self)
         X = check_array(X)
 
-
         # gradients are evaluated with training data
         gradients = self.itexpr.gradient(
-            X, self.tfuncs_dx, logit=hasattr(self.itexpr, 'classes_'))
+            self.X_, self.tfuncs_dx, logit=hasattr(self.itexpr, 'classes_'))
 
         importances = np.zeros( (gradients.shape[0], X.shape[0], X.shape[1]) )
         # iterate through each variable for each class
@@ -263,7 +262,9 @@ class ITExpr_explainer():
         return np.mean(np.abs(importances), axis=1)
 
 
-    def plot_feature_importances(self, *,
+    def plot_feature_importances(self,
+        X,
+        *,
         barh_kw            = None,
         ax                 = None,
         grouping_threshold = 0.05,
@@ -281,6 +282,9 @@ class ITExpr_explainer():
 
         Parameters
         ----------
+        X: array-like of shape (n_samples, n_features)
+            data to explain.
+
         bar_kw : dict or None, default=None
             dictionary with keywords to be used when generating the plots.
             When set to None, then ``bar_kw= {'alpha':1.0, 'align':'center'}``.
@@ -351,12 +355,12 @@ class ITExpr_explainer():
    
             target_idx = [list(self.itexpr.classes_).index(t) for t in target]
 
-            importances = importance_f(self.X_)[target_idx]
+            importances = importance_f(X_)[target_idx]
         else:
-            importances = importance_f(self.X_).reshape(1, -1)
+            importances = importance_f(X_).reshape(1, -1)
                 
         # classifying the importances
-        mean_values = np.abs(np.mean(self.X_, axis=0))
+        mean_values = np.abs(np.mean(X_, axis=0))
         if len(self.itexpr.labels) > 0:
             y_ticks_labels = np.array([f'{round(m, 3)} = {l}'
                 for m, l in zip(mean_values, self.itexpr.labels)])
@@ -422,15 +426,21 @@ class ITExpr_explainer():
 
         # annotating the importance values
         offset = np.max(np.sum(final_importances, axis=0))/50
-        for i, rect in enumerate(self.axes_.patches[-(final_importances.shape[1]):]):
+        for i, rect in enumerate(
+            self.axes_.patches[-(final_importances.shape[1]):]):
+            
             self.axes_.text(
                 rect.get_width()+rect.get_x()+offset,
                 rect.get_y() + 0.5,
-                np.sum(final_importances, axis=0)[-(i+1)].round(2), ha='left', va='top')
+                np.sum(final_importances, axis=0)[-(i+1)].round(2),
+                ha='left',
+                va='top'
+            )
 
         self.axes_.spines['right'].set_visible(False)
         self.axes_.spines['top'].set_visible(False)
-        self.axes_.set_xlim( (None, np.max(np.sum(final_importances, axis=0))+5*offset) )
+        self.axes_.set_xlim(
+            (None, np.max(np.sum(final_importances, axis=0))+5*offset) )
 
         if hasattr(self.itexpr, 'classes_'):
             self.axes_.legend(loc=4)
@@ -466,8 +476,10 @@ class ITExpr_explainer():
             coefs = coefs.reshape(-1, 1).T
         
         # Partial derivatives at the means and the evaluation of each term
-        at_the_means = np.zeros( (X.shape[1], num_points, self.itexpr.n_terms+1) )
-        terms_evals  = np.zeros( (X.shape[1], num_points, self.itexpr.n_terms) )
+        at_the_means = np.zeros(
+            (X.shape[1], num_points, self.itexpr.n_terms+1) )
+        terms_evals  = np.zeros(
+            (X.shape[1], num_points, self.itexpr.n_terms) )
 
         for j in range(X.shape[1]): 
             loval, hival = np.percentile(X[:, j], q=percentiles)
