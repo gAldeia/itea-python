@@ -447,20 +447,24 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>import numpy as np
-import pandas as pd
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-# automatically differentiable implementation of numpy
-import jax.numpy as jnp
+<span class="c1"># automatically differentiable implementation of numpy</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
-from sklearn import datasets
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 
-from sklearn.model_selection import train_test_split
-from IPython.display         import display, Math, Latex
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
 
-from itea.classification import ITEA_classifier
-from itea.inspection     import *
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">itea.classification</span> <span class="kn">import</span> <span class="n">ITEA_classifier</span>
+<span class="kn">from</span> <span class="nn">itea.inspection</span>     <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -472,36 +476,220 @@ from itea.inspection     import *
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>iris_data = datasets.load_iris()
-X, y      = iris_data[&#39;data&#39;], iris_data[&#39;target&#39;]
-labels    = iris_data[&#39;feature_names&#39;]
-targets   = iris_data[&#39;target_names&#39;]
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">iris_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span>      <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+<span class="n">labels</span>    <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
+<span class="n">targets</span>   <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;target_names&#39;</span><span class="p">]</span>
 
-# changing numbers to the class names
-y_targets = [targets[yi] for yi in y]
+<span class="c1"># changing numbers to the class names</span>
+<span class="n">y_targets</span> <span class="o">=</span> <span class="p">[</span><span class="n">targets</span><span class="p">[</span><span class="n">yi</span><span class="p">]</span> <span class="k">for</span> <span class="n">yi</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span>
 
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y_targets, test_size=0.33, random_state=42)
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y_targets</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-# Creating transformation functions for ITEA using jax.numpy
-# (so we don&#39;t need to analytically calculate its derivatives)
-tfuncs = {
-    &#39;log&#39;      : jnp.log,
-    &#39;sqrt.abs&#39; : lambda x: jnp.sqrt(jnp.abs(x)),
-    &#39;id&#39;       : lambda x: x
-}
+<span class="c1"># Creating transformation functions for ITEA using jax.numpy</span>
+<span class="c1"># (so we don&#39;t need to analytically calculate its derivatives)</span>
+<span class="n">tfuncs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span>       <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="s1">&#39;sqrt.abs&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+    <span class="s1">&#39;log&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+    <span class="s1">&#39;sin&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span>
+    <span class="s1">&#39;cos&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span>
+    <span class="s1">&#39;exp&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span>
+<span class="p">}</span>
 
-clf = ITEA_classifier(
-    gens         = 50,
-    popsize      = 50,
-    max_terms    = 5,
-    expolim      = (-2, -2),
-    verbose      = 5,
-    tfuncs       = tfuncs,
-    labels       = labels,
-    random_state = 42,
-).fit(X_train, y_train)
+<span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
+    <span class="n">gens</span>            <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
+    <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
+    <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_var&#39;</span><span class="p">,</span>
+    <span class="n">random_state</span>    <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+gen      min_fitness     mean_fitness    max_fitness     remaining (s)
+0        0.37    0.7060000000000001      0.93    0min1seg
+</pre></div></div>
+</div>
+<p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is an fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span>
+
+<span class="n">final_itexpr</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">term_separator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;[ 2.043  0.152 -2.195]*log(sepal length (cm)^-2 * sepal width (cm)^-2 * petal length (cm)^-2 * petal width (cm)^-2)\n[ 15.644   3.747 -19.391]&#39;
+</pre></div></div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code> to obtain metrics regarding the IT terms in the expression</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">ITExpr_inspector</span><span class="p">(</span>
+        <span class="n">itexpr</span><span class="o">=</span><span class="n">final_itexpr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">terms_analysis</span><span class="p">()</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>coef</th>
+      <th>func</th>
+      <th>strengths</th>
+      <th>coef stderr.</th>
+      <th>mean pairwise disentanglement</th>
+      <th>mean mutual information</th>
+      <th>prediction var.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[ 2.043  0.152 -2.195]</td>
+      <td>log</td>
+      <td>[-2, -2, -2, -2]</td>
+      <td>[0.572 0.221 0.548]</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>[41.6    0.23  48.015]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[ 15.644   3.747 -19.391]</td>
+      <td>intercept</td>
+      <td>---</td>
+      <td>[3.784 2.091 5.416]</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>[0. 0. 0.]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>Now let’s create an instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
+<p>We can calculate feature importances with Partial Effects (PE) or approximate the Shapley values using PE.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+    <span class="n">itexpr</span><span class="o">=</span><span class="n">final_itexpr</span><span class="p">,</span>
+    <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">,</span>
+    <span class="n">importance_method</span> <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="c1"># change to &#39;shapley&#39;</span>
+    <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">barh_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">},</span>
+    <span class="n">show</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/multiclass_example_10_0.png" src="_images/multiclass_example_10_0.png" />
+</div>
+</div>
+<p>We can explain a single instance as well:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">importance_method</span> <span class="o">=</span> <span class="s1">&#39;shapley&#39;</span><span class="p">,</span> <span class="c1"># change to &#39;shapley&#39;</span>
+    <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">barh_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">},</span>
+    <span class="n">show</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/multiclass_example_12_0.png" src="_images/multiclass_example_12_0.png" />
+</div>
+</div>
+<p>Instead of looking into the average Partial Effects, we can plot the Partial Effects for each variable when its co-variables are fixed at the means.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="n">explainer</span><span class="o">.</span><span class="n">plot_partial_effects_at_means</span><span class="p">(</span>
+    <span class="n">X</span>          <span class="o">=</span> <span class="n">X_test</span><span class="p">,</span> <span class="c1"># Obtaining explanations for test data</span>
+    <span class="n">ax</span>         <span class="o">=</span> <span class="n">axs</span><span class="p">,</span>
+    <span class="n">features</span>   <span class="o">=</span> <span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
+    <span class="n">target</span>     <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_points</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">share_y</span>    <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">show_err</span>   <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">show</span>       <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -509,67 +697,23 @@ clf = ITEA_classifier(
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.37    0.8675999999999999      0.93    1min1seg
-5        0.93    0.93    0.93    0min52seg
-10       0.93    0.93    0.93    0min51seg
-15       0.61    0.9236          0.93    0min46seg
-20       0.61    0.9236          0.93    0min38seg
-25       0.93    0.93    0.93    0min31seg
-30       0.93    0.93    0.93    0min26seg
-35       0.93    0.93    0.93    0min18seg
-40       0.93    0.93    0.93    0min12seg
-45       0.93    0.93    0.93    0min5seg
-/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/inspection/_ITExpr_explainer.py:61: UserWarning: It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
-  warnings.warn(&#34;It wasn&#39;t specified a dict for tfuncs_dx. &#34;
-</pre></div></div>
+<img alt="_images/multiclass_example_14_0.png" src="_images/multiclass_example_14_0.png" />
+</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-3-c35ea52f87ae&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">     27</span>     labels       <span class="ansi-blue-fg">=</span> labels<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">     28</span>     random_state <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">42</span><span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">---&gt; 29</span><span class="ansi-red-fg"> ).fit(X_train, y_train)
-</span>
-<span class="ansi-green-fg">/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/classification/_ITEA_classifier.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-fg">(self, X, y)</span>
-<span class="ansi-green-intense-fg ansi-bold">    180</span>         self<span class="ansi-blue-fg">.</span>classes_ <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>bestsol_<span class="ansi-blue-fg">.</span>classes_
-<span class="ansi-green-intense-fg ansi-bold">    181</span>
-<span class="ansi-green-fg">--&gt; 182</span><span class="ansi-red-fg">         </span>self<span class="ansi-blue-fg">.</span>_explain_bestsol<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>bestsol_<span class="ansi-blue-fg">,</span> X<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    183</span>
-<span class="ansi-green-intense-fg ansi-bold">    184</span>         <span class="ansi-green-fg">return</span> self
-
-<span class="ansi-green-fg">/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/_base/_BaseITEA.py</span> in <span class="ansi-cyan-fg">_explain_bestsol</span><span class="ansi-blue-fg">(self, itexpr, X, y)</span>
-<span class="ansi-green-intense-fg ansi-bold">    368</span>         ).fit(X, y)
-<span class="ansi-green-intense-fg ansi-bold">    369</span>
-<span class="ansi-green-fg">--&gt; 370</span><span class="ansi-red-fg">         </span>itexpr<span class="ansi-blue-fg">.</span>selected_features_ <span class="ansi-blue-fg">=</span> explainer<span class="ansi-blue-fg">.</span>selected_features<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    371</span>
-<span class="ansi-green-intense-fg ansi-bold">    372</span>         itexpr<span class="ansi-blue-fg">.</span>feature_importances_ <span class="ansi-blue-fg">=</span> explainer<span class="ansi-blue-fg">.</span>average_partial_effects<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">/mnt/c/Users/Guilherme Aldeia/Documents/github/interaction-transformation-evolutionary-algorithm/itea/inspection/_ITExpr_explainer.py</span> in <span class="ansi-cyan-fg">selected_features</span><span class="ansi-blue-fg">(self, idx)</span>
-<span class="ansi-green-intense-fg ansi-bold">    136</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-green-fg">if</span> len<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>itexpr<span class="ansi-blue-fg">.</span>labels<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">and</span> <span class="ansi-green-fg">not</span> idx<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 138</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>itexpr<span class="ansi-blue-fg">.</span>labels<span class="ansi-blue-fg">[</span>selected<span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">    139</span>
-<span class="ansi-green-intense-fg ansi-bold">    140</span>         <span class="ansi-green-fg">return</span> selected
-
-<span class="ansi-red-fg">TypeError</span>: only integer scalar arrays can be converted to a scalar index
+&lt;Figure size 432x288 with 0 Axes&gt;
 </pre></div></div>
 </div>
-<p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is an fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>final_itexpr = clf.bestsol_
-
-final_itexpr.to_str(term_separator=&#39;\n&#39;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
 </pre></div>
 </div>
 </div>

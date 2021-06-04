@@ -355,12 +355,12 @@ class ITExpr_explainer():
    
             target_idx = [list(self.itexpr.classes_).index(t) for t in target]
 
-            importances = importance_f(X_)[target_idx]
+            importances = importance_f(X)[target_idx]
         else:
-            importances = importance_f(X_).reshape(1, -1)
+            importances = importance_f(X).reshape(1, -1)
                 
         # classifying the importances
-        mean_values = np.abs(np.mean(X_, axis=0))
+        mean_values = np.abs(np.mean(X, axis=0))
         if len(self.itexpr.labels) > 0:
             y_ticks_labels = np.array([f'{round(m, 3)} = {l}'
                 for m, l in zip(mean_values, self.itexpr.labels)])

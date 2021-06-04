@@ -1,4 +1,4 @@
-PYTHON = python3
+PYTHON = python
 
 all: test coverage doc build-dist clean
 
@@ -23,7 +23,8 @@ doc:
 build-dist: 
 	rm -r ./dist/*.whl
 	${PYTHON} -B setup.py bdist_wheel
-	${PYTHON} -B -m pip install ./dist/*
+	${PYTHON} -B setup.py install
+	${PYTHON} -B -m pip install ./dist/*.whl
 
 clean:
 	rm -r .pytest_cache

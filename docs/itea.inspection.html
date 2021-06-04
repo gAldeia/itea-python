@@ -292,7 +292,7 @@ plots and explanations.</p>
 
 <dl class="method">
 <dt id="itea.inspection.ITExpr_explainer.plot_feature_importances">
-<code class="sig-name descname">plot_feature_importances</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">barh_kw=None</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">grouping_threshold=0.05</em>, <em class="sig-param">target=None</em>, <em class="sig-param">importance_method='pe'</em>, <em class="sig-param">show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_feature_importances" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_feature_importances</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">*</em>, <em class="sig-param">barh_kw=None</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">grouping_threshold=0.05</em>, <em class="sig-param">target=None</em>, <em class="sig-param">importance_method='pe'</em>, <em class="sig-param">show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_feature_importances" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bar plot of the feature importances, that can be calculated with
 the Partial effects (PE) or Shapley Values (shapley).</p>
 <img alt="_images/plot_feature_importances_1.png" class="align-center" src="_images/plot_feature_importances_1.png" />
@@ -300,6 +300,7 @@ the Partial effects (PE) or Shapley Values (shapley).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data to explain.</p></li>
 <li><p><strong>bar_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – dictionary with keywords to be used when generating the plots.
 When set to None, then <code class="docutils literal notranslate"><span class="pre">bar_kw=</span> <span class="pre">{'alpha':1.0,</span> <span class="pre">'align':'center'}</span></code>.</p></li>
 <li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is

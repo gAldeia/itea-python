@@ -180,7 +180,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
 
         probabilities = self.predict_proba(X)
 
-        return np.argmax(probabilities, axis=1)
+        return np.array(self.classes_)[np.argmax(probabilities, axis=1)]
 
 
     def predict_proba(self, X):

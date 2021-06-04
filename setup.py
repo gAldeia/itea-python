@@ -8,7 +8,7 @@ with open(path.join(root, 'README.md'), encoding='utf-8') as f:
 setup(
     name             = "itea",
     packages         = find_packages(include=['itea', 'itea.*']),
-    version          = "1.0.5",
+    version          = "1.0.7",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
     long_description = long_description,
