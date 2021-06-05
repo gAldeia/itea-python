@@ -98,7 +98,7 @@ class BaseITEA(BaseEstimator):
             print the status of the generation. If verbose is set
             to -1, every generation will print informations.
 
-        labels : list, default=[]
+        labels : list of strings, default=[]
             (``ITExpr`` parameter) list containing the labels of the
             data that will be used in the evolutionary process, and
             will be used in ``ITExpr`` constructors.

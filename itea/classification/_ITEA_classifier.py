@@ -73,7 +73,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             print the status of the generation. If verbose is set
             to -1, every generation will print informations.
 
-        labels : list, default=[]
+        labels : list of strings, default=[]
             (``ITExpr`` parameter) list containing the labels of the
             data that will be used in the evolutionary process, and
             will be used in ``ITExpr`` constructors.
@@ -101,9 +101,9 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             fitness (accuracy_score) of the final expression.
 
         convergence_ : dict
-            two nested dictionaries. The outer has the keys 
+            two nested dictionaries. The outer have the keys 
             ``['fitness', 'n_terms', 'complexity']``, and the inner 
-            has ``['min', 'mean', 'std', 'max']``. Each value of the inner
+            have ``['min', 'mean', 'std', 'max']``. Each value of the inner
             dictionary (for example itea.convergence_['fitness']['min'])
             is a list, containing the information of every generation.
             This dictionary can be used to inspect informations about the

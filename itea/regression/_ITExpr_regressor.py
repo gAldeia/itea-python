@@ -38,7 +38,7 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
             numpy.vectorize for more informations on how to vectorize
             your transformation functions.
 
-        labels : list, default=[]
+        labels : list of strings, default=[]
             list containing the labels of the variables that will be used.
             When the list of labels is empty, the variables are named
             :math:`x_0, x_1, \cdots`.
