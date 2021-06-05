@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>itea.regression &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -13,6 +14,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -31,13 +34,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -108,6 +109,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="regression_example.html">California housing regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agnostic_explainers.html">Using agnostic explainers</a></li>
 </ul>
 
             
@@ -199,7 +201,7 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="itea-regression">
+<section id="itea-regression">
 <h1>itea.regression<a class="headerlink" href="#itea-regression" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -207,14 +209,14 @@
 <li><p><a class="reference internal" href="#itexpr-regressor" id="id2">ITExpr_regressor</a></p></li>
 </ul>
 </div>
-<div class="section" id="itea-regressor">
+<section id="itea-regressor">
 <h2><a class="toc-backref" href="#id1">ITEA_regressor</a><a class="headerlink" href="#itea-regressor" title="Permalink to this headline">¶</a></h2>
 <p>For a more detailed description of the arguments, check the
 <a class="reference internal" href="_base.html#baseitea-docs"><span class="std std-ref">BaseITEA</span></a> documentation.</p>
-<dl class="class">
-<dt id="itea.regression.ITEA_regressor">
-<em class="property">class </em><code class="sig-prename descclassname">itea.regression.</code><code class="sig-name descname">ITEA_regressor</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">gens=100</em>, <em class="sig-param">popsize=100</em>, <em class="sig-param">tfuncs={'id': &lt;function ITEA_regressor.&lt;lambda&gt;&gt;}</em>, <em class="sig-param">tfuncs_dx=None</em>, <em class="sig-param">expolim=(-2</em>, <em class="sig-param">2)</em>, <em class="sig-param">max_terms=5</em>, <em class="sig-param">simplify_method='simplify_by_coef'</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">verbose=None</em>, <em class="sig-param">labels=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITEA_regressor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.RegressorMixin</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.regression.</span></span><span class="sig-name descname"><span class="pre">ITEA_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_regressor.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method='simplify_by_coef'</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITEA_regressor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="_base.html#itea._base.BaseITEA" title="itea._base._BaseITEA.BaseITEA"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.RegressorMixin</span></code></p>
 <p>This is the implementation of the ITEA for the regression task.</p>
 <p>The expressions will have their coefficients adjusted by means of the
 scikit’s linearRegression method. The fitness will be measured using
@@ -236,7 +238,7 @@ will not print informations. If verbose is an integer
 <code class="docutils literal notranslate"><span class="pre">n</span></code>, then every <code class="docutils literal notranslate"><span class="pre">n</span></code> generations the algorithm will
 print the status of the generation. If verbose is set
 to -1, every generation will print informations.</p></li>
-<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – (<code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> parameter) list containing the labels of the
+<li><p><strong>labels</strong> (<em>list of strings</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – (<code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> parameter) list containing the labels of the
 data that will be used in the evolutionary process, and
 will be used in <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> constructors.</p></li>
 <li><p><strong>tfuncs</strong> (<em>dict</em><em>, </em><em>default={'id': lambda x: x}</em>) – (<code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> parameter) transformations functions. Should always
@@ -249,9 +251,9 @@ differentiation  through jax to create the derivatives.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="attribute">
-<dt id="itea.regression.ITEA_regressor.bestsol_">
-<code class="sig-name descname">bestsol_</code><a class="headerlink" href="#itea.regression.ITEA_regressor.bestsol_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor.bestsol_">
+<span class="sig-name descname"><span class="pre">bestsol_</span></span><a class="headerlink" href="#itea.regression.ITEA_regressor.bestsol_" title="Permalink to this definition">¶</a></dt>
 <dd><p>an ITExpr expression used as it is (linear combination of IT terms).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -260,9 +262,9 @@ differentiation  through jax to create the derivatives.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITEA_regressor.fitness_">
-<code class="sig-name descname">fitness_</code><a class="headerlink" href="#itea.regression.ITEA_regressor.fitness_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor.fitness_">
+<span class="sig-name descname"><span class="pre">fitness_</span></span><a class="headerlink" href="#itea.regression.ITEA_regressor.fitness_" title="Permalink to this definition">¶</a></dt>
 <dd><p>fitness (RMSE) of the final expression.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -271,12 +273,12 @@ differentiation  through jax to create the derivatives.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITEA_regressor.convergence_">
-<code class="sig-name descname">convergence_</code><a class="headerlink" href="#itea.regression.ITEA_regressor.convergence_" title="Permalink to this definition">¶</a></dt>
-<dd><p>two nested dictionaries. The outer has the keys
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor.convergence_">
+<span class="sig-name descname"><span class="pre">convergence_</span></span><a class="headerlink" href="#itea.regression.ITEA_regressor.convergence_" title="Permalink to this definition">¶</a></dt>
+<dd><p>two nested dictionaries. The outer have the keys
 <code class="docutils literal notranslate"><span class="pre">['fitness',</span> <span class="pre">'n_terms',</span> <span class="pre">'complexity']</span></code>, and the inner
-has <code class="docutils literal notranslate"><span class="pre">['min',</span> <span class="pre">'mean',</span> <span class="pre">'std',</span> <span class="pre">'max']</span></code>. Each value of the inner
+have <code class="docutils literal notranslate"><span class="pre">['min',</span> <span class="pre">'mean',</span> <span class="pre">'std',</span> <span class="pre">'max']</span></code>. Each value of the inner
 dictionary (for example itea.convergence_[‘fitness’][‘min’])
 is a list, containing the information of every generation.
 This dictionary can be used to inspect informations about the
@@ -288,9 +290,9 @@ convergence of the evolutionary process.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITEA_regressor.exectime_">
-<code class="sig-name descname">exectime_</code><a class="headerlink" href="#itea.regression.ITEA_regressor.exectime_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor.exectime_">
+<span class="sig-name descname"><span class="pre">exectime_</span></span><a class="headerlink" href="#itea.regression.ITEA_regressor.exectime_" title="Permalink to this definition">¶</a></dt>
 <dd><p>time (in seconds) the evolutionary process took.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -299,9 +301,9 @@ convergence of the evolutionary process.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="itea.regression.ITEA_regressor.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITEA_regressor.fit" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITEA_regressor.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the evolutionary process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -325,9 +327,9 @@ Only after fitting the model that the attributes <code class="docutils literal n
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="itea.regression.ITEA_regressor.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITEA_regressor.predict" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="itea.regression.ITEA_regressor.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITEA_regressor.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predicts the response value for each sample in X.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -344,15 +346,15 @@ Only after fitting the model that the attributes <code class="docutils literal n
 
 </dd></dl>
 
-</div>
-<div class="section" id="itexpr-regressor">
+</section>
+<section id="itexpr-regressor">
 <h2><a class="toc-backref" href="#id2">ITExpr_regressor</a><a class="headerlink" href="#itexpr-regressor" title="Permalink to this headline">¶</a></h2>
 <p>For a more detailed description of the arguments, check the
 <a class="reference internal" href="_base.html#baseitexpr-docs"><span class="std std-ref">BaseITExpr</span></a> documentation.</p>
-<dl class="class">
-<dt id="itea.regression.ITExpr_regressor">
-<em class="property">class </em><code class="sig-prename descclassname">itea.regression.</code><code class="sig-name descname">ITExpr_regressor</code><span class="sig-paren">(</span><em class="sig-param">*</em>, <em class="sig-param">expr</em>, <em class="sig-param">tfuncs</em>, <em class="sig-param">labels=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITExpr.BaseITExpr</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.RegressorMixin</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.regression.</span></span><span class="sig-name descname"><span class="pre">ITExpr_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="_base.html#itea._base.BaseITExpr" title="itea._base._BaseITExpr.BaseITExpr"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITExpr.BaseITExpr</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.RegressorMixin</span></code></p>
 <p>ITExpr for the regression task. This will be the class
 in <code class="docutils literal notranslate"><span class="pre">ITEA_regressor.bestsol_</span></code>.</p>
 <p>Constructor method.</p>
@@ -366,15 +368,15 @@ the values are unary vectorized functions (for example,
 numpy functions). For user-defined functions, see
 numpy.vectorize for more informations on how to vectorize
 your transformation functions.</p></li>
-<li><p><strong>labels</strong> (<em>list</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – list containing the labels of the variables that will be used.
+<li><p><strong>labels</strong> (<em>list of strings</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – list containing the labels of the variables that will be used.
 When the list of labels is empty, the variables are named
-<span class="math notranslate nohighlight">\(x_0, x_1, \cdots\)</span>.</p></li>
+<img class="math" src="_images/math/35d6626ba55a8153a091d99e1a7478b2224f1417.png" alt="x_0, x_1, \cdots"/>.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="attribute">
-<dt id="itea.regression.ITExpr_regressor.n_terms">
-<code class="sig-name descname">n_terms</code><a class="headerlink" href="#itea.regression.ITExpr_regressor.n_terms" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.n_terms">
+<span class="sig-name descname"><span class="pre">n_terms</span></span><a class="headerlink" href="#itea.regression.ITExpr_regressor.n_terms" title="Permalink to this definition">¶</a></dt>
 <dd><p>number of infered IT terms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -383,9 +385,9 @@ When the list of labels is empty, the variables are named
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITExpr_regressor.is_fitted">
-<code class="sig-name descname">is_fitted</code><a class="headerlink" href="#itea.regression.ITExpr_regressor.is_fitted" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.is_fitted">
+<span class="sig-name descname"><span class="pre">is_fitted</span></span><a class="headerlink" href="#itea.regression.ITExpr_regressor.is_fitted" title="Permalink to this definition">¶</a></dt>
 <dd><p>boolean variable indicating if the ITExpr was fitted before.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -394,9 +396,9 @@ When the list of labels is empty, the variables are named
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITExpr_regressor._fitness">
-<code class="sig-name descname">_fitness</code><a class="headerlink" href="#itea.regression.ITExpr_regressor._fitness" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor._fitness">
+<span class="sig-name descname"><span class="pre">_fitness</span></span><a class="headerlink" href="#itea.regression.ITExpr_regressor._fitness" title="Permalink to this definition">¶</a></dt>
 <dd><p>fitness (RMSE) of the expression on the training data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -405,9 +407,9 @@ When the list of labels is empty, the variables are named
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITExpr_regressor.intercept_">
-<code class="sig-name descname">intercept_</code><a class="headerlink" href="#itea.regression.ITExpr_regressor.intercept_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.intercept_">
+<span class="sig-name descname"><span class="pre">intercept_</span></span><a class="headerlink" href="#itea.regression.ITExpr_regressor.intercept_" title="Permalink to this definition">¶</a></dt>
 <dd><p>regression intercept.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -416,9 +418,9 @@ When the list of labels is empty, the variables are named
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="itea.regression.ITExpr_regressor.coef_">
-<code class="sig-name descname">coef_</code><a class="headerlink" href="#itea.regression.ITExpr_regressor.coef_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.coef_">
+<span class="sig-name descname"><span class="pre">coef_</span></span><a class="headerlink" href="#itea.regression.ITExpr_regressor.coef_" title="Permalink to this definition">¶</a></dt>
 <dd><p>coefficients for each term.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -427,9 +429,9 @@ When the list of labels is empty, the variables are named
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="itea.regression.ITExpr_regressor.covariance_matrix">
-<code class="sig-name descname">covariance_matrix</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor.covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.covariance_matrix">
+<span class="sig-name descname"><span class="pre">covariance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor.covariance_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Estimation of the covariance matrix of the coefficients.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -446,9 +448,9 @@ When the list of labels is empty, the variables are named
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="itea.regression.ITExpr_regressor.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor.fit" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fits the linear model created by combining the IT terms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -468,9 +470,9 @@ Only after fitting the model that the attributes <code class="docutils literal n
 </dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="itea.regression.ITExpr_regressor.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor.predict" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="itea.regression.ITExpr_regressor.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.regression.ITExpr_regressor.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Predicts the response value for each sample in X.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -487,8 +489,8 @@ Only after fitting the model that the attributes <code class="docutils literal n
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

@@ -40,6 +40,7 @@ of the estimators follows their guidelines.
 
    regression_example
    multiclass_example
+   agnostic_explainers
 
 
 

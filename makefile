@@ -13,12 +13,14 @@ coverage:
 doc:
 	cp ./examples/regression_example.ipynb ./docsource/source
 	cp ./examples/multiclass_example.ipynb ./docsource/source
+	cp ./examples/agnostic_explainers.ipynb ./docsource/source
 
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
 
 	rm ./docsource/source/regression_example.ipynb
 	rm ./docsource/source/multiclass_example.ipynb
+	rm ./docsource/source/agnostic_explainers.ipynb
 
 build-dist: 
 	rm -r ./dist/*.whl

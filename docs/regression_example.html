@@ -4,7 +4,8 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>California housing regression &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -13,6 +14,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -31,13 +34,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -104,6 +105,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">California housing regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="agnostic_explainers.html">Using agnostic explainers</a></li>
 </ul>
 
             
@@ -441,10 +443,10 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="California-housing-regression">
+<section id="California-housing-regression">
 <h1>California housing regression<a class="headerlink" href="#California-housing-regression" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook we’ll use the <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code> to search for a good expression, that will be encapsulated inside the <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> class, and it will be used for the regression task of predicting california housing prices.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -465,36 +467,6 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-The history saving thread hit an unexpected error (DatabaseError(&#39;database disk image is malformed&#39;)).History will not be written to the database.
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The text.latex.preview rcparam was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The mathtext.fallback_to_cm rcparam was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle: Support for setting the &#39;mathtext.fallback_to_cm&#39; rcParam is deprecated since 3.3 and will be removed two minor releases later; use &#39;mathtext.fallback : &#39;cm&#39; instead.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The validate_bool_maybe_none function was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The savefig.jpeg_quality rcparam was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The keymap.all_axes rcparam was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The animation.avconv_path rcparam was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-In /home/galdeia/anaconda3/lib/python3.7/site-packages/matplotlib/mpl-data/stylelib/_classic_test.mplstyle:
-The animation.avconv_args rcparam was deprecated in Matplotlib 3.3 and will be removed two minor releases later.
-</pre></div></div>
 </div>
 <p>The California Housing data set contains 8 features.</p>
 <p>In this notebook, we’ll provide the transformations functions and its derivatives, instead of using the itea feature of extracting the derivatives using jax.</p>
@@ -531,7 +503,7 @@ The animation.avconv_args rcparam was deprecated in Matplotlib 3.3 and will be r
 <span class="n">reg</span> <span class="o">=</span> <span class="n">ITEA_regressor</span><span class="p">(</span>
     <span class="n">gens</span>         <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">popsize</span>      <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="n">max_terms</span>    <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">max_terms</span>    <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">expolim</span>      <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
     <span class="n">verbose</span>      <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">tfuncs</span>       <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
@@ -549,11 +521,11 @@ The animation.avconv_args rcparam was deprecated in Matplotlib 3.3 and will be r
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9964464179459863      1.1281438221885112      1.153918439458622       2min31seg
-10       0.8407929156201303      0.9436160658690044      1.0985488566324917      2min25seg
-20       0.8087406815720717      0.8582422799599203      1.0868944517090398      2min1seg
-30       0.8061245900280479      0.8974726034785508      1.0859364350173142      1min9seg
-40       0.8041677378663221      0.8382055944417849      1.0717060153005165      0min37seg
+0        0.8262621327388944      1.1159122831826924      1.153923613058111       1min40seg
+10       0.804700559967339       0.8463977749705149      0.9020893690442627      3min11seg
+20       0.7795362093991466      0.7941148504337509      0.8738719900021644      2min17seg
+30       0.7733398229329143      0.7893570197862658      0.8628567737570586      1min33seg
+40       0.7347068293819388      0.7563216163171014      0.8177084431749616      0min52seg
 </pre></div></div>
 </div>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">reg</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is an fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> ready to be used. Lets see the final expression and the execution time.</p>
@@ -565,7 +537,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">bestsol_</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Final expression:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">final_itexpr</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">term_separator</span><span class="o">=</span><span class="s1">&#39; +</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Elapsed time: </span><span class="si">{reg.exectime_}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Elapsed time: </span><span class="si">{</span><span class="n">reg</span><span class="o">.</span><span class="n">exectime_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -576,11 +548,14 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="highlight"><pre>
 
 Final expression:
- -0.589*log(MedInc^-2 * HouseAge^-2 * AveRooms * AveBedrms^-2 * Population^2 * AveOccup^-1 * Longitude^-2) +
-0.524*log(MedInc^2 * HouseAge^-2 * AveRooms^-2 * AveBedrms * Population^2 * AveOccup^-2 * Latitude^-1 * Longitude^-2) +
-4.102
+ 0.512*log(MedInc^2 * HouseAge^2 * AveRooms^-2 * AveBedrms * AveOccup^2 * Latitude^2 * Longitude^-2) +
+-16.002*log(MedInc * HouseAge^-2 * AveRooms^2 * AveBedrms^-1 * AveOccup * Latitude^2 * Longitude^-2) +
+16.864*log(MedInc^2 * HouseAge^-2 * AveRooms^2 * AveBedrms^-2 * AveOccup^2 * Latitude^2) +
+-0.855*log(MedInc^-2 * HouseAge^-1 * AveRooms^2 * AveOccup * Latitude^-1 * Longitude^-2) +
+-9.33*log(MedInc^2 * AveBedrms^-2 * AveOccup^2 * Latitude^2 * Longitude^-2) +
+-190.172
 
-Elapsed time: 183.30498623847961
+Elapsed time: 246.43351793289185
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -650,30 +625,60 @@ Elapsed time: 183.30498623847961
   <tbody>
     <tr>
       <th>0</th>
-      <td>-0.589</td>
+      <td>0.512</td>
       <td>log</td>
-      <td>[-2, -2, 1, -2, 2, -1, 0, -2]</td>
-      <td>0.005</td>
-      <td>0.589</td>
-      <td>0.587</td>
-      <td>1.522</td>
+      <td>[2, 2, -2, 1, 0, 2, 2, -2]</td>
+      <td>0.016</td>
+      <td>0.240</td>
+      <td>0.297</td>
+      <td>0.507</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.524</td>
+      <td>-16.002</td>
       <td>log</td>
-      <td>[2, -2, -2, 1, 2, -2, -1, -2]</td>
-      <td>0.005</td>
-      <td>0.589</td>
-      <td>0.587</td>
-      <td>1.426</td>
+      <td>[1, -2, 2, -1, 0, 1, 2, -2]</td>
+      <td>0.306</td>
+      <td>0.372</td>
+      <td>0.605</td>
+      <td>650.461</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4.102</td>
+      <td>16.864</td>
+      <td>log</td>
+      <td>[2, -2, 2, -2, 0, 2, 2, 0]</td>
+      <td>0.308</td>
+      <td>0.380</td>
+      <td>0.633</td>
+      <td>1100.265</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.855</td>
+      <td>log</td>
+      <td>[-2, -1, 2, 0, 0, 1, -1, -2]</td>
+      <td>0.009</td>
+      <td>0.190</td>
+      <td>0.278</td>
+      <td>0.733</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-9.33</td>
+      <td>log</td>
+      <td>[2, 0, 0, -2, 0, 2, 2, -2]</td>
+      <td>0.159</td>
+      <td>0.308</td>
+      <td>0.363</td>
+      <td>119.373</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-190.172</td>
       <td>intercept</td>
       <td>---</td>
-      <td>0.028</td>
+      <td>3.293</td>
       <td>0.000</td>
       <td>0.000</td>
       <td>0.000</td>
@@ -702,8 +707,9 @@ Elapsed time: 183.30498623847961
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="math notranslate nohighlight">
-$ ITExpr = \underbrace{\beta_0 \cdot log(\frac{AveRooms \cdot Population^{2}}{MedInc^{2} \cdot HouseAge^{2} \cdot AveBedrms^{2} \cdot AveOccup \cdot Longitude^{2}})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(\frac{MedInc^{2} \cdot AveBedrms \cdot Population^{2}}{HouseAge^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2}})}_{\text{term 1}} + I_0$</div></div>
+<div class="math">
+<p><img src="_images/math/8c4bf465cb7ea6e4cf4992a0bc04416d5776feae.png" alt="$ ITExpr = \underbrace{\beta_0 \cdot log(\frac{MedInc^{2} \cdot HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2}}{AveRooms^{2} \cdot Longitude^{2}})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(\frac{MedInc \cdot AveRooms^{2} \cdot AveOccup \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms \cdot Longitude^{2}})}_{\text{term 1}} + \underbrace{\beta_2 \cdot log(\frac{MedInc^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms^{2}})}_{\text{term 2}} + \underbrace{\beta_3 \cdot log(\frac{AveRooms^{2} \cdot AveOccup}{MedInc^{2} \cdot HouseAge \cdot Latitude \cdot Longitude^{2}})}_{\text{term 3}} + \underbrace{\beta_4 \cdot log(\frac{MedInc^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{AveBedrms^{2} \cdot Longitude^{2}})}_{\text{term 4}} + I_0$"/></p>
+</div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -727,8 +733,9 @@ $ ITExpr = \underbrace{\beta_0 \cdot log(\frac{AveRooms \cdot Population^{2}}{Me
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="math notranslate nohighlight">
-$ \frac{\partial}{\partial MedInc} ITExpr = \underbrace{-2\beta_0 \cdot log(\frac{AveRooms \cdot Population^{2}}{MedInc^{2} \cdot HouseAge^{2} \cdot AveBedrms^{2} \cdot AveOccup \cdot Longitude^{2}})(\frac{AveRooms \cdot Population^{2}}{MedInc^{3} \cdot HouseAge^{2} \cdot AveBedrms^{2} \cdot AveOccup \cdot Longitude^{2}})}_{\text{term 0 partial derivative}} + \underbrace{2\beta_1 \cdot log(\frac{MedInc^{2} \cdot AveBedrms \cdot Population^{2}}{HouseAge^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2}})(\frac{MedInc \cdot AveBedrms \cdot Population^{2}}{HouseAge^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2}})}_{\text{term 1 partial derivative}}$</div></div>
+<div class="math">
+<p><img src="_images/math/f73b2ebd5e92f5a787989129161fdcd278a821c4.png" alt="$ \frac{\partial}{\partial MedInc} ITExpr = \underbrace{2\beta_0 \cdot log(\frac{MedInc^{2} \cdot HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2}}{AveRooms^{2} \cdot Longitude^{2}})(\frac{MedInc \cdot HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2}}{AveRooms^{2} \cdot Longitude^{2}})}_{\text{term 0 partial derivative}} + \underbrace{1\beta_1 \cdot log(\frac{MedInc \cdot AveRooms^{2} \cdot AveOccup \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms \cdot Longitude^{2}})(\frac{AveRooms^{2} \cdot AveOccup \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms \cdot Longitude^{2}})}_{\text{term 1 partial derivative}} + \underbrace{2\beta_2 \cdot log(\frac{MedInc^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms^{2}})(\frac{MedInc \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms^{2}})}_{\text{term 2 partial derivative}} + \underbrace{-2\beta_3 \cdot log(\frac{AveRooms^{2} \cdot AveOccup}{MedInc^{2} \cdot HouseAge \cdot Latitude \cdot Longitude^{2}})(\frac{AveRooms^{2} \cdot AveOccup}{MedInc^{3} \cdot HouseAge \cdot Latitude \cdot Longitude^{2}})}_{\text{term 3 partial derivative}} + \underbrace{2\beta_4 \cdot log(\frac{MedInc^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{AveBedrms^{2} \cdot Longitude^{2}})(\frac{MedInc \cdot AveOccup^{2} \cdot Latitude^{2}}{AveBedrms^{2} \cdot Longitude^{2}})}_{\text{term 4 partial derivative}}$"/></p>
+</div></div>
 </div>
 <p>We can obtain feature importances using the Partial Effects and the <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <div class="nbinput docutils container">
@@ -811,7 +818,7 @@ $ \frac{\partial}{\partial MedInc} ITExpr = \underbrace{-2\beta_0 \cdot log(\fra
 </pre></div>
 </div>
 </div>
-</div>
+</section>
 
 
            </div>
