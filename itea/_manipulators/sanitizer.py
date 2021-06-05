@@ -23,14 +23,10 @@ def sanitize(expr):
     n_terms     = len(expr)
     unique_expr = []
 
-    for i in range(0, n_terms):        
-        fi, ti = expr[i]
-
+    for i, (fi, ti) in enumerate(expr):
         include=True
-        
-        for j in range(i+1, n_terms):
-            fj, tj = expr[j]
 
+        for _, (fj, tj) in enumerate(expr[i+1:]):
             if fi==fj and ti == tj:
                 include = False
                 break

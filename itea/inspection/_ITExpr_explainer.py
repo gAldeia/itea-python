@@ -513,28 +513,28 @@ class ITExpr_explainer():
             # plot interval 
             Xj_range = np.linspace(loval, hival, num_points)
 
-            for i, (fi, ni) in enumerate( self.itexpr.expr ):
-                intermediary_ni = ni.copy() 
+            for i, (fi, ti) in enumerate( self.itexpr.expr ):
+                intermediary_ti = ti.copy() 
 
                 # Let's take out the variable of interest to fix the 
                 # interaction at the mean value
-                intermediary_ni[j] = 0
+                intermediary_ti[j] = 0
 
                 cov_at_means = np.prod(
-                    np.power(X, intermediary_ni), axis=1).mean()
+                    np.power(X, intermediary_ti), axis=1).mean()
 
                 # calculating f'(g(x))
-                pi = self.tfuncs_dx[fi](np.power(Xj_range, ni[j])*cov_at_means)
+                pi = self.tfuncs_dx[fi](np.power(Xj_range, ti[j])*cov_at_means)
 
                 # g'(x)
-                pi_partialx = ni[j]*np.power(Xj_range, ni[j]-1)*(cov_at_means)
+                pi_partialx = ti[j]*np.power(Xj_range, ti[j]-1)*(cov_at_means)
 
                 # Chain rule f(g(x))' = f'(g(x))*g'(x).
                 at_the_means[j, :, i] = pi * pi_partialx
 
                 # Saving the term evaluation (will be used to estimate errors)
                 terms_evals[j, :, i] = \
-                    self.tfuncs[fi](np.power(Xj_range, ni[j])*cov_at_means)
+                    self.tfuncs[fi](np.power(Xj_range, ti[j])*cov_at_means)
 
         # ITExpr_classifier requires special treatment to evaluate the
         # derivatives, as mentioned in BaseITExpr.gradient documentation.

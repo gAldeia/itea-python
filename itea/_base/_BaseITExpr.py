@@ -126,17 +126,18 @@ class BaseITExpr(BaseEstimator):
             intercept = np.array(self.intercept_)
             
         str_terms = []
-        for w, (f_str, t) in zip(coefs.T, self.expr):
+        for w, (fi_str, ti) in zip(coefs.T, self.expr):
             if np.all(w == 0):
                 continue
             
             w_str = f"{w.round(places)}*"
 
-            t_str = " * ".join([f"placeholder_{i}" + (f"^{ti}" if ti!=1 else "")
-                for i, ti in enumerate(t) if ti!=0
+            t_str = " * ".join([
+                f"placeholder_{i}" + (f"^{t}" if t!=1 else "")
+                for i, t in enumerate(ti) if ti!=0
             ])
 
-            str_terms.append(f"{w_str}{f_str}({t_str})")
+            str_terms.append(f"{w_str}{fi_str}({t_str})")
 
         expr_str = term_separator.join(str_terms)
 
@@ -174,8 +175,8 @@ class BaseITExpr(BaseEstimator):
 
         Z = np.zeros( (len(X), self.n_terms) )
 
-        for i, (fi, ni) in enumerate( self.expr ):
-            Z[:, i] = self.tfuncs[fi]( np.prod(np.power(X, ni), axis=1) )
+        for i, (fi, ti) in enumerate( self.expr ):
+            Z[:, i] = self.tfuncs[fi]( np.prod(np.power(X, ti), axis=1) )
 
         return Z
 
@@ -299,11 +300,11 @@ class BaseITExpr(BaseEstimator):
 
             # evaluating the partial derivative w.r.t each variable
             g_partialx = np.zeros( (len(X), self.n_terms) )
-            for i, (fi, ni) in enumerate( self.expr ):
+            for i, (fi, ti) in enumerate( self.expr ):
         
-                pi = np.prod(np.power(X, ni), axis=1)
+                pi = np.prod(np.power(X, ti), axis=1)
 
-                pi_partialx = ni[j] * (pi)/X[:, j]
+                pi_partialx = ti[j] * (pi)/X[:, j]
 
                 g_partialx[:, i] = tfuncs_dx[fi](pi)*pi_partialx
 

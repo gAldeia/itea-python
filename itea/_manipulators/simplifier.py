@@ -87,12 +87,13 @@ def simplify_by_var(*, itexpr, X, **kwargs):
     """
 
     variances = []
-    for fi, ni in itexpr.expr:
-        term_eval = itexpr.tfuncs[fi]( np.prod(np.power(X, ni), axis=1) )
+    for fi, ti in itexpr.expr:
+        term_eval = itexpr.tfuncs[fi]( np.prod(np.power(X, ti), axis=1) )
         variances.append(np.var(term_eval))
 
     tot_variance = np.sum(variances)
     selected_terms = []
+    
     for i, v in enumerate(variances):
         if v/tot_variance >= VAR_THRESHOLD:
             selected_terms.append(i)

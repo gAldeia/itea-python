@@ -42,9 +42,9 @@ def _mutation_add(expr, expolim, tfuncs, nvars, random_state, **kwargs):
 
     randITGenerator = uniform(1, expolim, tfuncs, nvars, random_state)
 
-    newterm = next(randITGenerator)[0]
+    new_tierm = next(randITGenerator)[0]
     
-    return expr + [newterm]
+    return expr + [new_tierm]
 
 
 def _mutation_term(expr, expolim, tfuncs, nvars, random_state, **kwargs):
@@ -59,16 +59,16 @@ def _mutation_term(expr, expolim, tfuncs, nvars, random_state, **kwargs):
     indexStrength = random_state.randint(0, nvars)
     newStrength   = random_state.randint(expolim[0], expolim[1] + 1)
 
-    oldf, oldt = expr[indexTerm]
+    old_fi, old_ti = expr[indexTerm]
     
-    newt = oldt.copy()
-    newt[indexStrength] = newStrength
+    new_ti = old_ti.copy()
+    new_ti[indexStrength] = newStrength
     
-    if all(t == 0 for t in newt):    
+    if all(t == 0 for t in new_ti):    
         replacer = uniform(1, expolim, tfuncs, nvars, random_state)
-        newf, newt = next(replacer)[0]
+        new_fi, new_ti = next(replacer)[0]
 
-    return [expr[i] if i!= indexTerm else (oldf, newt)
+    return [expr[i] if i!= indexTerm else (old_fi, new_ti)
             for i in range(len(expr))]
 
 
@@ -84,18 +84,18 @@ def _mutation_interp(expr, expolim, tfuncs, nvars, random_state, **kwargs):
 
     fst_index, snd_index = random_state.randint(0, len(expr), size=2)
 
-    fstf, fstt = expr[fst_index]
-    sndt, sndt = expr[snd_index]
+    fst_fi, fst_ti = expr[fst_index]
+    snd_fi, snd_ti = expr[snd_index]
 
     # Avoiding values outside the expolim boundries
-    newt = [min(max(fstt[i] + sndt[i], expolim[0]), expolim[1])
+    new_ti = [min(max(fst_ti[i] + snd_ti[i], expolim[0]), expolim[1])
             for i in range(nvars)]
     
-    if all(t == 0 for t in newt):    
+    if all(t == 0 for t in new_ti):    
         replacer = uniform(1, expolim, tfuncs, nvars, random_state)
-        newf, newt = next(replacer)[0]
+        new_fi, new_ti = next(replacer)[0]
 
-    return expr + [(fstf, newt)]
+    return expr + [(fst_fi, new_ti)]
 
 
 def _mutation_intern(expr, expolim, tfuncs, nvars, random_state, **kwargs):
@@ -110,17 +110,17 @@ def _mutation_intern(expr, expolim, tfuncs, nvars, random_state, **kwargs):
 
     fst_index, snd_index = random_state.randint(0, len(expr), size=2)
 
-    fstf, fstt = expr[fst_index]
-    sndf, sndt = expr[snd_index]
+    fst_fi, fst_ti = expr[fst_index]
+    snd_fi, snd_ti = expr[snd_index]
 
-    newt = [min(max(fstt[i] - sndt[i], expolim[0]), expolim[1])
+    new_ti = [min(max(fst_ti[i] - snd_ti[i], expolim[0]), expolim[1])
             for i in range(nvars)]
     
-    if all(t == 0 for t in newt):    
+    if all(t == 0 for t in new_ti):    
         replacer = uniform(1, expolim, tfuncs, nvars, random_state)
-        newf, newt = next(replacer)[0]
+        new_fi, new_ti = next(replacer)[0]
 
-    return expr + [(fstf, newt)]
+    return expr + [(fst_fi, new_ti)]
 
 
 def mutate_individual(

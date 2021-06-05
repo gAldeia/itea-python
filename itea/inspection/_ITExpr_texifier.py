@@ -144,8 +144,8 @@ class ITExpr_texifier:
         for j in range(n_vars):
             latex_terms  = []
             for i, term in enumerate(itexpr.expr):
-                _, ni = term
-                term_dx = ni.copy()
+                _, ti = term
+                term_dx = ti.copy()
                 
                 term_dx[j] -= 1
 
@@ -155,7 +155,7 @@ class ITExpr_texifier:
 
                 latex_terms.append(term_wrapper(
                     i, 
-                    f'{ni[j]}\\beta_{i} \\cdot {outer_dx}{inner_dx}'
+                    f'{ti[j]}\\beta_{i} \\cdot {outer_dx}{inner_dx}'
                 ))
 
             str_it = term_separator.join(latex_terms)
