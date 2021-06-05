@@ -164,6 +164,12 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             itea after performing the evolution.
             Only after fitting the model that the attributes ``bestsol_``,
             ``fitness_`` and ``classes_`` will be available.
+
+        Raises
+        ------
+            ValueError
+                If one or more arguments would result in a invalid execution of
+                itea.
         """
 
         X, y = check_X_y(X, y)

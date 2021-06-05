@@ -287,6 +287,13 @@ plots and explanations.</p>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#itea.inspection.ITExpr_explainer" title="itea.inspection.ITExpr_explainer">ITExpr_explainer</a></p>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>NotFittedError</strong> – If the given <code class="docutils literal notranslate"><span class="pre">itexpr</span></code> is not fitted.</p></li>
+<li><p><strong>KeyError</strong> – If not all keys of <code class="docutils literal notranslate"><span class="pre">tfuncs</span></code> are contained
+    in the keys of <code class="docutils literal notranslate"><span class="pre">tfuncs_dx</span></code>.</p></li>
+</ul>
+</dd>
 </dl>
 </dd></dl>
 
@@ -323,6 +330,9 @@ importances. Available methods are: <code class="docutils literal notranslate"><
 or not.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">ax</span></code> or <code class="docutils literal notranslate"><span class="pre">target</span></code> has invalid values.</p>
+</dd>
 </dl>
 <p class="rubric">Notes</p>
 <p>This plot is heavily inspired by the <a class="reference external" href="https://shap.readthedocs.io/en/latest/example_notebooks/api_examples/plots/bar.html">bar plot from the SHAP package</a></p>
@@ -357,6 +367,9 @@ given axis.</p></li>
 <li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot shoud be displayed
 or not.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">ax</span></code> has invalid values.</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -405,6 +418,13 @@ elements as <code class="docutils literal notranslate"><span class="pre">feature
 interval on the y axis.</p></li>
 <li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot shoud be displayed
 or not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">ax</span></code> or <code class="docutils literal notranslate"><span class="pre">target</span></code> has invalid values.</p></li>
+<li><p><strong>IndexError</strong> – If one or more specified features are not in
+    <code class="docutils literal notranslate"><span class="pre">explainer.itexpr</span></code> labels.</p></li>
 </ul>
 </dd>
 </dl>

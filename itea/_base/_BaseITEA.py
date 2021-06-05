@@ -146,6 +146,12 @@ class BaseITEA(BaseEstimator):
         It is important to notice that the check must be made when fitting and
         should raise errors to stop the program flow if any problem is found.
         The scikit recomendation is to never do checks on __init__.
+
+        Raises
+        ------
+            ValueError
+                If one or more arguments would result in a invalid execution of
+                itea.
         """
         
         if self.expolim[1] < self.expolim[0]:

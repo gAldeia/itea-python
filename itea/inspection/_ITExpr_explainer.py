@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.1
-# Last modified: 06-02-2021 by Guilherme Aldeia
+# Version: 1.0.2
+# Last modified: 06-04-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 from jax                      import grad, vmap
 from sklearn.utils.validation import check_array, check_is_fitted
 from matplotlib.gridspec      import GridSpecFromSubplotSpec 
+
+from sklearn.exceptions import NotFittedError
 
 
 class ITExpr_explainer():
@@ -51,10 +53,19 @@ class ITExpr_explainer():
     def _check_args(self):
         """Method to check consistency between tfuncs and tfuncs_dx,
         and verify if the itexpr passed to the constructor was alreay fitted.
+
+        Raises
+        ------
+            NotFittedError
+                If the given ``itexpr`` is not fitted.
+
+            KeyError
+                If not all keys of ``tfuncs`` are contained
+                in the keys of ``tfuncs_dx``.
         """
         
         if not self.itexpr._is_fitted:
-            raise ValueError("The itexpr was not fitted.")
+            raise NotFittedError("The itexpr was not fitted.")
 
         # Creaing the partial derivatives if none was given.
         if not isinstance(self.tfuncs_dx, dict):
@@ -94,6 +105,16 @@ class ITExpr_explainer():
         self : ITExpr_explainer
             explainer with calculated covariance matrix, ready to generate
             plots and explanations.
+
+        Raises
+        ------
+            NotFittedError
+                If the given ``itexpr`` is not fitted.
+
+            KeyError
+                If not all keys of ``tfuncs`` are contained
+                in the keys of ``tfuncs_dx``.
+
         """
 
         X = check_array(X)
@@ -316,6 +337,11 @@ class ITExpr_explainer():
         show : bool, default=True
             boolean value indicating if the generated plot shoud be displayed
             or not.
+
+        Raises
+        ------
+            ValueError
+                If ``ax`` or ``target`` has invalid values.
 
         Notes
         -----
@@ -668,6 +694,15 @@ class ITExpr_explainer():
             boolean value indicating if the generated plot shoud be displayed
             or not.
 
+        Raises
+        ------
+            ValueError
+                If ``ax`` or ``target`` has invalid values.
+
+            IndexError
+                If one or more specified features are not in
+                ``explainer.itexpr`` labels.
+
         Notes
         -----
         This plot is heavily inspired by the `Partial Dependency Plot from 
@@ -855,6 +890,11 @@ class ITExpr_explainer():
         show : bool, default=True
             boolean value indicating if the generated plot shoud be displayed
             or not.
+
+        Raises
+        ------
+            ValueError
+                If ``ax`` has invalid values.
 
         Notes
         -----
