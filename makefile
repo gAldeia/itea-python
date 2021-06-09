@@ -24,11 +24,14 @@ doc:
 
 build-dist: 
 	rm -r ./dist/*.whl
+	rm -r ./dist/*.egg
+	
 	${PYTHON} -B setup.py bdist_wheel
 	${PYTHON} -B setup.py install
 	${PYTHON} -B -m pip install ./dist/*.whl
 
 clean:
 	rm -r .pytest_cache
+	rm `find ./ -name '__pycache__'` -rf
 
 # python3 -m twine upload --repository testpypi dist/*

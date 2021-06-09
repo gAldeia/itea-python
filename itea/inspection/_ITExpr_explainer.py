@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.2
-# Last modified: 06-04-2021 by Guilherme Aldeia
+# Version: 1.0.3
+# Last modified: 06-09-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -401,8 +401,7 @@ class ITExpr_explainer():
         features_in_others = 0
         tot_importances = np.sum(importances)
         for i in order[::-1]:
-            if (
-                np.sum(others + np.sum(importances, axis=0)[i])/tot_importances
+            if (np.sum(others + np.sum(importances, axis=0)[i])/tot_importances
             ) < grouping_threshold:
 
                 others[:, 0] += importances[:, i]
@@ -681,7 +680,7 @@ class ITExpr_explainer():
             axis to generate the plot. If none is given, then a new axis is
             created. If is a single axis, the plot will be drawn within the
             given axis. If ax is a list, then it must have the same number of
-            elements as ``features``.
+            elements in ``features``.
 
         show_err : bool, default=True
             boolean variable indicating if the standard error should be ploted.
@@ -733,8 +732,8 @@ class ITExpr_explainer():
 
         features = np.array([features]).flatten()
         if all(isinstance(n, str) for n in features):   
-
             features = [list(self.itexpr.labels).index(f) for f in features]
+
         elif all(np.isfinite(f) for f in features):
             if any(not (0 <= f < X.shape[1]) for f in features):
                 raise IndexError(
@@ -817,9 +816,7 @@ class ITExpr_explainer():
                             standard_err[target_i, feature_idx, :])]
                     
                     axi.fill_between(
-                        Xj_range, low_bound, upper_bound,
-                        **fill_kw
-                    )
+                        Xj_range, low_bound, upper_bound, **fill_kw)
                 
             if self.itexpr.labels is not None and len(self.itexpr.labels)>0:
                 axi.set_xlabel(self.itexpr.labels[feature_idx])
@@ -949,25 +946,31 @@ class ITExpr_explainer():
 
             x_axis = x_axis[:-1]
                 
+        # Avoid division by zero by already discarding some features
         global_importances = \
             global_importances[self.selected_features(idx=True), :]
 
         labels = self.selected_features()
+
+        # Number of features that were not selected (we'll use it to make
+        # the number of features in others match the number of features in 
+        # the dataset)
+        left_out = self.X_.shape[1] - len(labels)
 
         # order is going from the highest to the smallest important features
         order = np.argsort(-np.sum(global_importances, axis=1))
 
         # grouping the features that have small contribution
         others = np.zeros_like(global_importances[0])
-        features_in_others = 0
-        tot_area = grouping_threshold*100*num_points
+        features_in_others = left_out
+        thresold_area = grouping_threshold*100*num_points
 
         for i in order[::-1]:
-            if np.sum(others + global_importances[i, :]) < tot_area:
+            if np.sum(others + global_importances[i, :]) < thresold_area:
                 others += global_importances[i, :]
                 features_in_others += 1
 
-        if features_in_others > 1:
+        if features_in_others > 0:
             global_importances = np.vstack((
                 global_importances[order[:len(order)-features_in_others]],
                 others

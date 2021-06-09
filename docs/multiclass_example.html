@@ -101,10 +101,15 @@
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Examples:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="regression_example.html">California housing regression</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Iris classification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Iris classification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Creating-and-fitting-an-ITEA_classifier">Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Inspecting-the-results">Inspecting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Explaining-the-IT-expression-using-Partial-Effects">Explaining the IT expression using Partial Effects</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="agnostic_explainers.html">Using agnostic explainers</a></li>
 </ul>
 
@@ -476,6 +481,8 @@ div.rendered_html tbody tr:hover {
 <p>This data set contains 3 different classes of Iris flowers and have 4 features: sepal width, sepal length, petal width and petal length.</p>
 <p>One example of each flower is illustred in the figure below.</p>
 <img alt="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" src="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" />
+<section id="Creating-and-fitting-an-ITEA_classifier">
+<h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_classifier" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -506,7 +513,7 @@ div.rendered_html tbody tr:hover {
 <span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
     <span class="n">gens</span>            <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
     <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">),</span>
     <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
@@ -523,18 +530,21 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.37    0.6306          0.93    0min38seg
-5        0.93    0.93    0.93    0min53seg
-10       0.93    0.93    0.93    0min48seg
-15       0.93    0.93    0.93    0min37seg
-20       0.93    0.93    0.93    0min30seg
+0        0.37    0.7465999999999999      0.93    0min42seg
+5        0.93    0.93    0.93    0min47seg
+10       0.93    0.93    0.93    0min42seg
+15       0.93    0.93    0.93    0min36seg
+20       0.93    0.93    0.93    0min31seg
 25       0.93    0.93    0.93    0min26seg
-30       0.93    0.93    0.93    0min21seg
+30       0.93    0.93    0.93    0min20seg
 35       0.93    0.93    0.93    0min15seg
-40       0.93    0.93    0.93    0min10seg
+40       0.93    0.93    0.93    0min11seg
 45       0.93    0.93    0.93    0min5seg
 </pre></div></div>
 </div>
+</section>
+<section id="Inspecting-the-results">
+<h2>Inspecting the results<a class="headerlink" href="#Inspecting-the-results" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is an fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -563,7 +573,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span>
     <span class="n">y_test</span><span class="p">,</span>
-    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">)[</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)],</span>
+    <span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span>
     <span class="n">target_names</span><span class="o">=</span><span class="n">targets</span>
 <span class="p">))</span>
 </pre></div>
@@ -625,10 +635,10 @@ weighted avg       0.92      0.92      0.92        50
       <th>coef</th>
       <th>func</th>
       <th>strengths</th>
-      <th>coef stderr.</th>
-      <th>mean pairwise disentanglement</th>
-      <th>mean mutual information</th>
-      <th>prediction var.</th>
+      <th>coef\nstderr.</th>
+      <th>mean pairwise\ndisentanglement</th>
+      <th>mean mutual\ninformation</th>
+      <th>prediction\nvar.</th>
     </tr>
   </thead>
   <tbody>
@@ -656,6 +666,9 @@ weighted avg       0.92      0.92      0.92        50
 </table>
 </div></div>
 </div>
+</section>
+<section id="Explaining-the-IT-expression-using-Partial-Effects">
+<h2>Explaining the IT expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
 <p>Now let’s create an instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <p>We can calculate feature importances with Partial Effects (PE) or approximate the Shapley values using PE.</p>
 <div class="nbinput docutils container">
@@ -683,7 +696,7 @@ weighted avg       0.92      0.92      0.92        50
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/multiclass_example_11_0.png" src="_images/multiclass_example_11_0.png" />
+<img alt="_images/multiclass_example_12_0.png" src="_images/multiclass_example_12_0.png" />
 </div>
 </div>
 <p>We can explain a single instance as well:</p>
@@ -707,7 +720,7 @@ weighted avg       0.92      0.92      0.92        50
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/multiclass_example_13_0.png" src="_images/multiclass_example_13_0.png" />
+<img alt="_images/multiclass_example_14_0.png" src="_images/multiclass_example_14_0.png" />
 </div>
 </div>
 <p>Instead of looking into the average Partial Effects, we can plot the Partial Effects for each variable when its co-variables are fixed at the means.</p>
@@ -738,7 +751,7 @@ weighted avg       0.92      0.92      0.92        50
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/multiclass_example_15_0.png" src="_images/multiclass_example_15_0.png" />
+<img alt="_images/multiclass_example_16_0.png" src="_images/multiclass_example_16_0.png" />
 </div>
 </div>
 <p>We can share the y axis and show errors hatchs:</p>
@@ -769,9 +782,10 @@ weighted avg       0.92      0.92      0.92        50
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/multiclass_example_17_0.png" src="_images/multiclass_example_17_0.png" />
+<img alt="_images/multiclass_example_18_0.png" src="_images/multiclass_example_18_0.png" />
 </div>
 </div>
+</section>
 </section>
 
 

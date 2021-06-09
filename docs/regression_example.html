@@ -101,9 +101,14 @@
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples</span></p>
+<p class="caption"><span class="caption-text">Examples:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">California housing regression</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">California housing regression</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Creating-and-fitting-an-ITEA_regressor">Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Inspecting-the-results">Inspecting the results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Explaining-the-IT-expression-using-Partial-Effects">Explaining the IT expression using Partial Effects</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="agnostic_explainers.html">Using agnostic explainers</a></li>
 </ul>
@@ -470,6 +475,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>The California Housing data set contains 8 features.</p>
 <p>In this notebook, we’ll provide the transformations functions and its derivatives, instead of using the itea feature of extracting the derivatives using jax.</p>
+<section id="Creating-and-fitting-an-ITEA_regressor">
+<h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_regressor" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -511,7 +518,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">labels</span>       <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
     <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
     <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_var&#39;</span>
-<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -521,16 +528,47 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.8262621327388944      1.1159122831826924      1.153923613058111       1min40seg
-10       0.804700559967339       0.8463977749705149      0.9020893690442627      3min11seg
-20       0.7795362093991466      0.7941148504337509      0.8738719900021644      2min17seg
-30       0.7733398229329143      0.7893570197862658      0.8628567737570586      1min33seg
-40       0.7347068293819388      0.7563216163171014      0.8177084431749616      0min52seg
+0        0.828697204387871       1.1163040338013304      1.153675314530364       0min56seg
+10       0.7903571645539493      0.8258082130179909      0.9147393528349665      2min3seg
+20       0.7741353544571407      0.7826882136239719      0.815990824243841       2min13seg
+30       0.7751833470732888      0.7793975693019894      0.8089621701482773      1min37seg
+40       0.7698501470821243      0.7809081037138008      0.8270478815796867      0min43seg
 </pre></div></div>
+</div>
+</section>
+<section id="Inspecting-the-results">
+<h2>Inspecting the results<a class="headerlink" href="#Inspecting-the-results" title="Permalink to this headline">¶</a></h2>
+<p>We can see the convergence of the fitness, number of terms or tree complexity by using the <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code>, a inspector class focused on the <code class="docutils literal notranslate"><span class="pre">ITEA</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">summarizer</span> <span class="o">=</span> <span class="n">ITEA_summarizer</span><span class="p">(</span><span class="n">itea</span><span class="o">=</span><span class="n">reg</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">summarizer</span><span class="o">.</span><span class="n">plot_convergence</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">,</span> <span class="s1">&#39;n_terms&#39;</span><span class="p">,</span> <span class="s1">&#39;complexity&#39;</span><span class="p">],</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span>
+    <span class="n">show</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/regression_example_7_0.png" src="_images/regression_example_7_0.png" />
+</div>
 </div>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">reg</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is an fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> ready to be used. Lets see the final expression and the execution time.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -548,18 +586,18 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="highlight"><pre>
 
 Final expression:
- 0.512*log(MedInc^2 * HouseAge^2 * AveRooms^-2 * AveBedrms * AveOccup^2 * Latitude^2 * Longitude^-2) +
--16.002*log(MedInc * HouseAge^-2 * AveRooms^2 * AveBedrms^-1 * AveOccup * Latitude^2 * Longitude^-2) +
-16.864*log(MedInc^2 * HouseAge^-2 * AveRooms^2 * AveBedrms^-2 * AveOccup^2 * Latitude^2) +
--0.855*log(MedInc^-2 * HouseAge^-1 * AveRooms^2 * AveOccup * Latitude^-1 * Longitude^-2) +
--9.33*log(MedInc^2 * AveBedrms^-2 * AveOccup^2 * Latitude^2 * Longitude^-2) +
--190.172
+ 0.618*log(MedInc^-2 * HouseAge^0 * AveRooms^-2 * AveBedrms^2 * Population^0 * AveOccup^2 * Latitude^-2 * Longitude^2) +
+3.283*log(MedInc^2 * HouseAge * AveRooms^-1 * AveBedrms^-1 * Population^0 * AveOccup^-1 * Latitude^-2 * Longitude^2) +
+0.191*log(MedInc^-1 * HouseAge^-2 * AveRooms * AveBedrms * Population^2 * AveOccup^-1 * Latitude * Longitude^-2) +
+-1.459*log(MedInc^2 * HouseAge^2 * AveRooms^-2 * AveBedrms^-2 * Population^0 * AveOccup^-1 * Latitude^-2 * Longitude^-2) +
+-0.18*log(MedInc * HouseAge^-2 * AveRooms^-2 * AveBedrms^-2 * Population^2 * AveOccup^0 * Latitude^-2 * Longitude^0) +
+-33.276
 
-Elapsed time: 246.43351793289185
+Elapsed time: 209.73841261863708
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -574,12 +612,12 @@ Elapsed time: 246.43351793289185
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/regression_example_7_0.png" src="_images/regression_example_7_0.png" />
+<img alt="_images/regression_example_10_0.png" src="_images/regression_example_10_0.png" />
 </div>
 </div>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code> to see informations for each term.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -616,69 +654,69 @@ Elapsed time: 246.43351793289185
       <th>coef</th>
       <th>func</th>
       <th>strengths</th>
-      <th>coef stderr.</th>
-      <th>mean pairwise disentanglement</th>
-      <th>mean mutual information</th>
-      <th>prediction var.</th>
+      <th>coef\nstderr.</th>
+      <th>mean pairwise\ndisentanglement</th>
+      <th>mean mutual\ninformation</th>
+      <th>prediction\nvar.</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.512</td>
+      <td>0.618</td>
       <td>log</td>
-      <td>[2, 2, -2, 1, 0, 2, 2, -2]</td>
-      <td>0.016</td>
-      <td>0.240</td>
-      <td>0.297</td>
-      <td>0.507</td>
+      <td>[-2, 0, -2, 2, 0, 2, -2, 2]</td>
+      <td>0.019</td>
+      <td>0.124</td>
+      <td>0.266</td>
+      <td>0.804</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-16.002</td>
+      <td>3.283</td>
       <td>log</td>
-      <td>[1, -2, 2, -1, 0, 1, 2, -2]</td>
-      <td>0.306</td>
-      <td>0.372</td>
-      <td>0.605</td>
-      <td>650.461</td>
+      <td>[2, 1, -1, -1, 0, -1, -2, 2]</td>
+      <td>0.057</td>
+      <td>0.365</td>
+      <td>0.507</td>
+      <td>12.562</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>16.864</td>
+      <td>0.191</td>
       <td>log</td>
-      <td>[2, -2, 2, -2, 0, 2, 2, 0]</td>
-      <td>0.308</td>
-      <td>0.380</td>
-      <td>0.633</td>
-      <td>1100.265</td>
+      <td>[-1, -2, 1, 1, 2, -1, 1, -2]</td>
+      <td>0.01</td>
+      <td>0.320</td>
+      <td>0.480</td>
+      <td>0.154</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>-0.855</td>
+      <td>-1.459</td>
       <td>log</td>
-      <td>[-2, -1, 2, 0, 0, 1, -1, -2]</td>
-      <td>0.009</td>
-      <td>0.190</td>
-      <td>0.278</td>
-      <td>0.733</td>
+      <td>[2, 2, -2, -2, 0, -1, -2, -2]</td>
+      <td>0.03</td>
+      <td>0.328</td>
+      <td>0.495</td>
+      <td>5.245</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-9.33</td>
+      <td>-0.18</td>
       <td>log</td>
-      <td>[2, 0, 0, -2, 0, 2, 2, -2]</td>
-      <td>0.159</td>
-      <td>0.308</td>
-      <td>0.363</td>
-      <td>119.373</td>
+      <td>[1, -2, -2, -2, 2, 0, -2, 0]</td>
+      <td>0.008</td>
+      <td>0.180</td>
+      <td>0.405</td>
+      <td>0.165</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>-190.172</td>
+      <td>-33.276</td>
       <td>intercept</td>
       <td>---</td>
-      <td>3.293</td>
+      <td>0.655</td>
       <td>0.000</td>
       <td>0.000</td>
       <td>0.000</td>
@@ -689,7 +727,7 @@ Elapsed time: 246.43351793289185
 </div>
 <p>By using the <code class="docutils literal notranslate"><span class="pre">ITExpr_texifier</span></code>, we can create formatted LaTeX strings of the final expression and its derivatives.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -708,11 +746,11 @@ Elapsed time: 246.43351793289185
 </div>
 <div class="output_area docutils container">
 <div class="math">
-<p><img src="_images/math/8c4bf465cb7ea6e4cf4992a0bc04416d5776feae.png" alt="$ ITExpr = \underbrace{\beta_0 \cdot log(\frac{MedInc^{2} \cdot HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2}}{AveRooms^{2} \cdot Longitude^{2}})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(\frac{MedInc \cdot AveRooms^{2} \cdot AveOccup \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms \cdot Longitude^{2}})}_{\text{term 1}} + \underbrace{\beta_2 \cdot log(\frac{MedInc^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms^{2}})}_{\text{term 2}} + \underbrace{\beta_3 \cdot log(\frac{AveRooms^{2} \cdot AveOccup}{MedInc^{2} \cdot HouseAge \cdot Latitude \cdot Longitude^{2}})}_{\text{term 3}} + \underbrace{\beta_4 \cdot log(\frac{MedInc^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{AveBedrms^{2} \cdot Longitude^{2}})}_{\text{term 4}} + I_0$"/></p>
+<p><img src="_images/math/ddb15d850c269ceaacb07018641f7a51c198b9f3.png" alt="$ ITExpr = \underbrace{\beta_0 \cdot log(\frac{AveBedrms^{2} \cdot AveOccup^{2} \cdot Longitude^{2}}{MedInc^{2} \cdot AveRooms^{2} \cdot Latitude^{2}})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(\frac{MedInc^{2} \cdot HouseAge \cdot Longitude^{2}}{AveRooms \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2}})}_{\text{term 1}} + \underbrace{\beta_2 \cdot log(\frac{AveRooms \cdot AveBedrms \cdot Population^{2} \cdot Latitude}{MedInc \cdot HouseAge^{2} \cdot AveOccup \cdot Longitude^{2}})}_{\text{term 2}} + \underbrace{\beta_3 \cdot log(\frac{MedInc^{2} \cdot HouseAge^{2}}{AveRooms^{2} \cdot AveBedrms^{2} \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2}})}_{\text{term 3}} + \underbrace{\beta_4 \cdot log(\frac{MedInc \cdot Population^{2}}{HouseAge^{2} \cdot AveRooms^{2} \cdot AveBedrms^{2} \cdot Latitude^{2}})}_{\text{term 4}} + I_0$"/></p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -734,12 +772,15 @@ Elapsed time: 246.43351793289185
 </div>
 <div class="output_area docutils container">
 <div class="math">
-<p><img src="_images/math/f73b2ebd5e92f5a787989129161fdcd278a821c4.png" alt="$ \frac{\partial}{\partial MedInc} ITExpr = \underbrace{2\beta_0 \cdot log(\frac{MedInc^{2} \cdot HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2}}{AveRooms^{2} \cdot Longitude^{2}})(\frac{MedInc \cdot HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2}}{AveRooms^{2} \cdot Longitude^{2}})}_{\text{term 0 partial derivative}} + \underbrace{1\beta_1 \cdot log(\frac{MedInc \cdot AveRooms^{2} \cdot AveOccup \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms \cdot Longitude^{2}})(\frac{AveRooms^{2} \cdot AveOccup \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms \cdot Longitude^{2}})}_{\text{term 1 partial derivative}} + \underbrace{2\beta_2 \cdot log(\frac{MedInc^{2} \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms^{2}})(\frac{MedInc \cdot AveRooms^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{HouseAge^{2} \cdot AveBedrms^{2}})}_{\text{term 2 partial derivative}} + \underbrace{-2\beta_3 \cdot log(\frac{AveRooms^{2} \cdot AveOccup}{MedInc^{2} \cdot HouseAge \cdot Latitude \cdot Longitude^{2}})(\frac{AveRooms^{2} \cdot AveOccup}{MedInc^{3} \cdot HouseAge \cdot Latitude \cdot Longitude^{2}})}_{\text{term 3 partial derivative}} + \underbrace{2\beta_4 \cdot log(\frac{MedInc^{2} \cdot AveOccup^{2} \cdot Latitude^{2}}{AveBedrms^{2} \cdot Longitude^{2}})(\frac{MedInc \cdot AveOccup^{2} \cdot Latitude^{2}}{AveBedrms^{2} \cdot Longitude^{2}})}_{\text{term 4 partial derivative}}$"/></p>
+<p><img src="_images/math/300758d7f886159f4f1c3e6d9f189c03fa6f5e10.png" alt="$ \frac{\partial}{\partial MedInc} ITExpr = \underbrace{-2\beta_0 \cdot log'(\frac{AveBedrms^{2} \cdot AveOccup^{2} \cdot Longitude^{2}}{MedInc^{2} \cdot AveRooms^{2} \cdot Latitude^{2}})(\frac{AveBedrms^{2} \cdot AveOccup^{2} \cdot Longitude^{2}}{MedInc^{3} \cdot AveRooms^{2} \cdot Latitude^{2}})}_{\text{term 0 partial derivative}} + \underbrace{2\beta_1 \cdot log'(\frac{MedInc^{2} \cdot HouseAge \cdot Longitude^{2}}{AveRooms \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2}})(\frac{MedInc \cdot HouseAge \cdot Longitude^{2}}{AveRooms \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2}})}_{\text{term 1 partial derivative}} + \underbrace{-1\beta_2 \cdot log'(\frac{AveRooms \cdot AveBedrms \cdot Population^{2} \cdot Latitude}{MedInc \cdot HouseAge^{2} \cdot AveOccup \cdot Longitude^{2}})(\frac{AveRooms \cdot AveBedrms \cdot Population^{2} \cdot Latitude}{MedInc^{2} \cdot HouseAge^{2} \cdot AveOccup \cdot Longitude^{2}})}_{\text{term 2 partial derivative}} + \underbrace{2\beta_3 \cdot log'(\frac{MedInc^{2} \cdot HouseAge^{2}}{AveRooms^{2} \cdot AveBedrms^{2} \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2}})(\frac{MedInc \cdot HouseAge^{2}}{AveRooms^{2} \cdot AveBedrms^{2} \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2}})}_{\text{term 3 partial derivative}} + \underbrace{1\beta_4 \cdot log'(\frac{MedInc \cdot Population^{2}}{HouseAge^{2} \cdot AveRooms^{2} \cdot AveBedrms^{2} \cdot Latitude^{2}})(\frac{Population^{2}}{HouseAge^{2} \cdot AveRooms^{2} \cdot AveBedrms^{2} \cdot Latitude^{2}})}_{\text{term 4 partial derivative}}$"/></p>
 </div></div>
 </div>
+</section>
+<section id="Explaining-the-IT-expression-using-Partial-Effects">
+<h2>Explaining the IT expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
 <p>We can obtain feature importances using the Partial Effects and the <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -759,12 +800,12 @@ Elapsed time: 246.43351793289185
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/regression_example_14_0.png" src="_images/regression_example_14_0.png" />
+<img alt="_images/regression_example_17_0.png" src="_images/regression_example_17_0.png" />
 </div>
 </div>
 <p>The Partial Effects at the Means can help understand how the contribution of each variable changes according to its values, when their covariables are fixed at the means.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -789,12 +830,12 @@ Elapsed time: 246.43351793289185
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/regression_example_16_0.png" src="_images/regression_example_16_0.png" />
+<img alt="_images/regression_example_19_0.png" src="_images/regression_example_19_0.png" />
 </div>
 </div>
 <p>Finally, we can also plot the mean relative importances of each feature by calculating the average Partial Effect for each interval when the output is discretized.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -806,18 +847,10 @@ Elapsed time: 246.43351793289185
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/regression_example_18_0.png" src="_images/regression_example_18_0.png" />
+<img alt="_images/regression_example_21_0.png" src="_images/regression_example_21_0.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
-</div>
-</div>
+</section>
 </section>
 
 

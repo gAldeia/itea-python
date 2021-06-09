@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-31-2021 by Guilherme Aldeia
+# Version: 1.0.2
+# Last modified: 06-09-2021 by Guilherme Aldeia
 
 
 """ITExpr_texifier class.
@@ -10,13 +10,10 @@
 
 import numpy as np
 
-from sklearn.utils.validation import check_array, check_is_fitted
-
 
 class ITExpr_texifier:
     """class containing static methods to create LaTeX representations of the
-    expression, and a method to automatically generate a pdf file reporting
-    several interpretability plots for the expression.
+    expression.
     """
     
     @staticmethod
@@ -144,21 +141,25 @@ class ITExpr_texifier:
         for j in range(n_vars):
             latex_terms  = []
             for i, term in enumerate(itexpr.expr):
-                _, ti = term
+                fi, ti = term
                 term_dx = ti.copy()
                 
                 term_dx[j] -= 1
 
                 # Chain rule
                 inner_dx = ITExpr_texifier._term_frac( ('', term_dx) )
-                outer_dx = ITExpr_texifier._term_frac(term)
+                outer_dx = ITExpr_texifier._term_frac( (f'{fi}\'', ti))
 
-                latex_terms.append(term_wrapper(
-                    i, 
-                    f'{ti[j]}\\beta_{i} \\cdot {outer_dx}{inner_dx}'
-                ))
+                if ti[j] != 0:
+                    latex_terms.append(term_wrapper(
+                        i, 
+                        f'{ti[j]}\\beta_{i} \\cdot {outer_dx}{inner_dx}'
+                    ))
 
-            str_it = term_separator.join(latex_terms)
+            if len(latex_terms) > 0:
+                str_it = term_separator.join(latex_terms)
+            else:
+                str_it = '0.0'
 
             if len(itexpr.labels)>0:
                 for i, l in enumerate(itexpr.labels):
@@ -169,47 +170,3 @@ class ITExpr_texifier:
             latex_derivatives.append(str_it)
 
         return latex_derivatives
-
-
-    def __init__(self, *, itexpr):
-        """Constructor method.
-
-        Parameters
-        ----------
-        itexpr : ITExpr_classifier or ITExpr_regressor
-        """
-
-        self.itexpr = itexpr
-
-
-    def fit(self, X, y):
-        """Fit method to store the data used in the training of the given
-        itexpr instance.
-
-        Parameters
-        ----------
-        X : array-like of shape (n_samples, n_features)
-            data used to train the itexpr model.
-
-        y : array-like of shape (n_samples, )
-            target data used to train the itexpr model.
-
-        Returns
-        -------
-        self : ITExpr_texifier
-        """
-
-        X = check_array(X)
-        
-        self.X_ = X
-        self.y_ = y
-
-
-    def autoreport():      
-        """automatically generate a pdf using the methods implemented in
-        ``ITExpr_inspector``, ``ITExpr_explainer`` and ``ITExpr_texifier``.
-
-        TODO.
-        """
-
-        check_is_fitted(self)

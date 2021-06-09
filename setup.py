@@ -8,7 +8,7 @@ with open(path.join(root, 'README.md'), encoding='utf-8') as f:
 setup(
     name             = "itea",
     packages         = find_packages(include=['itea', 'itea.*']),
-    version          = "1.0.7",
+    version          = "1.0.52",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
     long_description = long_description,
@@ -22,7 +22,8 @@ setup(
         "pandas",
         "jax",
         "jaxlib",
-        "scipy"
+        "scipy",
+        "PyLaTeX"
     ],
     python_requires = '>=3',
     setup_requires  = ["pytest-runner", "coverage", "coverage-badge"],

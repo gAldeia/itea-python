@@ -1,9 +1,16 @@
+===================
 itea.classification
 ===================
+
+.. automodule:: itea.classification
+
+**Sub-module contents:**
 
 .. contents:: :local:
    :depth: 3
 
+
+---------------
 
 ITEA_classifier
 ---------------
@@ -16,6 +23,8 @@ For a more detailed description of the arguments, check the
    :undoc-members:
    :show-inheritance:
 
+
+-----------------
 
 ITExpr_classifier
 -----------------

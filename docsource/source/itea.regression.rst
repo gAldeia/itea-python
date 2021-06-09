@@ -1,9 +1,16 @@
+===============
 itea.regression
 ===============
+
+.. automodule:: itea.regression
+
+**Sub-module contents:**
 
 .. contents:: :local:
    :depth: 3
 
+
+--------------
 
 ITEA_regressor
 --------------
@@ -16,6 +23,8 @@ For a more detailed description of the arguments, check the
    :undoc-members:
    :show-inheritance: 
 
+
+----------------
 
 ITExpr_regressor
 ----------------

@@ -247,11 +247,11 @@ class ITExpr_inspector():
         mutual_info  = self._continuous_mutual_info() + [0.0]
         
         return {
-            'coef'                          : coefs,
-            'func'                          : funcs,
-            'strengths'                     : strengths, 
-            'coef stderr.'                  : self._coef_stderr(),
-            'mean pairwise disentanglement' : disentangles,
-            'mean mutual information'       : mutual_info,
-            'prediction var.'               : self._pred_var(),
+            'coef'                           : coefs,
+            'func'                           : funcs,
+            'strengths'                      : strengths, 
+            'coef\nstderr.'                  : self._coef_stderr(),
+            'mean pairwise\ndisentanglement' : disentangles,
+            'mean mutual\ninformation'       : mutual_info,
+            'prediction\nvar.'               : self._pred_var(),
         }

@@ -182,13 +182,15 @@ class BaseITEA(BaseEstimator):
 
             self.tfuncs['id'] = lambda x: x
 
-        if (len(self.labels) > 0) and (len(self.labels) != len(X[0])):
-            warnings.warn("The labels vector is not empty, and also does not "
-            "have the same length as the number of variables in X. labels "
+        self.labels = np.array([self.labels]).flatten()
+
+        if len(self.labels) != len(X[0]):
+            warnings.warn("The labels vector does not have the same length as "
+            "the number of variables in X (or was not provided). labels "
             f"has length {len(self.labels)}, and X has {len(X[0])} variables. "
-            "labels will be ignored.")
+            "labels will be generated as [x_0, x_1, ...].")
             
-            self.labels = []
+            self.labels = [f'x_{i}' for i in range(len(X[0]))]
 
 
     def _create_population(

@@ -36,7 +36,7 @@ of the estimators follows their guidelines.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Examples
+   :caption: Examples:
 
    regression_example
    multiclass_example

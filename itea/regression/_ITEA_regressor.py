@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-30-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-09-2021 by Guilherme Aldeia
 
 
 """Specialization of the base class BaseITEA for the classification task.
@@ -169,7 +169,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         self.bestsol_ = self._evolve(
             X, y, self.itexpr_class, self.greater_is_better)
         
-        self._fitness = self.bestsol_._fitness
+        self.fitness_ = self.bestsol_._fitness
 
         self._explain_bestsol(self.bestsol_, X, y)
 
