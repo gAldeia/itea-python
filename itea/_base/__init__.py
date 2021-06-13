@@ -7,7 +7,7 @@
 """Interaction Transformation Base classes
 
 Implementation of two base classes to be inherited and specialized for each
-regression and classification tasks.
+regression and classification task.
 
 This sub-module does not export any of the implementations, since it is intended
 for internal usage.

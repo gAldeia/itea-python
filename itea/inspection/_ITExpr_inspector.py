@@ -24,11 +24,11 @@ class ITExpr_inspector():
     
     Based on a more statistical approach, this class 
     implements methods to measure the quality of the final expression by
-    calculating informations between individual terms.
+    calculating information between individual terms.
     """
 
     def __init__(self, *, itexpr, tfuncs):
-        """Constructur method.
+        """Constructor method.
         
         Parameters
         ----------
@@ -60,7 +60,7 @@ class ITExpr_inspector():
         Returns
         -------
         self : ITExpr_inspector
-            inspector with calculated covariance matrix.
+            inspector with the calculated covariance matrix.
         """
 
         X = check_array(X)
@@ -211,7 +211,7 @@ class ITExpr_inspector():
         Returns
         -------
         analysis : dict
-            returns a dictionary containing several term informations
+            returns a dictionary containing several term information
             and metrics calculated for each term:
 
             - coef: coefficient of each term (or coefficients, if the

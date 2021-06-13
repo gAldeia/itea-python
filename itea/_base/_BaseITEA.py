@@ -1,6 +1,6 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.1
+# Version: 1.0.2
 # Last modified: 06-13-2021 by Guilherme Aldeia
 
 
@@ -27,19 +27,19 @@ class BaseITEA(BaseEstimator):
     """Base class to be inherited for classification and regression tasks.
 
     This class implements argument checks and generic evolutionary methods
-    (population initialization, selection, mutation and evolution), along with
+    (population initialization, selection, mutation, and evolution), along with
     three virtual methods to be implemented.
     
     Ideally, this class should never be instantiated, only its derivations.
 
-    Its derivations will be scikit estimators, and can be used in many scikit
-    methods such as gridsearch or pipelines.
+    Its derivations will be scikit estimators and can be used in many scikit
+    methods such as grid-search or pipelines.
 
     Every argument is a named argument. The list of arguments includes 
     everything that an ``ITExpr`` class needs to be instantiated.
 
     All arguments have a default value. In this configuration, the
-    evolutionary process will search only for polinomials.
+    evolutionary process will search only for polynomials.
     """
     
     def __init__(self, *,
@@ -84,19 +84,19 @@ class BaseITEA(BaseEstimator):
 
         random_state : int, None or numpy.random_state, default=None
             int or numpy random state. Use this argument
-            to have reproductible results across different
+            to have reproducible results across different
             executions. When None, a random state instance
-            will be created and used, and can be accessed
+            will be created and used and can be accessed
             by ``itea.random_state``.
 
         verbose : int, None or False, default=None
             specify if the algorithm should perform the evolution
-            silently or if it should print informations through the
-            process. When verbose is None, False or 0, the algorithm
-            will not print informations. If verbose is an integer
+            silently or if it should print information through the
+            process. When verbose is None, False, or 0, the algorithm
+            will not print any information. If verbose is an integer
             ``n``, then every ``n`` generations the algorithm will
             print the status of the generation. If verbose is set
-            to -1, every generation will print informations.
+            to -1, every generation information will be printed.
 
         labels : list of strings, default=[]
             (``ITExpr`` parameter) list containing the labels of the
@@ -110,7 +110,7 @@ class BaseITEA(BaseEstimator):
             keys are the names of the transformation functions and 
             the values are unary vectorized functions (for example,
             numpy functions). For user-defined functions, see
-            numpy.vectorize for more informations on how to vectorize
+            numpy.vectorize for more information on how to vectorize
             your transformation functions. Defaults to a dict with
             only the identity function.
 
@@ -383,7 +383,7 @@ class BaseITEA(BaseEstimator):
 
 
     def fit(self, X, y):
-        """virtual fit method. Should be overriden by sub-classes.
+        """virtual fit method. Should be overridden by sub-classes.
         """
 
         # The subclasses must do:
@@ -396,14 +396,14 @@ class BaseITEA(BaseEstimator):
 
 
     def predict(self, X):
-        """virtual predict method. Should be overriden by sub-classes.
+        """virtual predict method. Should be overridden by sub-classes.
         """
         
         raise NotImplementedError()
 
 
     def predict_proba(self, X):
-        """virtual predict_proba method. Should be overriden by sub-classes.
+        """virtual predict_proba method. Should be overridden by sub-classes.
         """
 
         raise NotImplementedError()

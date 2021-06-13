@@ -46,21 +46,21 @@ class ITExpr_texifier:
     @staticmethod
     def to_latex(
         itexpr, term_separator=' + ', term_wrapper=None):
-        r"""Static method that takes a instance of an ``ITExpr`` and returns
+        r"""Static method that takes an instance of an ``ITExpr`` and returns
         a latex representation of the expression.
 
         Parameters
         ----------
         itexpr : ITExpr_classifier or ITExpr_regressor
-            instance of itexpr to be texified.
+            an instance of itexpr to be texified.
 
         term_separator : string, default=' + '
             string to be used to concatenate each term.
 
         term_wrapper : None or Callable, default=None
-            function that takes two arguments: ``i`` the index of the term
+            a function that takes two arguments: ``i`` the index of the term
             and ``term`` the term itself, and returns a string. This can be
-            used to add special formatations to the terms. Examples are:
+            used to add special formatting to the terms. Examples are:
 
             - ``lambda i, term: r'\underbrace{'+term+r'}
               _{\text{term '+str(i)+'}}'`` to add a underbracket with the 
@@ -100,20 +100,20 @@ class ITExpr_texifier:
     @staticmethod
     def derivatives_to_latex(
         itexpr, term_separator=' + ', term_wrapper=None):
-        r"""Static method that takes a instance of an ``ITExpr`` and returns
+        r"""Static method that takes an instance of an ``ITExpr`` and returns
         a list containing a latex representation of each partial derivative
         of the expression.
 
         Parameters
         ----------
         itexpr : ITExpr_classifier or ITExpr_regressor
-            instance of itexpr to be texified.
+            an instance of itexpr to be texified.
 
         term_separator : string, default=' + '
             string to be used to concatenate each term.
 
         term_wrapper : None or Callable, default=None
-            function that takes two arguments: ``i`` the index of the term
+            a function that takes two arguments: ``i`` the index of the term
             and ``term`` the term itself, and returns a string. This can be
             used to add special formatations to the terms. Examples are:
 

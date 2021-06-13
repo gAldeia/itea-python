@@ -103,7 +103,7 @@ class ITExpr_explainer():
         Returns
         -------
         self : ITExpr_explainer
-            explainer with calculated covariance matrix, ready to generate
+            explainer with a calculated covariance matrix, ready to generate
             plots and explanations.
 
         Raises
@@ -135,8 +135,8 @@ class ITExpr_explainer():
 
     
     def selected_features(self, idx=False):
-        """Method to identify if any of the original features was left out
-        of the IT expression during the evolution of the exponents array.
+        """Method to identify if any of the original features were left out
+        of the IT expression during the evolution of the exponents' array.
 
         Parameters
         ----------
@@ -170,7 +170,7 @@ class ITExpr_explainer():
 
         This method assumes that every feature is continuous.
 
-        The partial effect of a given variable for a funcfion :math:`f` is
+        The partial effect of a given variable for a function :math:`f` is
         calculated by:
 
         :math:`PE_j = \frac{\partial \widehat{f}}{\partial x_j}
@@ -218,9 +218,9 @@ class ITExpr_explainer():
 
     def shapley_values(self, X):
         r"""Feature importance estimation through approximation of the 
-        shapley values with the gradient informations.
+        shapley values with the gradient information.
 
-        The shapley values comes from the coalitional game theory and were
+        The shapley values come from the coalitional game theory and were
         proposed as a feature importance measures by Scott Lundberg in 
         "Scott M. Lundberg and Su-In Lee. 2017. A unified approach to
         interpreting model predictions. NIPS". The equation:
@@ -234,7 +234,7 @@ class ITExpr_explainer():
         prediction when we fix the values of :math:`Q`, and the expected
         prediction.
         
-        It is possible to approximate this values by the equation:
+        It is possible to approximate these values by the equation:
 
         :math:`\widehat{\phi_j}(x) = \mathbb{E}[PE_j]
         \cdot (x_j - \mathbb{E}[x_j]),`
@@ -319,15 +319,15 @@ class ITExpr_explainer():
             The features will be iterated in order of importance, from the
             smallest to the highest importance, and a group of the smallest
             features that sum up less than the given percentage of importance
-            will be grouped together to reduce the plot information.
+            will be grouped to reduce the plot information.
             To disable the creation of the group, set ``grouping_threshol=0``.
 
         target : string, int, list[strings], list[ints] or None, default=None
             The targets to be considered when generating the plot for 
             ``ITExpr_classifier``. If the training data used strings as targets
-            on ``y``, then target must be a string of a valid class or a list
-            of valid classes. If the training data was encoded as integers,
-            then target must be a int or a list of integers.
+            on ``y``, then the target must be a string of a valid class or a
+            list of valid classes. If the training data was encoded as integers,
+            then the target must be an int or a list of integers.
             This argument is ignored if the itexpr is an ``ITExpr_regressor``.
 
         importance_method : string, default='pe'
@@ -335,7 +335,7 @@ class ITExpr_explainer():
             importances. Available methods are: ``['pe', 'shapley']``.
         
         show : bool, default=True
-            boolean value indicating if the generated plot shoud be displayed
+            boolean value indicating if the generated plot should be displayed
             or not.
 
         Raises
@@ -647,7 +647,7 @@ class ITExpr_explainer():
 
         features : string, list[string], int, list[int] or None, default=None
             the features to generate the plots. It can be a single feature
-            refered by its label or its index, or a list of features.
+            referred to by its label or its index or a list of features.
 
         percentiles : tuple of ints, default=(5, 95)
             the quartiles interval to generate the plot.
@@ -663,9 +663,9 @@ class ITExpr_explainer():
         target : string, int, list[strings], list[ints] or None, default=None
             The targets to be considered when generating the plot for 
             ``ITExpr_classifier``. If the training data used strings as targets
-            on ``y``, then target must be a string of a valid class or a list
-            of valid classes. If the training data was encoded as integers,
-            then target must be a int or a list of integers.
+            on ``y``, then the target must be a string of a valid class or a
+            list of valid classes. If the training data was encoded as integers,
+            then the target must be an int or a list of integers.
             This argument is ignored if the itexpr is an ``ITExpr_regressor``.
 
         line_kw : dict or None, default=None
@@ -683,14 +683,14 @@ class ITExpr_explainer():
             elements in ``features``.
 
         show_err : bool, default=True
-            boolean variable indicating if the standard error should be ploted.
+            boolean variable indicating if the standard error should be plotted.
 
         share_y : bool, default True
             boolean variable to specify if the axis should have the same
             interval on the y axis.
 
         show :  bool, default=True
-            boolean value indicating if the generated plot shoud be displayed
+            boolean value indicating if the generated plot should be displayed
             or not.
 
         Raises
@@ -852,10 +852,10 @@ class ITExpr_explainer():
         """Partial effects plots, separing the training data into discrete
         intervals.
 
-        First, the output interval is dicretized. Then, for each interval,
+        First, the output interval is discretized. Then, for each interval,
         the partial effect of the sample data that evaluation is within the 
-        interval are calculated. Finally, they are normalized in order to 
-        make the total contribution be 100%.
+        interval is calculated. Finally, they are normalized in order to 
+        make the total contribution by 100%.
 
         .. image:: assets/images/plot_normalized_partial_effects_1.png
             :align: center
@@ -871,7 +871,7 @@ class ITExpr_explainer():
             The features will be iterated in order of importance, from the
             smallest to the highest importance, and a group of the smallest
             features that sum up less than the given percentage of importance
-            will be grouped together to reduce the plot information.
+            will be grouped to reduce the plot information.
             To disable the creation of the group, set ``grouping_threshol=0``.
 
         stack_kw : dict or None, default=None
@@ -885,7 +885,7 @@ class ITExpr_explainer():
             given axis.
 
         show : bool, default=True
-            boolean value indicating if the generated plot shoud be displayed
+            boolean value indicating if the generated plot should be displayed
             or not.
 
         Raises
@@ -895,7 +895,7 @@ class ITExpr_explainer():
 
         Notes
         -----
-        This plot was inspired on the relative feature contribution plot
+        This plot was inspired by the relative feature contribution plot
         reported in the paper:
         "R. M. Filho, A. Lacerda and G. L. Pappa, "Explaining Symbolic
         Regression Predictions," 2020 IEEE Congress on Evolutionary Computation

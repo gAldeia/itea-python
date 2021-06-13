@@ -13,9 +13,9 @@ Ideally, the user should import and use only the ``ITEA_regressor``
 implementation, while the ``ITExpr_regressor`` should be created by means of the
 itea instead of manually by the user.
 
-The ``ITExpr_regressor`` that works just like any fitted scikit regressor,
+The ``ITExpr_regressor`` works just like any fitted scikit regressor,
 but --- in order to avoid the creation of problematic expressions --- I
-strongly discourage the direct instanciation of ``ITExpr_regressor``.
+strongly discourage the direct instantiation of ``ITExpr_regressor``.
 """
 
 

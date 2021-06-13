@@ -68,10 +68,10 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
 
         verbose : int, None or False, default=None
             When verbose is None, False or 0, the algorithm
-            will not print informations. If verbose is an integer
+            will not print information. If verbose is an integer
             ``n``, then every ``n`` generations the algorithm will
             print the status of the generation. If verbose is set
-            to -1, every generation will print informations.
+            to -1, every generation will print information.
 
         labels : list of strings, default=[]
             (``ITExpr`` parameter) list containing the labels of the
@@ -106,7 +106,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             have ``['min', 'mean', 'std', 'max']``. Each value of the inner
             dictionary (for example itea.convergence_['fitness']['min'])
             is a list, containing the information of every generation.
-            This dictionary can be used to inspect informations about the
+            This dictionary can be used to inspect information about the
             convergence of the evolutionary process.
 
         exectime_ : int
@@ -163,12 +163,12 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         self : ITEA_classifier
             itea after performing the evolution.
             Only after fitting the model that the attributes ``bestsol_``,
-            ``fitness_`` and ``classes_`` will be available.
+            ``fitness_``, and ``classes_`` will be available.
 
         Raises
         ------
             ValueError
-                If one or more arguments would result in a invalid execution of
+                If one or more arguments would result in an invalid execution of
                 itea.
         """
 

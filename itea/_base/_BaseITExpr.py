@@ -15,21 +15,21 @@ from sklearn.utils.validation import check_array
 
 class BaseITExpr(BaseEstimator):
     """This class describes the structure that an ``ITExpr`` should have, and
-    implements only the methods that have similar behaviour for classification
+    implements only the methods that have similar behavior for classification
     and regression.
 
     The ITEA implementations for classification and regression will create
     a population of ``ITExpr`` instances and evolve this population to find a
     final best solution ``itea.bestsol_``.
 
-    The best solution will be a scikit estimator, and can be used in many scikit
+    The best solution will be a scikit estimator and can be used in many scikit
     methods. It can also be used to create ICE and PDP plots, which are
     particularly interesting to complement explanations given by the
     ``ITExpr_explainer``.
 
     Methods that should be specialized are created as virtual methods.
 
-    In practice, this class should never be instanciated.
+    In practice, this class should never be instantiated.
     """
 
     def __init__(self, *, expr, tfuncs, labels=[], **kwargs):
@@ -38,12 +38,12 @@ class BaseITExpr(BaseEstimator):
         Parameters
         ----------
         expr : list of Tuple[Transformation, Interaction]
-            list if IT terms to create an IT expression.
+            list of IT terms to create an IT expression.
             
-            A IT term is the tuple :math:`(t, p)`, where
-            :math:`t : \mathbb{R} \rightarrow \mathbb{R}` is an unary function
-            called **transformation** function,  and :math:`p \in \mathbb{R}^d` is
-            an vector of size :math:`d`, where :math:`d` is the number of
+            An IT term is the tuple :math:`(t, p)`, where
+            :math:`t : \mathbb{R} \rightarrow \mathbb{R}` is a unary function
+            called **transformation** function,  and :math:`p \in \mathbb{R}^d`
+            is a vector of size :math:`d`, where :math:`d` is the number of
             variables of the problem. The tuple contains the information to
             create an expression:
 
@@ -55,13 +55,13 @@ class BaseITExpr(BaseEstimator):
 
             Each IT term is a tuple containing the name of the transformation
             function and a list of exponents to be used in the interaction
-            funcion.
+            function.
 
             The whole expression is evaluated as 
 
             :math:`f(x) = \sum_{i=1}^{n} w_i \cdot t_i \circ p_i(x),`
 
-            with :math:`w_i` being an coefficient to be adjusted with the
+            with :math:`w_i` being a coefficient to be adjusted with the
             ``fit()`` method, and :math:`n` the number of terms.
 
         tfuncs : dict
@@ -69,7 +69,7 @@ class BaseITExpr(BaseEstimator):
             keys are the names of the transformation functions and 
             the values are unary vectorized functions (for example,
             numpy functions). For user-defined functions, see
-            numpy.vectorize for more informations on how to vectorize
+            numpy.vectorize for more information on how to vectorize
             your transformation functions.
 
         labels : list of strings, default=[]
@@ -96,10 +96,10 @@ class BaseITExpr(BaseEstimator):
 
         Some simplifications are made to omit trivial operations:
 
-        - if an variable has zero as exponent, it is omited (since it will
+        - if a variable has zero as an exponent, it is omitted (since it will
           eval to 1 regardless of the x value);
         - if the coefficient (or all coefficients, in the multi-class task)
-          is zero, the whole term is omited.
+          is zero, the whole term is omitted.
         
         Parameters
         ----------
@@ -199,7 +199,7 @@ class BaseITExpr(BaseEstimator):
         Returns
         -------
         complexity : int
-            the number of nodes that an symbolic tree would have if the
+            the number of nodes that a symbolic tree would have if the
             IT expression was converted to it.
         """
 
@@ -232,9 +232,9 @@ class BaseITExpr(BaseEstimator):
 
     def gradient(self, X, tfuncs_dx, logit=False):
         r"""Method to evaluate the gradient of the IT expression for all
-        data points in ``X``. The gradients are usefull for the
-        ``ITExpr_explainer`` class, that calculates features importances
-        and generate plots using the gradient informations.
+        data points in ``X``. The gradients are useful for the
+        ``ITExpr_explainer`` class, which calculates feature importances
+        and generate plots using the gradient information.
 
         Parameters
         ----------
@@ -251,9 +251,9 @@ class BaseITExpr(BaseEstimator):
             boolean variable indicating if the IT expression is being used
             as a linear model or as a linear method of a logistic regression
             predictor. When it is true, then we must consider the derivative
-            of the logistigc regression.
+            of the logistic regression.
 
-            let :math:`it(x)` be the IT expression. Is is used in a logit model:
+            let :math:`it(x)` be the IT expression. It is used in a logit model:
 
             :math:`logit(x) = \frac{1}{1 + e^{-it(x)}}`
 
@@ -337,28 +337,28 @@ class BaseITExpr(BaseEstimator):
 
     def covariance_matrix(self, X, y):
         """virtual method to estimate the covariance matrix.
-        Should be overriden by sub-classes.
+        Should be overridden by sub-classes.
         """
 
         raise NotImplementedError()
 
 
     def fit(self, X, y):
-        """virtual fit method. Should be overriden by sub-classes.
+        """virtual fit method. Should be overridden by sub-classes.
         """
 
         raise NotImplementedError()
 
 
     def predict(self, X):
-        """virtual predict method. Should be overriden by sub-classes.
+        """virtual predict method. Should be overridden by sub-classes.
         """
 
         raise NotImplementedError()
 
 
     def predict_proba(self, X):
-        """virtual predict_proba method. Should be overriden by sub-classes.
+        """virtual predict_proba method. Should be overridden by sub-classes.
         """
 
         raise NotImplementedError()

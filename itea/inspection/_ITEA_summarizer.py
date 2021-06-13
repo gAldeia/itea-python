@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 06-07-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 13-06-2021 by Guilherme Aldeia
 
 
 """ITEA_summarizer class.
@@ -88,7 +88,7 @@ class ITEA_summarizer:
 
 
     def _report_pre_execution(self, doc, save_path):
-        """Creates all pages with informations related to pre-execution
+        """Creates all pages with information related to pre-execution
         of the algorithm (such as hyperparameters).
         """
     
@@ -116,10 +116,10 @@ class ITEA_summarizer:
             selected = order[:np.minimum(5, len(order))]
 
             doc.append(NoEscape(f"""
-                Showing descriptive statistics for {np.minimum(5, len(order))}
-                (from a total of {len(order)}) features contained on the given
-                data. The features were selected based on the absolute final
-                importance."""))
+                Reporting descriptive statistics for {np.minimum(5, len(order))}
+                (from a total of {len(order)}) features contained on the
+                training data. The features were selected based on the absolute
+                final importance."""))
 
             df_summary = pd.DataFrame(
                 np.array(self.X_)[:, selected],
@@ -139,9 +139,10 @@ class ITEA_summarizer:
             
             doc.append(NoEscape(r"""
                 The following hyperparameters were used to execute the
-                algorithm. If the random\_state parameter was set to a 
-                integer value, then it is possible to repeat the exact
-                execution by using the parameters listed below."""))
+                algorithm. If the random\_state parameter was set to an 
+                integer value (or a numpy randomState instance was given), then
+                it is possible to repeat the exact execution by using the same
+                training data and the parameters listed below."""))
 
             tfuncs_names = self.itea.tfuncs.keys()
 
@@ -161,7 +162,7 @@ class ITEA_summarizer:
 
 
     def _report_execution(self, doc, save_path):
-        """Creates pages with informations about the ITEA and the ITExpr.
+        """Creates pages with information about the ITEA and the ITExpr.
         This section of the report does not include the post hoc explanations.
         """
 
@@ -221,16 +222,16 @@ class ITEA_summarizer:
 
             doc.append(NoEscape(r"""
                 The best expression corresponds to the expression with
-                best fitness on the last generation before the evolution ends.
-                Not necessarily it will be the simplier or the global optimum
-                of the evoution. """ + 
+                the best fitness on the last generation before the evolution
+                ends. Not necessarily it will be the simpliest or the global
+                optimum expression of the evoution. """ + 
             
-                f"""The final expression is a {type_itexpr} with fitness of
+                f"""The final expression is a {type_itexpr} with a fitness of
                 {round(self.itea.fitness_, 5)}, and the number of IT terms is
-                {self.itea.bestsol_.n_terms}. Below is an representation of
-                the expression:""" + 
+                {self.itea.bestsol_.n_terms}. Below is an LaTeX representation
+                of the expression:""" + 
 
-                r"{\small \begin{dmath}" + 
+                r"\vfill {\small \begin{dmath}" + 
                 
                 NoEscape("ITExpr = " + ITExpr_texifier.to_latex(
                     self.itea.bestsol_,
@@ -243,7 +244,7 @@ class ITEA_summarizer:
         with doc.create(Section(
             NoEscape('Best expression metrics'), numbering=False)):
 
-            doc.append(NoEscape(r"""In the next page is reported a table
+            doc.append(NoEscape(r"""On the next page is reported a table
             containing the coefficients for the previous expression, as well as
             some metrics calculated for each term individually:
             
@@ -357,11 +358,11 @@ class ITEA_summarizer:
 
             doc.append(NoEscape(r"""
                 Feature importances with Normalized Partial Effects. 
-                To create this plot, first, the output interval is dicretized.
+                To create this plot, first, the output interval is discretized.
                 Then, for each interval, the partial effect of all samples
-                in the training set that results in an prediction within the
+                in the training set that results in a prediction within the
                 interval are calculated. Finally, they are normalized in
-                order to make the total contribution be 100\%.
+                order to make the total contribution by 100\%.
 
                 \vfill"""))
 
@@ -477,14 +478,14 @@ class ITEA_summarizer:
         show_err = True,
         show     = True
     ):
-        """Plot of informations about the ``itea`` evolutionary process.
-        This function is intended to help visualize the informations on the
+        """Plot of information about the ``itea`` evolutionary process.
+        This function is intended to help visualize the information on the
         ``itea.convergence_`` dictionary.
 
         Parameters
         ----------
         data : string, list of string, or None, default=None
-            the convergence informations to generate the plots. It can be a
+            the convergence information to generate the plots. It can be a
             single string or a list with strings in
             ``['fitness', 'n_terms', 'complexity']``. If set to none, then
             the whole list of strings will be used.
@@ -508,10 +509,10 @@ class ITEA_summarizer:
             elements in ``data``.
 
         show_err : bool, default=True
-            boolean variable indicating if the standard error should be ploted.
+            boolean variable indicating if the standard error should be plotted.
 
         show :  bool, default=True
-            boolean value indicating if the generated plot shoud be displayed
+            boolean value indicating if the generated plot should be displayed
             or not.
 
         Raises
@@ -632,10 +633,10 @@ class ITEA_summarizer:
 
     def autoreport(self, save_path='.', name_suffix='', use_temp_folder=True):      
         """automatically generate a pdf using the methods implemented in
-        ``ITExpr_inspector``, ``ITExpr_explainer`` and ``ITExpr_texifier``.
+        ``ITExpr_inspector``, ``ITExpr_explainer``, and ``ITExpr_texifier``.
 
         The idea is to simplify the generation of the plots and tables,
-        taking frfom the user the need to understand, instantiate the classes
+        taking from the user the need to understand, instantiate the classes
         and call the plots functions.
 
         This method makes usage of the ``PyLaTeX`` package and requires a 
@@ -645,7 +646,7 @@ class ITEA_summarizer:
         designed path.
 
         You can download one example of report
-        :download:`clicking here </assets/files/Report.pdf>`.
+        :download:`by clicking here </assets/files/Report.pdf>`.
 
         Parameters
         ----------

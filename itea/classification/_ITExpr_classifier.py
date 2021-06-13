@@ -29,13 +29,13 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         Parameters
         ----------
         expr : list of Tuple[Transformation, Interaction]
-            list if IT terms to create an IT expression.
+            list of IT terms to create an IT expression.
         tfuncs : dict
             should always be a dict where the
             keys are the names of the transformation functions and 
             the values are unary vectorized functions (for example,
             numpy functions). For user-defined functions, see
-            numpy.vectorize for more informations on how to vectorize
+            numpy.vectorize for more information on how to vectorize
             your transformation functions.
 
         labels : list of strings, default=[]
@@ -46,7 +46,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         Attributes
         ----------
         n_terms : int
-            number of infered IT terms.
+            number of inferred IT terms.
 
         is_fitted : bool
             boolean variable indicating if the ITExpr was fitted before.
@@ -63,7 +63,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
             class of the training data.
 
         classes_ : array of shape (n_classes, )
-            target classes infered from the training y target data.
+            target classes inferred from the training y target data.
         """
 
         super(ITExpr_classifier, self).__init__(expr=expr, tfuncs=tfuncs, labels=labels)
@@ -135,7 +135,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         self : ITExpr_classifier
             itexpr after fitting the coefficients and intercept.
             Only after fitting the model that the attributes ``coef_``,
-            ``intercept_`` and ``classes_`` will be available.
+            ``intercept_``, and ``classes_`` will be available.
         """
 
         if not self._is_fitted:

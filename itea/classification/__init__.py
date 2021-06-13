@@ -10,12 +10,12 @@ This sub-module implements a specialization of the base classes ``BaseITEA``
 and ``BaseITExpr`` to be used on classification tasks.
 
 Ideally, the user should import and use only the ``ITEA_classifier``
-implementation, while the ``ITExpr_classifier`` should be created by means of the
-itea instead of manually by the user.
+implementation, while the ``ITExpr_classifier`` should be created by means of
+the itea instead of manually by the user.
 
-The ``ITExpr_classifier`` that works just like any fitted scikit classifier,
+The ``ITExpr_classifier`` works just like any fitted scikit classifier,
 but --- in order to avoid the creation of problematic expressions --- I
-strongly discourage the direct instanciation of ``ITExpr_classifier``.
+strongly discourage the direct instantiation  of ``ITExpr_classifier``.
 """
 
 

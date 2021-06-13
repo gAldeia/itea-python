@@ -1,6 +1,6 @@
 # itea-python
 
-![code coverage](docsource/source/assets/images/coverage.svg?raw=true)
+![code coverage](https://galdeia.github.io/itea-python/_images/coverage.svg)
 
 itea is a python implementation of the Interaction-Transformation Evolutionary
 Algorithm described in the paper "Franca, F., & Aldeia, G. (2020).
@@ -16,7 +16,7 @@ model-specific explainer based on the Partial Effects to help users get a
 better understanding of the resulting expressions.
 
 This implementation is based on scikit-learn package and the implementations
-of the estimators follows their guidelines.
+of the estimators follow their guidelines.
 
 ## Documentation
 
