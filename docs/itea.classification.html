@@ -96,7 +96,7 @@
             
               <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="_base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">itea.classification</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#itea-classifier">ITEA_classifier</a></li>
@@ -107,9 +107,11 @@
 </ul>
 <p class="caption"><span class="caption-text">Examples:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="multiclass_example.html">Iris classification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
 
             
@@ -223,11 +225,11 @@ strongly discourage the direct instanciation of <code class="docutils literal no
 <section id="itea-classifier">
 <h2><a class="toc-backref" href="#id1">ITEA_classifier</a><a class="headerlink" href="#itea-classifier" title="Permalink to this headline">¶</a></h2>
 <p>For a more detailed description of the arguments, check the
-<a class="reference internal" href="_base.html#baseitea-docs"><span class="std std-ref">BaseITEA</span></a> documentation.</p>
+<a class="reference internal" href="base.html#baseitea-docs"><span class="std std-ref">BaseITEA</span></a> documentation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea.classification.ITEA_classifier">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITEA_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_classifier.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method='simplify_by_coef'</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.classification.ITEA_classifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="_base.html#itea._base.BaseITEA" title="itea._base._BaseITEA.BaseITEA"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="base.html#itea._base.BaseITEA" title="itea._base._BaseITEA.BaseITEA"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>This is the implementation of the ITEA for the classification task.</p>
 <p>The expressions will be used as the linear model in a logistic
 regression, and their coefficients will be adjusted by means of the
@@ -394,11 +396,11 @@ each sample in X.</p>
 <section id="itexpr-classifier">
 <h2><a class="toc-backref" href="#id2">ITExpr_classifier</a><a class="headerlink" href="#itexpr-classifier" title="Permalink to this headline">¶</a></h2>
 <p>For a more detailed description of the arguments, check the
-<a class="reference internal" href="_base.html#baseitexpr-docs"><span class="std std-ref">BaseITExpr</span></a> documentation.</p>
+<a class="reference internal" href="base.html#baseitexpr-docs"><span class="std std-ref">BaseITExpr</span></a> documentation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea.classification.ITExpr_classifier">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITExpr_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea.classification.ITExpr_classifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="_base.html#itea._base.BaseITExpr" title="itea._base._BaseITExpr.BaseITExpr"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITExpr.BaseITExpr</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="base.html#itea._base.BaseITExpr" title="itea._base._BaseITExpr.BaseITExpr"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITExpr.BaseITExpr</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>ITExpr for the classification task. This will be the class
 in <code class="docutils literal notranslate"><span class="pre">ITEA_classifier.bestsol_</span></code>.</p>
 <p>Constructor method.</p>

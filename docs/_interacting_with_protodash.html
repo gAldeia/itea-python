@@ -1,0 +1,947 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Interacting with ProtoDash &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Iris classification" href="_multiclass_example.html" />
+    <link rel="prev" title="Explanations Stability" href="_explanations_stability.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Interacting with ProtoDash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Interacting with ProtoDash</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/_interacting_with_protodash.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Interacting-with-ProtoDash">
+<h1>Interacting with ProtoDash<a class="headerlink" href="#Interacting-with-ProtoDash" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook we’ll combine the ProtoDash and the Partial Effects to obtain feature importances on the digits classifications task.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># automatically differentiable implementation of numpy</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">itea.classification</span> <span class="kn">import</span> <span class="n">ITEA_classifier</span>
+<span class="kn">from</span> <span class="nn">itea.inspection</span>     <span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+
+<span class="kn">from</span> <span class="nn">aix360.algorithms.protodash</span> <span class="kn">import</span> <span class="n">ProtodashExplainer</span><span class="p">,</span> <span class="n">get_Gaussian_Data</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">digits_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">()</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span>        <span class="o">=</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+<span class="n">labels</span>      <span class="o">=</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
+<span class="n">targets</span>     <span class="o">=</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;target_names&#39;</span><span class="p">]</span>
+
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Creating transformation functions for ITEA using jax.numpy</span>
+<span class="c1"># (so we don&#39;t need to analytically calculate its derivatives)</span>
+<span class="n">tfuncs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;id&#39;</span>       <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="s1">&#39;log&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+    <span class="s1">&#39;exp&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span>
+<span class="p">}</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
+    <span class="n">gens</span>            <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
+    <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
+    <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_var&#39;</span><span class="p">,</span>
+    <span class="n">random_state</span>    <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1203, 64)
+gen      min_fitness     mean_fitness    max_fitness     remaining (s)
+0        0.1055694098088113      0.10556940980881135     0.1055694098088113      11min52seg
+5        0.1055694098088113      0.10556940980881135     0.1055694098088113      11min57seg
+10       0.1055694098088113      0.10556940980881135     0.1055694098088113      10min27seg
+15       0.1055694098088113      0.10556940980881135     0.1055694098088113      11min59seg
+20       0.1055694098088113      0.10636741479634253     0.15045719035743974     16min39seg
+25       0.1055694098088113      0.11221113881961763     0.15045719035743974     36min0seg
+30       0.10889443059019119     0.15061512884455525     0.1629260182876143      35min2seg
+35       0.15045719035743974     0.16246882793017456     0.22942643391521197     58min18seg
+40       0.16209476309226933     0.2215045719035743      0.2734829592684954      84min1seg
+45       0.22942643391521197     0.24636741479634242     0.2734829592684954      87min42seg
+50       0.2734829592684954      0.27348295926849536     0.2734829592684954      80min52seg
+55       0.2734829592684954      0.27348295926849536     0.2734829592684954      79min53seg
+60       0.19534497090606817     0.27270157938487105     0.2734829592684954      79min59seg
+65       0.2734829592684954      0.2735328345802161      0.27514546965918535     76min21seg
+70       0.2734829592684954      0.2736990856192851      0.27514546965918535     74min41seg
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+ERROR:root:Internal Python error in the inspect module.
+Below is the traceback from this internal error.
+
+ERROR:root:Internal Python error in the inspect module.
+Below is the traceback from this internal error.
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3441, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File &#34;&lt;ipython-input-2-dd7c663c0d94&gt;&#34;, line 31, in &lt;module&gt;
+    ).fit(X_train, y_train)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITEA_classifier.py&#34;, line 183, in fit
+    X, y, self.itexpr_class, self.greater_is_better)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 333, in _evolve
+    random_state = random_state)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in _select_population
+    pop = [ps for ps in [p.fit(X, y) for p in pop]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in &lt;listcomp&gt;
+    pop = [ps for ps in [p.fit(X, y) for p in pop]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITExpr_classifier.py&#34;, line 149, in fit
+    pred  = self.fit_model_.fit(Z, y).predict(Z)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1416, in fit
+    for class_, warm_start_coef_ in zip(classes_, warm_start_coef))
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 1041, in __call__
+    if self.dispatch_one_batch(iterator):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 859, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 777, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 572, in __init__
+    self.results = batch()
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in __call__
+    for func, args, kwargs in self.items]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in &lt;listcomp&gt;
+    for func, args, kwargs in self.items]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/utils/fixes.py&#34;, line 222, in __call__
+    return self.function(*args, **kwargs)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 761, in _logistic_regression_path
+    options={&#34;iprint&#34;: iprint, &#34;gtol&#34;: tol, &#34;maxiter&#34;: max_iter}
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_minimize.py&#34;, line 620, in minimize
+    callback=callback, **options)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/lbfgsb.py&#34;, line 360, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 260, in fun_and_grad
+    self._update_fun()
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 226, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 133, in update_fun
+    self.f = fun_wrapped(self.x)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 130, in fun_wrapped
+    return fun(x, *args)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 74, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 68, in _compute_if_needed
+    fg = self.fun(x, *args)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 736, in func
+    def func(x, *args): return _multinomial_loss_grad(x, *args)[0:2]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 354, in _multinomial_loss_grad
+    grad[:, -1] = diff.sum(axis=0)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2061, in showtraceback
+    stb = value._render_traceback_()
+AttributeError: &#39;KeyboardInterrupt&#39; object has no attribute &#39;_render_traceback_&#39;
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1101, in get_records
+    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 248, in wrapped
+    return f(*args, **kwargs)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 281, in _fixed_getinnerframes
+    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1502, in getinnerframes
+    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1460, in getframeinfo
+    filename = getsourcefile(frame) or getfile(frame)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 696, in getsourcefile
+    if getattr(getmodule(object, filename), &#39;__loader__&#39;, None) is not None:
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 742, in getmodule
+    os.path.realpath(f)] = module.__name__
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/posixpath.py&#34;, line 395, in realpath
+    path, ok = _joinrealpath(filename[:0], filename, {})
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/posixpath.py&#34;, line 428, in _joinrealpath
+    newpath = join(path, name)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/posixpath.py&#34;, line 84, in join
+    if not p:
+KeyboardInterrupt
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3441, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File &#34;&lt;ipython-input-2-dd7c663c0d94&gt;&#34;, line 31, in &lt;module&gt;
+    ).fit(X_train, y_train)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITEA_classifier.py&#34;, line 183, in fit
+    X, y, self.itexpr_class, self.greater_is_better)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 333, in _evolve
+    random_state = random_state)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in _select_population
+    pop = [ps for ps in [p.fit(X, y) for p in pop]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in &lt;listcomp&gt;
+    pop = [ps for ps in [p.fit(X, y) for p in pop]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITExpr_classifier.py&#34;, line 149, in fit
+    pred  = self.fit_model_.fit(Z, y).predict(Z)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1416, in fit
+    for class_, warm_start_coef_ in zip(classes_, warm_start_coef))
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 1041, in __call__
+    if self.dispatch_one_batch(iterator):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 859, in dispatch_one_batch
+    self._dispatch(tasks)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 777, in _dispatch
+    job = self._backend.apply_async(batch, callback=cb)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
+    result = ImmediateResult(func)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 572, in __init__
+    self.results = batch()
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in __call__
+    for func, args, kwargs in self.items]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in &lt;listcomp&gt;
+    for func, args, kwargs in self.items]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/utils/fixes.py&#34;, line 222, in __call__
+    return self.function(*args, **kwargs)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 761, in _logistic_regression_path
+    options={&#34;iprint&#34;: iprint, &#34;gtol&#34;: tol, &#34;maxiter&#34;: max_iter}
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_minimize.py&#34;, line 620, in minimize
+    callback=callback, **options)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/lbfgsb.py&#34;, line 360, in _minimize_lbfgsb
+    f, g = func_and_grad(x)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 260, in fun_and_grad
+    self._update_fun()
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 226, in _update_fun
+    self._update_fun_impl()
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 133, in update_fun
+    self.f = fun_wrapped(self.x)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 130, in fun_wrapped
+    return fun(x, *args)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 74, in __call__
+    self._compute_if_needed(x, *args)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 68, in _compute_if_needed
+    fg = self.fun(x, *args)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 736, in func
+    def func(x, *args): return _multinomial_loss_grad(x, *args)[0:2]
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 354, in _multinomial_loss_grad
+    grad[:, -1] = diff.sum(axis=0)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2061, in showtraceback
+    stb = value._render_traceback_()
+AttributeError: &#39;KeyboardInterrupt&#39; object has no attribute &#39;_render_traceback_&#39;
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3361, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3458, in run_code
+    self.showtraceback(running_compiled_code=True)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2064, in showtraceback
+    value, tb, tb_offset=tb_offset)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1368, in structured_traceback
+    self, etype, value, tb, tb_offset, number_of_lines_of_context)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1268, in structured_traceback
+    self, etype, value, tb, tb_offset, number_of_lines_of_context
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1125, in structured_traceback
+    tb_offset)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1082, in format_exception_as_a_whole
+    last_unique, recursion_repeat = find_recursion(orig_etype, evalue, records)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 382, in find_recursion
+    return len(records), 0
+TypeError: object of type &#39;NoneType&#39; has no len()
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2061, in showtraceback
+    stb = value._render_traceback_()
+AttributeError: &#39;TypeError&#39; object has no attribute &#39;_render_traceback_&#39;
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1101, in get_records
+    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 248, in wrapped
+    return f(*args, **kwargs)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 281, in _fixed_getinnerframes
+    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1502, in getinnerframes
+    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1460, in getframeinfo
+    filename = getsourcefile(frame) or getfile(frame)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 696, in getsourcefile
+    if getattr(getmodule(object, filename), &#39;__loader__&#39;, None) is not None:
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 739, in getmodule
+    f = getabsfile(module)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 708, in getabsfile
+    _filename = getsourcefile(object) or getfile(object)
+  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 687, in getsourcefile
+    if any(filename.endswith(s) for s in all_bytecode_suffixes):
+KeyboardInterrupt
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+KeyboardInterrupt
+
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span>
+<span class="n">final_itexpr</span><span class="o">.</span><span class="n">selected_features_</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">onehot_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">onehot_encoded</span> <span class="o">=</span> <span class="n">onehot_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="p">)</span> <span class="p">)</span>
+
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">ProtodashExplainer</span><span class="p">()</span>
+
+<span class="c1"># call protodash explainer</span>
+<span class="c1"># S contains indices of the selected prototypes</span>
+<span class="c1"># W contains importance weights associated with the selected prototypes</span>
+<span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Hiding one subplot</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">it_explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+    <span class="n">itexpr</span><span class="o">=</span><span class="n">final_itexpr</span><span class="p">,</span>
+    <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+        <span class="n">it_explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importances for</span><span class="se">\n</span><span class="s2">Prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># now lets pick multiple prototypes and see the feature importance for groups</span>
+
+<span class="n">explainer</span> <span class="o">=</span> <span class="n">ProtodashExplainer</span><span class="p">()</span>
+
+<span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">class_</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+
+    <span class="n">prototypes_for_class</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span> <span class="k">if</span> <span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">==</span><span class="n">class_</span><span class="p">]</span>
+
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">it_explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">prototypes_for_class</span><span class="p">,</span> <span class="p">:])[</span><span class="n">class_</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importances for</span><span class="se">\n</span><span class="s2">Prototype of class </span><span class="si">{</span><span class="n">class_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="_multiclass_example.html" class="btn btn-neutral float-right" title="Iris classification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="_explanations_stability.html" class="btn btn-neutral float-left" title="Explanations Stability" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

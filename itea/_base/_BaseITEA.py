@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-30-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-13-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -167,7 +167,7 @@ class BaseITEA(BaseEstimator):
                     f"the expolim bounds {bound} must be integers.")
 
         if not np.issubdtype(type(self.max_terms), int):
-            raise ValueError(f"max_terms should be an int.") 
+            raise ValueError(f"max_terms should be a int.") 
 
         if self.simplify_method is not None:
             if not self.simplify_method in simplifiers.__all__:
@@ -281,6 +281,8 @@ class BaseITEA(BaseEstimator):
 
         random_state = check_random_state(self.random_state)
         
+        # Takes an array of competitors and returns the most valuable to the
+        # task
         if greater_is_better:
             select_f = lambda comp: comp[np.argmax([c._fitness for c in comp])]
         else:

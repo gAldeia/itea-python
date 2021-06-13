@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-31-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-13-2021 by Guilherme Aldeia
 
 
 """Base class to represent an IT expression.
@@ -118,11 +118,10 @@ class BaseITExpr(BaseEstimator):
 
         # If is not fitted, the method will use placeholder coefs and intercept
         coefs = np.ones(self.n_terms)
-        if hasattr(self, "coef_"):
-            coefs = np.array(self.coef_)
-
         intercept = np.array(0.0)
-        if hasattr(self, "intercept_"):
+
+        if self._is_fitted:
+            coefs     = np.array(self.coef_)
             intercept = np.array(self.intercept_)
             
         str_terms = []
@@ -134,7 +133,7 @@ class BaseITExpr(BaseEstimator):
 
             t_str = " * ".join([
                 f"placeholder_{i}" + (f"^{t}" if t!=1 else "")
-                for i, t in enumerate(ti) if ti!=0
+                for i, t in enumerate(ti) if t!=0
             ])
 
             str_terms.append(f"{w_str}{fi_str}({t_str})")
@@ -283,7 +282,11 @@ class BaseITExpr(BaseEstimator):
 
         X = check_array(X)
         
-        # the gradients should be calculated even before fit
+        # the gradients can be calculated even before fit
+        intercept = [0.0]
+        if hasattr(self, "intercept_"):
+            intercept = np.array(self.intercept_)
+
         coefs = np.ones(self.n_terms)
         if hasattr(self, "coef_"):
             coefs = np.array(self.coef_)
@@ -302,9 +305,16 @@ class BaseITExpr(BaseEstimator):
             g_partialx = np.zeros( (len(X), self.n_terms) )
             for i, (fi, ti) in enumerate( self.expr ):
         
+                ti_aux = np.copy(ti)
+                ti_aux[j] = ti_aux[j] - 1
+                
                 pi = np.prod(np.power(X, ti), axis=1)
 
-                pi_partialx = ti[j] * (pi)/X[:, j]
+                # avoid multiply zero and nan, would result in nan
+                if ti[j] == 0:
+                    pi_partialx = np.zeros_like(X[:, j])
+                else:
+                    pi_partialx = ti[j] * np.prod(np.power(X, ti_aux), axis=1)
 
                 g_partialx[:, i] = tfuncs_dx[fi](pi)*pi_partialx
 
@@ -313,14 +323,12 @@ class BaseITExpr(BaseEstimator):
         gradients = np.array([np.dot(term_gradients, coef).T for coef in coefs])
 
         if logit:
-            it_eval = (np.dot(
-                self._eval(X), np.array(self.coef_).T
-            ) + self.intercept_)
+            it_eval = np.dot(self._eval(X), coefs.T) + intercept
 
-            for c_idx in range(gradients.shape[0]): # número de classes
-                for x_idx in range(gradients.shape[2]): # número de variáveis
+            for c_idx in range(gradients.shape[0]): # number of classes
+                for x_idx in range(gradients.shape[2]): # number of variables
                     gradients[c_idx, :, x_idx] = np.divide(
-                        gradients[c_idx, :, x_idx] * np.exp(it_eval)[:, c_idx],
+                        np.exp(it_eval)[:, c_idx] * gradients[c_idx, :, x_idx],
                         np.power(np.exp(it_eval)[:, c_idx] + 1.0, 2)
                     )
             

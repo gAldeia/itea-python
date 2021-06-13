@@ -1,37 +1,38 @@
 PYTHON = python
 
-all: test coverage doc build-dist clean
+EXAMPLES := $(shell find "./examples/"  -maxdepth 1 -name '*.ipynb')
+
+all: coverage doc build-dist clean
 
 test:
-	${PYTHON} -B setup.py pytest
+	${PYTHON} setup.py pytest
 
 coverage: 
-	${PYTHON} -B -m coverage run --source=. setup.py pytest
+	${PYTHON} -m coverage run --source=. setup.py pytest
 	coverage-badge > ./docsource/source/assets/images/coverage.svg
 	coverage erase
 
-doc:
-	cp ./examples/regression_example.ipynb ./docsource/source
-	cp ./examples/multiclass_example.ipynb ./docsource/source
-	cp ./examples/agnostic_explainers.ipynb ./docsource/source
+doc: $(EXAMPLES)
+	$(info The following examples will be included in the documentation:)
+	$(info [${EXAMPLES}])
 
+	$(foreach example, $(EXAMPLES), $(shell cp $(example) ./docsource/source/$(addprefix _, $(notdir $(example)))))
+	
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
 
-	rm ./docsource/source/regression_example.ipynb
-	rm ./docsource/source/multiclass_example.ipynb
-	rm ./docsource/source/agnostic_explainers.ipynb
+	rm ./docsource/source/_*.ipynb
 
 build-dist: 
-	rm -r ./dist/*.whl
-	rm -r ./dist/*.egg
+	rm -r ./dist/*
 	
-	${PYTHON} -B setup.py bdist_wheel
-	${PYTHON} -B setup.py install
-	${PYTHON} -B -m pip install ./dist/*.whl
+	${PYTHON} setup.py develop
+	${PYTHON} setup.py sdist
+	
+	${PYTHON} -m pip install ./dist/*.tar.gz
 
 clean:
 	rm -r .pytest_cache
 	rm `find ./ -name '__pycache__'` -rf
 
-# python3 -m twine upload --repository testpypi dist/*
+# python -m twine upload --repository testpypi dist/*

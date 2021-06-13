@@ -137,7 +137,7 @@ class ITEA_summarizer:
         with doc.create(Section(
             NoEscape('Algorithm Hyper-parameters'), numbering=False)):
             
-            doc.append(NoEscape(f"""
+            doc.append(NoEscape(r"""
                 The following hyperparameters were used to execute the
                 algorithm. If the random\_state parameter was set to a 
                 integer value, then it is possible to repeat the exact
