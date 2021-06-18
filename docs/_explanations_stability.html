@@ -107,6 +107,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -476,7 +477,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>Let us start by loading the data set and fitting a simple classifier. Latter, the classifier will be used to explain a single instance and the stability of the explanation will be calculated for different sizes of neighborhoods.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -497,8 +498,6 @@ div.rendered_html tbody tr:hover {
     <span class="s1">&#39;id&#39;</span>       <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
     <span class="s1">&#39;sqrt.abs&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
     <span class="s1">&#39;log&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
-    <span class="s1">&#39;sin&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span>
-    <span class="s1">&#39;cos&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span>
     <span class="s1">&#39;exp&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span>
 <span class="p">}</span>
 
@@ -506,7 +505,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">gens</span>            <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
     <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
@@ -522,16 +521,16 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.51    0.9198          0.96    1min14seg
-5        0.87    0.9538000000000001      0.98    1min10seg
-10       0.94    0.9658          0.99    1min19seg
-15       0.95    0.9824          0.99    1min13seg
-20       0.98    0.9876          0.99    0min57seg
-25       0.97    0.9875999999999999      0.99    0min52seg
-30       0.96    0.9878000000000001      0.99    0min41seg
-35       0.97    0.9882000000000001      0.99    0min34seg
-40       0.97    0.9882000000000002      0.99    0min19seg
-45       0.94    0.9856000000000001      0.99    0min9seg
+0        0.35    0.8707999999999998      0.97    1min23seg
+5        0.95    0.9689999999999998      0.98    1min20seg
+10       0.89    0.9751999999999998      0.98    1min32seg
+15       0.96    0.9788          0.98    1min49seg
+20       0.97    0.9789999999999998      0.98    1min14seg
+25       0.95    0.978   0.98    0min45seg
+30       0.96    0.9785999999999998      0.98    0min41seg
+35       0.97    0.9795999999999999      0.98    0min21seg
+40       0.97    0.9792000000000001      0.98    0min27seg
+45       0.96    0.9789999999999999      0.98    0min11seg
 </pre></div></div>
 </div>
 <section id="Local-explanations-with-the-Partial-Effects">

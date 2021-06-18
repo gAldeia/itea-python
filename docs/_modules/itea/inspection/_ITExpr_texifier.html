@@ -1,0 +1,391 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea.inspection._ITExpr_texifier &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>itea.inspection._ITExpr_texifier</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for itea.inspection._ITExpr_texifier</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author:  Guilherme Aldeia</span>
+<span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
+<span class="c1"># Version: 1.0.2</span>
+<span class="c1"># Last modified: 06-09-2021 by Guilherme Aldeia</span>
+
+
+<span class="sd">&quot;&quot;&quot;ITExpr_texifier class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="ITExpr_texifier"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_texifier">[docs]</a><span class="k">class</span> <span class="nc">ITExpr_texifier</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;class containing static methods to create LaTeX representations of the</span>
+<span class="sd">    expression.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_term_frac</span><span class="p">(</span><span class="n">term</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method that takes an array of exponents and return a string</span>
+<span class="sd">        containing a latex frac with placeholders on the name of the variables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">fi</span><span class="p">,</span> <span class="n">ti</span> <span class="o">=</span> <span class="n">term</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">ti</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> 
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s1">(1.0)&#39;</span>
+
+        <span class="n">num</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39; \cdot &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">fr</span><span class="s1">&#39;var_placeholder_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">^</span><span class="si">{</span> <span class="p">{</span><span class="n">e</span><span class="p">}</span> <span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">den</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39; \cdot &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="sa">fr</span><span class="s1">&#39;var_placeholder_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">^</span><span class="si">{</span> <span class="p">{</span><span class="o">-</span><span class="n">e</span><span class="p">}</span> <span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">if</span> <span class="n">e</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">den</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s1">(&#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;\frac</span><span class="si">{1}</span><span class="s1">{&#39;</span> <span class="o">+</span> <span class="n">den</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;})&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="s1">(&#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;\frac{&#39;</span> <span class="o">+</span> <span class="n">num</span> <span class="o">+</span> <span class="s1">&#39;}{&#39;</span> <span class="o">+</span> <span class="n">den</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;})&#39;</span>
+
+
+<div class="viewcode-block" id="ITExpr_texifier.to_latex"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_texifier.to_latex">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">to_latex</span><span class="p">(</span>
+        <span class="n">itexpr</span><span class="p">,</span> <span class="n">term_separator</span><span class="o">=</span><span class="s1">&#39; + &#39;</span><span class="p">,</span> <span class="n">term_wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Static method that takes an instance of an ``ITExpr`` and returns</span>
+<span class="sd">        a latex representation of the expression.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        itexpr : ITExpr_classifier or ITExpr_regressor</span>
+<span class="sd">            an instance of itexpr to be texified.</span>
+
+<span class="sd">        term_separator : string, default=&#39; + &#39;</span>
+<span class="sd">            string to be used to concatenate each term.</span>
+
+<span class="sd">        term_wrapper : None or Callable, default=None</span>
+<span class="sd">            a function that takes two arguments: ``i`` the index of the term</span>
+<span class="sd">            and ``term`` the term itself, and returns a string. This can be</span>
+<span class="sd">            used to add special formatting to the terms. Examples are:</span>
+
+<span class="sd">            - ``lambda i, term: r&#39;\underbrace{&#39;+term+r&#39;}</span>
+<span class="sd">              _{\text{term &#39;+str(i)+&#39;}}&#39;`` to add a underbracket with the </span>
+<span class="sd">              index of the term;</span>
+<span class="sd">            - ``lambda i, term: term`` to do nothing;</span>
+
+<span class="sd">            When set to None, then the latter expression will be used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        itexpr_latex : string</span>
+<span class="sd">            latex expression representing the given itexpr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">term_wrapper</span><span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_wrapper</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="n">term</span>
+
+        <span class="n">latex_terms</span>  <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">term</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">expr</span><span class="p">):</span>
+            <span class="n">latex_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_wrapper</span><span class="p">(</span>
+                <span class="n">i</span><span class="p">,</span> 
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">beta_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">cdot </span><span class="si">{</span><span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">_term_frac</span><span class="p">(</span><span class="n">term</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">))</span>
+
+        <span class="n">str_it</span> <span class="o">=</span> <span class="n">term_separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">latex_terms</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+                <span class="n">str_it</span> <span class="o">=</span> <span class="n">str_it</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;var_placeholder_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">str_it</span> <span class="o">=</span> <span class="n">str_it</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;var_placeholder_&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">str_it</span> <span class="o">+</span> <span class="s1">&#39; + I_0&#39;</span></div>
+
+
+<div class="viewcode-block" id="ITExpr_texifier.derivatives_to_latex"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_texifier.derivatives_to_latex">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">derivatives_to_latex</span><span class="p">(</span>
+        <span class="n">itexpr</span><span class="p">,</span> <span class="n">term_separator</span><span class="o">=</span><span class="s1">&#39; + &#39;</span><span class="p">,</span> <span class="n">term_wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Static method that takes an instance of an ``ITExpr`` and returns</span>
+<span class="sd">        a list containing a latex representation of each partial derivative</span>
+<span class="sd">        of the expression.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        itexpr : ITExpr_classifier or ITExpr_regressor</span>
+<span class="sd">            an instance of itexpr to be texified.</span>
+
+<span class="sd">        term_separator : string, default=&#39; + &#39;</span>
+<span class="sd">            string to be used to concatenate each term.</span>
+
+<span class="sd">        term_wrapper : None or Callable, default=None</span>
+<span class="sd">            a function that takes two arguments: ``i`` the index of the term</span>
+<span class="sd">            and ``term`` the term itself, and returns a string. This can be</span>
+<span class="sd">            used to add special formatations to the terms. Examples are:</span>
+
+<span class="sd">            - ``lambda i, term: r&#39;\underbrace{&#39;+term+r&#39;}</span>
+<span class="sd">              _{\text{term &#39;+str(i)+&#39;}}&#39;`` to add a underbracket with the </span>
+<span class="sd">              index of the term;</span>
+<span class="sd">            - ``lambda i, term: term`` to do nothing;</span>
+
+<span class="sd">            When set to None, then the latter expression will be used.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        itexpr_latexs : list[string]</span>
+<span class="sd">            list of strings, where each string is a latex representation</span>
+<span class="sd">            of the partial derivative of the given itexpr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="n">term_wrapper</span><span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_wrapper</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="n">term</span>
+
+        <span class="c1"># number of variables is the length of any exponent array</span>
+        <span class="n">n_vars</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">expr</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">latex_derivatives</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_vars</span><span class="p">):</span>
+            <span class="n">latex_terms</span>  <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">term</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">expr</span><span class="p">):</span>
+                <span class="n">fi</span><span class="p">,</span> <span class="n">ti</span> <span class="o">=</span> <span class="n">term</span>
+                <span class="n">term_dx</span> <span class="o">=</span> <span class="n">ti</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                
+                <span class="n">term_dx</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+
+                <span class="c1"># Chain rule</span>
+                <span class="n">inner_dx</span> <span class="o">=</span> <span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">_term_frac</span><span class="p">(</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">term_dx</span><span class="p">)</span> <span class="p">)</span>
+                <span class="n">outer_dx</span> <span class="o">=</span> <span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">_term_frac</span><span class="p">(</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fi</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ti</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">ti</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">latex_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">term_wrapper</span><span class="p">(</span>
+                        <span class="n">i</span><span class="p">,</span> 
+                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ti</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="se">\\</span><span class="s1">beta_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1"> </span><span class="se">\\</span><span class="s1">cdot </span><span class="si">{</span><span class="n">outer_dx</span><span class="si">}{</span><span class="n">inner_dx</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latex_terms</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">str_it</span> <span class="o">=</span> <span class="n">term_separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">latex_terms</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">str_it</span> <span class="o">=</span> <span class="s1">&#39;0.0&#39;</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+                    <span class="n">str_it</span> <span class="o">=</span> <span class="n">str_it</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;var_placeholder_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">str_it</span> <span class="o">=</span> <span class="n">str_it</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;var_placeholder_&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+            <span class="n">latex_derivatives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">str_it</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">latex_derivatives</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

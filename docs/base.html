@@ -111,6 +111,7 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -206,7 +207,7 @@
 <span id="itea-base"></span><h1>itea._base<a class="headerlink" href="#module-itea._base" title="Permalink to this headline">¶</a></h1>
 <p>Interaction Transformation Base classes</p>
 <p>Implementation of two base classes to be inherited and specialized for each
-regression and classification tasks.</p>
+regression and classification task.</p>
 <p>This sub-module does not export any of the implementations, since it is intended
 for internal usage.</p>
 <p><strong>Sub-module contents:</strong></p>
@@ -221,19 +222,19 @@ for internal usage.</p>
 <span id="baseitea-docs"></span><h2><a class="toc-backref" href="#id1">BaseITEA</a><a class="headerlink" href="#baseitea" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea._base.BaseITEA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>Base class to be inherited for classification and regression tasks.</p>
 <p>This class implements argument checks and generic evolutionary methods
-(population initialization, selection, mutation and evolution), along with
+(population initialization, selection, mutation, and evolution), along with
 three virtual methods to be implemented.</p>
 <p>Ideally, this class should never be instantiated, only its derivations.</p>
-<p>Its derivations will be scikit estimators, and can be used in many scikit
-methods such as gridsearch or pipelines.</p>
+<p>Its derivations will be scikit estimators and can be used in many scikit
+methods such as grid-search or pipelines.</p>
 <p>Every argument is a named argument. The list of arguments includes
 everything that an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> class needs to be instantiated.</p>
 <p>All arguments have a default value. In this configuration, the
-evolutionary process will search only for polinomials.</p>
+evolutionary process will search only for polynomials.</p>
 <p>Constructor method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -251,17 +252,17 @@ method to be used before fitting expressions
 through the evolutionary process. When set to
 None, the simplification step is disabled.</p></li>
 <li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>None</em><em> or </em><em>numpy.random_state</em><em>, </em><em>default=None</em>) – int or numpy random state. Use this argument
-to have reproductible results across different
+to have reproducible results across different
 executions. When None, a random state instance
-will be created and used, and can be accessed
+will be created and used and can be accessed
 by <code class="docutils literal notranslate"><span class="pre">itea.random_state</span></code>.</p></li>
 <li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>None</em><em> or </em><em>False</em><em>, </em><em>default=None</em>) – specify if the algorithm should perform the evolution
-silently or if it should print informations through the
-process. When verbose is None, False or 0, the algorithm
-will not print informations. If verbose is an integer
+silently or if it should print information through the
+process. When verbose is None, False, or 0, the algorithm
+will not print any information. If verbose is an integer
 <code class="docutils literal notranslate"><span class="pre">n</span></code>, then every <code class="docutils literal notranslate"><span class="pre">n</span></code> generations the algorithm will
 print the status of the generation. If verbose is set
-to -1, every generation will print informations.</p></li>
+to -1, every generation information will be printed.</p></li>
 <li><p><strong>labels</strong> (<em>list of strings</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – (<code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> parameter) list containing the labels of the
 data that will be used in the evolutionary process, and
 will be used in <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> constructors.</p></li>
@@ -271,7 +272,7 @@ evolutionary process. Should always be a dict where the
 keys are the names of the transformation functions and
 the values are unary vectorized functions (for example,
 numpy functions). For user-defined functions, see
-numpy.vectorize for more informations on how to vectorize
+numpy.vectorize for more information on how to vectorize
 your transformation functions. Defaults to a dict with
 only the identity function.</p></li>
 <li><p><strong>tfuncs_dx</strong> (<em>dict</em><em>, </em><em>default=None</em>) – (ITExpr_explainer parameter) derivatives of the
@@ -287,20 +288,20 @@ through jax to create the derivatives.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITEA.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITEA.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>virtual fit method. Should be overriden by sub-classes.</p>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>virtual fit method. Should be overridden by sub-classes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITEA.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITEA.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>virtual predict method. Should be overriden by sub-classes.</p>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>virtual predict method. Should be overridden by sub-classes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITEA.predict_proba">
-<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITEA.predict_proba" title="Permalink to this definition">¶</a></dt>
-<dd><p>virtual predict_proba method. Should be overriden by sub-classes.</p>
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>virtual predict_proba method. Should be overridden by sub-classes.</p>
 </dd></dl>
 
 </dd></dl>
@@ -311,29 +312,29 @@ through jax to create the derivatives.</p></li>
 <span id="baseitexpr-docs"></span><h2><a class="toc-backref" href="#id2">BaseITExpr</a><a class="headerlink" href="#baseitexpr" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITExpr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITExpr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>This class describes the structure that an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> should have, and
-implements only the methods that have similar behaviour for classification
+implements only the methods that have similar behavior for classification
 and regression.</p>
 <p>The ITEA implementations for classification and regression will create
 a population of <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> instances and evolve this population to find a
 final best solution <code class="docutils literal notranslate"><span class="pre">itea.bestsol_</span></code>.</p>
-<p>The best solution will be a scikit estimator, and can be used in many scikit
+<p>The best solution will be a scikit estimator and can be used in many scikit
 methods. It can also be used to create ICE and PDP plots, which are
 particularly interesting to complement explanations given by the
 <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <p>Methods that should be specialized are created as virtual methods.</p>
-<p>In practice, this class should never be instanciated.</p>
+<p>In practice, this class should never be instantiated.</p>
 <p>Constructor method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>expr</strong> (<em>list of Tuple</em><em>[</em><em>Transformation</em><em>, </em><em>Interaction</em><em>]</em>) – <p>list if IT terms to create an IT expression.</p>
-<p>A IT term is the tuple <img class="math" src="_images/math/ea89419318680863d1c88f9aff0d228e28c5faa6.png" alt="(t, p)"/>, where
-<img class="math" src="_images/math/36f9f540c21d2345cbf9faf3ba4d3dc3b7e91e08.png" alt="t : \mathbb{R} \rightarrow \mathbb{R}"/> is an unary function
-called <strong>transformation</strong> function,  and <img class="math" src="_images/math/0cf7ed90618aca825f73b5df72a4b7a846b01383.png" alt="p \in \mathbb{R}^d"/> is
-an vector of size <img class="math" src="_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/>, where <img class="math" src="_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/> is the number of
+<li><p><strong>expr</strong> (<em>list of Tuple</em><em>[</em><em>Transformation</em><em>, </em><em>Interaction</em><em>]</em>) – <p>list of IT terms to create an IT expression.</p>
+<p>An IT term is the tuple <img class="math" src="_images/math/ea89419318680863d1c88f9aff0d228e28c5faa6.png" alt="(t, p)"/>, where
+<img class="math" src="_images/math/36f9f540c21d2345cbf9faf3ba4d3dc3b7e91e08.png" alt="t : \mathbb{R} \rightarrow \mathbb{R}"/> is a unary function
+called <strong>transformation</strong> function,  and <img class="math" src="_images/math/0cf7ed90618aca825f73b5df72a4b7a846b01383.png" alt="p \in \mathbb{R}^d"/>
+is a vector of size <img class="math" src="_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/>, where <img class="math" src="_images/math/badad346f6fbe2e237af99bfbd9a93a4da53a3da.png" alt="d"/> is the number of
 variables of the problem. The tuple contains the information to
 create an expression:</p>
 <p><img class="math" src="_images/math/2b8d7471700a084acd8a5fc50ef081dd8f9eb0fa.png" alt="ITterm(x) = t \circ p(x),"/></p>
@@ -341,17 +342,17 @@ create an expression:</p>
 <p><img class="math" src="_images/math/dbe5271fb93a314e8fb213a553601f8c8dd013d2.png" alt="p(x) = \prod_{i=1}^{d} x_{i}^{k_{i}}."/></p>
 <p>Each IT term is a tuple containing the name of the transformation
 function and a list of exponents to be used in the interaction
-funcion.</p>
+function.</p>
 <p>The whole expression is evaluated as</p>
 <p><img class="math" src="_images/math/d4568985d6e8cd1a37de2aa05f1f52e0bdbe1859.png" alt="f(x) = \sum_{i=1}^{n} w_i \cdot t_i \circ p_i(x),"/></p>
-<p>with <img class="math" src="_images/math/00ab1d47834bf57ac5b018a21ace10aae5798cfd.png" alt="w_i"/> being an coefficient to be adjusted with the
+<p>with <img class="math" src="_images/math/00ab1d47834bf57ac5b018a21ace10aae5798cfd.png" alt="w_i"/> being a coefficient to be adjusted with the
 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method, and <img class="math" src="_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> the number of terms.</p>
 </p></li>
 <li><p><strong>tfuncs</strong> (<em>dict</em>) – should always be a dict where the
 keys are the names of the transformation functions and
 the values are unary vectorized functions (for example,
 numpy functions). For user-defined functions, see
-numpy.vectorize for more informations on how to vectorize
+numpy.vectorize for more information on how to vectorize
 your transformation functions.</p></li>
 <li><p><strong>labels</strong> (<em>list of strings</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – list containing the labels of the variables that will be used.
 When the list of labels is empty, the variables are named
@@ -361,7 +362,7 @@ When the list of labels is empty, the variables are named
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.complexity">
-<span class="sig-name descname"><span class="pre">complexity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.complexity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">complexity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.complexity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.complexity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to calculate the IT expression size as if it was an expression
 tree, like the conventional representation for symbolic regression.</p>
 <p>Some simplifications will be made (the same that we do in <code class="docutils literal notranslate"><span class="pre">to_str()</span></code>),
@@ -369,7 +370,7 @@ so the complexity value corresponds to the string returned by the
 method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>complexity</strong> – the number of nodes that an symbolic tree would have if the
+<dd class="field-odd"><p><strong>complexity</strong> – the number of nodes that a symbolic tree would have if the
 IT expression was converted to it.</p>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -380,24 +381,24 @@ IT expression was converted to it.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.covariance_matrix">
-<span class="sig-name descname"><span class="pre">covariance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.covariance_matrix" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">covariance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.covariance_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.covariance_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>virtual method to estimate the covariance matrix.
-Should be overriden by sub-classes.</p>
+Should be overridden by sub-classes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>virtual fit method. Should be overriden by sub-classes.</p>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>virtual fit method. Should be overridden by sub-classes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.gradient">
-<span class="sig-name descname"><span class="pre">gradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs_dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.gradient" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">gradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs_dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.gradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.gradient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to evaluate the gradient of the IT expression for all
-data points in <code class="docutils literal notranslate"><span class="pre">X</span></code>. The gradients are usefull for the
-<code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code> class, that calculates features importances
-and generate plots using the gradient informations.</p>
+data points in <code class="docutils literal notranslate"><span class="pre">X</span></code>. The gradients are useful for the
+<code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code> class, which calculates feature importances
+and generate plots using the gradient information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -409,8 +410,8 @@ representing its derivative.</p></li>
 <li><p><strong>logit</strong> (<em>boolean</em><em>, </em><em>default=False</em>) – <p>boolean variable indicating if the IT expression is being used
 as a linear model or as a linear method of a logistic regression
 predictor. When it is true, then we must consider the derivative
-of the logistigc regression.</p>
-<p>let <img class="math" src="_images/math/3a5acf4b1c77fe807e47b4bc369ebd30b230d63d.png" alt="it(x)"/> be the IT expression. Is is used in a logit model:</p>
+of the logistic regression.</p>
+<p>let <img class="math" src="_images/math/3a5acf4b1c77fe807e47b4bc369ebd30b230d63d.png" alt="it(x)"/> be the IT expression. It is used in a logit model:</p>
 <p><img class="math" src="_images/math/3d8e3873d9f4520e1efaec7d0f1e531f4bc497f7.png" alt="logit(x) = \frac{1}{1 + e^{-it(x)}}"/></p>
 <p>The partial derivative needed to calculate the gradient is:</p>
 <p><img class="math" src="_images/math/0574f5a7b7db4806a425c839fb66cdbc1a599034.png" alt="\frac{\partial}{\partial x_i} logit(x)"/></p>
@@ -441,28 +442,28 @@ the class j in multi-class classification:
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>virtual predict method. Should be overriden by sub-classes.</p>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>virtual predict method. Should be overridden by sub-classes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.predict_proba">
-<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.predict_proba" title="Permalink to this definition">¶</a></dt>
-<dd><p>virtual predict_proba method. Should be overriden by sub-classes.</p>
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.predict_proba" title="Permalink to this definition">¶</a></dt>
+<dd><p>virtual predict_proba method. Should be overridden by sub-classes.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.to_str">
-<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">places</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term_separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#itea._base.BaseITExpr.to_str" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">places</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">term_separator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.to_str" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to represent the IT expression as a string.</p>
 <p>The variable names used are the ones given to <code class="docutils literal notranslate"><span class="pre">labels</span></code> in the
 constructor.</p>
 <p>Some simplifications are made to omit trivial operations:</p>
 <ul class="simple">
-<li><p>if an variable has zero as exponent, it is omited (since it will
+<li><p>if a variable has zero as an exponent, it is omitted (since it will
 eval to 1 regardless of the x value);</p></li>
 <li><p>if the coefficient (or all coefficients, in the multi-class task)
-is zero, the whole term is omited.</p></li>
+is zero, the whole term is omitted.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

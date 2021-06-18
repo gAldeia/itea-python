@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea.inspection._ITExpr_inspector &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>itea.inspection._ITExpr_inspector</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for itea.inspection._ITExpr_inspector</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author:  Guilherme Aldeia</span>
+<span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
+<span class="c1"># Version: 1.0.1</span>
+<span class="c1"># Last modified: 06-17-2021 by Guilherme Aldeia</span>
+
+
+<span class="sd">&quot;&quot;&quot;ITExpr_inspector class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span>     <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span>          <span class="kn">import</span> <span class="n">mutual_info_score</span>
+
+
+<div class="viewcode-block" id="ITExpr_inspector"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_inspector">[docs]</a><span class="k">class</span> <span class="nc">ITExpr_inspector</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;class ITExpr_inspector.</span>
+<span class="sd">    </span>
+<span class="sd">    Based on a more statistical approach, this class </span>
+<span class="sd">    implements methods to measure the quality of the final expression by</span>
+<span class="sd">    calculating information between individual terms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">itexpr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">decimal_places</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        itexpr : ITExpr_regressor or ITExpr_classifier</span>
+<span class="sd">            fitted instance of an ``ITExpr`` class to be explained.</span>
+<span class="sd">        </span>
+<span class="sd">        tfuncs : dict</span>
+<span class="sd">            transformations functions. Should always</span>
+<span class="sd">            be a dict where the keys are the names of the transformation</span>
+<span class="sd">            functions and the values are unary vectorized functions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span>         <span class="o">=</span> <span class="n">itexpr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span>         <span class="o">=</span> <span class="n">tfuncs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span> <span class="o">=</span> <span class="n">decimal_places</span>
+
+
+<div class="viewcode-block" id="ITExpr_inspector.fit"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_inspector.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit method to store the data used in the training of the given</span>
+<span class="sd">        itexpr instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            data used to train the itexpr model.</span>
+
+<span class="sd">        y : array-like of shape (n_samples, )</span>
+<span class="sd">            target data used to train the itexpr model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : ITExpr_inspector</span>
+<span class="sd">            inspector with the calculated covariance matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">=</span> <span class="n">y</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">varcovar_beta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">covariance_matrix</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">varcovar_beta</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">varcovar_beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">varcovar_beta</span><span class="p">])</span>
+
+        <span class="c1"># Matrix containing each term evaluation on training data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>   </div>
+
+
+    <span class="k">def</span> <span class="nf">_coef_stderr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for estimating the standard error of the coefficients.</span>
+
+<span class="sd">        The estimated standard deviations will be calculated by taking the</span>
+<span class="sd">        square root from the main diagonal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">stderrs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">varcovar_beta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">stderrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">varcovar_beta</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stderrs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">stderrs</span> <span class="o">=</span> <span class="n">stderrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">stderr</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">stderr</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stderrs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+
+
+    <span class="k">def</span> <span class="nf">_disentanglement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method for calculating the mean disentanglement for each term.</span>
+<span class="sd">        </span>
+<span class="sd">        The mean disentanglement is the mean Pearson&#39;s correlation between</span>
+<span class="sd">        the term of interest and the remaining terms.</span>
+
+<span class="sd">        The disentanglement (measured by the collinearity between the generated</span>
+<span class="sd">        features) was proposed in &quot;Learning feature spaces for regression with</span>
+<span class="sd">        genetic programming&quot;. The idea is that, when creating new features, a</span>
+<span class="sd">        disentangled representation ideally contains a minimal set of features.</span>
+<span class="sd">        In this paper, the authors tries to minimize collinearity between</span>
+<span class="sd">        features in order to promote disentanglement.</span>
+
+<span class="sd">        This metric is reported to indicate if there is a high degree of</span>
+<span class="sd">        disentanglement on the expression.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This calculation was proposed in</span>
+<span class="sd">        &quot;La Cava, W., Moore, J.H. Learning feature spaces for regression with</span>
+<span class="sd">        genetic programming. Genet Program Evolvable Mach 21, 433–467 (2020)&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+
+        <span class="n">disentanglements</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span><span class="p">):</span>
+
+            <span class="n">col_disentanglement</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">col_to_compare</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">col_to_compare</span><span class="p">:</span>
+                    <span class="n">corr</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">[:,</span> <span class="n">col</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">[:,</span> <span class="n">col_to_compare</span><span class="p">])</span>
+                    
+                    <span class="c1"># Pearson&#39;s correlation divides by the std, and the</span>
+                    <span class="c1"># existante of a result is not guaranted. We&#39;ll consider</span>
+                    <span class="c1"># a zero correlation in this cases</span>
+                    <span class="n">corr</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="k">else</span> <span class="n">corr</span><span class="o">**</span><span class="mi">2</span>
+                    
+                    <span class="n">col_disentanglement</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+
+            <span class="n">disentanglements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">col_disentanglement</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">disentanglements</span>
+
+
+    <span class="k">def</span> <span class="nf">_pred_var</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to calculate the variance of the predictions each term</span>
+<span class="sd">        produces on the training data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
+            <span class="n">variances</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">intercept</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">):</span>
+                
+                <span class="n">variances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">*</span> <span class="p">(</span><span class="n">coef</span> <span class="o">+</span> <span class="p">[</span><span class="n">intercept</span><span class="p">]),</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">))</span>
+
+            <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">))</span>
+                    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">variances</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Z</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">coef_</span> <span class="o">+</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">]),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_continuous_mutual_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to calculate the mean continuous mutual information for </span>
+<span class="sd">        each term. The mutual information is calculated between the term of</span>
+<span class="sd">        interest and the remaining terms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+            
+        <span class="n">mutual_informations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span><span class="p">):</span>
+
+            <span class="n">col_mutual_information</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">col_to_compare</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">n_terms</span><span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">col</span> <span class="o">!=</span> <span class="n">col_to_compare</span><span class="p">:</span>
+                    <span class="n">bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">))))</span>
+                    
+                    <span class="c1"># first element is a histogram</span>
+                    <span class="n">c_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">[:,</span> <span class="n">col</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">Z</span><span class="p">[:,</span> <span class="n">col_to_compare</span><span class="p">],</span>
+                        <span class="n">bins</span>
+                    <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    
+                    <span class="n">col_mutual_information</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">mutual_info_score</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">contingency</span><span class="o">=</span><span class="n">c_xy</span><span class="p">)</span>
+                    <span class="p">)</span>
+
+            <span class="n">mutual_informations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">col_mutual_information</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">mutual_informations</span>
+
+
+<div class="viewcode-block" id="ITExpr_inspector.terms_analysis"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_inspector.terms_analysis">[docs]</a>    <span class="k">def</span> <span class="nf">terms_analysis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to calculate different metrics for the terms composing</span>
+<span class="sd">        the IT expression.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        analysis : dict</span>
+<span class="sd">            returns a dictionary containing several term information</span>
+<span class="sd">            and metrics calculated for each term:</span>
+
+<span class="sd">            - coef: coefficient of each term (or coefficients, if the</span>
+<span class="sd">              itexpr is an instance of ``ITExpr_classifier``);</span>
+<span class="sd">            - func: transformation function of each term;</span>
+<span class="sd">            - strengths: the exponents of each term;</span>
+<span class="sd">            - coef stderr.: the standard error of the coefficients;</span>
+<span class="sd">            - mean pairwise disentanglement: the mean disentanglement between</span>
+<span class="sd">              each term when compared with the others;</span>
+<span class="sd">            - mean mutual information: the mean continuous mutual information</span>
+<span class="sd">              between each term when compared with the others;</span>
+<span class="sd">            - prediction var.: the variance of the predicted outcomes for</span>
+<span class="sd">              each term when predicting the training data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="n">coefs</span><span class="p">,</span> <span class="n">funcs</span><span class="p">,</span> <span class="n">strengths</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">wi</span><span class="p">,</span> <span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">ti</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">expr</span><span class="p">):</span>
+            
+            <span class="n">funcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fi</span><span class="p">)</span>
+            <span class="n">strengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ti</span><span class="p">))</span>
+            
+            <span class="n">coefs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">wi</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">)))</span>
+
+        <span class="c1"># Calculating statistics related to the intercept</span>
+        <span class="n">coefs</span>        <span class="o">=</span> <span class="n">coefs</span> <span class="o">+</span> <span class="p">[</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decimal_places</span><span class="p">))]</span>
+        <span class="n">funcs</span>        <span class="o">=</span> <span class="n">funcs</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;intercept&#39;</span><span class="p">]</span>
+        <span class="n">strengths</span>    <span class="o">=</span> <span class="n">strengths</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;---&#39;</span><span class="p">]</span>
+        <span class="n">disentangles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disentanglement</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+        <span class="n">mutual_info</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_continuous_mutual_info</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;coef&#39;</span>                           <span class="p">:</span> <span class="n">coefs</span><span class="p">,</span>
+            <span class="s1">&#39;func&#39;</span>                           <span class="p">:</span> <span class="n">funcs</span><span class="p">,</span>
+            <span class="s1">&#39;strengths&#39;</span>                      <span class="p">:</span> <span class="n">strengths</span><span class="p">,</span> 
+            <span class="s1">&#39;coef</span><span class="se">\n</span><span class="s1">stderr.&#39;</span>                  <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coef_stderr</span><span class="p">(),</span>
+            <span class="s1">&#39;mean pairwise</span><span class="se">\n</span><span class="s1">disentanglement&#39;</span> <span class="p">:</span> <span class="n">disentangles</span><span class="p">,</span>
+            <span class="s1">&#39;mean mutual</span><span class="se">\n</span><span class="s1">information&#39;</span>       <span class="p">:</span> <span class="n">mutual_info</span><span class="p">,</span>
+            <span class="s1">&#39;prediction</span><span class="se">\n</span><span class="s1">var.&#39;</span>               <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pred_var</span><span class="p">(),</span>
+        <span class="p">}</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

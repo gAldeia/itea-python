@@ -41,7 +41,7 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.imgmath',
     'nbsphinx',
-    'nbsphinx_link'
+    'sphinx.ext.viewcode'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

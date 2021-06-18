@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea._base._BaseITExpr &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>itea._base._BaseITExpr</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for itea._base._BaseITExpr</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author:  Guilherme Aldeia</span>
+<span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
+<span class="c1"># Version: 1.0.1</span>
+<span class="c1"># Last modified: 06-13-2021 by Guilherme Aldeia</span>
+
+
+<span class="sd">&quot;&quot;&quot;Base class to represent an IT expression.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span>             <span class="kn">import</span> <span class="n">BaseEstimator</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span>
+
+
+<div class="viewcode-block" id="BaseITExpr"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr">[docs]</a><span class="k">class</span> <span class="nc">BaseITExpr</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class describes the structure that an ``ITExpr`` should have, and</span>
+<span class="sd">    implements only the methods that have similar behavior for classification</span>
+<span class="sd">    and regression.</span>
+
+<span class="sd">    The ITEA implementations for classification and regression will create</span>
+<span class="sd">    a population of ``ITExpr`` instances and evolve this population to find a</span>
+<span class="sd">    final best solution ``itea.bestsol_``.</span>
+
+<span class="sd">    The best solution will be a scikit estimator and can be used in many scikit</span>
+<span class="sd">    methods. It can also be used to create ICE and PDP plots, which are</span>
+<span class="sd">    particularly interesting to complement explanations given by the</span>
+<span class="sd">    ``ITExpr_explainer``.</span>
+
+<span class="sd">    Methods that should be specialized are created as virtual methods.</span>
+
+<span class="sd">    In practice, this class should never be instantiated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        expr : list of Tuple[Transformation, Interaction]</span>
+<span class="sd">            list of IT terms to create an IT expression.</span>
+<span class="sd">            </span>
+<span class="sd">            An IT term is the tuple :math:`(t, p)`, where</span>
+<span class="sd">            :math:`t : \mathbb{R} \rightarrow \mathbb{R}` is a unary function</span>
+<span class="sd">            called **transformation** function,  and :math:`p \in \mathbb{R}^d`</span>
+<span class="sd">            is a vector of size :math:`d`, where :math:`d` is the number of</span>
+<span class="sd">            variables of the problem. The tuple contains the information to</span>
+<span class="sd">            create an expression:</span>
+
+<span class="sd">            :math:`ITterm(x) = t \circ p(x),`</span>
+
+<span class="sd">            and :math:`p` is the **interaction** of the variables:</span>
+<span class="sd">            </span>
+<span class="sd">            :math:`p(x) = \prod_{i=1}^{d} x_{i}^{k_{i}}.`</span>
+
+<span class="sd">            Each IT term is a tuple containing the name of the transformation</span>
+<span class="sd">            function and a list of exponents to be used in the interaction</span>
+<span class="sd">            function.</span>
+
+<span class="sd">            The whole expression is evaluated as </span>
+
+<span class="sd">            :math:`f(x) = \sum_{i=1}^{n} w_i \cdot t_i \circ p_i(x),`</span>
+
+<span class="sd">            with :math:`w_i` being a coefficient to be adjusted with the</span>
+<span class="sd">            ``fit()`` method, and :math:`n` the number of terms.</span>
+
+<span class="sd">        tfuncs : dict</span>
+<span class="sd">            should always be a dict where the</span>
+<span class="sd">            keys are the names of the transformation functions and </span>
+<span class="sd">            the values are unary vectorized functions (for example,</span>
+<span class="sd">            numpy functions). For user-defined functions, see</span>
+<span class="sd">            numpy.vectorize for more information on how to vectorize</span>
+<span class="sd">            your transformation functions.</span>
+
+<span class="sd">        labels : list of strings, default=[]</span>
+<span class="sd">            list containing the labels of the variables that will be used.</span>
+<span class="sd">            When the list of labels is empty, the variables are named</span>
+<span class="sd">            :math:`x_0, x_1, \cdots`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">expr</span>    <span class="o">=</span> <span class="n">expr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span>  <span class="o">=</span> <span class="n">labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span>  <span class="o">=</span> <span class="n">tfuncs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+
+        <span class="c1"># attributes that are changed by fit method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span> 
+
+
+<div class="viewcode-block" id="BaseITExpr.to_str"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.to_str">[docs]</a>    <span class="k">def</span> <span class="nf">to_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">places</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">term_separator</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Method to represent the IT expression as a string.</span>
+
+<span class="sd">        The variable names used are the ones given to ``labels`` in the </span>
+<span class="sd">        constructor.</span>
+
+<span class="sd">        Some simplifications are made to omit trivial operations:</span>
+
+<span class="sd">        - if a variable has zero as an exponent, it is omitted (since it will</span>
+<span class="sd">          eval to 1 regardless of the x value);</span>
+<span class="sd">        - if the coefficient (or all coefficients, in the multi-class task)</span>
+<span class="sd">          is zero, the whole term is omitted.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        places : int, default=3</span>
+<span class="sd">            Number of decimal places to round the coefficients when printing</span>
+<span class="sd">            the expression.</span>
+
+<span class="sd">        term_separator : string or None, default=None</span>
+<span class="sd">            string that will be used to contatenate each term. Suggestions</span>
+<span class="sd">            are ``[&#39;\n&#39;, &#39; + &#39;, &#39;, &#39;]``. If set to None, then the separator</span>
+<span class="sd">            used is ``&#39; + &#39;`` .</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">term_separator</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">term_separator</span> <span class="o">=</span> <span class="s2">&quot; + &quot;</span>
+
+        <span class="c1"># If is not fitted, the method will use placeholder coefs and intercept</span>
+        <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
+            <span class="n">coefs</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+            <span class="n">intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+            
+        <span class="n">str_terms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="p">(</span><span class="n">fi_str</span><span class="p">,</span> <span class="n">ti</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefs</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">w</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">continue</span>
+            
+            <span class="n">w_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">places</span><span class="p">)</span><span class="si">}</span><span class="s2">*&quot;</span>
+
+            <span class="n">t_str</span> <span class="o">=</span> <span class="s2">&quot; * &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="sa">f</span><span class="s2">&quot;placeholder_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;^</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">t</span><span class="o">!=</span><span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">if</span> <span class="n">t</span><span class="o">!=</span><span class="mi">0</span>
+            <span class="p">])</span>
+
+            <span class="n">str_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">w_str</span><span class="si">}{</span><span class="n">fi_str</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">t_str</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+        <span class="n">expr_str</span> <span class="o">=</span> <span class="n">term_separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">str_terms</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+                <span class="n">expr_str</span> <span class="o">=</span> <span class="n">expr_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;placeholder_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">expr_str</span> <span class="o">=</span> <span class="n">expr_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;placeholder_&quot;</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">expr_str</span>  <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">term_separator</span><span class="si">}{</span><span class="n">intercept</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">places</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Method to evaluate each IT term on a given data set.</span>
+
+<span class="sd">        This makes the mapping from the original variable space to the</span>
+<span class="sd">        IT expression space.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
+<span class="sd">            data set to be evaluated</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Z : numpy.array of shape (n_samples, n_terms)</span>
+<span class="sd">            the Z matrix will have one column for each IT term in the</span>
+<span class="sd">            expression, where the column ``Z[:, i]`` is the evaluation of</span>
+<span class="sd">            the i-th term for all samples.</span>
+
+<span class="sd">            This translates to:</span>
+
+<span class="sd">            :math:`Z_{(:, i)} = t_i \circ p_i(x).`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">ti</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">expr</span> <span class="p">):</span>
+            <span class="n">Z</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">[</span><span class="n">fi</span><span class="p">](</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ti</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Z</span>
+
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overload of the ``__str__`` method. Calls ``itexpr.to_string()``</span>
+<span class="sd">        method with the default values for the arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_str</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="BaseITExpr.complexity"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.complexity">[docs]</a>    <span class="k">def</span> <span class="nf">complexity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to calculate the IT expression size as if it was an expression</span>
+<span class="sd">        tree, like the conventional representation for symbolic regression.</span>
+
+<span class="sd">        Some simplifications will be made (the same that we do in ``to_str()``),</span>
+<span class="sd">        so the complexity value corresponds to the string returned by the </span>
+<span class="sd">        method.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        complexity : int</span>
+<span class="sd">            the number of nodes that a symbolic tree would have if the</span>
+<span class="sd">            IT expression was converted to it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;coef_&quot;</span><span class="p">):</span>
+            <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+
+        <span class="n">tlen</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">ti</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">coefs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expr</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">coef</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># coef, multiplication and transformation function</span>
+            <span class="n">tlen</span> <span class="o">+=</span> <span class="mi">3</span>
+
+            <span class="c1"># exponents != [0, 1] always are a 3 node subtree</span>
+            <span class="n">tlen</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">3</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ti</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+            <span class="c1"># when exponent is 1, then x^1 = x and we consider only 1 node</span>
+            <span class="n">tlen</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ti</span> <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># exponents equals to 0 are discarded, since x^0 = 1</span>
+
+            <span class="c1"># multiplication between each variable in the interaction</span>
+            <span class="n">tlen</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ti</span> <span class="k">if</span> <span class="n">t</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+            
+        <span class="c1"># sum between terms and the intercept</span>
+        <span class="k">return</span> <span class="n">tlen</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span></div>
+        
+
+<div class="viewcode-block" id="BaseITExpr.gradient"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">tfuncs_dx</span><span class="p">,</span> <span class="n">logit</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Method to evaluate the gradient of the IT expression for all</span>
+<span class="sd">        data points in ``X``. The gradients are useful for the</span>
+<span class="sd">        ``ITExpr_explainer`` class, which calculates feature importances</span>
+<span class="sd">        and generate plots using the gradient information.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
+<span class="sd">            points to evaluate the gradients.</span>
+
+<span class="sd">        tfuncs_dx : dict </span>
+<span class="sd">            dictionary like ``tfuncs`` , where the key is the name of the</span>
+<span class="sd">            function (should have the derivatives of every function in</span>
+<span class="sd">            tfuncs) and the value is a vectorized function</span>
+<span class="sd">            representing its derivative.</span>
+
+<span class="sd">        logit : boolean, default=False</span>
+<span class="sd">            boolean variable indicating if the IT expression is being used</span>
+<span class="sd">            as a linear model or as a linear method of a logistic regression</span>
+<span class="sd">            predictor. When it is true, then we must consider the derivative</span>
+<span class="sd">            of the logistic regression.</span>
+
+<span class="sd">            let :math:`it(x)` be the IT expression. It is used in a logit model:</span>
+
+<span class="sd">            :math:`logit(x) = \frac{1}{1 + e^{-it(x)}}`</span>
+
+<span class="sd">            The partial derivative needed to calculate the gradient is:</span>
+
+<span class="sd">            :math:`\frac{\partial}{\partial x_i} logit(x)`</span>
+
+<span class="sd">            :math:`\Rightarrow \frac{e^{it(x)} it&#39;(x)}{(e^{it(x)} + 1)^2}`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nabla : numpy.array of shape (n_classes, n_samples, n_features)</span>
+<span class="sd">            returns a 3-dimensional array. For regression and binary</span>
+<span class="sd">            classification, ``n_classes=1``. Each line of the matrix inside</span>
+<span class="sd">            ``nabla[i]`` is the gradient evaluated to the corresponding</span>
+<span class="sd">            sample in X.</span>
+
+<span class="sd">            To ilustrate:</span>
+
+<span class="sd">            - Gradient of observation i for regression:</span>
+<span class="sd">              ``gradients(X, tfuncs_dx)[1, i, :]``</span>
+<span class="sd">            - Gradient of observation i according to coefficients to classify</span>
+<span class="sd">              the class j in multi-class classification:</span>
+<span class="sd">              ``gradients(X, tfuncs_dx, logit=True)[j, i, :]``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="c1"># the gradients can be calculated even before fit</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;intercept_&quot;</span><span class="p">):</span>
+            <span class="n">intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+
+        <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;coef_&quot;</span><span class="p">):</span>
+            <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+
+        <span class="c1"># if coefs.ndim==1, then it is a regression ITExpr. Let&#39;s make it 2d</span>
+        <span class="k">if</span> <span class="n">coefs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">coefs</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="c1"># Storing the gradient of each term            </span>
+        <span class="n">term_gradients</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># i iterates over terms, j over variables</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+
+            <span class="c1"># evaluating the partial derivative w.r.t each variable</span>
+            <span class="n">g_partialx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">fi</span><span class="p">,</span> <span class="n">ti</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">expr</span> <span class="p">):</span>
+        
+                <span class="n">ti_aux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span>
+                <span class="n">ti_aux</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ti_aux</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+                
+                <span class="n">pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ti</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># avoid multiply zero and nan, would result in nan</span>
+                <span class="k">if</span> <span class="n">ti</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">pi_partialx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pi_partialx</span> <span class="o">=</span> <span class="n">ti</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">ti_aux</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">g_partialx</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">tfuncs_dx</span><span class="p">[</span><span class="n">fi</span><span class="p">](</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">pi_partialx</span>
+
+            <span class="n">term_gradients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g_partialx</span><span class="p">)</span>
+
+        <span class="n">gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">term_gradients</span><span class="p">,</span> <span class="n">coef</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">coef</span> <span class="ow">in</span> <span class="n">coefs</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">logit</span><span class="p">:</span>
+            <span class="n">it_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">coefs</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">intercept</span>
+
+            <span class="k">for</span> <span class="n">c_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span> <span class="c1"># number of classes</span>
+                <span class="k">for</span> <span class="n">x_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span> <span class="c1"># number of variables</span>
+                    <span class="n">gradients</span><span class="p">[</span><span class="n">c_idx</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">it_eval</span><span class="p">)[:,</span> <span class="n">c_idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">gradients</span><span class="p">[</span><span class="n">c_idx</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_idx</span><span class="p">],</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">it_eval</span><span class="p">)[:,</span> <span class="n">c_idx</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                    <span class="p">)</span>
+            
+        <span class="k">return</span> <span class="n">gradients</span></div>
+
+
+<div class="viewcode-block" id="BaseITExpr.covariance_matrix"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual method to estimate the covariance matrix.</span>
+<span class="sd">        Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BaseITExpr.fit"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual fit method. Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BaseITExpr.predict"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual predict method. Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BaseITExpr.predict_proba"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITExpr.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual predict_proba method. Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

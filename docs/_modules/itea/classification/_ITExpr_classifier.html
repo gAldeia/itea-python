@@ -1,0 +1,433 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea.classification._ITExpr_classifier &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>itea.classification._ITExpr_classifier</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for itea.classification._ITExpr_classifier</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author:  Guilherme Aldeia</span>
+<span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
+<span class="c1"># Version: 1.0.0</span>
+<span class="c1"># Last modified: 05-31-2021 by Guilherme Aldeia</span>
+
+
+<span class="sd">&quot;&quot;&quot;ITExpr sub-class, specialized to classification task.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span>             <span class="kn">import</span> <span class="n">ClassifierMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span>     <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span>          <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="kn">from</span> <span class="nn">itea._base</span> <span class="kn">import</span> <span class="n">BaseITExpr</span>
+
+
+<div class="viewcode-block" id="ITExpr_classifier"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier">[docs]</a><span class="k">class</span> <span class="nc">ITExpr_classifier</span><span class="p">(</span><span class="n">BaseITExpr</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ITExpr for the classification task. This will be the class </span>
+<span class="sd">    in ``ITEA_classifier.bestsol_``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        expr : list of Tuple[Transformation, Interaction]</span>
+<span class="sd">            list of IT terms to create an IT expression.</span>
+<span class="sd">        tfuncs : dict</span>
+<span class="sd">            should always be a dict where the</span>
+<span class="sd">            keys are the names of the transformation functions and </span>
+<span class="sd">            the values are unary vectorized functions (for example,</span>
+<span class="sd">            numpy functions). For user-defined functions, see</span>
+<span class="sd">            numpy.vectorize for more information on how to vectorize</span>
+<span class="sd">            your transformation functions.</span>
+
+<span class="sd">        labels : list of strings, default=[]</span>
+<span class="sd">            list containing the labels of the variables that will be used.</span>
+<span class="sd">            When the list of labels is empty, the variables are named</span>
+<span class="sd">            :math:`x_0, x_1, \cdots`.</span>
+
+<span class="sd">        Attributes</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_terms : int</span>
+<span class="sd">            number of inferred IT terms.</span>
+
+<span class="sd">        is_fitted : bool</span>
+<span class="sd">            boolean variable indicating if the ITExpr was fitted before.</span>
+
+<span class="sd">        _fitness : float</span>
+<span class="sd">            fitness (accuracy_score) of the expression on the training data.</span>
+
+<span class="sd">        intercept_ : numpy.array of shape (n_classes, )</span>
+<span class="sd">            intercept array used in the probability estimation for each class</span>
+<span class="sd">            of the training data.</span>
+
+<span class="sd">        coef_ : numpy.array of shape (n_classes, n_terms)</span>
+<span class="sd">            coefficients used in the probability estimation for each</span>
+<span class="sd">            class of the training data.</span>
+
+<span class="sd">        classes_ : array of shape (n_classes, )</span>
+<span class="sd">            target classes inferred from the training y target data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">ITExpr_classifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">expr</span><span class="o">=</span><span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">=</span> <span class="n">accuracy_score</span>
+
+
+<div class="viewcode-block" id="ITExpr_classifier.covariance_matrix"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Estimation of the covariance matrix of the coefficients.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X: numpy.array of shape (n_samples, n_features)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        covar : numpy.array of shape (n_classes, n_terms+1, n_terms+1)</span>
+<span class="sd">            each element in ``covar`` will be the covariance matrix to the</span>
+<span class="sd">            logistic regressor when considering the classes as a one vs all </span>
+<span class="sd">            problem.</span>
+
+<span class="sd">            The last row/column of each ``covar[i]`` is the intercept.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X_design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">)</span> <span class="p">)</span>
+        <span class="n">X_design</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">covars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">class_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)):</span>
+
+            <span class="c1"># Estimating as a one vs all classification for each class</span>
+            <span class="n">prob_class1</span> <span class="o">=</span> <span class="n">probs</span><span class="p">[:,</span> <span class="n">class_id</span><span class="p">]</span>
+            <span class="n">prob_class0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+                <span class="n">probs</span><span class="p">[:,</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">class_id</span><span class="p">]],</span>
+                <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="n">prob_class0</span><span class="p">,</span> <span class="n">prob_class1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">covars</span><span class="p">[</span><span class="n">class_id</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span>
+                    <span class="n">X_design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">V</span> <span class="o">@</span> <span class="n">X_design</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># singular matrix, lets use the pseudo inverse</span>
+                <span class="n">covars</span><span class="p">[</span><span class="n">class_id</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span>
+                    <span class="n">X_design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">V</span> <span class="o">@</span> <span class="n">X_design</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">covars</span></div>
+
+
+<div class="viewcode-block" id="ITExpr_classifier.fit"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fits the logistic regression with the IT expression as the linear</span>
+<span class="sd">        method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            training data.</span>
+
+<span class="sd">        y : array-like of shape (n_samples, )</span>
+<span class="sd">            target vector. Can be a binary classification problem or a </span>
+<span class="sd">            multi-class classification problem.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : ITExpr_classifier</span>
+<span class="sd">            itexpr after fitting the coefficients and intercept.</span>
+<span class="sd">            Only after fitting the model that the attributes ``coef_``,</span>
+<span class="sd">            ``intercept_``, and ``classes_`` will be available.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
+        
+            <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e+200</span><span class="p">):</span>
+                
+                <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
+                    <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+                
+                <span class="n">pred</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span> <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
+                    <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ITExpr_classifier.predict"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict class target for each sample in X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            samples to be predicted. Must be a two-dimensional array.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        p : numpy.array of shape (n_samples, )</span>
+<span class="sd">            predicted target for each sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="ITExpr_classifier.predict_proba"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Predict probabilities for each possible target for</span>
+<span class="sd">        each sample in X.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            samples to be predicted. Must be a two-dimensional array.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        p : numpy.array of shape (n_samples, n_classes)</span>
+<span class="sd">            prediction probability for each class target for each sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">,</span> \
+            <span class="p">(</span><span class="s2">&quot;The expression was simplified and has not refitted.&quot;</span><span class="p">)</span>
+
+        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;fit_model_&#39;</span><span class="p">),</span> \
+            <span class="p">(</span><span class="s2">&quot;The expression failed in evaluating finite values during the &quot;</span>
+             <span class="s2">&quot;training process.&quot;</span><span class="p">)</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

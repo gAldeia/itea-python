@@ -45,6 +45,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Recreating the Scikit-learn LogisticRegression method" href="_test_scikit_LogisticRegression_solver.html" />
     <link rel="prev" title="Iris classification" href="_multiclass_example.html" /> 
 </head>
 
@@ -106,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -523,11 +525,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1241661061649098      1.1537010152616711      0min46seg
-10       0.8090125341227223      0.9349910861460051      1.1534450480996674      0min50seg
-20       0.7949471054491373      0.8082669254353582      0.8683097084215429      1min6seg
-30       0.7834374617153554      0.7906001515305364      0.8391294036275558      0min42seg
-40       0.7353852668700478      0.768112810031591       0.805150307443258       0min21seg
+0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min21seg
+10       0.8272846090261381      0.881735672398493       1.0369699871900457      0min41seg
+20       0.8136939314899935      0.8272938408550969      1.0107234916933154      0min37seg
+30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min28seg
+40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min12seg
 </pre></div></div>
 </div>
 </section>
@@ -581,14 +583,14 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="highlight"><pre>
 
 Final expression:
- -8.684*log(AveRooms^2 * Population^2 * AveOccup^2 * Latitude^2 * Longitude^2) +
-14.821*log(MedInc * HouseAge^2 * AveRooms^2 * AveBedrms * Population^2 * AveOccup^2 * Latitude * Longitude^2) +
--0.402*log(MedInc^2 * AveRooms^2 * AveBedrms^2 * AveOccup^2 * Latitude * Longitude^2) +
-17.139*log(MedInc^2 * HouseAge * AveRooms^2 * AveBedrms^2 * Population^2 * AveOccup^2 * Latitude^2 * Longitude^2) +
--23.274*log(MedInc^2 * HouseAge^2 * AveRooms^2 * AveBedrms^2 * Population^2 * AveOccup^2 * Latitude^2) +
--163.347
+ 9.924*log(MedInc^2 * AveBedrms * Longitude^2) +
+7.982*log(MedInc * HouseAge * AveRooms * AveOccup^2 * Longitude^2) +
+-9.092*log(HouseAge * AveRooms * AveBedrms * AveOccup^2 * Latitude * Longitude^2) +
+0.702*log(HouseAge^2 * AveBedrms * AveOccup^2 * Latitude^2 * Longitude^2) +
+-25.846*log(MedInc) +
+-62.377
 
-Elapsed time: 100.10764384269714
+Elapsed time: 60.5909264087677
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -658,60 +660,60 @@ Elapsed time: 100.10764384269714
   <tbody>
     <tr>
       <th>0</th>
-      <td>-8.684</td>
+      <td>9.924</td>
       <td>log</td>
-      <td>[0, 0, 2, 0, 2, 2, 2, 2]</td>
-      <td>0.147</td>
-      <td>0.531</td>
-      <td>0.482</td>
-      <td>217.871</td>
+      <td>[2, 0, 0, 1, 0, 0, 0, 2]</td>
+      <td>0.238</td>
+      <td>0.323</td>
+      <td>0.748</td>
+      <td>85.569</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>14.821</td>
+      <td>7.982</td>
       <td>log</td>
-      <td>[1, 2, 2, 1, 2, 2, 1, 2]</td>
-      <td>0.304</td>
-      <td>0.657</td>
-      <td>0.796</td>
-      <td>767.421</td>
+      <td>[1, 1, 1, 0, 0, 2, 0, 2]</td>
+      <td>0.223</td>
+      <td>0.426</td>
+      <td>0.407</td>
+      <td>57.724</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-0.402</td>
+      <td>-9.092</td>
       <td>log</td>
-      <td>[2, 0, 2, 2, 0, 2, 1, 2]</td>
-      <td>0.011</td>
-      <td>0.300</td>
-      <td>0.327</td>
-      <td>0.352</td>
+      <td>[0, 1, 1, 1, 0, 2, 1, 2]</td>
+      <td>0.222</td>
+      <td>0.361</td>
+      <td>0.439</td>
+      <td>55.374</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>17.139</td>
+      <td>0.702</td>
       <td>log</td>
-      <td>[2, 1, 2, 2, 2, 2, 2, 2]</td>
-      <td>0.296</td>
-      <td>0.746</td>
-      <td>0.866</td>
-      <td>1176.852</td>
+      <td>[0, 2, 0, 1, 0, 2, 2, 2]</td>
+      <td>0.013</td>
+      <td>0.312</td>
+      <td>0.379</td>
+      <td>0.778</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-23.274</td>
+      <td>-25.846</td>
       <td>log</td>
-      <td>[2, 2, 2, 2, 2, 2, 2, 0]</td>
-      <td>0.453</td>
-      <td>0.710</td>
-      <td>0.917</td>
-      <td>2301.542</td>
+      <td>[1, 0, 0, 0, 0, 0, 0, 0]</td>
+      <td>0.697</td>
+      <td>0.324</td>
+      <td>0.754</td>
+      <td>147.950</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>-163.347</td>
+      <td>-62.377</td>
       <td>intercept</td>
       <td>---</td>
-      <td>3.271</td>
+      <td>1.501</td>
       <td>0.000</td>
       <td>0.000</td>
       <td>0.000</td>
@@ -804,6 +806,7 @@ Elapsed time: 100.10764384269714
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="_test_scikit_LogisticRegression_solver.html" class="btn btn-neutral float-right" title="Recreating the Scikit-learn LogisticRegression method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="_multiclass_example.html" class="btn btn-neutral float-left" title="Iris classification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

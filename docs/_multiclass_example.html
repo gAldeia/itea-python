@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -501,8 +502,6 @@ div.rendered_html tbody tr:hover {
     <span class="s1">&#39;id&#39;</span>       <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
     <span class="s1">&#39;sqrt.abs&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
     <span class="s1">&#39;log&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
-    <span class="s1">&#39;sin&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span>
-    <span class="s1">&#39;cos&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span>
     <span class="s1">&#39;exp&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span>
 <span class="p">}</span>
 
@@ -510,7 +509,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">gens</span>            <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
     <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
@@ -526,16 +525,16 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.51    0.9198          0.96    1min23seg
-5        0.87    0.9538000000000001      0.98    1min9seg
-10       0.94    0.9658          0.99    1min21seg
-15       0.95    0.9824          0.99    1min14seg
-20       0.98    0.9876          0.99    0min59seg
-25       0.97    0.9875999999999999      0.99    0min50seg
-30       0.96    0.9878000000000001      0.99    0min43seg
-35       0.97    0.9882000000000001      0.99    0min32seg
-40       0.97    0.9882000000000002      0.99    0min19seg
-45       0.94    0.9856000000000001      0.99    0min8seg
+0        0.34    0.8178          0.98    0min27seg
+5        0.93    0.9518000000000001      0.97    0min28seg
+10       0.73    0.9618000000000001      0.98    0min22seg
+15       0.96    0.9793999999999999      0.98    0min22seg
+20       0.95    0.9779999999999999      0.99    0min19seg
+25       0.97    0.9808          0.99    0min17seg
+30       0.96    0.9818000000000001      0.99    0min16seg
+35       0.96    0.9862000000000001      0.99    0min19seg
+40       0.97    0.9876          0.99    0min10seg
+45       0.94    0.9858000000000001      0.99    0min4seg
 </pre></div></div>
 </div>
 </section>
@@ -559,7 +558,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;[-0.697  0.655  0.042]*sqrt.abs(sepal length (cm) * sepal width (cm)^2 * petal width (cm)^2)\n[-1.496 -0.446  1.942]*sqrt.abs(petal length (cm)^2 * petal width (cm)^2)\n[  9.697   1.285 -10.981]&#39;
+&#39;[-3.818 -0.111  3.929]*sqrt.abs(sepal width (cm)^-1 * petal length (cm)^2 * petal width (cm)^2)\n[ 1.061  0.669 -1.73 ]*log(sepal length (cm)^2 * sepal width (cm) * petal length (cm)^2 * petal width (cm))\n[ 1.764 -1.136 -0.627]&#39;
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -583,12 +582,12 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
               precision    recall  f1-score   support
 
       setosa       1.00      1.00      1.00        19
-  versicolor       0.94      1.00      0.97        15
-   virginica       1.00      0.94      0.97        16
+  versicolor       0.93      0.93      0.93        15
+   virginica       0.94      0.94      0.94        16
 
-    accuracy                           0.98        50
-   macro avg       0.98      0.98      0.98        50
-weighted avg       0.98      0.98      0.98        50
+    accuracy                           0.96        50
+   macro avg       0.96      0.96      0.96        50
+weighted avg       0.96      0.96      0.96        50
 
 </pre></div></div>
 </div>
@@ -640,30 +639,30 @@ weighted avg       0.98      0.98      0.98        50
   <tbody>
     <tr>
       <th>0</th>
-      <td>[-0.697  0.655  0.042]</td>
+      <td>[-3.818 -0.111  3.929]</td>
       <td>sqrt.abs</td>
-      <td>[1, 2, 0, 2]</td>
-      <td>[1.335 0.366 0.413]</td>
-      <td>0.967</td>
-      <td>1.454</td>
-      <td>[17.707 15.65   0.064]</td>
+      <td>[0, -1, 2, 2]</td>
+      <td>[2.783 0.904 1.361]</td>
+      <td>0.883</td>
+      <td>1.219</td>
+      <td>[1.0118e+02 8.5000e-02 1.0713e+02]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>[-1.496 -0.446  1.942]</td>
-      <td>sqrt.abs</td>
-      <td>[0, 0, 2, 2]</td>
-      <td>[1.063 0.462 0.766]</td>
-      <td>0.967</td>
-      <td>1.454</td>
-      <td>[47.61   4.221 80.182]</td>
+      <td>[ 1.061  0.669 -1.73 ]</td>
+      <td>log</td>
+      <td>[2, 1, 2, 1]</td>
+      <td>[1.805 0.941 2.044]</td>
+      <td>0.883</td>
+      <td>1.219</td>
+      <td>[ 5.798  2.303 15.41 ]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>[  9.697   1.285 -10.981]</td>
+      <td>[ 1.764 -1.136 -0.627]</td>
       <td>intercept</td>
       <td>---</td>
-      <td>[4.7   1.46  3.865]</td>
+      <td>[ 6.255  3.789 12.576]</td>
       <td>0.000</td>
       <td>0.000</td>
       <td>[0. 0. 0.]</td>
@@ -693,7 +692,7 @@ weighted avg       0.98      0.98      0.98        50
 </div>
 <div class="output_area docutils container">
 <div class="math">
-<p><img src="_images/math/9f1c6be673bf54cd18f0245651cffe7c3eb38e4e.png" alt="$ ITExpr = \underbrace{\beta_0 \cdot sqrt.abs(sepal length (cm) \cdot sepal width (cm)^{2} \cdot petal width (cm)^{2})}_{\text{term 0}} + \underbrace{\beta_1 \cdot sqrt.abs(petal length (cm)^{2} \cdot petal width (cm)^{2})}_{\text{term 1}} + I_0$"/></p>
+<p><img src="_images/math/c3af4db727d68774d73429b51a2eff981f30aad4.png" alt="$ ITExpr = \underbrace{\beta_0 \cdot sqrt.abs(\frac{petal length (cm)^{2} \cdot petal width (cm)^{2}}{sepal width (cm)})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(sepal length (cm)^{2} \cdot sepal width (cm) \cdot petal length (cm)^{2} \cdot petal width (cm))}_{\text{term 1}} + I_0$"/></p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
@@ -719,7 +718,7 @@ weighted avg       0.98      0.98      0.98        50
 </div>
 <div class="output_area docutils container">
 <div class="math">
-<p><img src="_images/math/dcbe9b2d6f22e4de475e8226725617bf26b45241.png" alt="$ \frac{\partial}{\partial sepal length (cm)} ITExpr = \underbrace{1\beta_0 \cdot sqrt.abs'(sepal length (cm) \cdot sepal width (cm)^{2} \cdot petal width (cm)^{2})(sepal width (cm)^{2} \cdot petal width (cm)^{2})}_{\text{term 0 partial derivative}}$"/></p>
+<p><img src="_images/math/b79b0033aebe5d6450804c47b3cc64e75d8f2605.png" alt="$ \frac{\partial}{\partial sepal length (cm)} ITExpr = \underbrace{2\beta_1 \cdot log'(sepal length (cm)^{2} \cdot sepal width (cm) \cdot petal length (cm)^{2} \cdot petal width (cm))(sepal length (cm) \cdot sepal width (cm) \cdot petal length (cm)^{2} \cdot petal width (cm))}_{\text{term 1 partial derivative}}$"/></p>
 </div></div>
 </div>
 </section>
@@ -839,6 +838,15 @@ weighted avg       0.98      0.98      0.98        50
 </div>
 <div class="output_area docutils container">
 <img alt="_images/_multiclass_example_21_0.png" src="_images/_multiclass_example_21_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
 </div>
 </div>
 </section>

@@ -209,6 +209,8 @@ class BaseITEA(BaseEstimator):
         generator = uniform(
             self.max_terms, self.expolim, self.tfuncs, nvars, random_state)
 
+        # The loop below ensures that the first population is always 
+        # composed of valud expressions with finite fitness.
         pop = []
         while(len(pop) < self.popsize):
             expr = sanitize(next(generator))
@@ -249,24 +251,30 @@ class BaseITEA(BaseEstimator):
         pop, select_f, simplify_f, size, X, y, random_state):
         """Method to perform multiple tournament selections, until the number
         of selected expressions is equal to the popsize.
+
+        After selection, all individuals in the returned population are fitted,
+        but not all individuals in the passed population will be as well.
         """
     
-        # Bad expressions can happen. We'll ignore them, since their fitness
-        # will be bad
+        # Invalid expressions can happen. We'll ignore the warnings just here
         with np.errstate(all='ignore'):
+
+            # Selecting the competitors indexes
+            competitors_idx = random_state.choice(len(pop), size=(size, 2))
+
+            # Finding the unique expression in population that were selected
+            # (to avoid unecessary fits)
+            to_fit = np.unique(competitors_idx)
 
             # Simplify functions changes the expressions, we need to ensure
             # they will be fitted after the process
             if simplify_f is not None:
-                pop = [simplify_f(itexpr=p, X=X) for p in 
-                       [p.fit(X, y) for p in pop]]
+                _ = [simplify_f(itexpr=p, X=X) for p in 
+                       [pop[i].fit(X, y) for i in to_fit]]
 
-            pop = [ps for ps in [p.fit(X, y) for p in pop]
-                if np.isfinite(ps._fitness)]
-
-        competitors = random_state.choice(pop, size=(size, 2))
+            _ = [pop[i].fit(X, y) for i in to_fit]
         
-        return [select_f(comp) for comp in competitors]
+        return [select_f(comp) for comp in np.take(pop, competitors_idx)]
     
 
     def _evolve(self, X, y, itexpr_class, greater_is_better):
@@ -298,7 +306,8 @@ class BaseITEA(BaseEstimator):
 
         self.convergence_ = {
             group:{col:[] for col in columns} for group in groups} 
-        
+
+        # Starting the evolution now!        
         self.exectime_ = time.time()
 
         pop = self._create_population(
@@ -334,15 +343,17 @@ class BaseITEA(BaseEstimator):
                 y = y,
                 random_state = random_state)
             
+            # After selection, all individuals in population are fitted
+            # and have finite fitness
             fitnesses    = [p._fitness     for p in pop]
             n_terms      = [p.n_terms      for p in pop]
             complexities = [p.complexity() for p in pop]
 
             for group, data in zip(groups, [fitnesses, n_terms, complexities]):
-                self.convergence_[group]['min' ].append(np.min(data))
-                self.convergence_[group]['max' ].append(np.max(data))
-                self.convergence_[group]['mean'].append(np.mean(data))
-                self.convergence_[group]['std' ].append(np.std(data))
+                self.convergence_[group]['min' ].append(np.nanmin(data))
+                self.convergence_[group]['max' ].append(np.nanmax(data))
+                self.convergence_[group]['mean'].append(np.nanmean(data))
+                self.convergence_[group]['std' ].append(np.nanstd(data))
                 
             if (self.verbose and g%self.verbose==0) or self.verbose==-1:
                 # Estimating remaining time

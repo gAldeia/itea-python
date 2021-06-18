@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-31-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-17-2021 by Guilherme Aldeia
 
 
 """ITExpr sub-class, specialized to regression task.
@@ -12,8 +12,8 @@ import numpy as np
 
 from sklearn.base             import RegressorMixin
 from sklearn.utils.validation import check_array, check_is_fitted
-from sklearn.linear_model     import LinearRegression
 from sklearn.metrics          import mean_squared_error
+from scipy.linalg             import lstsq
 
 from itea._base import BaseITExpr
 
@@ -64,7 +64,6 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
         super(ITExpr_regressor, self).__init__(
             expr=expr, tfuncs=tfuncs, labels=labels)
 
-        self.fit_model = LinearRegression
         self.fitness_f = lambda pred, y: mean_squared_error(
             pred, y, squared=False)
 
@@ -105,6 +104,10 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
     def fit(self, X, y):
         """Fits the linear model created by combining the IT terms.
 
+        This method performs the transformation of the original data in X to 
+        the IT expression domain then fits a linear regression model to 
+        calculate the best coefficients and intercept to the IT expression.
+
         Parameters
         ----------
         X : array-like of shape (n_samples, n_features)
@@ -119,24 +122,54 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
             itexpr after fitting the coefficients and intercept.
             Only after fitting the model that the attributes ``coef_`` and
             ``intercept_`` will be available.
+
+        Notes
+        -----
+        This fit method does not check if the input is consistent, to minimize
+        the overhead since the ``ITEA_regressor`` will work with a population
+        of ``ITExpr_regressor`` instances. The input is then checked in 
+        the fit method from ``ITEA_regressor``. If you want to use the fit
+        method directly from the ``ITExpr_regressor``, it is recommended that
+        you do the check with ``check_array` `that scikit-learn provides in
+        ``sklearn.utils.validation``.
         """
                 
         if not self._is_fitted:
-        
+                
+            # applying the interaction and transformation to fit a linear model
+            # using the transformed variables Z
             Z = self._eval(X)
 
-            if np.isfinite(Z).all() and np.all(np.abs(Z) < 1e+100):
-                self.fit_model_ = self.fit_model()
+            if np.isfinite(Z).all() and np.all(np.abs(Z) < 1e+200):
+                # using the LinearRegression from scikit, the fit should be
+                # simple as this:
+                # from sklearn.linear_model import LinearRegression
+                # fit_model_      = LinearRegression().fit(Z, y)
+                # self.coef_      = fit_model_.coef_.tolist()
+                # self.intercept_ = fit_model_.intercept_
+                # self._fitness   = self.fitness_f(fit_model_.predict(Z), y)
 
-                pred  = self.fit_model_.fit(Z, y).predict(Z)
+                # Centering (this results in one less column and makes possible
+                # to easily calculate the intercept after fitting)
+                y_offset = np.average(y, axis=0)
+                Z_offset = np.average(Z, axis=0)
 
-                self.coef_      = self.fit_model_.coef_.tolist()
-                self.intercept_ = self.fit_model_.intercept_
-                self._fitness   = self.fitness_f(pred, y)
+                y_centered = y - y_offset
+                Z_centered = Z - Z_offset
+            
+                coef, residues, rank, singular = lstsq(Z_centered, y_centered)
+        
+                if y.ndim == 1:
+                    self.coef_ = np.ravel(coef.T).tolist()
+                
+                self.coef_      = coef.T.tolist()
+                self.intercept_ = y_offset - np.dot(Z_offset, coef.T)
+                self._fitness   = self.fitness_f(
+                    np.dot(Z, self.coef_) + self.intercept_, y)
             else:
                 self.coef_      = np.ones(self.n_terms)
                 self.intercept_ = 0.0
-                self._fitness   = np.nan
+                self._fitness   = np.inf
 
             self._is_fitted = True
 

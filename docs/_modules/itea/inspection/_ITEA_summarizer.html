@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea.inspection._ITEA_summarizer &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>itea.inspection._ITEA_summarizer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for itea.inspection._ITEA_summarizer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author:  Guilherme Aldeia</span>
+<span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
+<span class="c1"># Version: 1.0.1</span>
+<span class="c1"># Last modified: 13-06-2021 by Guilherme Aldeia</span>
+
+
+<span class="sd">&quot;&quot;&quot;ITEA_summarizer class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">pylatex</span>         <span class="kn">import</span> <span class="n">Document</span><span class="p">,</span> <span class="n">Section</span><span class="p">,</span> <span class="n">Command</span><span class="p">,</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">pylatex.utils</span>   <span class="kn">import</span> <span class="n">NoEscape</span><span class="p">,</span> <span class="n">make_temp_dir</span><span class="p">,</span> <span class="n">rm_temp_dir</span>
+<span class="kn">from</span> <span class="nn">pylatex.package</span> <span class="kn">import</span> <span class="n">Package</span>
+
+<span class="kn">from</span> <span class="nn">itea.inspection</span> <span class="kn">import</span> <span class="n">ITExpr_inspector</span><span class="p">,</span> <span class="n">ITExpr_explainer</span><span class="p">,</span> <span class="n">ITExpr_texifier</span>
+<span class="kn">from</span> <span class="nn">matplotlib.gridspec</span>      <span class="kn">import</span> <span class="n">GridSpecFromSubplotSpec</span> 
+
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
+
+
+<div class="viewcode-block" id="ITEA_summarizer"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITEA_summarizer">[docs]</a><span class="k">class</span> <span class="nc">ITEA_summarizer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Class to automatically generate a pdf file reporting</span>
+<span class="sd">    several interpretability plots for the expression.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">itea</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        itea : ITEA_classifier or ITEA_regressor</span>
+<span class="sd">            fitted instance of an ``ITEA`` class to be summarized.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">itea</span> <span class="o">=</span> <span class="n">itea</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">packages</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;geometry&#39;</span>    <span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;paperwidth&quot;</span>  <span class="p">:</span> <span class="s2">&quot;16cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;paperheight&quot;</span> <span class="p">:</span> <span class="s2">&quot;12cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;tmargin&quot;</span>     <span class="p">:</span> <span class="s2">&quot;1.75cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;lmargin&quot;</span>     <span class="p">:</span> <span class="s2">&quot;1cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;rmargin&quot;</span>     <span class="p">:</span> <span class="s2">&quot;1cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;bmargin&quot;</span>     <span class="p">:</span> <span class="s2">&quot;1.5cm&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;fontenc&#39;</span>      <span class="p">:</span> <span class="p">[</span><span class="s1">&#39;T1&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;babel&#39;</span>       <span class="p">:</span> <span class="s1">&#39;english&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;datetime&#39;</span>    <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;grffile&#39;</span>     <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;booktabs&#39;</span>    <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;amsfonts&#39;</span>    <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;amssymb&#39;</span>     <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;amsmath&#39;</span>     <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;amsthm&#39;</span>      <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;breqn&#39;</span>       <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;fancyhdr&#39;</span>    <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;indentfirst&#39;</span> <span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;float&#39;</span>       <span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+    
+    
+    <span class="k">def</span> <span class="nf">_report_frontpage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Private method to create the frontpage of the report</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">packages</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Package</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+
+        <span class="n">doc</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;ITEA automatic report&#39;</span><span class="p">))</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">Command</span><span class="p">(</span><span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\textit{ITEA\_summarizer}&#39;</span><span class="p">)))</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\today, \currenttime&#39;</span><span class="p">)))</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">preamble</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;pagestyle&#39;</span><span class="p">,</span> <span class="s1">&#39;fancy&#39;</span><span class="p">))</span>
+        
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;\maketitle \vfill            </span>
+<span class="s2">            </span>
+<span class="s2">            Automatic report created by \textit{ITEA\_summarizer} package.</span>
+<span class="s2">            This report makes usage of several methods to automatically inspect</span>
+<span class="s2">            and explain the final expression found in the evolutionary process</span>
+<span class="s2">            performed by the ITEA algorithm.</span>
+
+<span class="s2">            \vfill \pagebreak&quot;&quot;&quot;</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">_report_pre_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates all pages with information related to pre-execution</span>
+<span class="sd">        of the algorithm (such as hyperparameters).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="c1"># Header and footer</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            \lhead{Pre-execution --- ITEA automatic report}</span>
+<span class="s2">            \chead</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \rhead{\today, \currenttime}</span>
+<span class="s2">            </span>
+<span class="s2">            \lfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \cfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \rfoot{\thepage\ | \pageref</span><span class="si">{LastPage}</span><span class="s2">}&quot;&quot;&quot;</span><span class="p">))</span>
+
+        <span class="c1"># reporting descriptive statistics for the variables (maximum 5 to </span>
+        <span class="c1"># avoid overfull tables)</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="s1">&#39;Descriptive statistics of the data&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+            
+            <span class="c1"># Retrieving the feature importances and selecting at most 5</span>
+            <span class="n">feature_importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">feature_importances_</span>
+            
+            <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+            
+            <span class="c1"># get the most relevant features</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="n">order</span><span class="p">[:</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">))]</span>
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                Reporting descriptive statistics for </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">))</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">                (from a total of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="si">}</span><span class="s2">) features contained on the</span>
+<span class="s2">                training data. The features were selected based on the absolute</span>
+<span class="s2">                final importance.&quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">df_summary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">)[:,</span> <span class="n">selected</span><span class="p">],</span>
+                <span class="n">columns</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">labels</span><span class="p">)[</span><span class="n">selected</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Table</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">table</span><span class="p">:</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;centering&#39;</span><span class="p">))</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;footnotesize&#39;</span><span class="p">))</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span>
+                    <span class="n">df_summary</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">escape</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+            
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+
+        <span class="c1"># reporting the hyper parameters</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="s1">&#39;Algorithm Hyper-parameters&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+            
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                The following hyperparameters were used to execute the</span>
+<span class="s2">                algorithm. If the random\_state parameter was set to an </span>
+<span class="s2">                integer value (or a numpy randomState instance was given), then</span>
+<span class="s2">                it is possible to repeat the exact execution by using the same</span>
+<span class="s2">                training data and the parameters listed below.&quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">tfuncs_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">tfuncs</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span>
+                <span class="sa">r</span><span class="s2">&quot;{\footnotesize \begin</span><span class="si">{verbatim}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                            
+                <span class="c1"># almost all hyperparameters</span>
+                <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;    </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> : </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="s1">&#39;funcs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">k</span> <span class="ow">and</span> <span class="n">k</span><span class="o">!=</span> <span class="s1">&#39;labels&#39;</span><span class="p">])</span> <span class="o">+</span> 
+
+                <span class="c1"># displaying the transformation function keys</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    tfuncs : [</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">tfuncs_names</span><span class="p">])</span><span class="si">}</span><span class="s2">]&quot;</span> <span class="o">+</span>
+                            
+                <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{verbatim}</span><span class="s2"> } \vfill \pagebreak&quot;</span>
+            <span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">_report_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates pages with information about the ITEA and the ITExpr.</span>
+<span class="sd">        This section of the report does not include the post hoc explanations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Auxiliary function to use in texifier</span>
+        <span class="k">def</span> <span class="nf">term_wrapper_f</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;\underbrace{&#39;</span> <span class="o">+</span> <span class="n">term</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;}_{\text{term &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}}&#39;</span>
+
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            \lhead{Execution --- ITEA automatic report}</span>
+<span class="s2">            \chead</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \rhead{\today, \currenttime}</span>
+<span class="s2">            </span>
+<span class="s2">            \lfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \cfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \rfoot{\thepage\ | \pageref</span><span class="si">{LastPage}</span><span class="s2">}</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Convergence</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="s2">&quot;Evolution convergence&quot;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                The algorithm took </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">exectime_</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> seconds to</span>
+<span class="s2">                completely run. Below are the plots for the average fitness</span>
+<span class="s2">                of the population and the best individual fitness for each</span>
+<span class="s2">                generation.&quot;&quot;&quot;</span> <span class="o">+</span> 
+                <span class="sa">r</span><span class="s2">&quot;\vfill&quot;</span><span class="p">))</span>
+
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_convergence</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="s1">&#39;fitness&#39;</span><span class="p">,</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span>
+                <span class="n">show</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/fitness_convergence.pdf&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Figure</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">figure_plot</span><span class="p">:</span>
+                <span class="n">figure_plot</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/fitness_convergence.pdf&quot;</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;0.8\textwidth&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+                
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Final expression descriptions</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="s1">&#39;Best expression&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
+                <span class="n">type_itexpr</span> <span class="o">=</span> <span class="s1">&#39;classifier&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_itexpr</span> <span class="o">=</span> <span class="s1">&#39;regressor&#39;</span>
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                The best expression corresponds to the expression with</span>
+<span class="s2">                the best fitness on the last generation before the evolution</span>
+<span class="s2">                ends. Not necessarily it will be the simpliest or the global</span>
+<span class="s2">                optimum expression of the evoution. &quot;&quot;&quot;</span> <span class="o">+</span> 
+            
+                <span class="sa">f</span><span class="s2">&quot;&quot;&quot;The final expression is a </span><span class="si">{</span><span class="n">type_itexpr</span><span class="si">}</span><span class="s2"> with a fitness of</span>
+<span class="s2">                </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">fitness_</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">, and the number of IT terms is</span>
+<span class="s2">                </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">n_terms</span><span class="si">}</span><span class="s2">. Below is an LaTeX representation</span>
+<span class="s2">                of the expression:&quot;&quot;&quot;</span> <span class="o">+</span> 
+
+                <span class="sa">r</span><span class="s2">&quot;\vfill {\small \begin</span><span class="si">{dmath}</span><span class="s2">&quot;</span> <span class="o">+</span> 
+                
+                <span class="n">NoEscape</span><span class="p">(</span><span class="s2">&quot;ITExpr = &quot;</span> <span class="o">+</span> <span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span>
+                    <span class="n">term_wrapper</span> <span class="o">=</span> <span class="n">term_wrapper_f</span>
+                <span class="p">))</span> <span class="o">+</span> 
+                
+                <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{dmath}</span><span class="s2"> } \vfill \pagebreak&quot;</span><span class="p">))</span>
+
+        <span class="c1"># inspector statistics</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="s1">&#39;Best expression metrics&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;On the next page is reported a table</span>
+<span class="s2">            containing the coefficients for the previous expression, as well as</span>
+<span class="s2">            some metrics calculated for each term individually:</span>
+<span class="s2">            </span>
+<span class="s2">            \begin</span><span class="si">{itemize}</span><span class="s2"></span>
+<span class="s2">            \item \textbf</span><span class="si">{coef:}</span><span class="s2"> coefficient of each term (or coefficients,</span>
+<span class="s2">                  if the itexpr is an instance of ITExpr_classifier);</span>
+
+<span class="s2">            \item \textbf{coef stderr:} the standard error of the coefficients;</span>
+
+<span class="s2">            \item \textbf{disentang.:} mean pairwise disentanglement between</span>
+<span class="s2">                  each term when compared with the others;</span>
+
+<span class="s2">            \item \textbf{M.I.:} mean continuous mutual information between</span>
+<span class="s2">                  each term when compared with the others;</span>
+
+<span class="s2">            \item \textbf{pred. var.:} variance of the predicted outcomes for</span>
+<span class="s2">                  each term when predicting the training data.</span>
+<span class="s2">            \end</span><span class="si">{itemize}</span><span class="s2"></span>
+
+<span class="s2">             \vfill \pagebreak&quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">statistics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inspector_</span><span class="o">.</span><span class="n">terms_analysis</span><span class="p">())</span>
+            <span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;strengths&#39;</span><span class="p">)</span>
+            <span class="n">statistics</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;coef&#39;</span><span class="p">,</span> <span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="s1">&#39;coef stderr&#39;</span><span class="p">,</span>
+                                  <span class="s1">&#39;disentang.&#39;</span><span class="p">,</span> <span class="s1">&#39;M.I.&#39;</span><span class="p">,</span> <span class="s1">&#39;pred. var.&#39;</span><span class="p">]</span>
+            <span class="n">statistics</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+                <span class="s1">&#39;term &#39;</span> <span class="o">+</span> <span class="n">statistics</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">))</span>
+
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Table</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">table</span><span class="p">:</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;centering&#39;</span><span class="p">))</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Command</span><span class="p">(</span><span class="s1">&#39;footnotesize&#39;</span><span class="p">))</span>
+                <span class="n">table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="n">statistics</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="n">escape</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+            
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Partial derivatives</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="s1">&#39;Partial derivatives&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>
+
+            <span class="n">derivatives_latex</span> <span class="o">=</span> <span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">derivatives_to_latex</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span>
+                <span class="n">term_wrapper</span> <span class="o">=</span> <span class="n">term_wrapper_f</span>
+            <span class="p">)</span>
+
+            <span class="n">out</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;{\footnotesize&quot;</span>
+            
+            <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">derivatives_latex</span><span class="p">):</span>
+                <span class="n">out</span> <span class="o">+=</span> <span class="p">(</span>
+                    <span class="sa">r</span><span class="s2">&quot;\begin</span><span class="si">{dmath}</span><span class="s2">&quot;</span> <span class="o">+</span> 
+                    <span class="sa">r</span><span class="s2">&quot;\frac{\partial}{\partial &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;} ITExpr = &quot;</span> <span class="o">+</span> <span class="n">d</span> <span class="o">+</span> 
+                    <span class="sa">r</span><span class="s2">&quot;\end</span><span class="si">{dmath}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="n">out</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;} \vfill \pagebreak&quot;</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">_report_post_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Post hoc interpretations of the ITExpr. Several plots will be</span>
+<span class="sd">        generated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            \lhead{post-execution --- ITEA automatic report}</span>
+<span class="s2">            \chead</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \rhead{\today, \currenttime}</span>
+<span class="s2">            </span>
+<span class="s2">            \lfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \cfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">            \rfoot{\thepage\ | \pageref</span><span class="si">{LastPage}</span><span class="s2">}</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Average partial effects</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\textit{Average partial Effects}&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>   
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                Feature importances with Average Partial Effects. This method</span>
+<span class="s2">                attributes the importance to the i-th variable by calculating</span>
+<span class="s2">                the average of the partial derivative w.r.t. i, evaluated for</span>
+<span class="s2">                all data in the training set.</span>
+
+<span class="s2">                \vfill&quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">explainer_</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">,</span>
+                <span class="n">importance_method</span>  <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span>
+                <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">barh_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">},</span>
+                <span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/average_partial_effects.pdf&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Figure</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">figure_plot</span><span class="p">:</span>
+                <span class="n">figure_plot</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/average_partial_effects.pdf&quot;</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;0.8\textwidth&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+                
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Normalized partial effects</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\textit{Normalized partial Effects}&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>   
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                Feature importances with Normalized Partial Effects. </span>
+<span class="s2">                To create this plot, first, the output interval is discretized.</span>
+<span class="s2">                Then, for each interval, the partial effect of all samples</span>
+<span class="s2">                in the training set that results in a prediction within the</span>
+<span class="s2">                interval are calculated. Finally, they are normalized in</span>
+<span class="s2">                order to make the total contribution by 100\%.</span>
+
+<span class="s2">                \vfill&quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">explainer_</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span>
+                <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">,</span>
+                <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+                <span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/normalized_partial_effects.pdf&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Figure</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">figure_plot</span><span class="p">:</span>
+                <span class="n">figure_plot</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/normalized_partial_effects.pdf&quot;</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;0.8\textwidth&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+                
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Partial effects at the means</span>
+        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+            <span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\textit{Partial Effects at the Means}&#39;</span><span class="p">),</span>
+            <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)):</span>   
+
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                Partial Effects plots created by fixing the co-variables at</span>
+<span class="s2">                the means and evaluating the model&#39;s output when only one</span>
+<span class="s2">                variable changes. For simplicity, at most 5 variables are</span>
+<span class="s2">                selected to create the plot (the 5 most important variables</span>
+<span class="s2">                considering their Average Partial Effects).</span>
+
+<span class="s2">                \vfill&quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+            <span class="n">feature_importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">feature_importances_</span>
+            
+            <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+            
+            <span class="c1"># get the most relevant features</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="n">order</span><span class="p">[:</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">))]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">explainer_</span><span class="o">.</span><span class="n">plot_partial_effects_at_means</span><span class="p">(</span>
+                <span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span>
+                <span class="n">features</span><span class="o">=</span><span class="n">selected</span><span class="p">,</span>
+                <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">,</span>
+                <span class="n">n_cols</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">num_points</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                <span class="n">share_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">show_err</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">show</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/partial_effets_at_means.pdf&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Figure</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">figure_plot</span><span class="p">:</span>
+                <span class="n">figure_plot</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/partial_effets_at_means.pdf&quot;</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\textwidth&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+                
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="ITEA_summarizer.fit"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITEA_summarizer.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit method to store the data used in the training of the given</span>
+<span class="sd">        itea instance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            data used to train the itexpr model.</span>
+
+<span class="sd">        y : array-like of shape (n_samples, )</span>
+<span class="sd">            target data used to train the itexpr model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : ITEA_summarizer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">=</span> <span class="n">y</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">inspector_</span> <span class="o">=</span> <span class="n">ITExpr_inspector</span><span class="p">(</span>
+            <span class="n">itexpr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">tfuncs</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">explainer_</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+            <span class="n">itexpr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span>
+            <span class="n">tfuncs_dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">tfuncs_dx</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="ITEA_summarizer.plot_convergence"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITEA_summarizer.plot_convergence">[docs]</a>    <span class="k">def</span> <span class="nf">plot_convergence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">data</span>     <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_cols</span>   <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">line_kw</span>  <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fill_kw</span>  <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ax</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_err</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">show</span>     <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot of information about the ``itea`` evolutionary process.</span>
+<span class="sd">        This function is intended to help visualize the information on the</span>
+<span class="sd">        ``itea.convergence_`` dictionary.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : string, list of string, or None, default=None</span>
+<span class="sd">            the convergence information to generate the plots. It can be a</span>
+<span class="sd">            single string or a list with strings in</span>
+<span class="sd">            ``[&#39;fitness&#39;, &#39;n_terms&#39;, &#39;complexity&#39;]``. If set to none, then</span>
+<span class="sd">            the whole list of strings will be used.</span>
+
+<span class="sd">        n_cols : int, default=1</span>
+<span class="sd">            number of columns to be used when creating the plot grids if ax is</span>
+<span class="sd">            None.</span>
+
+<span class="sd">        line_kw : dict or None, default=None</span>
+<span class="sd">            dictionary with keywords to be used when generating the plots.</span>
+<span class="sd">            When set to None, then ``line_kw= {}``.</span>
+
+<span class="sd">        fill_kw : dict or None, default=None</span>
+<span class="sd">            dictionary with keywords to be used when generating the plots.</span>
+<span class="sd">            When set to None, then ``fill_kw= {&#39;alpha&#39; : 0.15}``.</span>
+
+<span class="sd">        ax : matplotlib.axes or list of matplotlib.axes or None, default=None</span>
+<span class="sd">            axis to generate the plot. If none is given, then a new axis is</span>
+<span class="sd">            created. If is a single axis, the plot will be drawn within the</span>
+<span class="sd">            given axis. If ax is a list, then it must have the same number of</span>
+<span class="sd">            elements in ``data``.</span>
+
+<span class="sd">        show_err : bool, default=True</span>
+<span class="sd">            boolean variable indicating if the standard error should be plotted.</span>
+
+<span class="sd">        show :  bool, default=True</span>
+<span class="sd">            boolean value indicating if the generated plot should be displayed</span>
+<span class="sd">            or not.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">                If ``ax`` or ``data`` has invalid values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">,</span> <span class="s1">&#39;n_terms&#39;</span><span class="p">,</span> <span class="s1">&#39;complexity&#39;</span><span class="p">]</span>
+            
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">data</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">([</span><span class="s1">&#39;fitness&#39;</span><span class="p">,</span> <span class="s1">&#39;n_terms&#39;</span><span class="p">,</span> <span class="s1">&#39;complexity&#39;</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data must be one string or a list containing &quot;</span>
+                             <span class="s2">&quot;one or more of the following strings: &quot;</span>
+                             <span class="s2">&quot;&#39;fitness&#39;, &#39;n_terms&#39;, &#39;complexity&#39;&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">ax</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Expected ax to have </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2"> axes, got </span><span class="si">{</span><span class="n">ax</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="s2">&quot;The number of axes must be equal to the number of &quot;</span>
+                    <span class="s2">&quot;values in `data` (or 1 if data is a string).&quot;</span><span class="p">)</span>
+
+        <span class="n">default_fill_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span> <span class="p">:</span> <span class="mf">0.15</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">fill_kw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fill_kw</span> <span class="o">=</span> <span class="n">default_fill_kw</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fill_kw</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">default_fill_kw</span><span class="p">,</span> <span class="o">**</span><span class="n">fill_kw</span><span class="p">}</span>
+
+        <span class="n">default_line_kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">line_kw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">line_kw</span> <span class="o">=</span> <span class="n">default_line_kw</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">line_kw</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">default_line_kw</span><span class="p">,</span> <span class="o">**</span><span class="n">line_kw</span><span class="p">}</span>
+
+        <span class="c1"># Creating subplots if ax is a single axis</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">):</span>
+            <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_cols</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_cols</span><span class="p">)))</span>
+            
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">figure_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+
+            <span class="n">axes_ravel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+            <span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpecFromSubplotSpec</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span>
+                                         <span class="n">subplot_spec</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_subplotspec</span><span class="p">())</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">spec</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">gs</span><span class="p">):</span>
+                <span class="n">axes_ravel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figure_</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ax</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">n_cols</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_cols</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span>   <span class="o">=</span> <span class="n">ax</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">figure_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">figure</span>
+    
+        <span class="n">best_of_generation</span> <span class="o">=</span> <span class="s1">&#39;max&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">greater_is_better</span> <span class="k">else</span> <span class="s1">&#39;min&#39;</span>        
+        <span class="n">gens</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">]))</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">axi</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">data</span><span class="p">):</span>
+            <span class="n">axi</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                <span class="n">gens</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">line_kw</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="s1">&#39;fitness&#39;</span><span class="p">:</span>
+                <span class="c1"># only the fitness can have either higher or lower values</span>
+                <span class="c1"># as the best for each generation. All other data always</span>
+                <span class="c1"># have smaller values as better values.</span>
+                <span class="n">axi</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="n">gens</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="n">best_of_generation</span><span class="p">],</span>
+                    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;best (</span><span class="si">{</span><span class="n">best_of_generation</span><span class="si">}</span><span class="s2">imum)&quot;</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">line_kw</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">axi</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="n">gens</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;min&#39;</span><span class="p">],</span>
+                    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;best (minimum)&quot;</span><span class="p">,</span>
+                    <span class="o">**</span><span class="n">line_kw</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">show_err</span><span class="p">:</span>    
+                <span class="n">low_bound</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="n">std</span> <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">std</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;std&#39;</span><span class="p">])]</span>
+
+                <span class="n">upper_bound</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">-</span><span class="n">std</span> <span class="k">for</span> <span class="n">y</span><span class="p">,</span> <span class="n">std</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">itea</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">d</span><span class="p">][</span><span class="s1">&#39;std&#39;</span><span class="p">])]</span>
+
+                <span class="n">axi</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+                    <span class="n">gens</span><span class="p">,</span> <span class="n">low_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">,</span> <span class="o">**</span><span class="n">fill_kw</span><span class="p">)</span>
+
+            <span class="n">axi</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="n">axi</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="n">axi</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;generation&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ITEA_summarizer.autoreport"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITEA_summarizer.autoreport">[docs]</a>    <span class="k">def</span> <span class="nf">autoreport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">name_suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">use_temp_folder</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>      
+        <span class="sd">&quot;&quot;&quot;automatically generate a pdf using the methods implemented in</span>
+<span class="sd">        ``ITExpr_inspector``, ``ITExpr_explainer``, and ``ITExpr_texifier``.</span>
+
+<span class="sd">        The idea is to simplify the generation of the plots and tables,</span>
+<span class="sd">        taking from the user the need to understand, instantiate the classes</span>
+<span class="sd">        and call the plots functions.</span>
+
+<span class="sd">        This method makes usage of the ``PyLaTeX`` package and requires a </span>
+<span class="sd">        visible latex installation to work properly.</span>
+
+<span class="sd">        The .tex file used to generate the pdf will also be saved on the</span>
+<span class="sd">        designed path.</span>
+
+<span class="sd">        You can download one example of report</span>
+<span class="sd">        :download:`by clicking here &lt;/assets/files/Report.pdf&gt;`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        save_path : string, default=&#39;.&#39;</span>
+<span class="sd">            path to save the pdf report. The file will be saved as &quot;Report.pdf&quot;,</span>
+<span class="sd">            unless a ``name_suffix`` is provided.</span>
+<span class="sd">            A Te</span>
+
+<span class="sd">        name_suffix : string, default=&quot;&quot;</span>
+<span class="sd">            suffix to add in the name of the report. </span>
+
+<span class="sd">        use_temp_folder : boolean, defaut=True</span>
+<span class="sd">            specifies if a temporary folder should be used to save the plots</span>
+<span class="sd">            during the creation of the report. If false, then the plots will</span>
+<span class="sd">            be saved on the ``save_path``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Creating the doc and title page</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">&#39;Report&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">use_temp_folder</span><span class="p">:</span>
+            <span class="n">temp_path</span> <span class="o">=</span> <span class="n">make_temp_dir</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temp_path</span> <span class="o">=</span> <span class="n">save_path</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_report_frontpage</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_report_pre_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_report_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_report_post_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
+
+        <span class="n">doc</span><span class="o">.</span><span class="n">generate_pdf</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">/Report</span><span class="si">{</span><span class="n">name_suffix</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">clean_tex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">use_temp_folder</span><span class="p">:</span>
+            <span class="n">rm_temp_dir</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

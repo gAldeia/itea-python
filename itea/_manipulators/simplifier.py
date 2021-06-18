@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-31-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-17-2021 by Guilherme Aldeia
 
 
 """Methods to simplify expressions. Methods should take an instance of
@@ -26,13 +26,6 @@ __all__ = [
     'simplify_by_coef',
     'simplify_by_var',
 ]
-
-
-# It is likely that the user does not to change this values, since they are
-# set to a low value just to eliminate terms that does not add much to the
-# expression
-COEF_THRESHOLD = 1e-5 # represents an absolute value
-VAR_THRESHOLD  = 1e-2 # represents a percentage
 
 
 def _keep_selected(itexpr, selected_terms):
@@ -65,7 +58,7 @@ def simplify_by_coef(*, itexpr, **kwargs):
 
     selected_terms = []
     for i, coef in enumerate(coefs):
-        if np.any(np.abs(coef) >= COEF_THRESHOLD):
+        if np.any(np.abs(coef) >= 1e-5):
             selected_terms.append(i)
 
     # We'll keep the term if it is the only on the ITExpr
@@ -83,19 +76,17 @@ def simplify_by_var(*, itexpr, X, **kwargs):
 
     This method evaluates the variance of each term and them normalizes the
     variance to represent the relative variance when compared to the other
-    terms. 
+    terms.
     """
 
-    variances = []
-    for fi, ti in itexpr.expr:
-        term_eval = itexpr.tfuncs[fi]( np.prod(np.power(X, ti), axis=1) )
-        variances.append(np.var(term_eval))
+    variances = [np.var(itexpr.tfuncs[fi]( np.prod(np.power(X, ti), axis=1) ))
+                 for fi, ti in itexpr.expr]
 
     tot_variance = np.sum(variances)
     selected_terms = []
     
     for i, v in enumerate(variances):
-        if v/tot_variance >= VAR_THRESHOLD:
+        if v/tot_variance >= 1e-2:
             selected_terms.append(i)
 
     if len(selected_terms) < 1:

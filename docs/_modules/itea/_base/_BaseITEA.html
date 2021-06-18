@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>itea._base._BaseITEA &mdash; Interaction-Transformation Evolutionary Algorithm</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
+          
+
+          
+            
+            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>itea._base._BaseITEA</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for itea._base._BaseITEA</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author:  Guilherme Aldeia</span>
+<span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
+<span class="c1"># Version: 1.0.2</span>
+<span class="c1"># Last modified: 06-13-2021 by Guilherme Aldeia</span>
+
+
+<span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span>             <span class="kn">import</span> <span class="n">BaseEstimator</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_random_state</span>
+
+<span class="kn">from</span> <span class="nn">itea._manipulators.generator</span> <span class="kn">import</span> <span class="n">uniform</span>
+<span class="kn">from</span> <span class="nn">itea._manipulators.mutation</span>  <span class="kn">import</span> <span class="n">mutate_individual</span>
+<span class="kn">from</span> <span class="nn">itea._manipulators.sanitizer</span> <span class="kn">import</span> <span class="n">sanitize</span>
+<span class="kn">from</span> <span class="nn">itea.inspection</span>              <span class="kn">import</span> <span class="n">ITExpr_explainer</span>
+
+<span class="kn">import</span> <span class="nn">itea._manipulators.simplifier</span> <span class="k">as</span> <span class="nn">simplifiers</span>
+
+
+<div class="viewcode-block" id="BaseITEA"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITEA">[docs]</a><span class="k">class</span> <span class="nc">BaseITEA</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.</span>
+
+<span class="sd">    This class implements argument checks and generic evolutionary methods</span>
+<span class="sd">    (population initialization, selection, mutation, and evolution), along with</span>
+<span class="sd">    three virtual methods to be implemented.</span>
+<span class="sd">    </span>
+<span class="sd">    Ideally, this class should never be instantiated, only its derivations.</span>
+
+<span class="sd">    Its derivations will be scikit estimators and can be used in many scikit</span>
+<span class="sd">    methods such as grid-search or pipelines.</span>
+
+<span class="sd">    Every argument is a named argument. The list of arguments includes </span>
+<span class="sd">    everything that an ``ITExpr`` class needs to be instantiated.</span>
+
+<span class="sd">    All arguments have a default value. In this configuration, the</span>
+<span class="sd">    evolutionary process will search only for polynomials.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">gens</span>            <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">max_terms</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">random_state</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span>         <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">labels</span>          <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">tfuncs</span>          <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">},</span>
+        <span class="n">tfuncs_dx</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                                
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        gens : int, default=100</span>
+<span class="sd">            number of generations of the evolutionary process. The</span>
+<span class="sd">            algorithm does not implement an early stop mechanism, so</span>
+<span class="sd">            it is guaranteed that the algorithm will perform the exact</span>
+<span class="sd">            number of generations.</span>
+
+<span class="sd">        popsize : int, default=100</span>
+<span class="sd">            population size, consistent through each generation.</span>
+
+<span class="sd">        expolim : tuple (int, int), default = (-2, 2)</span>
+<span class="sd">            tuple containing two integers, specifying the bounds</span>
+<span class="sd">            of exponents that can be explored through the evolution.</span>
+
+<span class="sd">        max_terms : int, default=5</span>
+<span class="sd">            the max number of IT terms allowed.</span>
+
+<span class="sd">        simplify_method : string or None, default=None</span>
+<span class="sd">            String with the name of the simplification</span>
+<span class="sd">            method to be used before fitting expressions</span>
+<span class="sd">            through the evolutionary process. When set to</span>
+<span class="sd">            None, the simplification step is disabled.</span>
+
+<span class="sd">        random_state : int, None or numpy.random_state, default=None</span>
+<span class="sd">            int or numpy random state. Use this argument</span>
+<span class="sd">            to have reproducible results across different</span>
+<span class="sd">            executions. When None, a random state instance</span>
+<span class="sd">            will be created and used and can be accessed</span>
+<span class="sd">            by ``itea.random_state``.</span>
+
+<span class="sd">        verbose : int, None or False, default=None</span>
+<span class="sd">            specify if the algorithm should perform the evolution</span>
+<span class="sd">            silently or if it should print information through the</span>
+<span class="sd">            process. When verbose is None, False, or 0, the algorithm</span>
+<span class="sd">            will not print any information. If verbose is an integer</span>
+<span class="sd">            ``n``, then every ``n`` generations the algorithm will</span>
+<span class="sd">            print the status of the generation. If verbose is set</span>
+<span class="sd">            to -1, every generation information will be printed.</span>
+
+<span class="sd">        labels : list of strings, default=[]</span>
+<span class="sd">            (``ITExpr`` parameter) list containing the labels of the</span>
+<span class="sd">            data that will be used in the evolutionary process, and</span>
+<span class="sd">            will be used in ``ITExpr`` constructors.</span>
+
+<span class="sd">        tfuncs : dict, default={&#39;id&#39;: lambda x: x}</span>
+<span class="sd">            (``ITExpr`` parameter) transformations functions to be</span>
+<span class="sd">            used when creating ``ITExpr`` &#39;s during the</span>
+<span class="sd">            evolutionary process. Should always be a dict where the</span>
+<span class="sd">            keys are the names of the transformation functions and </span>
+<span class="sd">            the values are unary vectorized functions (for example,</span>
+<span class="sd">            numpy functions). For user-defined functions, see</span>
+<span class="sd">            numpy.vectorize for more information on how to vectorize</span>
+<span class="sd">            your transformation functions. Defaults to a dict with</span>
+<span class="sd">            only the identity function.</span>
+
+<span class="sd">        tfuncs_dx : dict, default=None</span>
+<span class="sd">            (ITExpr_explainer parameter) derivatives of the</span>
+<span class="sd">            given transformations functions, following the same scheme:</span>
+<span class="sd">            a dictionary where the key is the name of the function</span>
+<span class="sd">            (should have the derivatives of every function in</span>
+<span class="sd">            tfuncs) and the value is a vectorized function</span>
+<span class="sd">            representing its derivative. When set to None, the</span>
+<span class="sd">            itea package will use automatic differentiation </span>
+<span class="sd">            through jax to create the derivatives.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">gens</span>            <span class="o">=</span> <span class="n">gens</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">popsize</span>         <span class="o">=</span> <span class="n">popsize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_terms</span>       <span class="o">=</span> <span class="n">max_terms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span>         <span class="o">=</span> <span class="n">expolim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs_dx</span>       <span class="o">=</span> <span class="n">tfuncs_dx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span>    <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>         <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="o">=</span> <span class="n">simplify_method</span>
+
+
+    <span class="k">def</span> <span class="nf">_check_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method provides a simple verification of the arguments to be</span>
+<span class="sd">        used as a baseline. </span>
+<span class="sd">        </span>
+<span class="sd">        The sub-classes of the BaseITEA should implement the check_args as well.</span>
+
+<span class="sd">        It is important to notice that the check must be made when fitting and</span>
+<span class="sd">        should raise errors to stop the program flow if any problem is found.</span>
+<span class="sd">        The scikit recomendation is to never do checks on __init__.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">            ValueError</span>
+<span class="sd">                If one or more arguments would result in a invalid execution of</span>
+<span class="sd">                itea.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Lower expolim bound is greater than upper bound.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_terms</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max_terms should be greater or equal to 1.&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">bound</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">bound</span><span class="p">),</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;the expolim bounds </span><span class="si">{</span><span class="n">bound</span><span class="si">}</span><span class="s2"> must be integers.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">issubdtype</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_terms</span><span class="p">),</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;max_terms should be a int.&quot;</span><span class="p">)</span> 
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="ow">in</span> <span class="n">simplifiers</span><span class="o">.</span><span class="n">__all__</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;simplify_method </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span><span class="si">}</span><span class="s2"> does not exist. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;Available methods: </span><span class="si">{</span><span class="n">simplifiers</span><span class="o">.</span><span class="n">__all__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;It is necessary to provide an identity function &quot;</span>
+            <span class="s2">&quot;with name &#39;id&#39; on the tfuncs dict, and I didn&#39;t found it. I will &quot;</span>
+            <span class="s2">&quot;insert ``&#39;id&#39; : lambda x: x`` on the dict.&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;The labels vector does not have the same length as &quot;</span>
+            <span class="s2">&quot;the number of variables in X (or was not provided). labels &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;has length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span><span class="si">}</span><span class="s2">, and X has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> variables. &quot;</span>
+            <span class="s2">&quot;labels will be generated as [x_0, x_1, ...].&quot;</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;x_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span>
+
+
+    <span class="k">def</span> <span class="nf">_create_population</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">simplify_f</span><span class="p">,</span> <span class="n">nvars</span><span class="p">,</span> <span class="n">itexpr_class</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to create an initial population for the evolutionary process.</span>
+
+<span class="sd">        It will use an random expression generator that does not create</span>
+<span class="sd">        trivial expressions (where all exponents are zero).</span>
+
+<span class="sd">        Although, if the user has chosen an simplification method, exists the</span>
+<span class="sd">        possibility that the initial population will have fewer individuals</span>
+<span class="sd">        than the given popsize. The while loop tries to guarantee that we will</span>
+<span class="sd">        start with a clean population where all fitnessess are finite values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="n">generator</span> <span class="o">=</span> <span class="n">uniform</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">nvars</span><span class="p">,</span> <span class="n">random_state</span><span class="p">)</span>
+
+        <span class="c1"># The loop below ensures that the first population is always </span>
+        <span class="c1"># composed of valud expressions with finite fitness.</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">popsize</span><span class="p">):</span>
+            <span class="n">expr</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">generator</span><span class="p">))</span>
+            
+            <span class="n">itexpr</span> <span class="o">=</span> <span class="n">itexpr_class</span><span class="p">(</span>
+                <span class="n">expr</span><span class="o">=</span><span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+    
+            <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+                <span class="n">itexpr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">simplify_f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">itexpr</span> <span class="o">=</span> <span class="n">simplify_f</span><span class="p">(</span><span class="n">itexpr</span><span class="o">=</span><span class="n">itexpr</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+                    <span class="n">itexpr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">itexpr</span><span class="o">.</span><span class="n">_fitness</span><span class="p">):</span>
+                <span class="n">pop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itexpr</span><span class="p">)</span>
+    
+        <span class="k">return</span> <span class="n">pop</span>
+
+
+    <span class="k">def</span> <span class="nf">_mutate_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">nvars</span><span class="p">,</span> <span class="n">itexpr_class</span><span class="p">,</span> <span class="n">random_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to mutate the population without changing its parents.</span>
+
+<span class="sd">        The mutated children will not be fitted. The fit of the ITExpr occurs</span>
+<span class="sd">        only when the selection method faces an unfitted ITExpr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">mutated</span> <span class="o">=</span> <span class="p">[</span><span class="n">mutate_individual</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">expr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">nvars</span><span class="p">,</span> <span class="n">random_state</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
+
+        <span class="n">newpop</span> <span class="o">=</span> <span class="p">[</span><span class="n">itexpr_class</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span>
+                    <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">mutated</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">newpop</span>
+
+
+    <span class="k">def</span> <span class="nf">_select_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">pop</span><span class="p">,</span> <span class="n">select_f</span><span class="p">,</span> <span class="n">simplify_f</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to perform multiple tournament selections, until the number</span>
+<span class="sd">        of selected expressions is equal to the popsize.</span>
+
+<span class="sd">        After selection, all individuals in the returned population are fitted,</span>
+<span class="sd">        but not all individuals in the passed population will be as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="c1"># Invalid expressions can happen. We&#39;ll ignore the warnings just here</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
+
+            <span class="c1"># Selecting the competitors indexes</span>
+            <span class="n">competitors_idx</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pop</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+            <span class="c1"># Finding the unique expression in population that were selected</span>
+            <span class="c1"># (to avoid unecessary fits)</span>
+            <span class="n">to_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">competitors_idx</span><span class="p">)</span>
+
+            <span class="c1"># Simplify functions changes the expressions, we need to ensure</span>
+            <span class="c1"># they will be fitted after the process</span>
+            <span class="k">if</span> <span class="n">simplify_f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">simplify_f</span><span class="p">(</span><span class="n">itexpr</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> 
+                       <span class="p">[</span><span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_fit</span><span class="p">]]</span>
+
+            <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_fit</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="p">[</span><span class="n">select_f</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">competitors_idx</span><span class="p">)]</span>
+    
+
+    <span class="k">def</span> <span class="nf">_evolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">itexpr_class</span><span class="p">,</span> <span class="n">greater_is_better</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evolution process on an ITExpr population.</span>
+
+<span class="sd">        Should be used on sub-classes, inside the fit function, to evolve the</span>
+<span class="sd">        population.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Getting ready...</span>
+        <span class="n">nvars</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">random_state</span> <span class="o">=</span> <span class="n">check_random_state</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        
+        <span class="c1"># Takes an array of competitors and returns the most valuable to the</span>
+        <span class="c1"># task</span>
+        <span class="k">if</span> <span class="n">greater_is_better</span><span class="p">:</span>
+            <span class="n">select_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">comp</span><span class="p">:</span> <span class="n">comp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">])]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">select_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">comp</span><span class="p">:</span> <span class="n">comp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">])]</span> 
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">simplify_f</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">simplifiers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">simplify_f</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">groups</span>  <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">,</span> <span class="s1">&#39;n_terms&#39;</span><span class="p">,</span> <span class="s1">&#39;complexity&#39;</span><span class="p">]</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">group</span><span class="p">:{</span><span class="n">col</span><span class="p">:[]</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">}</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">}</span> 
+
+        <span class="c1"># Starting the evolution now!        </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exectime_</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">pop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_population</span><span class="p">(</span>
+            <span class="n">simplify_f</span>   <span class="o">=</span> <span class="n">simplify_f</span><span class="p">,</span> 
+            <span class="n">nvars</span>        <span class="o">=</span> <span class="n">nvars</span><span class="p">,</span>
+            <span class="n">itexpr_class</span> <span class="o">=</span> <span class="n">itexpr_class</span><span class="p">,</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> 
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+            <span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;gen </span><span class="se">\t</span><span class="s2"> min_fitness </span><span class="se">\t</span><span class="s2"> mean_fitness&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> max_fitness </span><span class="se">\t</span><span class="s2"> remaining (s)&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Simple estimation of  remaining time</span>
+            <span class="n">last_5_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">fill_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gens</span><span class="p">):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+            <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mutate_population</span><span class="p">(</span>
+                <span class="n">pop</span> <span class="o">=</span> <span class="n">pop</span><span class="p">,</span>
+                <span class="n">nvars</span> <span class="o">=</span> <span class="n">nvars</span><span class="p">,</span>
+                <span class="n">itexpr_class</span> <span class="o">=</span> <span class="n">itexpr_class</span><span class="p">,</span>
+                <span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">)</span>
+
+            <span class="n">pop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select_population</span><span class="p">(</span>
+                <span class="n">pop</span>        <span class="o">=</span> <span class="n">pop</span> <span class="o">+</span> <span class="n">child</span><span class="p">,</span>
+                <span class="n">size</span>       <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">popsize</span><span class="p">,</span>
+                <span class="n">select_f</span>   <span class="o">=</span> <span class="n">select_f</span><span class="p">,</span>
+                <span class="n">simplify_f</span> <span class="o">=</span> <span class="n">simplify_f</span><span class="p">,</span> 
+                <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+                <span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span><span class="p">)</span>
+            
+            <span class="c1"># After selection, all individuals in population are fitted</span>
+            <span class="c1"># and have finite fitness</span>
+            <span class="n">fitnesses</span>    <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">_fitness</span>     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
+            <span class="n">n_terms</span>      <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">n_terms</span>      <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
+            <span class="n">complexities</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">complexity</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="p">[</span><span class="n">fitnesses</span><span class="p">,</span> <span class="n">n_terms</span><span class="p">,</span> <span class="n">complexities</span><span class="p">]):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;min&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;max&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;std&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="n">g</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="o">==-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Estimating remaining time</span>
+                <span class="n">last_5_times</span><span class="p">[</span><span class="n">g</span><span class="o">%</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t</span>
+                
+                <span class="n">remaining</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">last_5_times</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gens</span> <span class="o">-</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+                
+                <span class="n">remaining_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">remaining</span><span class="o">//</span><span class="mi">60</span><span class="si">}</span><span class="s2">min</span><span class="si">{</span><span class="n">remaining</span> <span class="o">%</span> <span class="mi">60</span><span class="si">}</span><span class="s2">seg&quot;</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">g</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">fitnesses</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">fitnesses</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">fitnesses</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">{</span><span class="n">remaining_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+           
+        <span class="bp">self</span><span class="o">.</span><span class="n">exectime_</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">exectime_</span>
+
+        <span class="c1"># At this point, all individuals in the population are fitted.</span>
+        <span class="k">if</span> <span class="n">greater_is_better</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pop</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">])]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pop</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">])]</span>
+
+
+    <span class="k">def</span> <span class="nf">_explain_bestsol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">itexpr</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Estimating feature importantes using the partial effect of the</span>
+<span class="sd">        final best solution.</span>
+
+<span class="sd">        After the evolution process, this method should be called to create</span>
+<span class="sd">        the feature_importances on the expression</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+            <span class="n">itexpr</span><span class="o">=</span><span class="n">itexpr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">tfuncs_dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tfuncs_dx</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="n">itexpr</span><span class="o">.</span><span class="n">selected_features_</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">selected_features</span><span class="p">()</span>
+
+        <span class="n">itexpr</span><span class="o">.</span><span class="n">feature_importances_</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BaseITEA.fit"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITEA.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual fit method. Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># The subclasses must do:</span>
+        <span class="c1"># 1 - check_args</span>
+        <span class="c1"># 2 - run the evolution (with _evolve()) </span>
+        <span class="c1"># 3 - retrieve the best solution</span>
+        <span class="c1"># 4 - calculate the feature importances of the best solution</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BaseITEA.predict"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITEA.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual predict method. Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="BaseITEA.predict_proba"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITEA.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;virtual predict_proba method. Should be overridden by sub-classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Guilherme Aldeia.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

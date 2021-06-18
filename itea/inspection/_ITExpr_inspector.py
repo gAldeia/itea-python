@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.0
-# Last modified: 05-31-2021 by Guilherme Aldeia
+# Version: 1.0.1
+# Last modified: 06-17-2021 by Guilherme Aldeia
 
 
 """ITExpr_inspector class.
@@ -16,9 +16,6 @@ from sklearn.utils.validation import check_array, check_is_fitted
 from sklearn.metrics          import mutual_info_score
 
 
-DECIMAL_PLACES = 3
-
-
 class ITExpr_inspector():
     """class ITExpr_inspector.
     
@@ -27,7 +24,7 @@ class ITExpr_inspector():
     calculating information between individual terms.
     """
 
-    def __init__(self, *, itexpr, tfuncs):
+    def __init__(self, *, itexpr, tfuncs, decimal_places=3):
         """Constructor method.
         
         Parameters
@@ -41,8 +38,9 @@ class ITExpr_inspector():
             functions and the values are unary vectorized functions.
         """
 
-        self.itexpr    = itexpr
-        self.tfuncs    = tfuncs
+        self.itexpr         = itexpr
+        self.tfuncs         = tfuncs
+        self.decimal_places = decimal_places
 
 
     def fit(self, X, y):
@@ -97,7 +95,8 @@ class ITExpr_inspector():
         if len(stderrs) == 1:
             stderrs = stderrs[0]
         
-        return [str(stderr.round(DECIMAL_PLACES)) for stderr in np.array(stderrs).T]
+        return [str(stderr.round(self.decimal_places))
+                for stderr in np.array(stderrs).T]
 
 
     def _disentanglement(self):
@@ -143,7 +142,8 @@ class ITExpr_inspector():
                     
                     col_disentanglement.append(corr)
 
-            disentanglements.append(np.mean(col_disentanglement).round(DECIMAL_PLACES))
+            disentanglements.append(
+                np.mean(col_disentanglement).round(self.decimal_places))
 
         return disentanglements
 
@@ -161,13 +161,14 @@ class ITExpr_inspector():
                 
                 variances.append(np.var(
                     self.Z * (coef + [intercept]),
-                axis=0).round(DECIMAL_PLACES))
+                axis=0).round(self.decimal_places))
 
-            return [str(v.round(DECIMAL_PLACES)) for v in np.array(variances).T]
+            return [str(v.round(self.decimal_places))
+                    for v in np.array(variances).T]
         else:
             return np.var(
                 self.Z * (self.itexpr.coef_ + [self.itexpr.intercept_]),
-            axis=0).round(DECIMAL_PLACES)
+            axis=0).round(self.decimal_places)
 
 
     def _continuous_mutual_info(self):
@@ -199,7 +200,8 @@ class ITExpr_inspector():
                         mutual_info_score(None, None, contingency=c_xy)
                     )
 
-            mutual_informations.append(np.mean(col_mutual_information).round(DECIMAL_PLACES))
+            mutual_informations.append(
+                np.mean(col_mutual_information).round(self.decimal_places))
 
         return mutual_informations
 
@@ -236,11 +238,11 @@ class ITExpr_inspector():
             funcs.append(fi)
             strengths.append(str(ti))
             
-            coefs.append(str(wi.round(DECIMAL_PLACES)))
+            coefs.append(str(wi.round(self.decimal_places)))
 
         # Calculating statistics related to the intercept
         coefs        = coefs + [
-            str(np.round(self.itexpr.intercept_, DECIMAL_PLACES))]
+            str(np.round(self.itexpr.intercept_, self.decimal_places))]
         funcs        = funcs + ['intercept']
         strengths    = strengths + ['---']
         disentangles = self._disentanglement() + [0.0]

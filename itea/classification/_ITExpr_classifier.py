@@ -66,7 +66,8 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
             target classes inferred from the training y target data.
         """
 
-        super(ITExpr_classifier, self).__init__(expr=expr, tfuncs=tfuncs, labels=labels)
+        super(ITExpr_classifier, self).__init__(
+            expr=expr, tfuncs=tfuncs, labels=labels)
 
         self.fit_model = LogisticRegression
         self.fitness_f = accuracy_score
@@ -94,7 +95,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
 
         probs = self.predict_proba(X)
 
-        covars = np.zeros( (len(self.classes_), self.n_terms+1, self.n_terms+1) )
+        covars = np.zeros((len(self.classes_), self.n_terms+1, self.n_terms+1))
         for class_id in range(len(self.classes_)):
 
             # Estimating as a one vs all classification for each class
@@ -142,9 +143,10 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         
             Z = self._eval(X)
 
-            if np.isfinite(Z).all() and np.all(np.abs(Z) < 1e+100):
+            if np.isfinite(Z).all() and np.all(np.abs(Z) < 1e+200):
                 
-                self.fit_model_ = self.fit_model()
+                self.fit_model_ = self.fit_model(
+                    solver='saga', penalty='none')
                 
                 pred  = self.fit_model_.fit(Z, y).predict(Z)
 
@@ -155,7 +157,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
             else:
                 self.classes_   = np.unique(y).tolist()
                 self.intercept_ = np.zeros( (len(self.classes_)) ).tolist()
-                self._fitness   = np.nan
+                self._fitness   = -np.inf
                 self.coef_      = np.ones(
                     (len(self.classes_), self.n_terms) ).tolist()
 

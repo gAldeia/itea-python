@@ -4,6 +4,10 @@ EXAMPLES := $(shell find "./examples/"  -maxdepth 1 -name '*.ipynb')
 
 all: coverage doc build-dist clean
 
+profile:
+	${PYTHON} -m cProfile -o ./profiling/profiling_results.dat ./profiling/itea_profiling.py
+	snakeviz ./profiling/profiling_results.dat
+
 test:
 	${PYTHON} setup.py pytest
 

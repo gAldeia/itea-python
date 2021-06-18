@@ -49,7 +49,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
+   "execution_count": 10,
    "id": "efbd78e4",
    "metadata": {},
    "outputs": [
@@ -58,16 +58,16 @@
      "output_type": "stream",
      "text": [
       "gen \t min_fitness \t mean_fitness \t max_fitness \t remaining (s)\n",
-      "0 \t 0.51 \t 0.9198 \t 0.96 \t 1min14seg\n",
-      "5 \t 0.87 \t 0.9538000000000001 \t 0.98 \t 1min10seg\n",
-      "10 \t 0.94 \t 0.9658 \t 0.99 \t 1min19seg\n",
-      "15 \t 0.95 \t 0.9824 \t 0.99 \t 1min13seg\n",
-      "20 \t 0.98 \t 0.9876 \t 0.99 \t 0min57seg\n",
-      "25 \t 0.97 \t 0.9875999999999999 \t 0.99 \t 0min52seg\n",
-      "30 \t 0.96 \t 0.9878000000000001 \t 0.99 \t 0min41seg\n",
-      "35 \t 0.97 \t 0.9882000000000001 \t 0.99 \t 0min34seg\n",
-      "40 \t 0.97 \t 0.9882000000000002 \t 0.99 \t 0min19seg\n",
-      "45 \t 0.94 \t 0.9856000000000001 \t 0.99 \t 0min9seg\n"
+      "0 \t 0.35 \t 0.8707999999999998 \t 0.97 \t 1min23seg\n",
+      "5 \t 0.95 \t 0.9689999999999998 \t 0.98 \t 1min20seg\n",
+      "10 \t 0.89 \t 0.9751999999999998 \t 0.98 \t 1min32seg\n",
+      "15 \t 0.96 \t 0.9788 \t 0.98 \t 1min49seg\n",
+      "20 \t 0.97 \t 0.9789999999999998 \t 0.98 \t 1min14seg\n",
+      "25 \t 0.95 \t 0.978 \t 0.98 \t 0min45seg\n",
+      "30 \t 0.96 \t 0.9785999999999998 \t 0.98 \t 0min41seg\n",
+      "35 \t 0.97 \t 0.9795999999999999 \t 0.98 \t 0min21seg\n",
+      "40 \t 0.97 \t 0.9792000000000001 \t 0.98 \t 0min27seg\n",
+      "45 \t 0.96 \t 0.9789999999999999 \t 0.98 \t 0min11seg\n"
      ]
     }
    ],
@@ -89,8 +89,6 @@
     "    'id'       : lambda x: x,\n",
     "    'sqrt.abs' : lambda x: jnp.sqrt(jnp.abs(x)), \n",
     "    'log'      : jnp.log,\n",
-    "    'sin'      : jnp.sin,\n",
-    "    'cos'      : jnp.cos,\n",
     "    'exp'      : jnp.exp\n",
     "}\n",
     "\n",
@@ -98,7 +96,7 @@
     "    gens            = 50,\n",
     "    popsize         = 50,\n",
     "    max_terms       = 3,\n",
-    "    expolim         = (0, 2),\n",
+    "    expolim         = (-2, 2),\n",
     "    verbose         = 5,\n",
     "    tfuncs          = tfuncs,\n",
     "    labels          = labels,\n",
