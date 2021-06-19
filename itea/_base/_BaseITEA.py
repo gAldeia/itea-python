@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.2
-# Last modified: 06-13-2021 by Guilherme Aldeia
+# Version: 1.0.3
+# Last modified: 06-18-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -53,7 +53,7 @@ class BaseITEA(BaseEstimator):
         labels          = [],
         tfuncs          = {'id': lambda x: x},
         tfuncs_dx       = None,
-                                
+        fit_kw          = None  
     ):
         """Constructor method.
 
@@ -123,6 +123,11 @@ class BaseITEA(BaseEstimator):
             representing its derivative. When set to None, the
             itea package will use automatic differentiation 
             through jax to create the derivatives.
+
+        fit_kw : dict or None, default = None
+            dictionary with parameters to pass as configuration arguments
+            to the fit method in the  ``BaseITExpr`` subclass.
+            If none is given, then a empty dict will be used.
         """
 
         self.gens            = gens
@@ -135,6 +140,7 @@ class BaseITEA(BaseEstimator):
         self.labels          = labels
         self.verbose         = verbose
         self.simplify_method = simplify_method
+        self.fit_kw          = fit_kw
 
 
     def _check_args(self, X, y):
@@ -152,6 +158,16 @@ class BaseITEA(BaseEstimator):
             ValueError
                 If one or more arguments would result in a invalid execution of
                 itea.
+
+        Notes
+        -----
+        As the scikit documentation suggests, no check for valid arguments is
+        made on the constructor. Instead, when those arguments will be used, 
+        we then perform the checkings. **All 'private' methods (beginning with
+        an underscore) are designed to work after the ``check_args`` is called,
+        since they rely on valid parameters. Also, all of them are intended
+        to internal usage. When modifying, calling them directly, or testing
+        the private methods, you should manually call the check args.
         """
         
         if self.expolim[1] < self.expolim[0]:
@@ -192,6 +208,9 @@ class BaseITEA(BaseEstimator):
             
             self.labels = [f'x_{i}' for i in range(len(X[0]))]
 
+        if self.fit_kw == None:
+            self.fit_kw = {}
+
 
     def _create_population(
         self, *, simplify_f, nvars, itexpr_class, X, y, random_state):
@@ -216,7 +235,9 @@ class BaseITEA(BaseEstimator):
             expr = sanitize(next(generator))
             
             itexpr = itexpr_class(
-                expr=sanitize(expr), tfuncs=self.tfuncs, labels=self.labels)
+                expr=sanitize(expr), tfuncs=self.tfuncs, labels=self.labels,
+                **self.fit_kw
+            )
     
             with np.errstate(all='ignore'):
                 itexpr.fit(X, y)
@@ -242,7 +263,7 @@ class BaseITEA(BaseEstimator):
                           self.tfuncs, nvars, random_state) for p in pop]
 
         newpop = [itexpr_class(expr = sanitize(expr), tfuncs = self.tfuncs,
-                    labels = self.labels) for expr in mutated]
+                    labels = self.labels, **self.fit_kw) for expr in mutated]
 
         return newpop
 

@@ -107,7 +107,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -530,11 +529,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1241661061649098      1.1537010152616711      0min37seg
-10       0.8090125341227223      0.9349910861460051      1.1534450480996674      0min39seg
-20       0.7949471054491373      0.8082669254353582      0.8683097084215429      1min13seg
-30       0.7834374617153554      0.7906001515305364      0.8391294036275558      0min49seg
-40       0.7353852668700478      0.768112810031591       0.805150307443258       0min21seg
+0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min34seg
+10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min28seg
+20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min14seg
+30       0.7662163369724707      0.7870666345437662      0.8239470965278956      1min2seg
+40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min23seg
 </pre></div></div>
 </div>
 <section id="Explaining-with-PDP">
@@ -640,7 +639,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1c4411c0a1944f0fadbf00c9ca851b10", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "dfc2cc47494b438492e44983f0b0c137", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -697,7 +696,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "fa646cf099b34ad7b41b56129b5dc4ac", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "1f2cd0ae0d8945e587d1bcf16cfc2f94", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -37828,25 +37827,25 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divR44V7ZNFQLE363H"></div>
+        <div class="lime top_div" id="top_divH7Z11IJTIY1F687"></div>
 
         <script>
-        var top_div = d3.select('#top_divR44V7ZNFQLE363H').classed('lime top_div', true);
+        var top_div = d3.select('#top_divH7Z11IJTIY1F687').classed('lime top_div', true);
 
 
                     var pp_div = top_div.append('div')
                                         .classed('lime predicted_value', true);
                     var pp_svg = pp_div.append('svg').style('width', '100%');
-                    var pp = new lime.PredictedValue(pp_svg, 0.22100108233735227, -4.915036745639554, 7.628702371972395);
+                    var pp = new lime.PredictedValue(pp_svg, 0.34337565053237995, -3.4448945508923643, 6.449456219617701);
 
         var exp_div;
             var exp = new lime.Explanation(["negative", "positive"]);
 
             exp_div = top_div.append('div').classed('lime explanation', true);
-            exp.show([["AveOccup > 3.28", -1.6336806051317123], ["MedInc <= 2.57", -1.5644185158529227], ["34.27 < Latitude <= 37.72", -0.4964589419478388], ["AveRooms <= 4.46", 0.46226342213588156], ["-121.81 < Longitude <= -118.51", 0.3729470770483327], ["1.01 < AveBedrms <= 1.05", -0.3163970169247895], ["1170.50 < Population <= 1729.00", -0.04642239249650596], ["18.00 < HouseAge <= 29.00", 0.03005899600651192]], 1, exp_div);
+            exp.show([["MedInc <= 2.57", -1.7186528972224353], ["AveOccup > 3.28", -1.6421952137338034], ["AveRooms <= 4.46", 0.6166560598367917], ["1.01 < AveBedrms <= 1.05", -0.2785344677443623], ["34.27 < Latitude <= 37.72", -0.24049342568393983], ["-121.81 < Longitude <= -118.51", 0.19038453150168205], ["18.00 < HouseAge <= 29.00", 0.014253911985967439], ["1170.50 < Population <= 1729.00", -0.004687277110972198]], 1, exp_div);
 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["AveOccup", "3.88", -1.6336806051317123], ["MedInc", "1.68", -1.5644185158529227], ["Latitude", "36.06", -0.4964589419478388], ["AveRooms", "4.19", 0.46226342213588156], ["Longitude", "-119.01", 0.3729470770483327], ["AveBedrms", "1.02", -0.3163970169247895], ["Population", "1392.00", -0.04642239249650596], ["HouseAge", "25.00", 0.03005899600651192]], 1, raw_div);
+            exp.show_raw_tabular([["MedInc", "1.68", -1.7186528972224353], ["AveOccup", "3.88", -1.6421952137338034], ["AveRooms", "4.19", 0.6166560598367917], ["AveBedrms", "1.02", -0.2785344677443623], ["Latitude", "36.06", -0.24049342568393983], ["Longitude", "-119.01", 0.19038453150168205], ["HouseAge", "25.00", 0.014253911985967439], ["Population", "1392.00", -0.004687277110972198]], 1, raw_div);
 
         </script>
         </body></html></div>

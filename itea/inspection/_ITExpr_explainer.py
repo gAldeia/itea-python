@@ -195,8 +195,10 @@ class ITExpr_explainer():
 
         Returns
         -------
-        ape : numpy.array of shape (n_features, )
-            the importance of each feature of X.
+        ape : numpy.array of shape (n_classes, n_features)
+            the importance of each feature of X. for each class found in the
+            given itexpr. If itexpr is an ``ITExpr_regressor``, then the
+            returned array have shape (1, n_features).
 
         Notes
         -----
@@ -320,7 +322,7 @@ class ITExpr_explainer():
             smallest to the highest importance, and a group of the smallest
             features that sum up less than the given percentage of importance
             will be grouped to reduce the plot information.
-            To disable the creation of the group, set ``grouping_threshol=0``.
+            To disable the creation of the group, set ``grouping_threshold=0``.
 
         target : string, int, list[strings], list[ints] or None, default=None
             The targets to be considered when generating the plot for 
@@ -407,7 +409,7 @@ class ITExpr_explainer():
                 others[:, 0] += importances[:, i]
                 features_in_others += 1
 
-        # Handling plot labels 
+        # Greater than one because a group of one is not a group
         if features_in_others > 1:
             final_importances = np.hstack((
                 importances[:, order[:len(order)-features_in_others]],
@@ -872,7 +874,7 @@ class ITExpr_explainer():
             smallest to the highest importance, and a group of the smallest
             features that sum up less than the given percentage of importance
             will be grouped to reduce the plot information.
-            To disable the creation of the group, set ``grouping_threshol=0``.
+            To disable the creation of the group, set ``grouping_threshold=0``.
 
         stack_kw : dict or None, default=None
             dictionary with keywords to be used when generating the plots.
@@ -947,22 +949,22 @@ class ITExpr_explainer():
             x_axis = x_axis[:-1]
                 
         # Avoid division by zero by already discarding some features
-        global_importances = \
-            global_importances[self.selected_features(idx=True), :]
+        # global_importances = \
+        #     global_importances[self.selected_features(idx=True), :]
 
-        labels = self.selected_features()
+        labels = self.itexpr.labels
 
         # Number of features that were not selected (we'll use it to make
         # the number of features in others match the number of features in 
         # the dataset)
-        left_out = self.X_.shape[1] - len(labels)
+        # left_out = self.X_.shape[1] - len(labels)
 
         # order is going from the highest to the smallest important features
         order = np.argsort(-np.sum(global_importances, axis=1))
 
         # grouping the features that have small contribution
         others = np.zeros_like(global_importances[0])
-        features_in_others = left_out
+        features_in_others = 0
         thresold_area = grouping_threshold*100*num_points
 
         for i in order[::-1]:
@@ -970,14 +972,16 @@ class ITExpr_explainer():
                 others += global_importances[i, :]
                 features_in_others += 1
 
-        if features_in_others > 0:
+        # Greater than one because a group of one is not a group
+        if features_in_others > 1:
+            sorted = order[:len(order)-(features_in_others)]
             global_importances = np.vstack((
-                global_importances[order[:len(order)-features_in_others]],
+                global_importances[sorted],
                 others
             ))
 
             labels = np.hstack((
-                labels[order[:len(order)-features_in_others]],
+                labels[sorted],
                 [f'Other features ({features_in_others})']
             ))
 

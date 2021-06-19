@@ -45,7 +45,6 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Recreating the Scikit-learn LogisticRegression method" href="_test_scikit_LogisticRegression_solver.html" />
     <link rel="prev" title="Iris classification" href="_multiclass_example.html" /> 
 </head>
 
@@ -107,7 +106,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -525,11 +523,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min21seg
-10       0.8272846090261381      0.881735672398493       1.0369699871900457      0min41seg
-20       0.8136939314899935      0.8272938408550969      1.0107234916933154      0min37seg
-30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min28seg
-40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min12seg
+0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min32seg
+10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min10seg
+20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min11seg
+30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min49seg
+40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min21seg
 </pre></div></div>
 </div>
 </section>
@@ -573,6 +571,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Final expression:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">final_itexpr</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">term_separator</span><span class="o">=</span><span class="s1">&#39; +</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Elapsed time: </span><span class="si">{</span><span class="n">reg</span><span class="o">.</span><span class="n">exectime_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Selected Features: </span><span class="si">{</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">selected_features_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -590,7 +589,10 @@ Final expression:
 -25.846*log(MedInc) +
 -62.377
 
-Elapsed time: 60.5909264087677
+Elapsed time: 108.50205707550049
+
+Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;AveOccup&#39; &#39;Latitude&#39;
+ &#39;Longitude&#39;]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -786,7 +788,7 @@ Elapsed time: 60.5909264087677
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">()</span>
+<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -806,7 +808,6 @@ Elapsed time: 60.5909264087677
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="_test_scikit_LogisticRegression_solver.html" class="btn btn-neutral float-right" title="Recreating the Scikit-learn LogisticRegression method" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="_multiclass_example.html" class="btn btn-neutral float-left" title="Iris classification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

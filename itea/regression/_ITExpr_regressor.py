@@ -14,6 +14,7 @@ from sklearn.base             import RegressorMixin
 from sklearn.utils.validation import check_array, check_is_fitted
 from sklearn.metrics          import mean_squared_error
 from scipy.linalg             import lstsq
+from sklearn.exceptions       import NotFittedError
 
 from itea._base import BaseITExpr
 
@@ -161,17 +162,23 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
         
                 if y.ndim == 1:
                     self.coef_ = np.ravel(coef.T).tolist()
-                
+
+                # Saving the fitted parameters                
                 self.coef_      = coef.T.tolist()
                 self.intercept_ = y_offset - np.dot(Z_offset, coef.T)
-                self._fitness   = self.fitness_f(
-                    np.dot(Z, self.coef_) + self.intercept_, y)
+        
+                # setting fitted to true to use prediction below
+                self._is_fitted = True
+
+                self._fitness   = self.fitness_f(self.predict(X), y)
             else:
                 self.coef_      = np.ones(self.n_terms)
                 self.intercept_ = 0.0
                 self._fitness   = np.inf
 
-            self._is_fitted = True
+                # Failed to fit. Default values were set and the is_fitted
+                # is set to true to avoid repeated failing fits.
+                self._is_fitted = True
 
         return self
 
@@ -188,12 +195,21 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
         -------
         p : numpy.array of shape (n_samples, )
             predicted response value for each sample.
+
+        Raises
+        ------
+            NotFittedError
+                If the expression was not fitted before calling this method.
         """
 
+        # scikit check - searches for attributes ending with '_'
         check_is_fitted(self)
 
-        assert self._is_fitted, \
-            ("The expression was simplified and has not refitted.")
+        # my check, which indicates if the expression was changed by
+        # manipulators or not fitted
+        if not self._is_fitted:
+            raise NotFittedError(
+                "The expression was simplified and has not refitted.")
 
         X = check_array(X)
 

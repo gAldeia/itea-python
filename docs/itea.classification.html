@@ -111,7 +111,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -228,7 +227,7 @@ strongly discourage the direct instantiation  of <code class="docutils literal n
 <a class="reference internal" href="base.html#baseitea-docs"><span class="std std-ref">BaseITEA</span></a> documentation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea.classification.ITEA_classifier">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITEA_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_classifier.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method='simplify_by_coef'</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITEA_classifier.html#ITEA_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITEA_classifier" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITEA_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_classifier.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method='simplify_by_coef'</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">fit_kw=None</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITEA_classifier.html#ITEA_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITEA_classifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base.html#itea._base.BaseITEA" title="itea._base._BaseITEA.BaseITEA"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>This is the implementation of the ITEA for the classification task.</p>
 <p>The expressions will be used as the linear model in a logistic
@@ -262,6 +261,14 @@ functions and the values are unary vectorized functions.</p></li>
 given transformations functions, the same scheme.
 When set to None, the itea package will use automatic
 differentiation  through jax to create the derivatives.</p></li>
+<li><p><strong>fit_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default = None</em>) – dictionary with parameters to fit the logistic regressor model
+used in the <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier.fit()</span></code>. If none is given, then the
+default configuration for the customizable parameters will be:
+<code class="docutils literal notranslate"><span class="pre">{'max_iter':100,</span> <span class="pre">'alpha':0.,</span> <span class="pre">'beta':0.}</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the maximum number of iterations of the
+gradient optimizer, and <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are the elasticnet
+regularization parameters (when both are set to zero, then no
+regularization is performed).</p></li>
 </ul>
 </dd>
 </dl>
@@ -334,7 +341,7 @@ convergence of the evolutionary process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – training data.</p></li>
+<li><p><strong>X</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – training data. Should be a matrix of float values.</p></li>
 <li><p><strong>y</strong> (<em>array-like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>)</em>) – target vector. Can be a binary classification problem or a
 multi-class classification problem.</p></li>
 </ul>
@@ -399,7 +406,7 @@ each sample in X.</p>
 <a class="reference internal" href="base.html#baseitexpr-docs"><span class="std std-ref">BaseITExpr</span></a> documentation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea.classification.ITExpr_classifier">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITExpr_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITExpr_classifier.html#ITExpr_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITExpr_classifier" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITExpr_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITExpr_classifier.html#ITExpr_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITExpr_classifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base.html#itea._base.BaseITExpr" title="itea._base._BaseITExpr.BaseITExpr"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITExpr.BaseITExpr</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>ITExpr for the classification task. This will be the class
 in <code class="docutils literal notranslate"><span class="pre">ITEA_classifier.bestsol_</span></code>.</p>
@@ -417,6 +424,16 @@ your transformation functions.</p></li>
 <li><p><strong>labels</strong> (<em>list of strings</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – list containing the labels of the variables that will be used.
 When the list of labels is empty, the variables are named
 <img class="math" src="_images/math/35d6626ba55a8153a091d99e1a7478b2224f1417.png" alt="x_0, x_1, \cdots"/>.</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em><em>, </em><em>default=100</em>) – the maximum number of iterations that the optimization gradient
+method should perform to adjust the coefficients of the linear
+model used as the decision function in the inner logistic
+regression method implemented in the <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code>.
+Smaller values can improve performance, at the cost of a weaker
+adjustment.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>default = 0.0</em>) – The logistic regressor will use the saga solver with a elastic net
+regularization. Alpha parameter controls the L1 regularization.</p></li>
+<li><p><strong>beta</strong> (<em>float</em><em>, </em><em>default = 0.0</em>) – The logistic regressor will use the saga solver with a elastic net
+regularization. Beta parameter controls the L2 regularization.</p></li>
 </ul>
 </dd>
 </dl>
@@ -488,6 +505,11 @@ class of the training data.</p>
 </dl>
 </dd></dl>
 
+<p class="rubric">Notes</p>
+<p>The saga is described in the paper:
+“Defazio, A., Bach F. &amp; Lacoste-Julien S. (2014). SAGA: A Fast
+Incremental Gradient Method With Support for Non-Strongly Convex
+Composite Objectives”</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="itea.classification.ITExpr_classifier.covariance_matrix">
 <span class="sig-name descname"><span class="pre">covariance_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITExpr_classifier.html#ITExpr_classifier.covariance_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITExpr_classifier.covariance_matrix" title="Permalink to this definition">¶</a></dt>
@@ -514,6 +536,10 @@ problem.</p>
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITExpr_classifier.html#ITExpr_classifier.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITExpr_classifier.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fits the logistic regression with the IT expression as the linear
 method.</p>
+<p>This method performs the transformation of the original data in X to
+the IT expression domain then fits a logistic regressor using the
+IT expression as decision function. The logistic regressor is fitted
+by means of the saga method without any penalties.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -531,6 +557,14 @@ Only after fitting the model that the attributes <code class="docutils literal n
 <dd class="field-odd"><p><a class="reference internal" href="#itea.classification.ITExpr_classifier" title="itea.classification.ITExpr_classifier">ITExpr_classifier</a></p>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>This fit method does not check if the input is consistent, to minimize
+the overhead since the <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> will work with a population
+of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> instances. The input is then checked in
+the fit method from <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code>. If you want to use the fit
+method directly from the <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code>, it is recommended that
+you do the check with <code class="docutils literal notranslate"><span class="pre">check_array`</span> <span class="pre">`that</span> <span class="pre">scikit-learn</span> <span class="pre">provides</span> <span class="pre">in</span>
+<span class="pre">``sklearn.utils.validation</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -546,6 +580,9 @@ Only after fitting the model that the attributes <code class="docutils literal n
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.array of shape (n_samples, )</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotFittedError</strong> – If the expression was not fitted before calling this method.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -564,6 +601,9 @@ each sample in X.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.array of shape (n_samples, n_classes)</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>NotFittedError</strong> – If the expression was not fitted before calling this method.</p>
 </dd>
 </dl>
 </dd></dl>

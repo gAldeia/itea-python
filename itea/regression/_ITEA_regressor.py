@@ -106,7 +106,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         exectime_ : int
             time (in seconds) the evolutionary process took.
         """
-                
+        
         super(ITEA_regressor, self).__init__(
             gens            = gens, 
             popsize         = popsize,
@@ -117,6 +117,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
             simplify_method = simplify_method, 
             random_state    = random_state,
             verbose         = verbose,
+            fit_kw          = {},
             labels          = labels)
 
         self.itexpr_class      = ITExpr_regressor
@@ -143,7 +144,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         Parameters
         ----------
         X : array-like of shape (n_samples, n_features)
-            training data.
+            training data. Should be a matrix of float values.
 
         y : array-like of shape (n_samples, )
             expected values. 
@@ -162,7 +163,9 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
                 of itea.
         """
         
-        X, y = check_X_y(X, y)
+        # numpy power method only works with negative exponents if the X
+        # values are floats
+        X, y = check_X_y(X, y, dtype='float64')
         
         self._check_args(X, y)
 

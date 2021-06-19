@@ -107,7 +107,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -481,7 +480,7 @@ div.rendered_html tbody tr:hover {
 <section id="Creating-and-fitting-an-ITEA_classifier">
 <h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_classifier" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -508,12 +507,13 @@ div.rendered_html tbody tr:hover {
 <span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
     <span class="n">gens</span>            <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
     <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
     <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_var&#39;</span><span class="p">,</span>
+    <span class="n">fit_kw</span>          <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_iter&#39;</span><span class="p">:</span><span class="mi">25</span><span class="p">},</span>
     <span class="n">random_state</span>    <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
@@ -525,24 +525,54 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.34    0.8178          0.98    0min27seg
-5        0.93    0.9518000000000001      0.97    0min28seg
-10       0.73    0.9618000000000001      0.98    0min22seg
-15       0.96    0.9793999999999999      0.98    0min22seg
-20       0.95    0.9779999999999999      0.99    0min19seg
-25       0.97    0.9808          0.99    0min17seg
-30       0.96    0.9818000000000001      0.99    0min16seg
-35       0.96    0.9862000000000001      0.99    0min19seg
-40       0.97    0.9876          0.99    0min10seg
-45       0.94    0.9858000000000001      0.99    0min4seg
+0        0.56    0.8482          0.97    0min17seg
+5        0.74    0.9617999999999999      0.98    0min11seg
+10       0.79    0.9693999999999999      0.99    0min11seg
+15       0.95    0.9822          0.99    0min9seg
+20       0.89    0.9822          0.99    0min9seg
+25       0.86    0.9824          0.99    0min8seg
+30       0.93    0.9818000000000001      0.99    0min6seg
+35       0.96    0.9826000000000001      0.99    0min4seg
+40       0.94    0.9816000000000001      0.99    0min3seg
+45       0.66    0.9738          0.99    0min1seg
+</pre></div></div>
+</div>
+<p>Since the <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and the best solution found by the ITEA <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> are both scikit-like models, we can use some base methods like <code class="docutils literal notranslate"><span class="pre">get_params</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-7-b8a20b96219b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>clf<span class="ansi-blue-fg">.</span>bestsol_<span class="ansi-blue-fg">.</span>get_params<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/sklearn/base.py</span> in <span class="ansi-cyan-fg">get_params</span><span class="ansi-blue-fg">(self, deep)</span>
+<span class="ansi-green-intense-fg ansi-bold">    193</span>         out <span class="ansi-blue-fg">=</span> dict<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    194</span>         <span class="ansi-green-fg">for</span> key <span class="ansi-green-fg">in</span> self<span class="ansi-blue-fg">.</span>_get_param_names<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 195</span><span class="ansi-red-fg">             </span>value <span class="ansi-blue-fg">=</span> getattr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    196</span>             <span class="ansi-green-fg">if</span> deep <span class="ansi-green-fg">and</span> hasattr<span class="ansi-blue-fg">(</span>value<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;get_params&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    197</span>                 deep_items <span class="ansi-blue-fg">=</span> value<span class="ansi-blue-fg">.</span>get_params<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>items<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">AttributeError</span>: &#39;ITExpr_classifier&#39; object has no attribute &#39;alpha&#39;
 </pre></div></div>
 </div>
 </section>
 <section id="Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier">
 <h2>Inspecting the results from <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code><a class="headerlink" href="#Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is a fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -552,17 +582,8 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&#39;[-3.818 -0.111  3.929]*sqrt.abs(sepal width (cm)^-1 * petal length (cm)^2 * petal width (cm)^2)\n[ 1.061  0.669 -1.73 ]*log(sepal length (cm)^2 * sepal width (cm) * petal length (cm)^2 * petal width (cm))\n[ 1.764 -1.136 -0.627]&#39;
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -574,26 +595,9 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-              precision    recall  f1-score   support
-
-      setosa       1.00      1.00      1.00        19
-  versicolor       0.93      0.93      0.93        15
-   virginica       0.94      0.94      0.94        16
-
-    accuracy                           0.96        50
-   macro avg       0.96      0.96      0.96        50
-weighted avg       0.96      0.96      0.96        50
-
-</pre></div></div>
-</div>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code> to obtain metrics regarding the IT terms in the expression</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -605,75 +609,9 @@ weighted avg       0.96      0.96      0.96        50
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>coef</th>
-      <th>func</th>
-      <th>strengths</th>
-      <th>coef\nstderr.</th>
-      <th>mean pairwise\ndisentanglement</th>
-      <th>mean mutual\ninformation</th>
-      <th>prediction\nvar.</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>[-3.818 -0.111  3.929]</td>
-      <td>sqrt.abs</td>
-      <td>[0, -1, 2, 2]</td>
-      <td>[2.783 0.904 1.361]</td>
-      <td>0.883</td>
-      <td>1.219</td>
-      <td>[1.0118e+02 8.5000e-02 1.0713e+02]</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>[ 1.061  0.669 -1.73 ]</td>
-      <td>log</td>
-      <td>[2, 1, 2, 1]</td>
-      <td>[1.805 0.941 2.044]</td>
-      <td>0.883</td>
-      <td>1.219</td>
-      <td>[ 5.798  2.303 15.41 ]</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>[ 1.764 -1.136 -0.627]</td>
-      <td>intercept</td>
-      <td>---</td>
-      <td>[ 6.255  3.789 12.576]</td>
-      <td>0.000</td>
-      <td>0.000</td>
-      <td>[0. 0. 0.]</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
 <p>By using the <code class="docutils literal notranslate"><span class="pre">ITExpr_texifier</span></code>, we can create formatted LaTeX strings of the final expression and its derivatives.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -687,16 +625,8 @@ weighted avg       0.96      0.96      0.96        50
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="math">
-<p><img src="_images/math/c3af4db727d68774d73429b51a2eff981f30aad4.png" alt="$ ITExpr = \underbrace{\beta_0 \cdot sqrt.abs(\frac{petal length (cm)^{2} \cdot petal width (cm)^{2}}{sepal width (cm)})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(sepal length (cm)^{2} \cdot sepal width (cm) \cdot petal length (cm)^{2} \cdot petal width (cm))}_{\text{term 1}} + I_0$"/></p>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -713,21 +643,13 @@ weighted avg       0.96      0.96      0.96        50
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="math">
-<p><img src="_images/math/b79b0033aebe5d6450804c47b3cc64e75d8f2605.png" alt="$ \frac{\partial}{\partial sepal length (cm)} ITExpr = \underbrace{2\beta_1 \cdot log'(sepal length (cm)^{2} \cdot sepal width (cm) \cdot petal length (cm)^{2} \cdot petal width (cm))(sepal length (cm) \cdot sepal width (cm) \cdot petal length (cm)^{2} \cdot petal width (cm))}_{\text{term 1 partial derivative}}$"/></p>
-</div></div>
-</div>
 </section>
 <section id="Explaining-the-IT_classifier-expression-using-Partial-Effects">
 <h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_classifier</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_classifier-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
 <p>Now let’s create an instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <p>We can calculate feature importances with Partial Effects (PE) or approximate the Shapley values using PE.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -747,16 +669,9 @@ weighted avg       0.96      0.96      0.96        50
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/_multiclass_example_15_0.png" src="_images/_multiclass_example_15_0.png" />
-</div>
-</div>
 <p>We can explain a single instance as well:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -771,16 +686,9 @@ weighted avg       0.96      0.96      0.96        50
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/_multiclass_example_17_0.png" src="_images/_multiclass_example_17_0.png" />
-</div>
-</div>
 <p>Instead of looking into the average Partial Effects, we can plot the Partial Effects for each variable when its co-variables are fixed at the means.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -802,16 +710,9 @@ weighted avg       0.96      0.96      0.96        50
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/_multiclass_example_19_0.png" src="_images/_multiclass_example_19_0.png" />
-</div>
-</div>
 <p>We can share the y axis and show errors hatchs:</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -831,13 +732,6 @@ weighted avg       0.96      0.96      0.96        50
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/_multiclass_example_21_0.png" src="_images/_multiclass_example_21_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">

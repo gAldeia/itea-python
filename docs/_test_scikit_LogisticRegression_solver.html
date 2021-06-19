@@ -448,14 +448,14 @@ div.rendered_html tbody tr:hover {
 <h1>Recreating the Scikit-learn LogisticRegression method<a class="headerlink" href="#Recreating-the-Scikit-learn-LogisticRegression-method" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook I’m going to re-create the logistic regression without the overhead of checks that scikit-learn method performs.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="kn">import</span> <span class="n">softmax</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">itea.classification</span>  <span class="kn">import</span> <span class="n">ITEA_classifier</span>
 
@@ -469,14 +469,14 @@ div.rendered_html tbody tr:hover {
     <span class="n">n_samples</span>    <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">n_features</span>   <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">cluster_std</span>  <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">centers</span>      <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)],</span>
+    <span class="n">centers</span>      <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">10</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)],</span>
     <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -491,6 +491,8 @@ div.rendered_html tbody tr:hover {
 <span class="nb">print</span><span class="p">(</span><span class="n">clf_original</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">clf_original</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">clf_original</span><span class="o">.</span><span class="n">n_iter_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clf_original</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_clf</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clf_original</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_clf</span><span class="p">[:</span><span class="mi">10</span><span class="p">,</span> <span class="p">:]))</span>
 </pre></div>
 </div>
 </div>
@@ -499,13 +501,14 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.004296302795410156
-[[-0.55009618 -0.60745217]
- [-0.08147184  0.11412668]
- [ 0.63156802  0.4933255 ]]
-[-1.26197799  2.81647098 -1.55449298]
-[0 1 2]
+0.0022547245025634766
+[[0.48337368 0.51733756]]
+[0.00588424]
+[0 1]
 [100]
+[[9.99940572e-01 5.94275638e-05]
+ [1.93190907e-04 9.99806809e-01]]
+[0 1 0 1 1 0 0 1 0 0]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -518,61 +521,84 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model._sag</span> <span class="kn">import</span> <span class="n">sag_solver</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">LabelBinarizer</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="kn">import</span> <span class="n">row_norms</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="kn">import</span> <span class="n">row_norms</span><span class="p">,</span> <span class="n">safe_sparse_dot</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expit</span>
 
 <span class="k">def</span> <span class="nf">my_implementation</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-    <span class="n">classes_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">classes_</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
-    <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes_</span><span class="p">)</span>
-    <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">X</span> <span class="c1"># Nosso Z seria o eval</span>
 
-    <span class="n">max_squared_sum</span> <span class="o">=</span> <span class="n">row_norms</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">n_classes</span>  <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes_</span><span class="p">)</span>
+    <span class="n">n_terms</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">max_squared_sum</span> <span class="o">=</span> <span class="n">row_norms</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">n_classes</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">multi_class</span> <span class="o">=</span> <span class="s1">&#39;multinomial&#39;</span>
 
-        <span class="c1"># SAG multinomial solver needs LabelEncoder, not LabelBinarizer</span>
-        <span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
-        <span class="n">Y_multi</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># from scikit: &quot;SAG multinomial solver needs LabelEncoder, not LabelBinarizer&quot;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-        <span class="n">target</span> <span class="o">=</span> <span class="n">Y_multi</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
-                      <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
         <span class="n">warm_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">w0</span><span class="o">.</span><span class="n">T</span><span class="p">}</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">multi_class</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span>
-        <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_features</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">classes_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">n_classes</span> <span class="o">-=</span> <span class="mi">1</span>
 
-        <span class="n">y_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="n">y_bin</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">target</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">classes_</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
 
-        <span class="n">target</span> <span class="o">=</span> <span class="n">y_bin</span>
+        <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
         <span class="n">warm_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)}</span>
 
     <span class="n">coef_</span><span class="p">,</span> <span class="n">n_iter_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sag_solver</span><span class="p">(</span>
-        <span class="n">X</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">multi_class</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+        <span class="n">Z</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">multi_class</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
         <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">check_input</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_squared_sum</span><span class="o">=</span><span class="n">max_squared_sum</span><span class="p">,</span>
-        <span class="n">warm_start_mem</span><span class="o">=</span><span class="n">warm_start</span><span class="p">,</span>
-        <span class="n">is_saga</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">warm_start_mem</span><span class="o">=</span><span class="n">warm_start</span><span class="p">,</span> <span class="n">is_saga</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">n_classes</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">coef_</span> <span class="o">=</span> <span class="n">coef_</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">coef_</span> <span class="o">=</span> <span class="n">coef_</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="n">intercept_</span> <span class="o">=</span> <span class="n">coef_</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef_</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">n_iter_</span>
+
+
+
+<span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+
+    <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">safe_sparse_dot</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="c1"># AQUI SERIA O EVAL Z</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coef_</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">intercept_</span><span class="p">))</span>
+
+    <span class="c1"># Normalizar no caso multiclasse</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes_</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">prob</span><span class="p">)</span> <span class="p">)</span>
+        <span class="n">prob</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">prob</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">softmax</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">probabilities</span> <span class="o">=</span> <span class="n">predict_proba</span><span class="p">(</span><span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">classes_</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+
 
 <span class="n">exectime_</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 <span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">n_iter_</span> <span class="o">=</span> <span class="n">my_implementation</span><span class="p">(</span><span class="n">X_clf</span><span class="p">,</span> <span class="n">y_clf</span><span class="p">)</span>
@@ -583,6 +609,8 @@ div.rendered_html tbody tr:hover {
 <span class="nb">print</span><span class="p">(</span><span class="n">intercept_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">classes_</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">n_iter_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">X_clf</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">X_clf</span><span class="p">[:</span><span class="mi">10</span><span class="p">,</span> <span class="p">:]))</span>
 </pre></div>
 </div>
 </div>
@@ -591,13 +619,34 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.0028505325317382812
-[[-0.55362482 -0.60421306]
- [-0.07915516  0.11205122]
- [ 0.63277998  0.49216185]]
-[-1.26707532  2.81774843 -1.55067311]
-[0 1 2]
-100
+0.0012922286987304688
+[[0.46814302 0.50734168]]
+[-0.02233791]
+[0 1]
+97
+[[9.99999998e-01 2.00909890e-09]
+ [1.66818863e-07 9.99999833e-01]]
+[0 1 0 1 1 0 0 1 0 0]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
+    <span class="n">predict</span><span class="p">(</span><span class="n">coef_</span><span class="p">,</span> <span class="n">intercept_</span><span class="p">,</span> <span class="n">classes_</span><span class="p">,</span> <span class="n">X_clf</span><span class="p">),</span>
+    <span class="n">clf_original</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_clf</span><span class="p">)</span>
+<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">

@@ -104,7 +104,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -279,7 +278,7 @@
 <span class="sd">        exectime_ : int</span>
 <span class="sd">            time (in seconds) the evolutionary process took.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-                
+        
         <span class="nb">super</span><span class="p">(</span><span class="n">ITEA_regressor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">gens</span>            <span class="o">=</span> <span class="n">gens</span><span class="p">,</span> 
             <span class="n">popsize</span>         <span class="o">=</span> <span class="n">popsize</span><span class="p">,</span>
@@ -290,6 +289,7 @@
             <span class="n">simplify_method</span> <span class="o">=</span> <span class="n">simplify_method</span><span class="p">,</span> 
             <span class="n">random_state</span>    <span class="o">=</span> <span class="n">random_state</span><span class="p">,</span>
             <span class="n">verbose</span>         <span class="o">=</span> <span class="n">verbose</span><span class="p">,</span>
+            <span class="n">fit_kw</span>          <span class="o">=</span> <span class="p">{},</span>
             <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span>      <span class="o">=</span> <span class="n">ITExpr_regressor</span>
@@ -316,7 +316,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X : array-like of shape (n_samples, n_features)</span>
-<span class="sd">            training data.</span>
+<span class="sd">            training data. Should be a matrix of float values.</span>
 
 <span class="sd">        y : array-like of shape (n_samples, )</span>
 <span class="sd">            expected values. </span>
@@ -335,7 +335,9 @@
 <span class="sd">                of itea.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="c1"># numpy power method only works with negative exponents if the X</span>
+        <span class="c1"># values are floats</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">check_X_y</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_args</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 

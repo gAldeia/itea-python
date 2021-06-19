@@ -111,7 +111,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -222,7 +221,7 @@ for internal usage.</p>
 <span id="baseitea-docs"></span><h2><a class="toc-backref" href="#id1">BaseITEA</a><a class="headerlink" href="#baseitea" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea._base.BaseITEA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">fit_kw=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>Base class to be inherited for classification and regression tasks.</p>
 <p>This class implements argument checks and generic evolutionary methods
@@ -283,6 +282,9 @@ tfuncs) and the value is a vectorized function
 representing its derivative. When set to None, the
 itea package will use automatic differentiation
 through jax to create the derivatives.</p></li>
+<li><p><strong>fit_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default = None</em>) – dictionary with parameters to pass as configuration arguments
+to the fit method in the  <code class="docutils literal notranslate"><span class="pre">BaseITExpr</span></code> subclass.
+If none is given, then a empty dict will be used.</p></li>
 </ul>
 </dd>
 </dl>
@@ -390,6 +392,8 @@ Should be overridden by sub-classes.</p>
 <dt class="sig sig-object py" id="itea._base.BaseITExpr.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>virtual fit method. Should be overridden by sub-classes.</p>
+<p>It takes a dictionary as named arguments to allow sub-classes to have
+specific parameters to the fit method.</p>
 </dd></dl>
 
 <dl class="py method">

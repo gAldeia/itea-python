@@ -345,6 +345,9 @@ class BaseITExpr(BaseEstimator):
 
     def fit(self, X, y):
         """virtual fit method. Should be overridden by sub-classes.
+
+        It takes a dictionary as named arguments to allow sub-classes to have
+        specific parameters to the fit method.
         """
 
         raise NotImplementedError()

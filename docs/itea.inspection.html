@@ -113,7 +113,6 @@
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -287,10 +286,12 @@ calculated by:</p>
 the predicted outcomes of the model.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>ape</strong> – the importance of each feature of X.</p>
+<dd class="field-even"><p><strong>ape</strong> – the importance of each feature of X. for each class found in the
+given itexpr. If itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>, then the
+returned array have shape (1, n_features).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.array of shape (n_features, )</p>
+<dd class="field-odd"><p>numpy.array of shape (n_classes, n_features)</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -349,7 +350,7 @@ given axis.</p></li>
 smallest to the highest importance, and a group of the smallest
 features that sum up less than the given percentage of importance
 will be grouped to reduce the plot information.
-To disable the creation of the group, set <code class="docutils literal notranslate"><span class="pre">grouping_threshol=0</span></code>.</p></li>
+To disable the creation of the group, set <code class="docutils literal notranslate"><span class="pre">grouping_threshold=0</span></code>.</p></li>
 <li><p><strong>target</strong> (<em>string</em><em>, </em><em>int</em><em>, </em><em>list</em><em>[</em><em>strings</em><em>]</em><em>, </em><em>list</em><em>[</em><em>ints</em><em>] or </em><em>None</em><em>, </em><em>default=None</em>) – The targets to be considered when generating the plot for
 <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code>. If the training data used strings as targets
 on <code class="docutils literal notranslate"><span class="pre">y</span></code>, then the target must be a string of a valid class or a
@@ -389,7 +390,7 @@ plots. This is ignored if <code class="docutils literal notranslate"><span class
 smallest to the highest importance, and a group of the smallest
 features that sum up less than the given percentage of importance
 will be grouped to reduce the plot information.
-To disable the creation of the group, set <code class="docutils literal notranslate"><span class="pre">grouping_threshol=0</span></code>.</p></li>
+To disable the creation of the group, set <code class="docutils literal notranslate"><span class="pre">grouping_threshold=0</span></code>.</p></li>
 <li><p><strong>stack_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – dictionary with keywords to be used when generating the plots.
 When set to None, then stack_kw is <code class="docutils literal notranslate"><span class="pre">{'baseline':</span> <span class="pre">'zero',</span>
 <span class="pre">'labels':</span> <span class="pre">labels,</span> <span class="pre">'edgecolor':</span> <span class="pre">'k',</span> <span class="pre">'alpha':</span> <span class="pre">0.75}</span></code>.</p></li>

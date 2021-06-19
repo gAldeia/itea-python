@@ -9,6 +9,8 @@ from itea.regression import ITExpr_regressor
 
 
 def test_BaseITEA_check_args():
+    # Testing only for raises. The check_args also generate warnings,
+    # but the algorithm can execute normally if no exception was thrown. 
 
     X = np.array([[1, 1, 1]])
     y = np.array([3])
@@ -50,11 +52,14 @@ def test_BaseITEA_check_args():
 # or a numpy.randomState and makes the appropriate management to call the
 # others. The following tests will use a randomstate instance, instead of
 # the usual number. 
+# Before calling any method that begins with an underscore, it is important
+# to call _check_args, to do the proper adjustments before execution.
 
 def test_population_size():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
     baseitea = BaseITEA(popsize=10)
+    baseitea._check_args(X, y)
 
     # we need to provide a subclass of BaseITExpr. Using the regressor just
     # to test the BaseITEA, since it is faster than the classification
@@ -69,6 +74,7 @@ def test_mutation_size():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
     baseitea = BaseITEA(popsize=10)
+    baseitea._check_args(X, y)
 
     pop = baseitea._create_population(nvars=2, simplify_f=None, X=X, y=y,
         itexpr_class=ITExpr_regressor, random_state=np.random.RandomState(42))
@@ -85,6 +91,7 @@ def test_mutation_dont_change_originals():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
     baseitea = BaseITEA(popsize=50)
+    baseitea._check_args(X, y)
 
     pop = baseitea._create_population(nvars=2, simplify_f=None, X=X, y=y,
         itexpr_class=ITExpr_regressor, random_state=np.random.RandomState(42))
@@ -105,6 +112,7 @@ def test_selection():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
     baseitea = BaseITEA(popsize=10)
+    baseitea._check_args(X, y)
 
     pop = baseitea._create_population(nvars=2, simplify_f=None, X=X, y=y,
         itexpr_class=ITExpr_regressor, random_state=np.random.RandomState(42))
@@ -128,10 +136,16 @@ def test_random_state():
 
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    bestsol_1 = BaseITEA(popsize=10, gens=10, random_state=42)._evolve(
+    baseitea_1 = BaseITEA(popsize=10, gens=10, random_state=42)    
+    baseitea_1._check_args(X, y)
+
+    bestsol_1 = baseitea_1._evolve(
         X=X, y=y, itexpr_class=ITExpr_regressor, greater_is_better=False)
 
-    bestsol_2 = BaseITEA(popsize=10, gens=10, random_state=42)._evolve(
+    baseitea_2 = BaseITEA(popsize=10, gens=10, random_state=42)    
+    baseitea_2._check_args(X, y)
+
+    bestsol_2 = baseitea_2._evolve(
         X=X, y=y, itexpr_class=ITExpr_regressor, greater_is_better=False)
 
     assert str(bestsol_1) == str(bestsol_2)
@@ -141,6 +155,7 @@ def test_virtual_methods():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
     baseitea = BaseITEA()
+    baseitea._check_args(X, y)
 
     with pytest.raises(NotImplementedError):
         baseitea.fit(X, y)

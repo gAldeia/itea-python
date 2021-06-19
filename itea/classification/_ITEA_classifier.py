@@ -39,6 +39,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         random_state    = None,
         verbose         = None,
         labels          = [],
+        fit_kw          = None,
         **kwargs
     ):
         """Constructor method.
@@ -89,6 +90,15 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             When set to None, the itea package will use automatic
             differentiation  through jax to create the derivatives.
 
+        fit_kw : dict or None, default = None
+            dictionary with parameters to fit the logistic regressor model
+            used in the ``ITExpr_classifier.fit()``. If none is given, then the
+            default configuration for the customizable parameters will be: 
+            ``{'max_iter':100, 'alpha':0., 'beta':0.}``,
+            where ``max_iter`` is the maximum number of iterations of the
+            gradient optimizer, and ``alpha`` and ``beta`` are the elasticnet
+            regularization parameters (when both are set to zero, then no 
+            regularization is performed). 
         
         Attributes
         ----------
@@ -126,6 +136,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             simplify_method = simplify_method, 
             random_state    = random_state,
             verbose         = verbose,
+            fit_kw          = fit_kw,
             labels          = labels)
 
         self.itexpr_class      = ITExpr_classifier
@@ -145,6 +156,21 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
 
         super()._check_args(X, y)
 
+        n_classes = len(set(y))
+        if n_classes < 2:
+            raise ValueError("To fit a classifier you need to provide the "
+                             "targets (expected output for supervised "
+                             "learning) as the y argument in fit(X, y), and "
+                             "there should be at least two different target "
+                             "values. the given y array contains only 1 "
+                             "target value.")
+
+        default_fit_kw = {'max_iter':100, 'alpha':0., 'beta':0.}
+        if self.fit_kw is None:
+            self.fit_kw = default_fit_kw
+        else:
+            self.fit_kw = {**default_fit_kw, **self.fit_kw}
+
 
     def fit(self, X, y):
         """Performs the evolutionary process.
@@ -152,7 +178,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         Parameters
         ----------
         X : array-like of shape (n_samples, n_features)
-            training data.
+            training data. Should be a matrix of float values.
 
         y : array-like of shape (n_samples, )
             target vector. Can be a binary classification problem or a 
@@ -172,7 +198,9 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
                 itea.
         """
 
-        X, y = check_X_y(X, y)
+        # numpy power method only works with negative exponents if the X
+        # values are floats
+        X, y = check_X_y(X, y, dtype='float64')
         
         self._check_args(X, y)
 

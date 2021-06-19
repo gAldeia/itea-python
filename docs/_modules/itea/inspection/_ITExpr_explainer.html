@@ -104,7 +104,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -368,8 +367,10 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ape : numpy.array of shape (n_features, )</span>
-<span class="sd">            the importance of each feature of X.</span>
+<span class="sd">        ape : numpy.array of shape (n_classes, n_features)</span>
+<span class="sd">            the importance of each feature of X. for each class found in the</span>
+<span class="sd">            given itexpr. If itexpr is an ``ITExpr_regressor``, then the</span>
+<span class="sd">            returned array have shape (1, n_features).</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -493,7 +494,7 @@
 <span class="sd">            smallest to the highest importance, and a group of the smallest</span>
 <span class="sd">            features that sum up less than the given percentage of importance</span>
 <span class="sd">            will be grouped to reduce the plot information.</span>
-<span class="sd">            To disable the creation of the group, set ``grouping_threshol=0``.</span>
+<span class="sd">            To disable the creation of the group, set ``grouping_threshold=0``.</span>
 
 <span class="sd">        target : string, int, list[strings], list[ints] or None, default=None</span>
 <span class="sd">            The targets to be considered when generating the plot for </span>
@@ -580,7 +581,7 @@
                 <span class="n">others</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">importances</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
                 <span class="n">features_in_others</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="c1"># Handling plot labels </span>
+        <span class="c1"># Greater than one because a group of one is not a group</span>
         <span class="k">if</span> <span class="n">features_in_others</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">final_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
                 <span class="n">importances</span><span class="p">[:,</span> <span class="n">order</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="o">-</span><span class="n">features_in_others</span><span class="p">]],</span>
@@ -1045,7 +1046,7 @@
 <span class="sd">            smallest to the highest importance, and a group of the smallest</span>
 <span class="sd">            features that sum up less than the given percentage of importance</span>
 <span class="sd">            will be grouped to reduce the plot information.</span>
-<span class="sd">            To disable the creation of the group, set ``grouping_threshol=0``.</span>
+<span class="sd">            To disable the creation of the group, set ``grouping_threshold=0``.</span>
 
 <span class="sd">        stack_kw : dict or None, default=None</span>
 <span class="sd">            dictionary with keywords to be used when generating the plots.</span>
@@ -1120,22 +1121,22 @@
             <span class="n">x_axis</span> <span class="o">=</span> <span class="n">x_axis</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                 
         <span class="c1"># Avoid division by zero by already discarding some features</span>
-        <span class="n">global_importances</span> <span class="o">=</span> \
-            <span class="n">global_importances</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">(</span><span class="n">idx</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="p">:]</span>
+        <span class="c1"># global_importances = \</span>
+        <span class="c1">#     global_importances[self.selected_features(idx=True), :]</span>
 
-        <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_features</span><span class="p">()</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span>
 
         <span class="c1"># Number of features that were not selected (we&#39;ll use it to make</span>
         <span class="c1"># the number of features in others match the number of features in </span>
         <span class="c1"># the dataset)</span>
-        <span class="n">left_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="c1"># left_out = self.X_.shape[1] - len(labels)</span>
 
         <span class="c1"># order is going from the highest to the smallest important features</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">global_importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 
         <span class="c1"># grouping the features that have small contribution</span>
         <span class="n">others</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">global_importances</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">features_in_others</span> <span class="o">=</span> <span class="n">left_out</span>
+        <span class="n">features_in_others</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">thresold_area</span> <span class="o">=</span> <span class="n">grouping_threshold</span><span class="o">*</span><span class="mi">100</span><span class="o">*</span><span class="n">num_points</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">order</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
@@ -1143,14 +1144,16 @@
                 <span class="n">others</span> <span class="o">+=</span> <span class="n">global_importances</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
                 <span class="n">features_in_others</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="k">if</span> <span class="n">features_in_others</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Greater than one because a group of one is not a group</span>
+        <span class="k">if</span> <span class="n">features_in_others</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">sorted</span> <span class="o">=</span> <span class="n">order</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">features_in_others</span><span class="p">)]</span>
             <span class="n">global_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span>
-                <span class="n">global_importances</span><span class="p">[</span><span class="n">order</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="o">-</span><span class="n">features_in_others</span><span class="p">]],</span>
+                <span class="n">global_importances</span><span class="p">[</span><span class="nb">sorted</span><span class="p">],</span>
                 <span class="n">others</span>
             <span class="p">))</span>
 
             <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
-                <span class="n">labels</span><span class="p">[</span><span class="n">order</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="o">-</span><span class="n">features_in_others</span><span class="p">]],</span>
+                <span class="n">labels</span><span class="p">[</span><span class="nb">sorted</span><span class="p">],</span>
                 <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Other features (</span><span class="si">{</span><span class="n">features_in_others</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">]</span>
             <span class="p">))</span>
 

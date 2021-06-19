@@ -104,7 +104,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -173,8 +172,8 @@
   <h1>Source code for itea.classification._ITExpr_classifier</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.0</span>
-<span class="c1"># Last modified: 05-31-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.1</span>
+<span class="c1"># Last modified: 06-18-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;ITExpr sub-class, specialized to classification task.</span>
@@ -183,10 +182,14 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.base</span>             <span class="kn">import</span> <span class="n">ClassifierMixin</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span>     <span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span>          <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span>              <span class="kn">import</span> <span class="n">ClassifierMixin</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span>  <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span>           <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model._sag</span> <span class="kn">import</span> <span class="n">sag_solver</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span>     <span class="kn">import</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span>     <span class="kn">import</span> <span class="n">row_norms</span><span class="p">,</span> <span class="n">safe_sparse_dot</span><span class="p">,</span> <span class="n">softmax</span>
+<span class="kn">from</span> <span class="nn">sklearn.exceptions</span>        <span class="kn">import</span> <span class="n">NotFittedError</span>
+
 
 <span class="kn">from</span> <span class="nn">itea._base</span> <span class="kn">import</span> <span class="n">BaseITExpr</span>
 
@@ -196,13 +199,18 @@
 <span class="sd">    in ``ITEA_classifier.bestsol_``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
+        <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        expr : list of Tuple[Transformation, Interaction]</span>
 <span class="sd">            list of IT terms to create an IT expression.</span>
+
 <span class="sd">        tfuncs : dict</span>
 <span class="sd">            should always be a dict where the</span>
 <span class="sd">            keys are the names of the transformation functions and </span>
@@ -215,6 +223,22 @@
 <span class="sd">            list containing the labels of the variables that will be used.</span>
 <span class="sd">            When the list of labels is empty, the variables are named</span>
 <span class="sd">            :math:`x_0, x_1, \cdots`.</span>
+
+<span class="sd">        max_iter : int, default=100</span>
+<span class="sd">            the maximum number of iterations that the optimization gradient</span>
+<span class="sd">            method should perform to adjust the coefficients of the linear</span>
+<span class="sd">            model used as the decision function in the inner logistic</span>
+<span class="sd">            regression method implemented in the ``ITExpr_classifier``. </span>
+<span class="sd">            Smaller values can improve performance, at the cost of a weaker</span>
+<span class="sd">            adjustment.</span>
+
+<span class="sd">        alpha : float, default = 0.0</span>
+<span class="sd">            The logistic regressor will use the saga solver with a elastic net</span>
+<span class="sd">            regularization. Alpha parameter controls the L1 regularization.</span>
+
+<span class="sd">        beta : float, default = 0.0</span>
+<span class="sd">            The logistic regressor will use the saga solver with a elastic net</span>
+<span class="sd">            regularization. Beta parameter controls the L2 regularization.</span>
 
 <span class="sd">        Attributes</span>
 <span class="sd">        ----------</span>
@@ -237,12 +261,23 @@
 
 <span class="sd">        classes_ : array of shape (n_classes, )</span>
 <span class="sd">            target classes inferred from the training y target data.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The saga is described in the paper:</span>
+<span class="sd">        &quot;Defazio, A., Bach F. &amp; Lacoste-Julien S. (2014). SAGA: A Fast</span>
+<span class="sd">        Incremental Gradient Method With Support for Non-Strongly Convex</span>
+<span class="sd">        Composite Objectives&quot;</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ITExpr_classifier</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">expr</span><span class="o">=</span><span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span> <span class="o">=</span> <span class="n">LogisticRegression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>    <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta</span>     <span class="o">=</span> <span class="n">beta</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">=</span> <span class="n">accuracy_score</span>
 
 
@@ -295,6 +330,11 @@
         <span class="sd">&quot;&quot;&quot;Fits the logistic regression with the IT expression as the linear</span>
 <span class="sd">        method.</span>
 
+<span class="sd">        This method performs the transformation of the original data in X to </span>
+<span class="sd">        the IT expression domain then fits a logistic regressor using the</span>
+<span class="sd">        IT expression as decision function. The logistic regressor is fitted</span>
+<span class="sd">        by means of the saga method without any penalties.</span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X : array-like of shape (n_samples, n_features)</span>
@@ -310,6 +350,16 @@
 <span class="sd">            itexpr after fitting the coefficients and intercept.</span>
 <span class="sd">            Only after fitting the model that the attributes ``coef_``,</span>
 <span class="sd">            ``intercept_``, and ``classes_`` will be available.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This fit method does not check if the input is consistent, to minimize</span>
+<span class="sd">        the overhead since the ``ITEA_classifier`` will work with a population</span>
+<span class="sd">        of ``ITExpr_classifier`` instances. The input is then checked in </span>
+<span class="sd">        the fit method from ``ITEA_classifier``. If you want to use the fit</span>
+<span class="sd">        method directly from the ``ITExpr_classifier``, it is recommended that</span>
+<span class="sd">        you do the check with ``check_array` `that scikit-learn provides in</span>
+<span class="sd">        ``sklearn.utils.validation``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
@@ -317,16 +367,68 @@
             <span class="n">Z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e+200</span><span class="p">):</span>
+                <span class="c1"># using the LinearRegression from scikit, the fit should be</span>
+                <span class="c1"># simple as this:</span>
+                <span class="c1"># from sklearn.linear_model import LogisticRegression</span>
+                <span class="c1"># fit_model_ = LogisticRegression(solver=&#39;saga&#39;, penalty=&#39;none&#39;)</span>
+                <span class="c1"># self.coef_      = fit_model_.coef_.tolist()</span>
+                <span class="c1"># self.classes_   = fit_model_.classes_.tolist()</span>
+                <span class="c1"># self.intercept_ = fit_model_.intercept_</span>
+                <span class="c1"># self._fitness   = self.fitness_f(fit_model_.predict(Z), y)</span>
                 
-                <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span>
-                    <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;saga&#39;</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+                                
+                <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+                <span class="n">n_terms</span>   <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 
-                <span class="n">pred</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+                <span class="n">max_squared_sum</span> <span class="o">=</span> <span class="n">row_norms</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">n_classes</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">multi_class</span> <span class="o">=</span> <span class="s1">&#39;multinomial&#39;</span>
+                        
+                    <span class="c1"># from scikit: &quot;SAG multinomial solver needs LabelEncoder&quot;</span>
+                    <span class="n">target</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> \
+                        <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+                    <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+                        <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                    
+                    <span class="n">warm_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">w0</span><span class="o">.</span><span class="n">T</span><span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">multi_class</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span>
+                    
+                    <span class="n">n_classes</span> <span class="o">-=</span> <span class="mi">1</span>
+                    
+                    <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                    <span class="n">target</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
+                    
+                    <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                    
+                    <span class="n">warm_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)}</span>
+                
+                <span class="n">coef_</span><span class="p">,</span> <span class="n">n_iter_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sag_solver</span><span class="p">(</span>
+                    <span class="n">Z</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">multi_class</span><span class="p">,</span>
+                    <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+                    <span class="n">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+                    <span class="n">check_input</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_squared_sum</span><span class="o">=</span><span class="n">max_squared_sum</span><span class="p">,</span>
+                    <span class="n">warm_start_mem</span><span class="o">=</span><span class="n">warm_start</span><span class="p">,</span> <span class="n">is_saga</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+                
+                <span class="k">if</span> <span class="n">n_classes</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">coef_</span> <span class="o">=</span> <span class="n">coef_</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                
+                <span class="n">intercept_</span> <span class="o">=</span> <span class="n">coef_</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef_</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="c1"># Saving the fitted parameters   </span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">intercept_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+                <span class="c1"># setting fitted to true to use prediction below</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span> <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -334,7 +436,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
                     <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="c1"># Failed to fit. Default values were set and the is_fitted</span>
+                <span class="c1"># is set to true to avoid repeated failing fits.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
@@ -351,6 +455,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        p : numpy.array of shape (n_samples, )</span>
 <span class="sd">            predicted target for each sample.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">            NotFittedError</span>
+<span class="sd">                If the expression was not fitted before calling this method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
@@ -371,20 +480,37 @@
 <span class="sd">        -------</span>
 <span class="sd">        p : numpy.array of shape (n_samples, n_classes)</span>
 <span class="sd">            prediction probability for each class target for each sample.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">            NotFittedError</span>
+<span class="sd">                If the expression was not fitted before calling this method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># scikit check - searches for attributes ending with &#39;_&#39;</span>
         <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">,</span> \
-            <span class="p">(</span><span class="s2">&quot;The expression was simplified and has not refitted.&quot;</span><span class="p">)</span>
 
-        <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;fit_model_&#39;</span><span class="p">),</span> \
-            <span class="p">(</span><span class="s2">&quot;The expression failed in evaluating finite values during the &quot;</span>
-             <span class="s2">&quot;training process.&quot;</span><span class="p">)</span>
+        <span class="c1"># my check, which indicates if the expression was changed by</span>
+        <span class="c1"># manipulators or not fitted</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NotFittedError</span><span class="p">(</span>
+                <span class="s2">&quot;The expression was simplified and has not refitted.&quot;</span><span class="p">)</span>
 
         <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_model_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">))</span></div></div>
+        <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">safe_sparse_dot</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+        <span class="c1"># If is a binary classification, then we need to create the</span>
+        <span class="c1"># complementary probability for the second class</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">prob</span><span class="p">)</span> <span class="p">)</span>  
+            <span class="n">prob</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">prob</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">softmax</span><span class="p">(</span><span class="n">prob</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

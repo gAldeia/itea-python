@@ -104,7 +104,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_test_scikit_LogisticRegression_solver.html">Recreating the Scikit-learn LogisticRegression method</a></li>
 </ul>
 
             
@@ -187,6 +186,7 @@
 <span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span>          <span class="kn">import</span> <span class="n">mean_squared_error</span>
 <span class="kn">from</span> <span class="nn">scipy.linalg</span>             <span class="kn">import</span> <span class="n">lstsq</span>
+<span class="kn">from</span> <span class="nn">sklearn.exceptions</span>       <span class="kn">import</span> <span class="n">NotFittedError</span>
 
 <span class="kn">from</span> <span class="nn">itea._base</span> <span class="kn">import</span> <span class="n">BaseITExpr</span>
 
@@ -334,17 +334,23 @@
         
                 <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">coef</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                
+
+                <span class="c1"># Saving the fitted parameters                </span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">y_offset</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z_offset</span><span class="p">,</span> <span class="n">coef</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+                <span class="c1"># setting fitted to true to use prediction below</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="mf">0.0</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="c1"># Failed to fit. Default values were set and the is_fitted</span>
+                <span class="c1"># is set to true to avoid repeated failing fits.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
 
@@ -361,12 +367,21 @@
 <span class="sd">        -------</span>
 <span class="sd">        p : numpy.array of shape (n_samples, )</span>
 <span class="sd">            predicted response value for each sample.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">            NotFittedError</span>
+<span class="sd">                If the expression was not fitted before calling this method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="c1"># scikit check - searches for attributes ending with &#39;_&#39;</span>
         <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">,</span> \
-            <span class="p">(</span><span class="s2">&quot;The expression was simplified and has not refitted.&quot;</span><span class="p">)</span>
+        <span class="c1"># my check, which indicates if the expression was changed by</span>
+        <span class="c1"># manipulators or not fitted</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NotFittedError</span><span class="p">(</span>
+                <span class="s2">&quot;The expression was simplified and has not refitted.&quot;</span><span class="p">)</span>
 
         <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
