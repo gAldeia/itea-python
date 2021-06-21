@@ -448,6 +448,7 @@ div.rendered_html tbody tr:hover {
 <section id="Interacting-with-ProtoDash">
 <h1>Interacting with ProtoDash<a class="headerlink" href="#Interacting-with-ProtoDash" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook we’ll combine the ProtoDash and the Partial Effects to obtain feature importances on the digits classifications task.</p>
+<p>ProtoDash was proposed in <em>Gurumoorthy, Karthik &amp; Dhurandhar, Amit &amp; Cecchi, Guillermo &amp; Aggarwal, Charu. (2019). Efficient Data Representation by Selecting Prototypes with Importance Weights. 260-269. 10.1109/ICDM.2019.00036</em>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -458,6 +459,8 @@ div.rendered_html tbody tr:hover {
 
 <span class="c1"># automatically differentiable implementation of numpy</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="kn">import</span> <span class="nn">shap</span>
 
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 
@@ -477,16 +480,17 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">digits_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">()</span>
+<span></span><span class="n">digits_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_digits</span><span class="p">(</span><span class="n">n_class</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span>        <span class="o">=</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 <span class="n">labels</span>      <span class="o">=</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
 <span class="n">targets</span>     <span class="o">=</span> <span class="n">digits_data</span><span class="p">[</span><span class="s1">&#39;target_names&#39;</span><span class="p">]</span>
 
+<span class="n">X</span> <span class="o">/=</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
@@ -496,21 +500,20 @@ div.rendered_html tbody tr:hover {
 <span class="c1"># Creating transformation functions for ITEA using jax.numpy</span>
 <span class="c1"># (so we don&#39;t need to analytically calculate its derivatives)</span>
 <span class="n">tfuncs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;id&#39;</span>       <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-    <span class="s1">&#39;log&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
-    <span class="s1">&#39;exp&#39;</span>      <span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span>
+    <span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
 <span class="p">}</span>
 
 <span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
-    <span class="n">gens</span>            <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
-    <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="n">gens</span>            <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
-    <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_var&#39;</span><span class="p">,</span>
+    <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">random_state</span>    <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="n">fit_kw</span>          <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_iter&#39;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -522,243 +525,66 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 (1203, 64)
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.1055694098088113      0.10556940980881135     0.1055694098088113      11min52seg
-5        0.1055694098088113      0.10556940980881135     0.1055694098088113      11min57seg
-10       0.1055694098088113      0.10556940980881135     0.1055694098088113      10min27seg
-15       0.1055694098088113      0.10556940980881135     0.1055694098088113      11min59seg
-20       0.1055694098088113      0.10636741479634253     0.15045719035743974     16min39seg
-25       0.1055694098088113      0.11221113881961763     0.15045719035743974     36min0seg
-30       0.10889443059019119     0.15061512884455525     0.1629260182876143      35min2seg
-35       0.15045719035743974     0.16246882793017456     0.22942643391521197     58min18seg
-40       0.16209476309226933     0.2215045719035743      0.2734829592684954      84min1seg
-45       0.22942643391521197     0.24636741479634242     0.2734829592684954      87min42seg
-50       0.2734829592684954      0.27348295926849536     0.2734829592684954      80min52seg
-55       0.2734829592684954      0.27348295926849536     0.2734829592684954      79min53seg
-60       0.19534497090606817     0.27270157938487105     0.2734829592684954      79min59seg
-65       0.2734829592684954      0.2735328345802161      0.27514546965918535     76min21seg
-70       0.2734829592684954      0.2736990856192851      0.27514546965918535     74min41seg
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-ERROR:root:Internal Python error in the inspect module.
-Below is the traceback from this internal error.
-
-ERROR:root:Internal Python error in the inspect module.
-Below is the traceback from this internal error.
-
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3441, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File &#34;&lt;ipython-input-2-dd7c663c0d94&gt;&#34;, line 31, in &lt;module&gt;
-    ).fit(X_train, y_train)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITEA_classifier.py&#34;, line 183, in fit
-    X, y, self.itexpr_class, self.greater_is_better)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 333, in _evolve
-    random_state = random_state)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in _select_population
-    pop = [ps for ps in [p.fit(X, y) for p in pop]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in &lt;listcomp&gt;
-    pop = [ps for ps in [p.fit(X, y) for p in pop]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITExpr_classifier.py&#34;, line 149, in fit
-    pred  = self.fit_model_.fit(Z, y).predict(Z)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1416, in fit
-    for class_, warm_start_coef_ in zip(classes_, warm_start_coef))
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 1041, in __call__
-    if self.dispatch_one_batch(iterator):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 859, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 777, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 572, in __init__
-    self.results = batch()
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in __call__
-    for func, args, kwargs in self.items]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in &lt;listcomp&gt;
-    for func, args, kwargs in self.items]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/utils/fixes.py&#34;, line 222, in __call__
-    return self.function(*args, **kwargs)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 761, in _logistic_regression_path
-    options={&#34;iprint&#34;: iprint, &#34;gtol&#34;: tol, &#34;maxiter&#34;: max_iter}
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_minimize.py&#34;, line 620, in minimize
-    callback=callback, **options)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/lbfgsb.py&#34;, line 360, in _minimize_lbfgsb
-    f, g = func_and_grad(x)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 260, in fun_and_grad
-    self._update_fun()
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 226, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 133, in update_fun
-    self.f = fun_wrapped(self.x)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 130, in fun_wrapped
-    return fun(x, *args)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 74, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 68, in _compute_if_needed
-    fg = self.fun(x, *args)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 736, in func
-    def func(x, *args): return _multinomial_loss_grad(x, *args)[0:2]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 354, in _multinomial_loss_grad
-    grad[:, -1] = diff.sum(axis=0)
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: &#39;KeyboardInterrupt&#39; object has no attribute &#39;_render_traceback_&#39;
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1101, in get_records
-    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 248, in wrapped
-    return f(*args, **kwargs)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 281, in _fixed_getinnerframes
-    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1502, in getinnerframes
-    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1460, in getframeinfo
-    filename = getsourcefile(frame) or getfile(frame)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 696, in getsourcefile
-    if getattr(getmodule(object, filename), &#39;__loader__&#39;, None) is not None:
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 742, in getmodule
-    os.path.realpath(f)] = module.__name__
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/posixpath.py&#34;, line 395, in realpath
-    path, ok = _joinrealpath(filename[:0], filename, {})
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/posixpath.py&#34;, line 428, in _joinrealpath
-    newpath = join(path, name)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/posixpath.py&#34;, line 84, in join
-    if not p:
-KeyboardInterrupt
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3441, in run_code
-    exec(code_obj, self.user_global_ns, self.user_ns)
-  File &#34;&lt;ipython-input-2-dd7c663c0d94&gt;&#34;, line 31, in &lt;module&gt;
-    ).fit(X_train, y_train)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITEA_classifier.py&#34;, line 183, in fit
-    X, y, self.itexpr_class, self.greater_is_better)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 333, in _evolve
-    random_state = random_state)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in _select_population
-    pop = [ps for ps in [p.fit(X, y) for p in pop]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py&#34;, line 264, in &lt;listcomp&gt;
-    pop = [ps for ps in [p.fit(X, y) for p in pop]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/itea/classification/_ITExpr_classifier.py&#34;, line 149, in fit
-    pred  = self.fit_model_.fit(Z, y).predict(Z)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 1416, in fit
-    for class_, warm_start_coef_ in zip(classes_, warm_start_coef))
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 1041, in __call__
-    if self.dispatch_one_batch(iterator):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 859, in dispatch_one_batch
-    self._dispatch(tasks)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 777, in _dispatch
-    job = self._backend.apply_async(batch, callback=cb)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 208, in apply_async
-    result = ImmediateResult(func)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/_parallel_backends.py&#34;, line 572, in __init__
-    self.results = batch()
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in __call__
-    for func, args, kwargs in self.items]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/joblib/parallel.py&#34;, line 263, in &lt;listcomp&gt;
-    for func, args, kwargs in self.items]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/utils/fixes.py&#34;, line 222, in __call__
-    return self.function(*args, **kwargs)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 761, in _logistic_regression_path
-    options={&#34;iprint&#34;: iprint, &#34;gtol&#34;: tol, &#34;maxiter&#34;: max_iter}
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_minimize.py&#34;, line 620, in minimize
-    callback=callback, **options)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/lbfgsb.py&#34;, line 360, in _minimize_lbfgsb
-    f, g = func_and_grad(x)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 260, in fun_and_grad
-    self._update_fun()
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 226, in _update_fun
-    self._update_fun_impl()
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 133, in update_fun
-    self.f = fun_wrapped(self.x)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/_differentiable_functions.py&#34;, line 130, in fun_wrapped
-    return fun(x, *args)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 74, in __call__
-    self._compute_if_needed(x, *args)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/scipy/optimize/optimize.py&#34;, line 68, in _compute_if_needed
-    fg = self.fun(x, *args)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 736, in func
-    def func(x, *args): return _multinomial_loss_grad(x, *args)[0:2]
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/sklearn/linear_model/_logistic.py&#34;, line 354, in _multinomial_loss_grad
-    grad[:, -1] = diff.sum(axis=0)
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: &#39;KeyboardInterrupt&#39; object has no attribute &#39;_render_traceback_&#39;
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3361, in run_ast_nodes
-    if (await self.run_code(code, result,  async_=asy)):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 3458, in run_code
-    self.showtraceback(running_compiled_code=True)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2064, in showtraceback
-    value, tb, tb_offset=tb_offset)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1368, in structured_traceback
-    self, etype, value, tb, tb_offset, number_of_lines_of_context)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1268, in structured_traceback
-    self, etype, value, tb, tb_offset, number_of_lines_of_context
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1125, in structured_traceback
-    tb_offset)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1082, in format_exception_as_a_whole
-    last_unique, recursion_repeat = find_recursion(orig_etype, evalue, records)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 382, in find_recursion
-    return len(records), 0
-TypeError: object of type &#39;NoneType&#39; has no len()
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py&#34;, line 2061, in showtraceback
-    stb = value._render_traceback_()
-AttributeError: &#39;TypeError&#39; object has no attribute &#39;_render_traceback_&#39;
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 1101, in get_records
-    return _fixed_getinnerframes(etb, number_of_lines_of_context, tb_offset)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 248, in wrapped
-    return f(*args, **kwargs)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/site-packages/IPython/core/ultratb.py&#34;, line 281, in _fixed_getinnerframes
-    records = fix_frame_records_filenames(inspect.getinnerframes(etb, context))
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1502, in getinnerframes
-    frameinfo = (tb.tb_frame,) + getframeinfo(tb, context)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 1460, in getframeinfo
-    filename = getsourcefile(frame) or getfile(frame)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 696, in getsourcefile
-    if getattr(getmodule(object, filename), &#39;__loader__&#39;, None) is not None:
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 739, in getmodule
-    f = getabsfile(module)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 708, in getabsfile
-    _filename = getsourcefile(object) or getfile(object)
-  File &#34;/home/galdeia/anaconda3/lib/python3.7/inspect.py&#34;, line 687, in getsourcefile
-    if any(filename.endswith(s) for s in all_bytecode_suffixes):
-KeyboardInterrupt
+0        0.1055694098088113      0.10556940980881134     0.1055694098088113      6min51seg
+5        0.1055694098088113      0.10556940980881134     0.1055694098088113      7min59seg
+10       0.1055694098088113      0.10556940980881134     0.1055694098088113      8min11seg
+15       0.1055694098088113      0.10556940980881134     0.1055694098088113      8min29seg
+20       0.1055694098088113      0.1092269326683292      0.1512884455527847      8min27seg
+25       0.1055694098088113      0.15486007204211696     0.2734829592684954      8min54seg
+30       0.1512884455527847      0.2430811859240787      0.32751454696591853     9min12seg
+35       0.2734829592684954      0.2987143252978664      0.3507896924355777      10min33seg
+40       0.2635078969243558      0.3326932668329178      0.40980881130507063     11min11seg
+45       0.3341645885286783      0.3718814075921308      0.4613466334164589      10min55seg
+50       0.3782211138819618      0.4164921030756442      0.514546965918537       11min50seg
+55       0.39900249376558605     0.48183153228041004     0.5527847049044057      10min34seg
+60       0.4081463009143807      0.5280548628428928      0.5743973399833749      11min31seg
+65       0.46467165419783873     0.564438902743142       0.6309226932668329      10min12seg
+70       0.48212801330008315     0.587597672485453       0.6309226932668329      10min32seg
+75       0.5752285951787198      0.6201080631753949      0.6433915211970075      10min52seg
+80       0.5843724023275145      0.6364422277639236      0.6949293433083957      9min47seg
+85       0.5677472984206151      0.6537018564699363      0.7198669991687449      10min11seg
+90       0.6217788861180382      0.6877860903297313      0.7198669991687449      9min48seg
+95       0.6259351620947631      0.7116292601828762      0.7373233582709892      9min54seg
+100      0.6118038237738986      0.7259268495428097      0.7664172901080631      9min27seg
+105      0.6824605153782212      0.745599889165974       0.769742310889443       9min11seg
+110      0.6724854530340815      0.7639318370739817      0.7855361596009975      9min28seg
+115      0.684954280964256       0.7719811582155721      0.8038237738985868      8min44seg
+120      0.7024106400665004      0.7884427819340538      0.8104738154613467      7min34seg
+125      0.744804655029094       0.801183153228041       0.8196176226101413      8min4seg
+130      0.7522859517871987      0.8061540592962039      0.8204488778054863      7min52seg
+135      0.7481296758104738      0.8145552784704904      0.8246051537822111      7min31seg
+140      0.772236076475478       0.8177251316154058      0.8312551953449709      8min4seg
+145      0.7622610141313383      0.8225741202549183      0.8387364921030757      7min22seg
+150      0.7581047381546134      0.8273704627320588      0.8428927680798005      6min37seg
+155      0.7747298420615129      0.8314408423385979      0.8453865336658354      6min49seg
+160      0.7830423940149626      0.8358132446661125      0.8478802992518704      6min39seg
+165      0.7871986699916874      0.8393599334995845      0.8620116375727348      6min38seg
+170      0.7855361596009975      0.8411305070656692      0.8636741479634248      6min10seg
+175      0.7905236907730673      0.8459822665558328      0.8636741479634248      5min50seg
+180      0.7963424771404821      0.8499224161817677      0.8636741479634248      5min40seg
+185      0.8096425602660017      0.8550152396785813      0.8645054031587698      5min4seg
+190      0.8038237738985868      0.8557328899972292      0.8661679135494597      5min24seg
+195      0.800498753117207       0.8583762815184262      0.8694929343308395      4min38seg
+200      0.8113050706566916      0.8597533942920476      0.8761429758935994      4min35seg
+205      0.8187863674147964      0.8599002493765586      0.8761429758935994      4min39seg
+210      0.8187863674147964      0.8617982820725963      0.8778054862842892      4min28seg
+215      0.8179551122194514      0.864233859794957       0.8778054862842892      3min57seg
+220      0.8079800498753117      0.8646273205874202      0.8778054862842892      3min29seg
+225      0.8029925187032418      0.8651454696591854      0.8761429758935994      3min38seg
+230      0.8029925187032418      0.8673760044333609      0.8761429758935994      3min22seg
+235      0.7963424771404821      0.8676586311997784      0.8761429758935994      3min9seg
+240      0.7963424771404821      0.8659240786921585      0.8761429758935994      3min3seg
+245      0.8154613466334164      0.8677888611803823      0.8761429758935994      2min40seg
+250      0.8196176226101413      0.8687780548628429      0.8761429758935994      2min19seg
+255      0.8237738985868661      0.8687558880576337      0.8769742310889443      2min21seg
+260      0.8262676641729011      0.8683208645054031      0.8769742310889443      1min48seg
+265      0.798836242726517       0.8701690218897202      0.8778054862842892      1min36seg
+270      0.8088113050706567      0.8696896647270713      0.8778054862842892      1min23seg
+275      0.8246051537822111      0.8703435854807428      0.8778054862842892      1min10seg
+280      0.8054862842892768      0.8703518980326961      0.8786367414796342      0min55seg
+285      0.8395677472984207      0.873588251593239       0.8827930174563591      0min39seg
+290      0.8179551122194514      0.8729038514824051      0.8794679966749792      0min26seg
+295      0.8079800498753117      0.8731144361318924      0.8802992518703242      0min12seg
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -766,13 +592,11 @@ KeyboardInterrupt
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-
-KeyboardInterrupt
-
+It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -781,46 +605,135 @@ KeyboardInterrupt
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([&#39;pixel_0_4&#39;, &#39;pixel_1_2&#39;, &#39;pixel_2_5&#39;, &#39;pixel_3_2&#39;, &#39;pixel_3_4&#39;,
+       &#39;pixel_4_4&#39;, &#39;pixel_4_5&#39;, &#39;pixel_5_1&#39;, &#39;pixel_5_2&#39;, &#39;pixel_5_3&#39;,
+       &#39;pixel_5_6&#39;, &#39;pixel_6_2&#39;, &#39;pixel_7_4&#39;, &#39;pixel_7_5&#39;], dtype=&#39;&lt;U9&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-<span class="n">onehot_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span></span><span class="n">onehot_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">onehot_encoded</span> <span class="o">=</span> <span class="n">onehot_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
     <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span> <span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="p">)</span> <span class="p">)</span>
 
 <span class="n">explainer</span> <span class="o">=</span> <span class="n">ProtodashExplainer</span><span class="p">()</span>
 
-<span class="c1"># call protodash explainer</span>
+<span class="c1"># call protodash explainer. We&#39;ll select 10 prototypes</span>
 <span class="c1"># S contains indices of the selected prototypes</span>
 <span class="c1"># W contains importance weights associated with the selected prototypes</span>
-<span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">)))</span>
+<span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+elementwise comparison failed; returning scalar instead, but in the future will perform elementwise comparison
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
 
-<span class="c1"># Hiding one subplot</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 
+<span class="c1"># Showing 10 prototypes</span>
 <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]</span>
+
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=-</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">PRGn</span>
+
+    <span class="n">cset2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cset2</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">set_linestyle</span><span class="p">(</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_interacting_with_protodash_6_0.png" src="_images/_interacting_with_protodash_6_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">it_explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+    <span class="n">itexpr</span><span class="o">=</span><span class="n">final_itexpr</span><span class="p">,</span>
+    <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">it_explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importance</span><span class="se">\n</span><span class="s2">prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]</span>
+
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=-</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">PRGn</span>
+
+    <span class="n">cset2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cset2</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">set_linestyle</span><span class="p">(</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_interacting_with_protodash_7_1.png" src="_images/_interacting_with_protodash_7_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
@@ -830,60 +743,40 @@ KeyboardInterrupt
     <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
 
-<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+    <span class="n">c_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span> <span class="k">if</span> <span class="n">y_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="n">c</span><span class="p">])</span>
 
-    <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-        <span class="n">it_explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-    <span class="p">)</span>
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">it_explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">c_idx</span><span class="p">,</span> <span class="p">:])[</span><span class="n">c</span><span class="p">]</span>
 
-    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importances for</span><span class="se">\n</span><span class="s2">Prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importance</span><span class="se">\n</span><span class="s2">prototype of class </span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># now lets pick multiple prototypes and see the feature importance for groups</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">c_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]</span>
 
-<span class="n">explainer</span> <span class="o">=</span> <span class="n">ProtodashExplainer</span><span class="p">()</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=-</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">PRGn</span>
 
-<span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">explain</span><span class="p">(</span><span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">onehot_encoded</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">))</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">cset2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
 
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">class_</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
-
-    <span class="n">prototypes_for_class</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">S</span> <span class="k">if</span> <span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">==</span><span class="n">class_</span><span class="p">]</span>
-
-    <span class="n">importances</span> <span class="o">=</span> <span class="n">it_explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">prototypes_for_class</span><span class="p">,</span> <span class="p">:])[</span><span class="n">class_</span><span class="p">]</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importances for</span><span class="se">\n</span><span class="s2">Prototype of class </span><span class="si">{</span><span class="n">class_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cset2</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">set_linestyle</span><span class="p">(</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

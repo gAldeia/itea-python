@@ -111,6 +111,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
@@ -282,7 +283,7 @@ calculated by:</p>
 <p><img class="math" src="_images/math/f58f8c1926701416b3078c992a4b67cc4b2c7be2.png" alt="p'_i(x) = k_j\frac{p_i(x)}{x_j}."/></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importances for
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importance for
 the predicted outcomes of the model.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -333,10 +334,10 @@ plots and explanations.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="itea.inspection.ITExpr_explainer.plot_feature_importances">
 <span class="sig-name descname"><span class="pre">plot_feature_importances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barh_kw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">importance_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/inspection/_ITExpr_explainer.html#ITExpr_explainer.plot_feature_importances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_feature_importances" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bar plot of the feature importances, that can be calculated with
+<dd><p>Bar plot of the feature importance, that can be calculated with
 the Partial effects (PE) or Shapley Values (shapley).</p>
-<img alt="_images/plot_feature_importances_1.png" class="align-center" src="_images/plot_feature_importances_1.png" />
-<img alt="_images/plot_feature_importances_2.png" class="align-center" src="_images/plot_feature_importances_2.png" />
+<img alt="_images/plot_feature_importance_1.png" class="align-center" src="_images/plot_feature_importance_1.png" />
+<img alt="_images/plot_feature_importance_2.png" class="align-center" src="_images/plot_feature_importance_2.png" />
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -358,7 +359,7 @@ list of valid classes. If the training data was encoded as integers,
 then the target must be an int or a list of integers.
 This argument is ignored if the itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>.</p></li>
 <li><p><strong>importance_method</strong> (<em>string</em><em>, </em><em>default='pe'</em>) – string specifying which method should be used to estimate feature
-importances. Available methods are: <code class="docutils literal notranslate"><span class="pre">['pe',</span> <span class="pre">'shapley']</span></code>.</p></li>
+importance. Available methods are: <code class="docutils literal notranslate"><span class="pre">['pe',</span> <span class="pre">'shapley']</span></code>.</p></li>
 <li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot should be displayed
 or not.</p></li>
 </ul>
@@ -423,7 +424,7 @@ co-variables are fixed at the mean.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importances for
+<li><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importance for
 the predicted outcomes of the model.</p></li>
 <li><p><strong>features</strong> (<em>string</em><em>, </em><em>list</em><em>[</em><em>string</em><em>]</em><em>, </em><em>int</em><em>, </em><em>list</em><em>[</em><em>int</em><em>] or </em><em>None</em><em>, </em><em>default=None</em>) – the features to generate the plots. It can be a single feature
 referred to by its label or its index or a list of features.</p></li>
@@ -508,7 +509,7 @@ prediction.</p>
 <p>Where <img class="math" src="_images/math/a977639ded663f03f036ca55103a0c00fa9704c0.png" alt="PE_j"/> is the partial effect w.r.t <img class="math" src="_images/math/e3fc28292267f066fee7718c64f4bbfece521f24.png" alt="j"/>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importances for
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importance for
 the predicted outcomes of the model.</p>
 </dd>
 <dt class="field-even">Returns</dt>

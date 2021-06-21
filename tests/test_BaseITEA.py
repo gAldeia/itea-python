@@ -6,6 +6,7 @@ from sklearn.base import clone
 
 from itea._base import BaseITEA
 from itea.regression import ITExpr_regressor
+from sklearn.datasets   import make_regression
 
 
 def test_BaseITEA_check_args():

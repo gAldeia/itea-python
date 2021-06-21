@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
 </ul>
@@ -362,7 +363,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
-<span class="sd">            data from which we want to extract the feature importances for</span>
+<span class="sd">            data from which we want to extract the feature importance for</span>
 <span class="sd">            the predicted outcomes of the model.</span>
 
 <span class="sd">        Returns</span>
@@ -418,7 +419,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
-<span class="sd">            data from which we want to extract the feature importances for</span>
+<span class="sd">            data from which we want to extract the feature importance for</span>
 <span class="sd">            the predicted outcomes of the model.</span>
 
 <span class="sd">        Returns</span>
@@ -448,6 +449,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs_dx</span><span class="p">,</span> <span class="n">logit</span><span class="o">=</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">))</span>
 
         <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="n">gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span>
+        
         <span class="c1"># iterate through each variable for each class</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gradients</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
@@ -467,12 +469,12 @@
         <span class="n">importance_method</span>  <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span>
         <span class="n">show</span>               <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Bar plot of the feature importances, that can be calculated with</span>
+        <span class="sd">&quot;&quot;&quot;Bar plot of the feature importance, that can be calculated with</span>
 <span class="sd">        the Partial effects (PE) or Shapley Values (shapley).</span>
 
-<span class="sd">        .. image:: assets/images/plot_feature_importances_1.png</span>
+<span class="sd">        .. image:: assets/images/plot_feature_importance_1.png</span>
 <span class="sd">            :align: center</span>
-<span class="sd">        .. image:: assets/images/plot_feature_importances_2.png</span>
+<span class="sd">        .. image:: assets/images/plot_feature_importance_2.png</span>
 <span class="sd">            :align: center</span>
 
 <span class="sd">        Parameters</span>
@@ -506,7 +508,7 @@
 
 <span class="sd">        importance_method : string, default=&#39;pe&#39;</span>
 <span class="sd">            string specifying which method should be used to estimate feature</span>
-<span class="sd">            importances. Available methods are: ``[&#39;pe&#39;, &#39;shapley&#39;]``.</span>
+<span class="sd">            importance. Available methods are: ``[&#39;pe&#39;, &#39;shapley&#39;]``.</span>
 <span class="sd">        </span>
 <span class="sd">        show : bool, default=True</span>
 <span class="sd">            boolean value indicating if the generated plot should be displayed</span>
@@ -559,7 +561,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">importances</span> <span class="o">=</span> <span class="n">importance_f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
                 
-        <span class="c1"># classifying the importances</span>
+        <span class="c1"># classifying the features importances</span>
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">y_ticks_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -816,7 +818,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
-<span class="sd">            data from which we want to extract the feature importances for</span>
+<span class="sd">            data from which we want to extract the feature importance for</span>
 <span class="sd">            the predicted outcomes of the model.</span>
 
 <span class="sd">        features : string, list[string], int, list[int] or None, default=None</span>
@@ -1119,17 +1121,8 @@
                 <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_importances</span>
 
             <span class="n">x_axis</span> <span class="o">=</span> <span class="n">x_axis</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                
-        <span class="c1"># Avoid division by zero by already discarding some features</span>
-        <span class="c1"># global_importances = \</span>
-        <span class="c1">#     global_importances[self.selected_features(idx=True), :]</span>
 
         <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span>
-
-        <span class="c1"># Number of features that were not selected (we&#39;ll use it to make</span>
-        <span class="c1"># the number of features in others match the number of features in </span>
-        <span class="c1"># the dataset)</span>
-        <span class="c1"># left_out = self.X_.shape[1] - len(labels)</span>
 
         <span class="c1"># order is going from the highest to the smallest important features</span>
         <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">global_importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
@@ -1179,7 +1172,7 @@
         <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Model prediction&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Relative importances (%)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Relative importance (%)&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)))</span>

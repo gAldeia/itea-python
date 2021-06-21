@@ -190,15 +190,15 @@ class ITExpr_explainer():
         Parameters
         ----------
         X : numpy.array of shape (n_samples, n_features)
-            data from which we want to extract the feature importances for
+            data from which we want to extract the feature importance for
             the predicted outcomes of the model.
 
         Returns
         -------
-        ape : numpy.array of shape (n_classes, n_features)
-            the importance of each feature of X. for each class found in the
+        ape_values : numpy.array of shape (n_classes, n_features)
+            the importance of each feature of X, for each class found in the
             given itexpr. If itexpr is an ``ITExpr_regressor``, then the
-            returned array have shape (1, n_features).
+            returned array will have the shape (1, n_features).
 
         Notes
         -----
@@ -246,13 +246,15 @@ class ITExpr_explainer():
         Parameters
         ----------
         X : numpy.array of shape (n_samples, n_features)
-            data from which we want to extract the feature importances for
+            data from which we want to extract the feature importance for
             the predicted outcomes of the model.
 
         Returns
         -------
-        shapley_values : numpy.array of shape (n_features, )
-            the importance of each feature of X.
+        shapley_values : numpy.array of shape (n_classes, n_features)
+            the importance of each feature of X, for each class found in the
+            given itexpr. If itexpr is an ``ITExpr_regressor``, then the
+            returned array will have the shape (1, n_features).
 
         Notes
         -----
@@ -276,6 +278,7 @@ class ITExpr_explainer():
             self.X_, self.tfuncs_dx, logit=hasattr(self.itexpr, 'classes_'))
 
         importances = np.zeros( (gradients.shape[0], X.shape[0], X.shape[1]) )
+
         # iterate through each variable for each class
         for c in range(len(gradients)):
             for i in range(X.shape[1]):
@@ -295,12 +298,12 @@ class ITExpr_explainer():
         importance_method  = 'pe',
         show               = True,
     ):
-        """Bar plot of the feature importances, that can be calculated with
+        """Bar plot of the feature importance, that can be calculated with
         the Partial effects (PE) or Shapley Values (shapley).
 
-        .. image:: assets/images/plot_feature_importances_1.png
+        .. image:: assets/images/plot_feature_importance_1.png
             :align: center
-        .. image:: assets/images/plot_feature_importances_2.png
+        .. image:: assets/images/plot_feature_importance_2.png
             :align: center
 
         Parameters
@@ -334,7 +337,7 @@ class ITExpr_explainer():
 
         importance_method : string, default='pe'
             string specifying which method should be used to estimate feature
-            importances. Available methods are: ``['pe', 'shapley']``.
+            importance. Available methods are: ``['pe', 'shapley']``.
         
         show : bool, default=True
             boolean value indicating if the generated plot should be displayed
@@ -387,7 +390,7 @@ class ITExpr_explainer():
         else:
             importances = importance_f(X).reshape(1, -1)
                 
-        # classifying the importances
+        # classifying the features importances
         mean_values = np.abs(np.mean(X, axis=0))
         if len(self.itexpr.labels) > 0:
             y_ticks_labels = np.array([f'{round(m, 3)} = {l}'
@@ -644,7 +647,7 @@ class ITExpr_explainer():
         Parameters
         ----------
         X : numpy.array of shape (n_samples, n_features)
-            data from which we want to extract the feature importances for
+            data from which we want to extract the feature importance for
             the predicted outcomes of the model.
 
         features : string, list[string], int, list[int] or None, default=None
@@ -947,17 +950,8 @@ class ITExpr_explainer():
                 global_importances[:, i] = feature_importances
 
             x_axis = x_axis[:-1]
-                
-        # Avoid division by zero by already discarding some features
-        # global_importances = \
-        #     global_importances[self.selected_features(idx=True), :]
 
         labels = self.itexpr.labels
-
-        # Number of features that were not selected (we'll use it to make
-        # the number of features in others match the number of features in 
-        # the dataset)
-        # left_out = self.X_.shape[1] - len(labels)
 
         # order is going from the highest to the smallest important features
         order = np.argsort(-np.sum(global_importances, axis=1))
@@ -1007,7 +1001,7 @@ class ITExpr_explainer():
         )
 
         self.axes_.set_xlabel("Model prediction")
-        self.axes_.set_ylabel("Relative importances (%)")
+        self.axes_.set_ylabel("Relative importance (%)")
 
         if hasattr(self.itexpr, 'classes_'):
             self.axes_.set_xticks(range(len(x_axis)))

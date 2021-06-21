@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
 </ul>
@@ -452,7 +453,11 @@
         <span class="c1"># Invalid expressions can happen. We&#39;ll ignore the warnings just here</span>
         <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
 
-            <span class="c1"># Selecting the competitors indexes</span>
+            <span class="c1"># Selecting the competitors indexes. Even if there is only 1</span>
+            <span class="c1"># individual in the population, the mutation will create a variation</span>
+            <span class="c1"># and the population passed as argument (which is assumed to be</span>
+            <span class="c1"># the concatenation of the original population and its mutated</span>
+            <span class="c1"># children) should have at least 2 individuals to compete.</span>
             <span class="n">competitors_idx</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pop</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
             <span class="c1"># Finding the unique expression in population that were selected</span>

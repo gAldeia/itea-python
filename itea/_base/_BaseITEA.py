@@ -280,7 +280,11 @@ class BaseITEA(BaseEstimator):
         # Invalid expressions can happen. We'll ignore the warnings just here
         with np.errstate(all='ignore'):
 
-            # Selecting the competitors indexes
+            # Selecting the competitors indexes. Even if there is only 1
+            # individual in the population, the mutation will create a variation
+            # and the population passed as argument (which is assumed to be
+            # the concatenation of the original population and its mutated
+            # children) should have at least 2 individuals to compete.
             competitors_idx = random_state.choice(len(pop), size=(size, 2))
 
             # Finding the unique expression in population that were selected

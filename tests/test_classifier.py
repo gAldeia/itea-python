@@ -164,3 +164,20 @@ def test_ITEA_classifier_fit_predict(classification_toy_data):
     # predict() called on ITEA or ITExpr always corresponds to calling it
     # directly on the ITExpr
     assert np.allclose(clf.predict(X), clf.bestsol_.predict(X))
+
+
+def test_one_individual_one_generation(classification_toy_data):
+    X, y = classification_toy_data
+
+    # Should have a valid fitted expression after 1 generation
+    clf = ITEA_classifier(
+        gens=1, popsize=1, verbose=-1, random_state=42).fit(X, y)
+
+    assert hasattr(clf, 'bestsol_')
+    assert hasattr(clf, 'fitness_')
+    assert np.isfinite(clf.bestsol_._fitness)
+
+    # NOTE: the algorithm does not guarantee that a one individual populaiton
+    # will always have a valid expression after n generaions, because there
+    # is no elitism and there is a chance that the tournament ends up selecting
+    # two bad expressions to compete.
