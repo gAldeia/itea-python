@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.1
-# Last modified: 06-18-2021 by Guilherme Aldeia
+# Version: 1.0.2
+# Last modified: 06-25-2021 by Guilherme Aldeia
 
 
 """ITExpr sub-class, specialized to classification task.
@@ -13,10 +13,12 @@ import numpy as np
 from sklearn.base              import ClassifierMixin
 from sklearn.utils.validation  import check_array, check_is_fitted
 from sklearn.metrics           import accuracy_score
-from sklearn.linear_model._sag import sag_solver
 from sklearn.preprocessing     import LabelEncoder
 from sklearn.utils.extmath     import row_norms, safe_sparse_dot, softmax
 from sklearn.exceptions        import NotFittedError
+
+from sklearn.linear_model._base     import make_dataset
+from sklearn.linear_model._sag_fast import sag32, sag64
 
 
 from itea._base import BaseITExpr
@@ -37,7 +39,8 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         Parameters
         ----------
         expr : list of Tuple[Transformation, Interaction]
-            list of IT terms to create an IT expression.
+            list of IT terms to create an IT expression. It **must** be a
+            python built-in list.
 
         tfuncs : dict
             should always be a dict where the
@@ -87,7 +90,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
             coefficients used in the probability estimation for each
             class of the training data.
 
-        classes_ : array of shape (n_classes, )
+        classes_ : numpy.array of shape (n_classes, )
             target classes inferred from the training y target data.
 
         Notes
@@ -199,9 +202,9 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                 # simple as this:
                 # from sklearn.linear_model import LogisticRegression
                 # fit_model_ = LogisticRegression(solver='saga', penalty='none')
-                # self.coef_      = fit_model_.coef_.tolist()
-                # self.classes_   = fit_model_.classes_.tolist()
-                # self.intercept_ = fit_model_.intercept_
+                # self.coef_      = fit_model_.coef_ 
+                # self.classes_   = fit_model_.classes_ 
+                # self.intercept_ = fit_model_.intercept_ 
                 # self._fitness   = self.fitness_f(fit_model_.predict(Z), y)
                 
                 self.classes_  = np.unique(y)
@@ -211,6 +214,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                 
                 max_squared_sum = row_norms(Z, squared=True).max()
 
+                # Preparing for the multinomial or log classification
                 if n_classes > 2:
                     multi_class = 'multinomial'
                         
@@ -221,27 +225,91 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                     w0 = np.zeros((self.classes_.size, n_terms + 1),
                         order='F', dtype=Z.dtype)
                     
-                    warm_start = {'coef': w0.T}
+                    coef_init = w0.T
                 else:
                     multi_class = 'log'
-                    
-                    n_classes -= 1
                     
                     target = np.ones(y.shape, dtype=Z.dtype)
                     target[~(y == self.classes_[1])] = -1.
                     
                     w0 = np.zeros(n_terms + 1, dtype=Z.dtype)
                     
-                    warm_start = {'coef': np.expand_dims(w0, axis=1)}
+                    coef_init = np.expand_dims(w0, axis=1)
                 
-                coef_, n_iter_, _ = sag_solver(
-                    Z, target, sample_weight=None, loss=multi_class,
-                    alpha=self.alpha, beta=self.beta, max_iter=self.max_iter,
-                    tol=0.001, verbose=0, random_state=42,
-                    check_input=False, max_squared_sum=max_squared_sum,
-                    warm_start_mem=warm_start, is_saga=True
-                )
+                n_samples, n_features = Z.shape[0], Z.shape[1]
+
+                # As in SGD, the alpha is scaled by n_samples.
+                alpha_scaled = float(self.alpha) / n_samples
+                beta_scaled = float(self.beta) / n_samples
+
+                # if multi_class == 'multinomial', y should be label encoded.
+                if multi_class == 'multinomial':
+                    n_classes = int(target.max()) + 1
+                else:
+                    n_classes = 1
+
+                # initialization
+                sample_weight = np.ones(n_samples, dtype=Z.dtype)
                 
+                intercept_init = coef_init[-1, :]
+                coef_init = coef_init[:-1, :]
+
+                # Using Z to make the IT expression as decision function
+                dataset, intercept_decay = make_dataset(
+                    Z, target, sample_weight, random_state=42)
+
+                # Calculating the step size
+                L = (0.25 * (max_squared_sum +1) + alpha_scaled)
+                mun = min(2 * n_samples * alpha_scaled, L)
+                step_size = 1. / (2 * L + mun)
+
+                if step_size * alpha_scaled == 1:
+                    raise ZeroDivisionError(
+                        "Current sag implementation does not handle "
+                        "the case step_size * alpha_scaled == 1")
+
+                # Choosing the c implementation of sag solver
+                sag = sag64 if Z.dtype == np.float64 else sag32
+
+                # This is a c implementation, we need to provide all parameters
+                tol = 0.001
+                sum_gradient_init = np.zeros((n_features, n_classes),
+                                     dtype=Z.dtype, order='C')
+                gradient_memory_init =np.zeros((n_samples, n_classes),
+                                        dtype=Z.dtype, order='C')
+                seen_init = np.zeros(n_samples, dtype=np.int32, order='C')
+                num_seen_init = 0
+                fit_intercept = True
+                intercept_sum_gradient = np.zeros(n_classes, dtype=Z.dtype)
+                intercept_decay = intercept_decay 
+                is_saga = True
+                verbose = False
+
+                num_seen, n_iter_ = sag(dataset, coef_init,
+                                        intercept_init, n_samples,
+                                        n_features, n_classes, tol,
+                                        self.max_iter,
+                                        multi_class,
+                                        step_size, alpha_scaled,
+                                        beta_scaled,
+                                        sum_gradient_init,
+                                        gradient_memory_init,
+                                        seen_init,
+                                        num_seen_init,
+                                        fit_intercept,
+                                        intercept_sum_gradient,
+                                        intercept_decay,
+                                        is_saga,
+                                        verbose)
+
+                coef_init = np.vstack((coef_init, intercept_init))
+
+                if multi_class == 'multinomial':
+                    coef_ = coef_init.T
+                else:
+                    coef_ = coef_init[:, 0]
+
+                # Extracting the intercept
                 if n_classes <= 2:
                     coef_ = coef_.reshape(n_classes, n_terms + 1)
                 
@@ -249,20 +317,32 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                 coef_      = coef_[:, :-1]
 
                 # Saving the fitted parameters   
-                self.classes_   = self.classes_.tolist()
-                self.intercept_ = intercept_.tolist()
-                self.coef_      = coef_.tolist()
+                self.classes_   = self.classes_ 
+                self.intercept_ = intercept_ 
+                self.coef_      = coef_ 
 
                 # setting fitted to true to use prediction below
                 self._is_fitted = True
 
-                self._fitness   = self.fitness_f(self.predict(X), y)
+                # Calculating the fitness using the predictions without doing
+                # the input check
+                prob = (safe_sparse_dot(
+                        self._eval(X), self.coef_.T) + self.intercept_)
+                
+                if len(self.classes_) <= 2:
+                    prob = np.hstack(
+                        (np.ones(X.shape[0]).reshape(-1, 1), prob) )  
+                    prob[:, 0] -= prob[:, 1]
+                
+                pred = self.classes_[np.argmax(softmax(prob), axis=1)]
+
+                self._fitness   = self.fitness_f(pred, y)
             else:
-                self.classes_   = np.unique(y).tolist()
-                self.intercept_ = np.zeros( (len(self.classes_)) ).tolist()
+                self.classes_   = np.unique(y) 
+                self.intercept_ = np.zeros( (len(self.classes_)) ) 
                 self._fitness   = -np.inf
                 self.coef_      = np.ones(
-                    (len(self.classes_), self.n_terms) ).tolist()
+                    (len(self.classes_), self.n_terms) ) 
 
                 # Failed to fit. Default values were set and the is_fitted
                 # is set to true to avoid repeated failing fits.
@@ -292,7 +372,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
 
         probabilities = self.predict_proba(X)
 
-        return np.array(self.classes_)[np.argmax(probabilities, axis=1)]
+        return self.classes_[np.argmax(probabilities, axis=1)]
 
 
     def predict_proba(self, X):
@@ -326,11 +406,8 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
 
         X = check_array(X)
 
-        prob = (
-            safe_sparse_dot(
-                self._eval(X), np.array(self.coef_).T
-            ) + np.array(self.intercept_)
-        )
+        prob = (safe_sparse_dot(
+            self._eval(X), self.coef_.T) + self.intercept_)
         
         # If is a binary classification, then we need to create the
         # complementary probability for the second class

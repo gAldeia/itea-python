@@ -33,6 +33,7 @@ if __name__ == '__main__':
     ).fit(X_reg, y_reg)
 
     print(reg.bestsol_)
+    print(reg.bestsol_.coef_)
 
     # Classification execution
     X_clf, y_clf = make_blobs(
@@ -53,3 +54,4 @@ if __name__ == '__main__':
     ).fit(X_clf, y_clf)
 
     print(clf.bestsol_)
+    print(clf.bestsol_.coef_)

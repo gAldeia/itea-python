@@ -30,7 +30,9 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
         Parameters
         ----------
         expr : list of Tuple[Transformation, Interaction]
-            list of IT terms to create an IT expression.
+            list of IT terms to create an IT expression. It **must** be a
+            python built-in list.
+
         tfuncs : dict
             should always be a dict where the
             keys are the names of the transformation functions and 
@@ -146,7 +148,7 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
                 # simple as this:
                 # from sklearn.linear_model import LinearRegression
                 # fit_model_      = LinearRegression().fit(Z, y)
-                # self.coef_      = fit_model_.coef_.tolist()
+                # self.coef_      = fit_model_.coef_
                 # self.intercept_ = fit_model_.intercept_
                 # self._fitness   = self.fitness_f(fit_model_.predict(Z), y)
 
@@ -161,16 +163,18 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
                 coef, residues, rank, singular = lstsq(Z_centered, y_centered)
         
                 if y.ndim == 1:
-                    self.coef_ = np.ravel(coef.T).tolist()
+                    self.coef_ = np.ravel(coef.T)
 
                 # Saving the fitted parameters                
-                self.coef_      = coef.T.tolist()
+                self.coef_      = coef.T
                 self.intercept_ = y_offset - np.dot(Z_offset, coef.T)
         
                 # setting fitted to true to use prediction below
                 self._is_fitted = True
 
-                self._fitness   = self.fitness_f(self.predict(X), y)
+                pred = np.dot(self._eval(X), self.coef_) + self.intercept_
+                
+                self._fitness   = self.fitness_f(pred, y)
             else:
                 self.coef_      = np.ones(self.n_terms)
                 self.intercept_ = 0.0

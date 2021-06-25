@@ -4,13 +4,13 @@ import numpy           as np
 import jax.numpy       as jnp
 import statsmodels.api as sm
 
-from itea.classification import ITExpr_classifier,ITEA_classifier
+from itea.classification import ITExpr_classifier, ITEA_classifier
 
 from jax import grad, vmap
 
-from sklearn.datasets   import make_blobs
-from sklearn.exceptions import NotFittedError
-from sklearn.base       import clone
+from sklearn.datasets     import make_blobs
+from sklearn.exceptions   import NotFittedError
+from sklearn.linear_model import LogisticRegression
 
 
 # Using the identity, one trigonometric and one non-linear function
@@ -102,7 +102,7 @@ def test_linear_ITExpr_fit(
 
     assert np.array(linear_ITExpr.coef_).ndim == 2
     assert np.array(linear_ITExpr.intercept_).ndim == 1
-    assert linear_ITExpr.classes_ == [0, 1, 2]
+    assert np.array_equal(linear_ITExpr.classes_,  [0, 1, 2])
 
     # Shoudnt raise an error anymore    
     linear_ITExpr.predict(X)
@@ -110,6 +110,32 @@ def test_linear_ITExpr_fit(
     # The ITExpr is exactly the same original expresison. must have almost
     # perfect results.
     assert np.isclose(linear_ITExpr._fitness, 1.0)
+
+
+def test_linear_ITExpr_equals_scikit_logisticRegression(
+    linear_ITExpr, classification_toy_data):
+
+    X, y = classification_toy_data
+
+    # Fitting the linear model, which will correspond to a linear decision
+    # function
+    itexpr_clf = linear_ITExpr.fit(X, y)
+
+    # Must ensure that the configuration of the logistic regression is the
+    # same used in the itexpr. even the solver random state
+    scikit_clf = LogisticRegression(
+        solver='saga',
+        max_iter=100,
+        multi_class='multinomial',
+        penalty='none',
+        random_state=42
+    ).fit(X, y)
+
+    # They should give the exact same coefficients and intercept, with same
+    # shapes and vales, and even have the score() function with same return val
+    assert np.array_equal(itexpr_clf.coef_, scikit_clf.coef_)
+    assert np.array_equal(itexpr_clf.intercept_, scikit_clf.intercept_)
+    assert np.array_equal(itexpr_clf.score(X, y), scikit_clf.score(X, y))
 
 
 def test_linear_ITExpr_predict(

@@ -368,10 +368,10 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ape : numpy.array of shape (n_classes, n_features)</span>
-<span class="sd">            the importance of each feature of X. for each class found in the</span>
+<span class="sd">        ape_values : numpy.array of shape (n_classes, n_features)</span>
+<span class="sd">            the importance of each feature of X, for each class found in the</span>
 <span class="sd">            given itexpr. If itexpr is an ``ITExpr_regressor``, then the</span>
-<span class="sd">            returned array have shape (1, n_features).</span>
+<span class="sd">            returned array will have the shape (1, n_features).</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -424,8 +424,10 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        shapley_values : numpy.array of shape (n_features, )</span>
-<span class="sd">            the importance of each feature of X.</span>
+<span class="sd">        shapley_values : numpy.array of shape (n_classes, n_features)</span>
+<span class="sd">            the importance of each feature of X, for each class found in the</span>
+<span class="sd">            given itexpr. If itexpr is an ``ITExpr_regressor``, then the</span>
+<span class="sd">            returned array will have the shape (1, n_features).</span>
 
 <span class="sd">        Notes</span>
 <span class="sd">        -----</span>
@@ -449,7 +451,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs_dx</span><span class="p">,</span> <span class="n">logit</span><span class="o">=</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">))</span>
 
         <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="n">gradients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span>
-        
+
         <span class="c1"># iterate through each variable for each class</span>
         <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gradients</span><span class="p">)):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
@@ -672,7 +674,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Making it 2d to have a more generic way of processing the coefs</span>
-        <span class="n">coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+        <span class="n">coefs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">coef_</span>
         <span class="k">if</span> <span class="n">coefs</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">coefs</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         

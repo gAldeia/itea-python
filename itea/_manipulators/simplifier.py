@@ -50,7 +50,7 @@ def simplify_by_coef(*, itexpr, **kwargs):
     case of multi-class classification) are discarded.
     """
 
-    coefs = np.array(itexpr.coef_)
+    coefs = itexpr.coef_
 
     # Transposing in multi-class case to correctly iterate over the coefs
     if coefs.ndim == 2:

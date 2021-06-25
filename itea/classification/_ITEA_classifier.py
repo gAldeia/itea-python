@@ -60,8 +60,15 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             the max number of IT terms allowed.
 
         simplify_method : string or None, default=None
-            String with the name of the simplification method to be used.
+            String with the name of the simplification method to be used
+            before fitting expressions through the evolutionary process.
             When set to None, the simplification step is disabled.
+
+            Simplification can impact performance. To be simplified, the
+            expression must be previously fitted. After the simplification, if
+            the expression was changed, it should be fitted again to better
+            adjust the coefficients and intercept to the new IT expressions'
+            structure.
 
         random_state : int, None or numpy.random_state, default=None
             int or numpy random state. When None, a random state instance

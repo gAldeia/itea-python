@@ -5,6 +5,7 @@ EXAMPLES := $(shell find "./examples/"  -maxdepth 1 -name '*.ipynb')
 all: coverage doc build-dist clean
 
 profile:
+	# before profiling remind of do make all to compile and install the modifications!
 	${PYTHON} -m cProfile -o ./profiling/profiling_results.dat ./profiling/itea_profiling.py
 	snakeviz ./profiling/profiling_results.dat
 

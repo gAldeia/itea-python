@@ -75,7 +75,7 @@ def test_simplifier_coef_ITExpr_regressor():
     )
 
     # sample coefs to test
-    itexpr_regressor.coef_ = [1e-7, 1.0]
+    itexpr_regressor.coef_ = np.array([1e-7, 1.0])
 
     itexpr_regressor_simplified = simplify_by_coef(itexpr=itexpr_regressor)
     
@@ -95,10 +95,12 @@ def test_simplifier_coef_ITExpr_regressor():
 
     # If at least one class (one row of coefficients) have a value greater
     # than the default 1e-5, then the term is not discarded.
-    itexpr_classifier.coef_ = [ 
+    itexpr_classifier.coef_ = np.array([ 
         [1e-7, 1e+0, 1e-8, 1e-8],
         [1e-8, 1e-7, 1e+2, 1e-7]
-    ]
+    ])
+
+    # coefficients should be a numpy array
 
     itexpr_classifier_simplified = simplify_by_coef(itexpr=itexpr_classifier)
     
@@ -123,7 +125,7 @@ def test_simplifier_var():
         }
     )
 
-    itexpr_regressor.coef_ = [1e-7, 1e-2, 1.0, 100]
+    itexpr_regressor.coef_ = np.array([1e-7, 1e-2, 1.0, 100])
 
     X = np.array([
         [1, 1, 1],

@@ -8,8 +8,9 @@ from itea.regression import ITExpr_regressor, ITEA_regressor
 
 from jax import grad, vmap
 
-from sklearn.datasets   import make_regression
-from sklearn.exceptions import NotFittedError
+from sklearn.datasets     import make_regression
+from sklearn.linear_model import LinearRegression
+from sklearn.exceptions   import NotFittedError
 
 
 # Using the identity, one trigonometric and one non-linear function
@@ -113,6 +114,24 @@ def test_linear_ITExpr_fit(
     # perfect results.
     assert np.allclose(linear_ITExpr.coef_, coef)
     assert np.isclose(linear_ITExpr._fitness, 0.0)
+
+
+def test_linear_ITExpr_equals_scikit_linearRegression(
+    linear_ITExpr, regression_toy_data):
+
+    X, y, coef = regression_toy_data
+
+    # Fitting the linear model, which will correspond to a linear regression
+    itexpr_reg = linear_ITExpr.fit(X, y)
+    
+    scikit_reg = LinearRegression().fit(X, y)
+
+    # They should give the exact same coefficients and intercept, with same
+    # shapes and vales, and even have the score() function with same return val
+    assert np.array_equal(itexpr_reg.coef_, scikit_reg.coef_)
+    assert np.array_equal(itexpr_reg.intercept_, scikit_reg.intercept_)
+    assert np.array_equal(itexpr_reg.score(X, y), scikit_reg.score(X, y))
+    
 
 
 def test_linear_ITExpr_predict(

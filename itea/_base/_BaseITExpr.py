@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.1
-# Last modified: 06-13-2021 by Guilherme Aldeia
+# Version: 1.0.2
+# Last modified: 06-25-2021 by Guilherme Aldeia
 
 
 """Base class to represent an IT expression.
@@ -38,7 +38,8 @@ class BaseITExpr(BaseEstimator):
         Parameters
         ----------
         expr : list of Tuple[Transformation, Interaction]
-            list of IT terms to create an IT expression.
+            list of IT terms to create an IT expression. It **must** be a
+            python built-in list.
             
             An IT term is the tuple :math:`(t, p)`, where
             :math:`t : \mathbb{R} \rightarrow \mathbb{R}` is a unary function
@@ -121,8 +122,8 @@ class BaseITExpr(BaseEstimator):
         intercept = np.array(0.0)
 
         if self._is_fitted:
-            coefs     = np.array(self.coef_)
-            intercept = np.array(self.intercept_)
+            coefs     = self.coef_
+            intercept = self.intercept_
             
         str_terms = []
         for w, (fi_str, ti) in zip(coefs.T, self.expr):
@@ -205,7 +206,7 @@ class BaseITExpr(BaseEstimator):
 
         coefs = np.ones(self.n_terms)
         if hasattr(self, "coef_"):
-            coefs = np.array(self.coef_)
+            coefs = self.coef_
 
         tlen = 0
         for coef, (fi, ti) in zip(coefs, self.expr):
@@ -285,11 +286,11 @@ class BaseITExpr(BaseEstimator):
         # the gradients can be calculated even before fit
         intercept = [0.0]
         if hasattr(self, "intercept_"):
-            intercept = np.array(self.intercept_)
+            intercept = self.intercept_
 
         coefs = np.ones(self.n_terms)
         if hasattr(self, "coef_"):
-            coefs = np.array(self.coef_)
+            coefs = self.coef_
 
         # if coefs.ndim==1, then it is a regression ITExpr. Let's make it 2d
         if coefs.ndim == 1:

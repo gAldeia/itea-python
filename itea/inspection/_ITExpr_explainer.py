@@ -501,7 +501,7 @@ class ITExpr_explainer():
         """
 
         # Making it 2d to have a more generic way of processing the coefs
-        coefs = np.array(self.itexpr.coef_)
+        coefs = self.itexpr.coef_
         if coefs.ndim == 1:
             coefs = coefs.reshape(-1, 1).T
         

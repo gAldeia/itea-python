@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
 </ul>
@@ -172,8 +173,8 @@
   <h1>Source code for itea.classification._ITExpr_classifier</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.1</span>
-<span class="c1"># Last modified: 06-18-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.2</span>
+<span class="c1"># Last modified: 06-25-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;ITExpr sub-class, specialized to classification task.</span>
@@ -185,10 +186,12 @@
 <span class="kn">from</span> <span class="nn">sklearn.base</span>              <span class="kn">import</span> <span class="n">ClassifierMixin</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.validation</span>  <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span>           <span class="kn">import</span> <span class="n">accuracy_score</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model._sag</span> <span class="kn">import</span> <span class="n">sag_solver</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span>     <span class="kn">import</span> <span class="n">LabelEncoder</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span>     <span class="kn">import</span> <span class="n">row_norms</span><span class="p">,</span> <span class="n">safe_sparse_dot</span><span class="p">,</span> <span class="n">softmax</span>
 <span class="kn">from</span> <span class="nn">sklearn.exceptions</span>        <span class="kn">import</span> <span class="n">NotFittedError</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.linear_model._base</span>     <span class="kn">import</span> <span class="n">make_dataset</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model._sag_fast</span> <span class="kn">import</span> <span class="n">sag32</span><span class="p">,</span> <span class="n">sag64</span>
 
 
 <span class="kn">from</span> <span class="nn">itea._base</span> <span class="kn">import</span> <span class="n">BaseITExpr</span>
@@ -209,7 +212,8 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        expr : list of Tuple[Transformation, Interaction]</span>
-<span class="sd">            list of IT terms to create an IT expression.</span>
+<span class="sd">            list of IT terms to create an IT expression. It **must** be a</span>
+<span class="sd">            python built-in list.</span>
 
 <span class="sd">        tfuncs : dict</span>
 <span class="sd">            should always be a dict where the</span>
@@ -259,7 +263,7 @@
 <span class="sd">            coefficients used in the probability estimation for each</span>
 <span class="sd">            class of the training data.</span>
 
-<span class="sd">        classes_ : array of shape (n_classes, )</span>
+<span class="sd">        classes_ : numpy.array of shape (n_classes, )</span>
 <span class="sd">            target classes inferred from the training y target data.</span>
 
 <span class="sd">        Notes</span>
@@ -371,9 +375,9 @@
                 <span class="c1"># simple as this:</span>
                 <span class="c1"># from sklearn.linear_model import LogisticRegression</span>
                 <span class="c1"># fit_model_ = LogisticRegression(solver=&#39;saga&#39;, penalty=&#39;none&#39;)</span>
-                <span class="c1"># self.coef_      = fit_model_.coef_.tolist()</span>
-                <span class="c1"># self.classes_   = fit_model_.classes_.tolist()</span>
-                <span class="c1"># self.intercept_ = fit_model_.intercept_</span>
+                <span class="c1"># self.coef_      = fit_model_.coef_ </span>
+                <span class="c1"># self.classes_   = fit_model_.classes_ </span>
+                <span class="c1"># self.intercept_ = fit_model_.intercept_ </span>
                 <span class="c1"># self._fitness   = self.fitness_f(fit_model_.predict(Z), y)</span>
                 
                 <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -383,6 +387,7 @@
                 
                 <span class="n">max_squared_sum</span> <span class="o">=</span> <span class="n">row_norms</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">squared</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
+                <span class="c1"># Preparing for the multinomial or log classification</span>
                 <span class="k">if</span> <span class="n">n_classes</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="n">multi_class</span> <span class="o">=</span> <span class="s1">&#39;multinomial&#39;</span>
                         
@@ -393,27 +398,91 @@
                     <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
                         <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
                     
-                    <span class="n">warm_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">w0</span><span class="o">.</span><span class="n">T</span><span class="p">}</span>
+                    <span class="n">coef_init</span> <span class="o">=</span> <span class="n">w0</span><span class="o">.</span><span class="n">T</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">multi_class</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span>
-                    
-                    <span class="n">n_classes</span> <span class="o">-=</span> <span class="mi">1</span>
                     
                     <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
                     <span class="n">target</span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span>
                     
                     <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
                     
-                    <span class="n">warm_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;coef&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)}</span>
+                    <span class="n">coef_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                 
-                <span class="n">coef_</span><span class="p">,</span> <span class="n">n_iter_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sag_solver</span><span class="p">(</span>
-                    <span class="n">Z</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">multi_class</span><span class="p">,</span>
-                    <span class="n">alpha</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
-                    <span class="n">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-                    <span class="n">check_input</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_squared_sum</span><span class="o">=</span><span class="n">max_squared_sum</span><span class="p">,</span>
-                    <span class="n">warm_start_mem</span><span class="o">=</span><span class="n">warm_start</span><span class="p">,</span> <span class="n">is_saga</span><span class="o">=</span><span class="kc">True</span>
-                <span class="p">)</span>
+                <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Z</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="c1"># As in SGD, the alpha is scaled by n_samples.</span>
+                <span class="n">alpha_scaled</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_samples</span>
+                <span class="n">beta_scaled</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_samples</span>
+
+                <span class="c1"># if multi_class == &#39;multinomial&#39;, y should be label encoded.</span>
+                <span class="k">if</span> <span class="n">multi_class</span> <span class="o">==</span> <span class="s1">&#39;multinomial&#39;</span><span class="p">:</span>
+                    <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">n_classes</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="c1"># initialization</span>
+                <span class="n">sample_weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
                 
+                <span class="n">intercept_init</span> <span class="o">=</span> <span class="n">coef_init</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+                <span class="n">coef_init</span> <span class="o">=</span> <span class="n">coef_init</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+
+                <span class="c1"># Using Z to make the IT expression as decision function</span>
+                <span class="n">dataset</span><span class="p">,</span> <span class="n">intercept_decay</span> <span class="o">=</span> <span class="n">make_dataset</span><span class="p">(</span>
+                    <span class="n">Z</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">sample_weight</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+                <span class="c1"># Calculating the step size</span>
+                <span class="n">L</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_squared_sum</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">alpha_scaled</span><span class="p">)</span>
+                <span class="n">mun</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_samples</span> <span class="o">*</span> <span class="n">alpha_scaled</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+                <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">L</span> <span class="o">+</span> <span class="n">mun</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">alpha_scaled</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span>
+                        <span class="s2">&quot;Current sag implementation does not handle &quot;</span>
+                        <span class="s2">&quot;the case step_size * alpha_scaled == 1&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Choosing the c implementation of sag solver</span>
+                <span class="n">sag</span> <span class="o">=</span> <span class="n">sag64</span> <span class="k">if</span> <span class="n">Z</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span> <span class="k">else</span> <span class="n">sag32</span>
+
+                <span class="c1"># This is a c implementation, we need to provide all parameters</span>
+                <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.001</span>
+                <span class="n">sum_gradient_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_features</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">),</span>
+                                     <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+                <span class="n">gradient_memory_init</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">),</span>
+                                        <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+                <span class="n">seen_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">)</span>
+                <span class="n">num_seen_init</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">fit_intercept</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">intercept_sum_gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">Z</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                <span class="n">intercept_decay</span> <span class="o">=</span> <span class="n">intercept_decay</span> 
+                <span class="n">is_saga</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="n">num_seen</span><span class="p">,</span> <span class="n">n_iter_</span> <span class="o">=</span> <span class="n">sag</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">coef_init</span><span class="p">,</span>
+                                        <span class="n">intercept_init</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span>
+                                        <span class="n">n_features</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+                                        <span class="n">multi_class</span><span class="p">,</span>
+                                        <span class="n">step_size</span><span class="p">,</span> <span class="n">alpha_scaled</span><span class="p">,</span>
+                                        <span class="n">beta_scaled</span><span class="p">,</span>
+                                        <span class="n">sum_gradient_init</span><span class="p">,</span>
+                                        <span class="n">gradient_memory_init</span><span class="p">,</span>
+                                        <span class="n">seen_init</span><span class="p">,</span>
+                                        <span class="n">num_seen_init</span><span class="p">,</span>
+                                        <span class="n">fit_intercept</span><span class="p">,</span>
+                                        <span class="n">intercept_sum_gradient</span><span class="p">,</span>
+                                        <span class="n">intercept_decay</span><span class="p">,</span>
+                                        <span class="n">is_saga</span><span class="p">,</span>
+                                        <span class="n">verbose</span><span class="p">)</span>
+
+                <span class="n">coef_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">coef_init</span><span class="p">,</span> <span class="n">intercept_init</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="n">multi_class</span> <span class="o">==</span> <span class="s1">&#39;multinomial&#39;</span><span class="p">:</span>
+                    <span class="n">coef_</span> <span class="o">=</span> <span class="n">coef_init</span><span class="o">.</span><span class="n">T</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">coef_</span> <span class="o">=</span> <span class="n">coef_init</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+                <span class="c1"># Extracting the intercept</span>
                 <span class="k">if</span> <span class="n">n_classes</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
                     <span class="n">coef_</span> <span class="o">=</span> <span class="n">coef_</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">n_terms</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
                 
@@ -421,20 +490,32 @@
                 <span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef_</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
                 <span class="c1"># Saving the fitted parameters   </span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">intercept_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">intercept_</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">coef_</span> 
 
                 <span class="c1"># setting fitted to true to use prediction below</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_is_fitted</span> <span class="o">=</span> <span class="kc">True</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+                <span class="c1"># Calculating the fitness using the predictions without doing</span>
+                <span class="c1"># the input check</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span><span class="n">safe_sparse_dot</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">prob</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">prob</span><span class="p">)</span> <span class="p">)</span>  
+                    <span class="n">prob</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-=</span> <span class="n">prob</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+                
+                <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">softmax</span><span class="p">(</span><span class="n">prob</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span> <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span> <span class="p">)</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
-                    <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                    <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span> 
 
                 <span class="c1"># Failed to fit. Default values were set and the is_fitted</span>
                 <span class="c1"># is set to true to avoid repeated failing fits.</span>
@@ -464,7 +545,7 @@
 
         <span class="n">probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span></div>
 
 
 <div class="viewcode-block" id="ITExpr_classifier.predict_proba"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
@@ -498,11 +579,8 @@
 
         <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-        <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">safe_sparse_dot</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-            <span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="n">prob</span> <span class="o">=</span> <span class="p">(</span><span class="n">safe_sparse_dot</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
         
         <span class="c1"># If is a binary classification, then we need to create the</span>
         <span class="c1"># complementary probability for the second class</span>

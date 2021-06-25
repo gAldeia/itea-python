@@ -287,9 +287,9 @@ calculated by:</p>
 the predicted outcomes of the model.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>ape</strong> – the importance of each feature of X. for each class found in the
+<dd class="field-even"><p><strong>ape_values</strong> – the importance of each feature of X, for each class found in the
 given itexpr. If itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>, then the
-returned array have shape (1, n_features).</p>
+returned array will have the shape (1, n_features).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.array of shape (n_classes, n_features)</p>
@@ -513,10 +513,12 @@ prediction.</p>
 the predicted outcomes of the model.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>shapley_values</strong> – the importance of each feature of X.</p>
+<dd class="field-even"><p><strong>shapley_values</strong> – the importance of each feature of X, for each class found in the
+given itexpr. If itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>, then the
+returned array will have the shape (1, n_features).</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.array of shape (n_features, )</p>
+<dd class="field-odd"><p>numpy.array of shape (n_classes, n_features)</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
@@ -759,6 +761,7 @@ itea instance.</p>
 <dd><p>Plot of information about the <code class="docutils literal notranslate"><span class="pre">itea</span></code> evolutionary process.
 This function is intended to help visualize the information on the
 <code class="docutils literal notranslate"><span class="pre">itea.convergence_</span></code> dictionary.</p>
+<img alt="_images/plot_convergence_1.png" class="align-center" src="_images/plot_convergence_1.png" />
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

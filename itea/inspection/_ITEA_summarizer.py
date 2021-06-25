@@ -482,6 +482,9 @@ class ITEA_summarizer:
         This function is intended to help visualize the information on the
         ``itea.convergence_`` dictionary.
 
+        .. image:: assets/images/plot_convergence_1.png
+            :align: center
+
         Parameters
         ----------
         data : string, list of string, or None, default=None

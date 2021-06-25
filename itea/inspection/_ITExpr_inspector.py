@@ -159,16 +159,21 @@ class ITExpr_inspector():
             for coef, intercept in zip(
                 self.itexpr.coef_, self.itexpr.intercept_):
                 
+                coef_and_intercept = np.append(
+                    coef, intercept)
+                    
                 variances.append(np.var(
-                    self.Z * (coef + [intercept]),
+                    self.Z * coef_and_intercept,
                 axis=0).round(self.decimal_places))
 
             return [str(v.round(self.decimal_places))
                     for v in np.array(variances).T]
         else:
+            coef_and_intercept = np.append(
+                self.itexpr.coef_, self.itexpr.intercept_)
+
             return np.var(
-                self.Z * (self.itexpr.coef_ + [self.itexpr.intercept_]),
-            axis=0).round(self.decimal_places)
+                self.Z * coef_and_intercept, axis=0).round(self.decimal_places)
 
 
     def _continuous_mutual_info(self):
@@ -232,8 +237,7 @@ class ITExpr_inspector():
         check_is_fitted(self)
         
         coefs, funcs, strengths = [], [], []
-        for wi, (fi, ti) in zip(
-            np.array(self.itexpr.coef_).T, self.itexpr.expr):
+        for wi, (fi, ti) in zip(self.itexpr.coef_.T, self.itexpr.expr):
             
             funcs.append(fi)
             strengths.append(str(ti))

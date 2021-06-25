@@ -109,6 +109,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
@@ -242,8 +243,15 @@ the accuracy_score metric (greater is better).</p>
 <li><p><strong>popsize</strong> (<em>int</em><em>, </em><em>default=100</em>) – population size, consistent through each generation.</p></li>
 <li><p><strong>expolim</strong> (<em>tuple</em><em> (</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>default =</em><em> (</em><em>-2</em><em>, </em><em>2</em><em>)</em>) – tuple specifying the bounds of exponents for ITExpr.</p></li>
 <li><p><strong>max_terms</strong> (<em>int</em><em>, </em><em>default=5</em>) – the max number of IT terms allowed.</p></li>
-<li><p><strong>simplify_method</strong> (<em>string</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – String with the name of the simplification method to be used.
-When set to None, the simplification step is disabled.</p></li>
+<li><p><strong>simplify_method</strong> (<em>string</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – <p>String with the name of the simplification method to be used
+before fitting expressions through the evolutionary process.
+When set to None, the simplification step is disabled.</p>
+<p>Simplification can impact performance. To be simplified, the
+expression must be previously fitted. After the simplification, if
+the expression was changed, it should be fitted again to better
+adjust the coefficients and intercept to the new IT expressions’
+structure.</p>
+</p></li>
 <li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>None</em><em> or </em><em>numpy.random_state</em><em>, </em><em>default=None</em>) – int or numpy random state. When None, a random state instance
 will be created and used.</p></li>
 <li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>None</em><em> or </em><em>False</em><em>, </em><em>default=None</em>) – When verbose is None, False or 0, the algorithm
@@ -414,7 +422,8 @@ in <code class="docutils literal notranslate"><span class="pre">ITEA_classifier.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>expr</strong> (<em>list of Tuple</em><em>[</em><em>Transformation</em><em>, </em><em>Interaction</em><em>]</em>) – list of IT terms to create an IT expression.</p></li>
+<li><p><strong>expr</strong> (<em>list of Tuple</em><em>[</em><em>Transformation</em><em>, </em><em>Interaction</em><em>]</em>) – list of IT terms to create an IT expression. It <strong>must</strong> be a
+python built-in list.</p></li>
 <li><p><strong>tfuncs</strong> (<em>dict</em>) – should always be a dict where the
 keys are the names of the transformation functions and
 the values are unary vectorized functions (for example,
@@ -500,7 +509,7 @@ class of the training data.</p>
 <dd><p>target classes inferred from the training y target data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>array of shape (n_classes, )</p>
+<dd class="field-odd"><p>numpy.array of shape (n_classes, )</p>
 </dd>
 </dl>
 </dd></dl>

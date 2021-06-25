@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
 </ul>
@@ -172,8 +173,8 @@
   <h1>Source code for itea.regression._ITEA_regressor</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.1</span>
-<span class="c1"># Last modified: 06-09-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.2</span>
+<span class="c1"># Last modified: 06-25-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Specialization of the base class BaseITEA for the classification task.</span>
@@ -226,8 +227,15 @@
 <span class="sd">            the max number of IT terms allowed.</span>
 
 <span class="sd">        simplify_method : string or None, default=None</span>
-<span class="sd">            String with the name of the simplification method to be used.</span>
+<span class="sd">            String with the name of the simplification method to be used</span>
+<span class="sd">            before fitting expressions through the evolutionary process.</span>
 <span class="sd">            When set to None, the simplification step is disabled.</span>
+
+<span class="sd">            Simplification can impact performance. To be simplified, the</span>
+<span class="sd">            expression must be previously fitted. After the simplification, if</span>
+<span class="sd">            the expression was changed, it should be fitted again to better</span>
+<span class="sd">            adjust the coefficients and intercept to the new IT expressions&#39;</span>
+<span class="sd">            structure.</span>
 
 <span class="sd">        random_state : int, None or numpy.random_state, default=None</span>
 <span class="sd">            int or numpy random state. When None, a random state instance</span>

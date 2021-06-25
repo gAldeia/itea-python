@@ -524,11 +524,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min32seg
-10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min10seg
-20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min11seg
-30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min49seg
-40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min21seg
+0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min33seg
+10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min45seg
+20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min30seg
+30       0.7662163369724707      0.7870666345437662      0.8239470965278956      1min2seg
+40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min28seg
 </pre></div></div>
 </div>
 </section>
@@ -590,7 +590,7 @@ Final expression:
 -25.846*log(MedInc) +
 -62.377
 
-Elapsed time: 108.50205707550049
+Elapsed time: 139.81290650367737
 
 Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;AveOccup&#39; &#39;Latitude&#39;
  &#39;Longitude&#39;]
@@ -789,7 +789,9 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

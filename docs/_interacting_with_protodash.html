@@ -461,6 +461,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">import</span> <span class="nn">shap</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
 
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 
@@ -495,19 +496,18 @@ div.rendered_html tbody tr:hover {
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-<span class="c1"># Creating transformation functions for ITEA using jax.numpy</span>
-<span class="c1"># (so we don&#39;t need to analytically calculate its derivatives)</span>
 <span class="n">tfuncs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+    <span class="s1">&#39;id&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="s1">&#39;sin&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span>
+    <span class="s1">&#39;cos&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">,</span>
+    <span class="s1">&#39;tan&#39;</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">tan</span>
 <span class="p">}</span>
 
 <span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
     <span class="n">gens</span>            <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
     <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
     <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
@@ -515,6 +515,9 @@ div.rendered_html tbody tr:hover {
     <span class="n">random_state</span>    <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
     <span class="n">fit_kw</span>          <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_iter&#39;</span> <span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span>
+<span class="n">final_itexpr</span><span class="o">.</span><span class="n">selected_features_</span>
 </pre></div>
 </div>
 </div>
@@ -523,71 +526,70 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(1203, 64)
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.1055694098088113      0.10556940980881134     0.1055694098088113      6min51seg
-5        0.1055694098088113      0.10556940980881134     0.1055694098088113      7min59seg
-10       0.1055694098088113      0.10556940980881134     0.1055694098088113      8min11seg
-15       0.1055694098088113      0.10556940980881134     0.1055694098088113      8min29seg
-20       0.1055694098088113      0.1092269326683292      0.1512884455527847      8min27seg
-25       0.1055694098088113      0.15486007204211696     0.2734829592684954      8min54seg
-30       0.1512884455527847      0.2430811859240787      0.32751454696591853     9min12seg
-35       0.2734829592684954      0.2987143252978664      0.3507896924355777      10min33seg
-40       0.2635078969243558      0.3326932668329178      0.40980881130507063     11min11seg
-45       0.3341645885286783      0.3718814075921308      0.4613466334164589      10min55seg
-50       0.3782211138819618      0.4164921030756442      0.514546965918537       11min50seg
-55       0.39900249376558605     0.48183153228041004     0.5527847049044057      10min34seg
-60       0.4081463009143807      0.5280548628428928      0.5743973399833749      11min31seg
-65       0.46467165419783873     0.564438902743142       0.6309226932668329      10min12seg
-70       0.48212801330008315     0.587597672485453       0.6309226932668329      10min32seg
-75       0.5752285951787198      0.6201080631753949      0.6433915211970075      10min52seg
-80       0.5843724023275145      0.6364422277639236      0.6949293433083957      9min47seg
-85       0.5677472984206151      0.6537018564699363      0.7198669991687449      10min11seg
-90       0.6217788861180382      0.6877860903297313      0.7198669991687449      9min48seg
-95       0.6259351620947631      0.7116292601828762      0.7373233582709892      9min54seg
-100      0.6118038237738986      0.7259268495428097      0.7664172901080631      9min27seg
-105      0.6824605153782212      0.745599889165974       0.769742310889443       9min11seg
-110      0.6724854530340815      0.7639318370739817      0.7855361596009975      9min28seg
-115      0.684954280964256       0.7719811582155721      0.8038237738985868      8min44seg
-120      0.7024106400665004      0.7884427819340538      0.8104738154613467      7min34seg
-125      0.744804655029094       0.801183153228041       0.8196176226101413      8min4seg
-130      0.7522859517871987      0.8061540592962039      0.8204488778054863      7min52seg
-135      0.7481296758104738      0.8145552784704904      0.8246051537822111      7min31seg
-140      0.772236076475478       0.8177251316154058      0.8312551953449709      8min4seg
-145      0.7622610141313383      0.8225741202549183      0.8387364921030757      7min22seg
-150      0.7581047381546134      0.8273704627320588      0.8428927680798005      6min37seg
-155      0.7747298420615129      0.8314408423385979      0.8453865336658354      6min49seg
-160      0.7830423940149626      0.8358132446661125      0.8478802992518704      6min39seg
-165      0.7871986699916874      0.8393599334995845      0.8620116375727348      6min38seg
-170      0.7855361596009975      0.8411305070656692      0.8636741479634248      6min10seg
-175      0.7905236907730673      0.8459822665558328      0.8636741479634248      5min50seg
-180      0.7963424771404821      0.8499224161817677      0.8636741479634248      5min40seg
-185      0.8096425602660017      0.8550152396785813      0.8645054031587698      5min4seg
-190      0.8038237738985868      0.8557328899972292      0.8661679135494597      5min24seg
-195      0.800498753117207       0.8583762815184262      0.8694929343308395      4min38seg
-200      0.8113050706566916      0.8597533942920476      0.8761429758935994      4min35seg
-205      0.8187863674147964      0.8599002493765586      0.8761429758935994      4min39seg
-210      0.8187863674147964      0.8617982820725963      0.8778054862842892      4min28seg
-215      0.8179551122194514      0.864233859794957       0.8778054862842892      3min57seg
-220      0.8079800498753117      0.8646273205874202      0.8778054862842892      3min29seg
-225      0.8029925187032418      0.8651454696591854      0.8761429758935994      3min38seg
-230      0.8029925187032418      0.8673760044333609      0.8761429758935994      3min22seg
-235      0.7963424771404821      0.8676586311997784      0.8761429758935994      3min9seg
-240      0.7963424771404821      0.8659240786921585      0.8761429758935994      3min3seg
-245      0.8154613466334164      0.8677888611803823      0.8761429758935994      2min40seg
-250      0.8196176226101413      0.8687780548628429      0.8761429758935994      2min19seg
-255      0.8237738985868661      0.8687558880576337      0.8769742310889443      2min21seg
-260      0.8262676641729011      0.8683208645054031      0.8769742310889443      1min48seg
-265      0.798836242726517       0.8701690218897202      0.8778054862842892      1min36seg
-270      0.8088113050706567      0.8696896647270713      0.8778054862842892      1min23seg
-275      0.8246051537822111      0.8703435854807428      0.8778054862842892      1min10seg
-280      0.8054862842892768      0.8703518980326961      0.8786367414796342      0min55seg
-285      0.8395677472984207      0.873588251593239       0.8827930174563591      0min39seg
-290      0.8179551122194514      0.8729038514824051      0.8794679966749792      0min26seg
-295      0.8079800498753117      0.8731144361318924      0.8802992518703242      0min12seg
+0        0.10390689941812137     0.10415073427542255     0.1055694098088113      64min25seg
+5        0.10390689941812137     0.10555832640620674     0.1055694098088113      13min10seg
+10       0.1055694098088113      0.10556940980881134     0.1055694098088113      12min40seg
+15       0.10390689941812137     0.10556386810750903     0.1055694098088113      13min39seg
+20       0.1055694098088113      0.10628151842615687     0.1778886118038238      14min43seg
+25       0.1055694098088113      0.1146411748406761      0.22527015793848712     21min19seg
+30       0.11970074812967581     0.15483236353560545     0.2344139650872818      33min40seg
+35       0.19866999168744803     0.22126904959822669     0.2801330008312552      50min5seg
+40       0.2344139650872818      0.28497644776946524     0.343308395677473       74min0seg
+45       0.2801330008312552      0.34155167636464395     0.3574397339983375      77min16seg
+50       0.343308395677473       0.3556802438348573      0.4056525353283458      83min33seg
+55       0.35245220282626766     0.3745358825159324      0.4147963424771405      88min16seg
+60       0.4023275145469659      0.4109420892213909      0.45552784704904403     87min29seg
+65       0.39567747298420614     0.44171515655306176     0.4688279301745636      83min31seg
+70       0.46633416458852867     0.4815876974231089      0.6184538653366584      93min48seg
+75       0.5045719035743973      0.5571044610695484      0.6192851205320034      95min32seg
+80       0.5793848711554447      0.6256719312829038      0.6891105569409809      98min57seg
+85       0.6209476309226932      0.6870268772513163      0.6965918536990856      99min14seg
+90       0.655860349127182       0.6957273482959269      0.7215295095594347      93min57seg
+95       0.6907730673316709      0.7160598503740648      0.771404821280133       89min0seg
+100      0.7165419783873649      0.7529093931837075      0.7813798836242727      90min46seg
+105      0.7506234413965087      0.7741008589637018      0.7980049875311721      89min16seg
+110      0.773067331670823       0.7917484067608755      0.8054862842892768      81min46seg
+115      0.7880299251870324      0.8044416735937933      0.8137988362427265      83min36seg
+120      0.7980049875311721      0.8105070656691605      0.8187863674147964      80min40seg
+125      0.799667497921862       0.8179163203103352      0.829592684954281       76min14seg
+130      0.801330008312552       0.8235743973399834      0.8420615128844555      76min31seg
+135      0.8196176226101413      0.834328068717096       0.8495428096425602      77min44seg
+140      0.8345802161263508      0.8445497367691882      0.8603491271820449      74min35seg
+145      0.8337489609310058      0.8522942643391521      0.8603491271820449      71min10seg
+150      0.8503740648379052      0.8595428096425602      0.8669991687448046      67min32seg
+155      0.8520365752285952      0.8656719312829038      0.8786367414796342      64min40seg
+160      0.8636741479634248      0.8715987808257136      0.8786367414796342      63min45seg
+165      0.8586866167913549      0.8786256580770297      0.8861180382377389      61min17seg
+170      0.8503740648379052      0.8833915211970075      0.8960931005818786      57min4seg
+175      0.8769742310889443      0.8879301745635911      0.8960931005818786      56min37seg
+180      0.8819617622610141      0.8908174009420892      0.8960931005818786      57min37seg
+185      0.8894430590191189      0.8946190080354669      0.9002493765586035      53min28seg
+190      0.8694929343308395      0.898653366583541       0.9035743973399833      53min19seg
+195      0.8994181213632585      0.9029260182876142      0.9185369908561929      48min3seg
+200      0.8927680798004988      0.9116154059296203      0.9201995012468828      44min55seg
+205      0.9052369077306733      0.9185840953172624      0.9251870324189526      45min15seg
+210      0.8994181213632585      0.9208811305070657      0.9293433083956775      40min35seg
+215      0.8969243557772236      0.9259767248545302      0.9343308395677473      36min54seg
+220      0.9210307564422278      0.9297506234413966      0.9334995843724023      36min48seg
+225      0.9235245220282626      0.9330645608201718      0.9351620947630923      32min5seg
+230      0.9251870324189526      0.9349847603214186      0.940980881130507       31min26seg
+235      0.9243557772236076      0.9377029648101969      0.942643391521197       27min31seg
+240      0.9235245220282626      0.9404045441950679      0.943474646716542       25min59seg
+245      0.9393183707398172      0.9416154059296205      0.9443059019118869      24min38seg
+250      0.9343308395677473      0.9435272928789137      0.9459684123025769      20min57seg
+255      0.9251870324189526      0.9450180105292325      0.9467996674979219      19min53seg
+260      0.9351620947630923      0.9463230811859243      0.9484621778886118      17min57seg
+265      0.9459684123025769      0.9473510667775008      0.9501246882793017      14min59seg
+270      0.9368246051537822      0.9485813244666113      0.9501246882793017      12min59seg
+275      0.9326683291770573      0.9496813521751176      0.9509559434746467      11min1seg
+280      0.9334995843724023      0.9498947076752563      0.9526184538653366      7min45seg
+285      0.9334995843724023      0.9509642560266002      0.9559434746467166      6min6seg
+290      0.9443059019118869      0.9525020781379884      0.9559434746467166      4min17seg
+295      0.940149625935162       0.9545857578276531      0.9559434746467166      1min50seg
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
@@ -595,29 +597,133 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
 </pre></div></div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([&#39;pixel_0_0&#39;, &#39;pixel_0_1&#39;, &#39;pixel_0_2&#39;, &#39;pixel_0_3&#39;, &#39;pixel_0_4&#39;,
+       &#39;pixel_0_5&#39;, &#39;pixel_0_6&#39;, &#39;pixel_0_7&#39;, &#39;pixel_1_0&#39;, &#39;pixel_1_1&#39;,
+       &#39;pixel_1_2&#39;, &#39;pixel_1_3&#39;, &#39;pixel_1_4&#39;, &#39;pixel_1_5&#39;, &#39;pixel_1_6&#39;,
+       &#39;pixel_1_7&#39;, &#39;pixel_2_0&#39;, &#39;pixel_2_1&#39;, &#39;pixel_2_2&#39;, &#39;pixel_2_3&#39;,
+       &#39;pixel_2_4&#39;, &#39;pixel_2_5&#39;, &#39;pixel_2_6&#39;, &#39;pixel_2_7&#39;, &#39;pixel_3_0&#39;,
+       &#39;pixel_3_1&#39;, &#39;pixel_3_2&#39;, &#39;pixel_3_3&#39;, &#39;pixel_3_4&#39;, &#39;pixel_3_5&#39;,
+       &#39;pixel_3_6&#39;, &#39;pixel_3_7&#39;, &#39;pixel_4_0&#39;, &#39;pixel_4_1&#39;, &#39;pixel_4_2&#39;,
+       &#39;pixel_4_3&#39;, &#39;pixel_4_4&#39;, &#39;pixel_4_5&#39;, &#39;pixel_4_6&#39;, &#39;pixel_4_7&#39;,
+       &#39;pixel_5_0&#39;, &#39;pixel_5_1&#39;, &#39;pixel_5_2&#39;, &#39;pixel_5_3&#39;, &#39;pixel_5_4&#39;,
+       &#39;pixel_5_5&#39;, &#39;pixel_5_6&#39;, &#39;pixel_5_7&#39;, &#39;pixel_6_0&#39;, &#39;pixel_6_1&#39;,
+       &#39;pixel_6_2&#39;, &#39;pixel_6_3&#39;, &#39;pixel_6_4&#39;, &#39;pixel_6_5&#39;, &#39;pixel_6_6&#39;,
+       &#39;pixel_6_7&#39;, &#39;pixel_7_0&#39;, &#39;pixel_7_1&#39;, &#39;pixel_7_2&#39;, &#39;pixel_7_3&#39;,
+       &#39;pixel_7_4&#39;, &#39;pixel_7_5&#39;, &#39;pixel_7_6&#39;, &#39;pixel_7_7&#39;], dtype=&#39;&lt;U9&#39;)
+</pre></div></div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span>
-<span class="n">final_itexpr</span><span class="o">.</span><span class="n">selected_features_</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span>
+    <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">]</span>
+<span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([&#39;pixel_0_4&#39;, &#39;pixel_1_2&#39;, &#39;pixel_2_5&#39;, &#39;pixel_3_2&#39;, &#39;pixel_3_4&#39;,
-       &#39;pixel_4_4&#39;, &#39;pixel_4_5&#39;, &#39;pixel_5_1&#39;, &#39;pixel_5_2&#39;, &#39;pixel_5_3&#39;,
-       &#39;pixel_5_6&#39;, &#39;pixel_6_2&#39;, &#39;pixel_7_4&#39;, &#39;pixel_7_5&#39;], dtype=&#39;&lt;U9&#39;)
+              precision    recall  f1-score   support
+
+           0       0.93      0.91      0.92        55
+           1       0.89      0.85      0.87        55
+           2       0.92      0.94      0.93        52
+           3       0.83      0.88      0.85        56
+           4       0.92      0.89      0.90        64
+           5       0.96      0.90      0.93        73
+           6       0.95      0.96      0.96        57
+           7       0.91      0.98      0.95        62
+           8       0.82      0.77      0.79        52
+           9       0.89      0.91      0.90        68
+
+    accuracy                           0.90       594
+   macro avg       0.90      0.90      0.90       594
+weighted avg       0.90      0.90      0.90       594
+
 </pre></div></div>
 </div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code> to inspect the convergence during the evolution. In the cell below, we’ll create 3 plots, one for the fitness (classification accuracy), one for the complexity (number of nodes if the IT expression was converted to a symbolic tree) and number of terms (number of IT terms of the solutions in the population for each generation).</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">summarizer</span> <span class="o">=</span> <span class="n">ITEA_summarizer</span><span class="p">(</span><span class="n">itea</span><span class="o">=</span><span class="n">clf</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">plot_convergence</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fitness&#39;</span><span class="p">,</span> <span class="s1">&#39;complexity&#39;</span><span class="p">,</span> <span class="s1">&#39;n_terms&#39;</span><span class="p">],</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+    <span class="n">show</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_interacting_with_protodash_6_1.png" src="_images/_interacting_with_protodash_6_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># features are named pixel_x_y. Lets extract those coordinates and</span>
+<span class="c1"># paint in a figure to show the selected features</span>
+
+<span class="n">selected_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">feature_name</span><span class="p">,</span> <span class="n">feature_importance</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="n">final_itexpr</span><span class="o">.</span><span class="n">selected_features_</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">feature_name</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">],</span> <span class="n">feature_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">selected_features</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="n">feature_importance</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">axs</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">selected_features</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Selected features&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_interacting_with_protodash_7_0.png" src="_images/_interacting_with_protodash_7_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -646,7 +752,7 @@ elementwise comparison failed; returning scalar instead, but in the future will 
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -680,11 +786,11 @@ elementwise comparison failed; returning scalar instead, but in the future will 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_interacting_with_protodash_6_0.png" src="_images/_interacting_with_protodash_6_0.png" />
+<img alt="_images/_interacting_with_protodash_9_0.png" src="_images/_interacting_with_protodash_9_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -730,11 +836,70 @@ It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generat
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_interacting_with_protodash_7_1.png" src="_images/_interacting_with_protodash_7_1.png" />
+<img alt="_images/_interacting_with_protodash_10_1.png" src="_images/_interacting_with_protodash_10_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">shap_explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">KernelExplainer</span><span class="p">(</span>
+    <span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span>
+    <span class="n">shap</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
+
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importance</span><span class="se">\n</span><span class="s2">prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]</span>
+
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmax</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=-</span><span class="nb">abs</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">PRGn</span>
+
+    <span class="n">cset2</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cset2</span><span class="o">.</span><span class="n">collections</span><span class="p">:</span>
+        <span class="n">c</span><span class="o">.</span><span class="n">set_linestyle</span><span class="p">(</span><span class="s1">&#39;solid&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_interacting_with_protodash_11_1.png" src="_images/_interacting_with_protodash_11_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -770,13 +935,20 @@ It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generat
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
 It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
 </pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_interacting_with_protodash_12_1.png" src="_images/_interacting_with_protodash_12_1.png" />
+</div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

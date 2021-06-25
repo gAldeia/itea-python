@@ -521,16 +521,16 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.56    0.8493999999999999      0.97    0min17seg
-5        0.74    0.9617999999999999      0.98    0min13seg
-10       0.79    0.9693999999999999      0.99    0min12seg
-15       0.96    0.9815999999999999      0.99    0min8seg
-20       0.88    0.9797999999999999      0.99    0min7seg
-25       0.87    0.9812000000000002      0.99    0min7seg
-30       0.86    0.9788          0.99    0min6seg
-35       0.85    0.98    0.99    0min4seg
-40       0.93    0.9762          0.99    0min3seg
-45       0.95    0.9801999999999998      0.99    0min1seg
+0        0.56    0.8482          0.97    0min17seg
+5        0.74    0.9617999999999999      0.98    0min12seg
+10       0.79    0.9693999999999999      0.99    0min14seg
+15       0.95    0.9822          0.99    0min10seg
+20       0.89    0.9822          0.99    0min11seg
+25       0.86    0.9824          0.99    0min9seg
+30       0.93    0.9818000000000001      0.99    0min6seg
+35       0.96    0.9826000000000001      0.99    0min5seg
+40       0.94    0.9816000000000001      0.99    0min3seg
+45       0.66    0.9738          0.99    0min1seg
 </pre></div></div>
 </div>
 <section id="Local-explanations-with-the-Partial-Effects">
@@ -538,6 +538,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <p>To calculate the local explanations, we can use the function <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer.average_partial_effects</span></code>, passing as an argument a single sample we want to explain.</p>
 <p>We can see the explanation both visually or as an array with the importance for each feature.</p>
 <p>Let’s start by creating an explainer instance.</p>
+<p><strong>NOTE</strong>: In the remaining of this notebook, all local explanations will be calculated over the first element of the test set.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -591,9 +592,9 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[6.86847430e-03, 4.99322064e-02, 4.75756506e-02, 1.51423224e-01],
-       [2.48057964e-04, 3.30272158e-03, 1.32368369e-03, 6.44538908e-03],
-       [1.03717849e-01, 6.74602804e-01, 6.71116064e-01, 2.10130558e+00]])
+array([[6.85112219e-03, 5.00492617e-02, 4.76003440e-02, 1.51608147e-01],
+       [2.74413002e-04, 3.40860669e-03, 1.31835324e-03, 6.55848291e-03],
+       [1.03778588e-01, 6.74201575e-01, 6.71034697e-01, 2.10067814e+00]])
 </pre></div></div>
 </div>
 <p>The function returns an array, where each line corresponds to the importance for each class. As we can see from the bar plot, the total importance for a given feature is the summation of the importance for each class:</p>
@@ -615,7 +616,7 @@ array([[6.86847430e-03, 4.99322064e-02, 4.75756506e-02, 1.51423224e-01],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([0.11083438, 0.72783773, 0.7200154 , 2.2591742 ])
+array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 </pre></div></div>
 </div>
 </section>
@@ -714,7 +715,7 @@ array([0.11083438, 0.72783773, 0.7200154 , 2.2591742 ])
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.007993043171325421
+0.0045027336123055275
 </pre></div></div>
 </div>
 </section>
@@ -755,6 +756,199 @@ array([0.11083438, 0.72783773, 0.7200154 , 2.2591742 ])
 <img alt="_images/_explanations_stability_16_0.png" src="_images/_explanations_stability_16_0.png" />
 </div>
 </div>
+</section>
+<section id="The-Jaccard-Index">
+<h2>The Jaccard Index<a class="headerlink" href="#The-Jaccard-Index" title="Permalink to this headline">¶</a></h2>
+<p>In <em>Zhengze Zhou, Giles Hooker, Fei Wang. “S-LIME: Stabilized-LIME for Model Explanation”. In Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD ’21), August 14–18, 2021, Virtual Event, Singapore</em>, the authors used the Jaccrd index to evaluate the stability of a function.</p>
+<div class="math">
+<p><img src="_images/math/789046274f48d169d2b183f6de0dff6f99e1a5a0.png" alt="J(A, B) = \frac{|A \cap B|}{|A \cup B|}."/></p>
+</div><p>This method ignores ordering, and is only concerned if the most important features will always be the same. Values close to 1 means that the algorithm is stable accros different iterations.</p>
+<p>The Jaccard index is the ratio of the intersection over the union of two data sets. In the paper, to evaluate the stability for aa given test instance <img class="math" src="_images/math/907a4add6d5db5b7f197f7924f1371b8ac404fe6.png" alt="t"/>, they: 1. Execute the explanation method 20 times; 2. Saved the <img class="math" src="_images/math/9630132210b904754c9ab272b61cb527d12263ca.png" alt="k"/> most important features (with <img class="math" src="_images/math/c73f753c94530ca49cc163c3c37a353eb17fedba.png" alt="k=\{1, 2, 3, 4, 5\}"/>); 3. For each value of <img class="math" src="_images/math/10394fb9a1e2539ad64521b5d93d822aa0775a36.png" alt="k_i"/>, the <img class="math" src="_images/math/10394fb9a1e2539ad64521b5d93d822aa0775a36.png" alt="k_i"/> most important features for each execution were used to calculate the Jaccard index across all possible pairs (20*19 pairs), then the average was reported.</p>
+<p>Their result look like this:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 97%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>k</p></th>
+<th class="head"><p>Jaccard Index for the method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>0.2</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>0.8</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>0.7</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>0.0</p></td>
+</tr>
+</tbody>
+</table>
+<section id="Adaptating-the-Jaccard-Index">
+<h3>Adaptating the Jaccard Index<a class="headerlink" href="#Adaptating-the-Jaccard-Index" title="Permalink to this headline">¶</a></h3>
+<p>In the cell below the Jaccard Index is used to evaluate stability, but since the Partial Effects explanation method is deterministic, the calculation will be performed on the neighborhood of the test point. We can use <code class="docutils literal notranslate"><span class="pre">explain_single</span></code> and <code class="docutils literal notranslate"><span class="pre">neighborhood</span></code> functions previously declared.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">jaccard_index</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Method to calculate the ratio of the intersection</span>
+<span class="sd">    over the union of two sets. This is known as Jaccard</span>
+<span class="sd">    index and ranges from 0 to 1, measuring how simmilar</span>
+<span class="sd">    the two sets are. A value equals to 1 means that the</span>
+<span class="sd">    sets are identical (remembering that sets does not</span>
+<span class="sd">    have order relations between its elements), and a</span>
+<span class="sd">    value equals to 0 means that they are completely</span>
+<span class="sd">    different.</span>
+
+<span class="sd">    Takes as argument two python built-in sets A and B.</span>
+
+<span class="sd">    Returns a float number representing the Jaccard Index.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">B</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">get_k_most_important</span><span class="p">(</span><span class="n">explanation</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Method that takes an array of explanation and</span>
+<span class="sd">    returns the index of the k most important (highest)</span>
+<span class="sd">    values in the array.</span>
+
+<span class="sd">    Takes an array of explanations of shape (n_features, )</span>
+<span class="sd">    and an integer k representing the size of the subset,</span>
+<span class="sd">    k &lt;= len(explanations).</span>
+
+<span class="sd">    Returns a python built-in set containing the indexes</span>
+<span class="sd">    of the k highest values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Reversing the order so its in descending order</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">explanation</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">order</span><span class="p">[:</span><span class="n">k</span><span class="p">])</span>
+
+
+<span class="k">def</span> <span class="nf">jaccard_stability</span><span class="p">(</span><span class="n">explainer</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">neighborhood</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Jaccard adaptation Stability function.</span>
+
+<span class="sd">    Takes as argument an explanation method, a single observation</span>
+<span class="sd">    x of shape (n_features, ), the neighborhood as a matrix of</span>
+<span class="sd">    shape (n_neighbors, n_features), and the size of the subset being</span>
+<span class="sd">    considered k</span>
+
+<span class="sd">    Returns the mean Jaccard Index between the original sample</span>
+<span class="sd">    and all neighbors, considering how similar the k most important</span>
+<span class="sd">    subset of features between the explanation of the original data</span>
+<span class="sd">    and its neighbors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">original_explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">original_jaccard_set</span> <span class="o">=</span> <span class="n">get_k_most_important</span><span class="p">(</span><span class="n">original_explanation</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">([</span>
+        <span class="n">jaccard_index</span><span class="p">(</span>
+            <span class="n">get_k_most_important</span><span class="p">(</span><span class="n">explainer</span><span class="p">(</span><span class="n">nb</span><span class="p">),</span> <span class="n">k</span><span class="p">),</span>
+            <span class="n">original_jaccard_set</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">nb</span> <span class="ow">in</span> <span class="n">neighborhood</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>In te cell below we create a table similar to the one reported in the S-LIME paper. For different multiplication factors that adjusts the size of the neighborhood, we can see how stable the explanations are in terms of returning the same most important features.</p>
+<p>Notice that the maximum number of features is 4.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">fs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+
+<span class="n">jaccard_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">data</span>   <span class="o">=</span> <span class="p">[[</span><span class="n">jaccard_stability</span><span class="p">(</span><span class="n">explain_single</span><span class="p">,</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">neighborhood</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">f</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ks</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fs</span><span class="p">],</span>
+    <span class="n">index</span>   <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;factor </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fs</span><span class="p">],</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;k=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">ks</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">jaccard_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>k=1</th>
+      <th>k=2</th>
+      <th>k=3</th>
+      <th>k=4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>factor 0.001</th>
+      <td>1.00</td>
+      <td>0.733333</td>
+      <td>1.000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>factor 0.01</th>
+      <td>1.00</td>
+      <td>0.646667</td>
+      <td>1.000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>factor 0.1</th>
+      <td>1.00</td>
+      <td>0.646667</td>
+      <td>1.000</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>factor 1.0</th>
+      <td>0.93</td>
+      <td>0.720000</td>
+      <td>0.955</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
 </section>
 </section>
 

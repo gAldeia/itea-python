@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.3
-# Last modified: 06-18-2021 by Guilherme Aldeia
+# Version: 1.0.4
+# Last modified: 06-25-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -77,10 +77,15 @@ class BaseITEA(BaseEstimator):
             the max number of IT terms allowed.
 
         simplify_method : string or None, default=None
-            String with the name of the simplification
-            method to be used before fitting expressions
-            through the evolutionary process. When set to
-            None, the simplification step is disabled.
+            String with the name of the simplification method to be used
+            before fitting expressions through the evolutionary process.
+            When set to None, the simplification step is disabled.
+
+            Simplification can impact performance. To be simplified, the
+            expression must be previously fitted. After the simplification, if
+            the expression was changed, it should be fitted again to better
+            adjust the coefficients and intercept to the new IT expressions'
+            structure.
 
         random_state : int, None or numpy.random_state, default=None
             int or numpy random state. Use this argument
@@ -294,10 +299,11 @@ class BaseITEA(BaseEstimator):
             # Simplify functions changes the expressions, we need to ensure
             # they will be fitted after the process
             if simplify_f is not None:
-                _ = [simplify_f(itexpr=p, X=X) for p in 
-                       [pop[i].fit(X, y) for i in to_fit]]
+                for i in to_fit:
+                    pop[i] = simplify_f(itexpr=pop[i].fit(X, y), X=X)
 
-            _ = [pop[i].fit(X, y) for i in to_fit]
+            for i in to_fit:
+                pop[i].fit(X, y)
         
         return [select_f(comp) for comp in np.take(pop, competitors_idx)]
     

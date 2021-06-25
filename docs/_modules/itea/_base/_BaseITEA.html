@@ -173,8 +173,8 @@
   <h1>Source code for itea._base._BaseITEA</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.3</span>
-<span class="c1"># Last modified: 06-18-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.4</span>
+<span class="c1"># Last modified: 06-25-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.&quot;&quot;&quot;</span>
@@ -250,10 +250,15 @@
 <span class="sd">            the max number of IT terms allowed.</span>
 
 <span class="sd">        simplify_method : string or None, default=None</span>
-<span class="sd">            String with the name of the simplification</span>
-<span class="sd">            method to be used before fitting expressions</span>
-<span class="sd">            through the evolutionary process. When set to</span>
-<span class="sd">            None, the simplification step is disabled.</span>
+<span class="sd">            String with the name of the simplification method to be used</span>
+<span class="sd">            before fitting expressions through the evolutionary process.</span>
+<span class="sd">            When set to None, the simplification step is disabled.</span>
+
+<span class="sd">            Simplification can impact performance. To be simplified, the</span>
+<span class="sd">            expression must be previously fitted. After the simplification, if</span>
+<span class="sd">            the expression was changed, it should be fitted again to better</span>
+<span class="sd">            adjust the coefficients and intercept to the new IT expressions&#39;</span>
+<span class="sd">            structure.</span>
 
 <span class="sd">        random_state : int, None or numpy.random_state, default=None</span>
 <span class="sd">            int or numpy random state. Use this argument</span>
@@ -467,10 +472,11 @@
             <span class="c1"># Simplify functions changes the expressions, we need to ensure</span>
             <span class="c1"># they will be fitted after the process</span>
             <span class="k">if</span> <span class="n">simplify_f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">simplify_f</span><span class="p">(</span><span class="n">itexpr</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> 
-                       <span class="p">[</span><span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_fit</span><span class="p">]]</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_fit</span><span class="p">:</span>
+                    <span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">simplify_f</span><span class="p">(</span><span class="n">itexpr</span><span class="o">=</span><span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
 
-            <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_fit</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_fit</span><span class="p">:</span>
+                <span class="n">pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         
         <span class="k">return</span> <span class="p">[</span><span class="n">select_f</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span> <span class="k">for</span> <span class="n">comp</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">competitors_idx</span><span class="p">)]</span>
     

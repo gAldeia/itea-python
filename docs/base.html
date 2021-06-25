@@ -247,10 +247,15 @@ number of generations.</p></li>
 <li><p><strong>expolim</strong> (<em>tuple</em><em> (</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>default =</em><em> (</em><em>-2</em><em>, </em><em>2</em><em>)</em>) – tuple containing two integers, specifying the bounds
 of exponents that can be explored through the evolution.</p></li>
 <li><p><strong>max_terms</strong> (<em>int</em><em>, </em><em>default=5</em>) – the max number of IT terms allowed.</p></li>
-<li><p><strong>simplify_method</strong> (<em>string</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – String with the name of the simplification
-method to be used before fitting expressions
-through the evolutionary process. When set to
-None, the simplification step is disabled.</p></li>
+<li><p><strong>simplify_method</strong> (<em>string</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – <p>String with the name of the simplification method to be used
+before fitting expressions through the evolutionary process.
+When set to None, the simplification step is disabled.</p>
+<p>Simplification can impact performance. To be simplified, the
+expression must be previously fitted. After the simplification, if
+the expression was changed, it should be fitted again to better
+adjust the coefficients and intercept to the new IT expressions’
+structure.</p>
+</p></li>
 <li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>None</em><em> or </em><em>numpy.random_state</em><em>, </em><em>default=None</em>) – int or numpy random state. Use this argument
 to have reproducible results across different
 executions. When None, a random state instance
@@ -333,7 +338,8 @@ particularly interesting to complement explanations given by the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>expr</strong> (<em>list of Tuple</em><em>[</em><em>Transformation</em><em>, </em><em>Interaction</em><em>]</em>) – <p>list of IT terms to create an IT expression.</p>
+<li><p><strong>expr</strong> (<em>list of Tuple</em><em>[</em><em>Transformation</em><em>, </em><em>Interaction</em><em>]</em>) – <p>list of IT terms to create an IT expression. It <strong>must</strong> be a
+python built-in list.</p>
 <p>An IT term is the tuple <img class="math" src="_images/math/ea89419318680863d1c88f9aff0d228e28c5faa6.png" alt="(t, p)"/>, where
 <img class="math" src="_images/math/36f9f540c21d2345cbf9faf3ba4d3dc3b7e91e08.png" alt="t : \mathbb{R} \rightarrow \mathbb{R}"/> is a unary function
 called <strong>transformation</strong> function,  and <img class="math" src="_images/math/0cf7ed90618aca825f73b5df72a4b7a846b01383.png" alt="p \in \mathbb{R}^d"/>
