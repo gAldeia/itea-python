@@ -469,8 +469,12 @@ div.rendered_html tbody tr:hover {
 <span class="kn">from</span> <span class="nn">itea.inspection</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="kn">import</span> <span class="nn">shap</span>
+<span class="kn">import</span> <span class="nn">sage</span>
+
 <span class="kn">from</span> <span class="nn">lime</span> <span class="kn">import</span> <span class="n">lime_tabular</span>
 <span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">plot_partial_dependence</span>
+
+<span class="kn">from</span> <span class="nn">interpret.blackbox</span> <span class="kn">import</span> <span class="n">MorrisSensitivity</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
@@ -530,11 +534,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min33seg
-10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min28seg
-20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min26seg
-30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min55seg
-40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min26seg
+0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min34seg
+10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min43seg
+20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min25seg
+30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min54seg
+40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min25seg
 </pre></div></div>
 </div>
 <section id="Explaining-with-PDP">
@@ -640,7 +644,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "cb677f3e746f4300ba402041014a476d", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d9b8ba56b2c14a0f852e9d2f6ba5680e", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -697,7 +701,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "93227570345640908c9da96e3104c157", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "42221bff8cb94646acd42ae927970ef6", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -37828,28 +37832,180 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_div1V41KMZHZG9FBCJ"></div>
+        <div class="lime top_div" id="top_divJE9MMCGVO8H3ZH3"></div>
 
         <script>
-        var top_div = d3.select('#top_div1V41KMZHZG9FBCJ').classed('lime top_div', true);
+        var top_div = d3.select('#top_divJE9MMCGVO8H3ZH3').classed('lime top_div', true);
 
 
                     var pp_div = top_div.append('div')
                                         .classed('lime predicted_value', true);
                     var pp_svg = pp_div.append('svg').style('width', '100%');
-                    var pp = new lime.PredictedValue(pp_svg, 0.34337565053237995, -3.5594939490256436, 6.302895140788394);
+                    var pp = new lime.PredictedValue(pp_svg, 0.34337565053237995, -3.8883298650439855, 7.4037611743066805);
 
         var exp_div;
             var exp = new lime.Explanation(["negative", "positive"]);
 
             exp_div = top_div.append('div').classed('lime explanation', true);
-            exp.show([["MedInc <= 2.57", -1.7246177482457303], ["AveOccup > 3.28", -1.6061077650487972], ["AveRooms <= 4.46", 0.6597066303819458], ["34.27 < Latitude <= 37.72", -0.23078895159908425], ["1.01 < AveBedrms <= 1.05", -0.228879859894696], ["-121.81 < Longitude <= -118.51", 0.11823322365036569], ["18.00 < HouseAge <= 29.00", 0.009128532292835128], ["1170.50 < Population <= 1729.00", -0.00417466848357979]], 1, exp_div);
+            exp.show([["MedInc <= 2.57", -1.7388560595391218], ["AveOccup > 3.28", -1.6133682396756397], ["AveRooms <= 4.46", 0.5524554441308227], ["34.27 < Latitude <= 37.72", -0.24148244480938844], ["1.01 < AveBedrms <= 1.05", -0.21850496372034553], ["-121.81 < Longitude <= -118.51", 0.13197123031033917], ["1170.50 < Population <= 1729.00", -0.02625108126772774], ["18.00 < HouseAge <= 29.00", 0.012993004331881088]], 1, exp_div);
 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["MedInc", "1.68", -1.7246177482457303], ["AveOccup", "3.88", -1.6061077650487972], ["AveRooms", "4.19", 0.6597066303819458], ["Latitude", "36.06", -0.23078895159908425], ["AveBedrms", "1.02", -0.228879859894696], ["Longitude", "-119.01", 0.11823322365036569], ["HouseAge", "25.00", 0.009128532292835128], ["Population", "1392.00", -0.00417466848357979]], 1, raw_div);
+            exp.show_raw_tabular([["MedInc", "1.68", -1.7388560595391218], ["AveOccup", "3.88", -1.6133682396756397], ["AveRooms", "4.19", 0.5524554441308227], ["Latitude", "36.06", -0.24148244480938844], ["AveBedrms", "1.02", -0.21850496372034553], ["Longitude", "-119.01", 0.13197123031033917], ["Population", "1392.00", -0.02625108126772774], ["HouseAge", "25.00", 0.012993004331881088]], 1, raw_div);
 
         </script>
         </body></html></div>
+</div>
+</section>
+<section id="Morris-Sensitivity">
+<h2>Morris Sensitivity<a class="headerlink" href="#Morris-Sensitivity" title="Permalink to this headline">¶</a></h2>
+<p>InterpretML is an interpretability dashboard with the implementation of many model agnostic explainers created by Microsoft, reported in the paper <em>“InterpretML: A Unified Framework for Machine Learning Interpretability” (H. Nori, S. Jenkins, P. Koch, and R. Caruana 2019)</em>.</p>
+<p>While they implement the SHAP, LIME, and PDP, those were already used in the previous cells in this notebook (although they have interactive plots, which can be cool for deep interpretability analyses). One new model agnostic explainer that they provide and can be used with ITEA is the Morris Sensitivity explainer.</p>
+<p>This method changes one step at a time (OAT) to evaluate the sensitivity of the model regarding each variable independently (meaning that it <a class="reference external" href="%5Bhttps://interpret.ml/docs/msa.html">cannot differentiate interactions with non-linearities</a>), but have a fast computation of the feature importances in a global perspective.</p>
+<p>The plot function of the interpretML package uses plotly, making difficult to save and report the plot in this notebook. Thankfully, they have a method to access the data used in the plots. In te cell bellow we’ll extract the importances and recreate the plot using matplotlib.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">msa</span> <span class="o">=</span> <span class="n">MorrisSensitivity</span><span class="p">(</span>
+    <span class="n">predict_fn</span><span class="o">=</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+    <span class="n">feature_types</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;continuous&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span>
+<span class="p">)</span>
+<span class="n">msa_global</span> <span class="o">=</span> <span class="n">msa</span><span class="o">.</span><span class="n">explain_global</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">msa_global</span><span class="o">.</span><span class="n">data</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="n">features</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">])</span>
+<span class="n">y_pos</span>       <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]))</span>
+<span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">])</span>
+<span class="n">order</span>       <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">y_pos</span><span class="p">,</span> <span class="n">importances</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">y_pos</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="n">order</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s1">&#39;Morris Sensitivity</span><span class="se">\n</span><span class="s1">Convergence Index: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;convergence_index&quot;</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axisbelow</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;names&#39;: [&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;, &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], &#39;scores&#39;: masked_array(data=[5.959504710120908, 1.0141329042866714,
+                   4.737214619262825, 5.586442484117953, 0.0,
+                   2.9624736861747123, 1.9367002779619282,
+                   1.54083991726877],
+             mask=[False, False, False, False, False, False, False, False],
+       fill_value=1e+20), &#39;convergence_index&#39;: 0.038716050317714495}
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_agnostic_explainers_18_1.png" src="_images/_agnostic_explainers_18_1.png" />
+</div>
+</div>
+</section>
+<section id="Explaining-with-sage">
+<h2>Explaining with sage<a class="headerlink" href="#Explaining-with-sage" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Setup and calculate</span>
+<span class="n">imputer</span>   <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">MarginalImputer</span><span class="p">(</span><span class="n">final_itexpr</span><span class="p">,</span> <span class="n">X_test</span><span class="p">[:</span><span class="mi">512</span><span class="p">])</span>
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">PermutationEstimator</span><span class="p">(</span><span class="n">imputer</span><span class="p">,</span> <span class="s1">&#39;mse&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sage_values</span> <span class="o">=</span> <span class="n">estimator</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="n">sage_values</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "34fc4cb9fda242b89cf41af30c868786", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_agnostic_explainers_21_2.png" src="_images/_agnostic_explainers_21_2.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sensitivity</span> <span class="o">=</span> <span class="n">estimator</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">sensitivity</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Model Sensitivity&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Calculating model sensitivity (Shapley Effects, not SAGE)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "318e77233164434ca110a3a80e02becd", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_agnostic_explainers_22_3.png" src="_images/_agnostic_explainers_22_3.png" />
+</div>
 </div>
 </section>
 <section id="Generating-explanations-with-ITEA_summarizer">
@@ -37858,7 +38014,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <p>To compare the explanations from different explainers with the explanations through Partial Effects, we’ll use the <code class="docutils literal notranslate"><span class="pre">autoreport()</span></code> method to create a pdf file.</p>
 <p>This file will have several explanations of the given <code class="docutils literal notranslate"><span class="pre">itexpr</span></code>, and the file generated from the cell below can be downloaded <a class="reference external" href="https://galdeia.github.io/itea-python/_static/files/Report.pdf">by clicking here</a></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

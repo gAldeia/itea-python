@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.4
-# Last modified: 06-25-2021 by Guilherme Aldeia
+# Version: 1.0.5
+# Last modified: 07-12-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -350,10 +350,10 @@ class BaseITEA(BaseEstimator):
             random_state = random_state)
 
         if self.verbose:
-            print(f"gen \t min_fitness \t mean_fitness",
-                       "\t max_fitness \t remaining (s)")
+            print("gen | smallest fitness | mean fitness | highest fitness | "
+                  "remaining time (s)\n", "-"*76 )
             
-            # Simple estimation of  remaining time
+            # Simple estimation of the remaining time
             last_5_times = np.full(shape=(5), fill_value = np.nan, dtype=float)
 
         for g in range(self.gens):
@@ -387,6 +387,7 @@ class BaseITEA(BaseEstimator):
                 self.convergence_[group]['std' ].append(np.nanstd(data))
                 
             if (self.verbose and g%self.verbose==0) or self.verbose==-1:
+
                 # Estimating remaining time
                 last_5_times[g%5] = time.time() - t
                 
@@ -395,8 +396,10 @@ class BaseITEA(BaseEstimator):
                 
                 remaining_str = f"{remaining//60}min{remaining % 60}seg"
 
-                print(f"{g} \t {np.min(fitnesses)} \t {np.mean(fitnesses)}",
-                            f"\t {np.max(fitnesses)} \t {remaining_str}")
+                print("{:3d} | {:16.6f} | {:12.6f} | {:15.6f} | {:12s}".format(
+                    g, np.min(fitnesses), np.mean(fitnesses),
+                    np.max(fitnesses), remaining_str
+                ))
            
         self.exectime_ = time.time() - self.exectime_
 

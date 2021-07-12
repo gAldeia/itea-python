@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name             = "itea",
     packages         = find_packages(),
-    version          = "1.0.21",
+    version          = "1.0.22",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
     long_description = open('README.md', encoding='utf-8').read(),

@@ -19,9 +19,9 @@ results_fname      = './regression_benchmark_res.csv'
 n_repetitions      = 30
 itea_configuration = {
     'gens'            : 250,
-    'popsize'         : 250,
-    'max_terms'       : 10,
-    'expolim'         : (-2, 2),
+    'popsize'         : 400,
+    'max_terms'       : 15,
+    'expolim'         : (-3, 3),
     'verbose'         : 25,
     'random_state'    : None,
     'simplify_method' : None,
@@ -96,7 +96,8 @@ if __name__ == '__main__':
 
         # Random train and test split
         X_train, X_test, y_train, y_test = train_test_split(
-            ds_data.iloc[:, :-1], ds_data.iloc[:, -1],
+            ds_data.iloc[:, :-1].astype('float64'),
+            ds_data.iloc[:, -1].astype('float64'),
             test_size=0.33, random_state=None
         )
 
@@ -135,5 +136,5 @@ if __name__ == '__main__':
     # Reporting the results
     print("====================================")
     print(f"Data set: {ds}")
-    print(resultsDF.drop(['Rep'], axis=1).mean())
+    print(resultsDF(resultsDF['Dataset']==ds).drop(['Rep'], axis=1).mean())
     print("====================================")

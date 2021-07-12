@@ -513,7 +513,7 @@ div.rendered_html tbody tr:hover {
     <span class="n">tfuncs_dx</span>    <span class="o">=</span> <span class="n">tfuncs_dx</span><span class="p">,</span>
     <span class="n">labels</span>       <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
     <span class="n">random_state</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
-    <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_var&#39;</span>
+    <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_coef&#39;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -524,11 +524,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min33seg
-10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min45seg
-20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min30seg
-30       0.7662163369724707      0.7870666345437662      0.8239470965278956      1min2seg
-40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min28seg
+0        0.8796531277890931      1.0756715613041894      1.1537010152616711      0min44seg
+10       0.794826232055237       0.8285743030679675      0.9836791596555399      1min26seg
+20       0.7918577043287668      0.7941906241804908      0.8027295426319568      1min5seg
+30       0.7855557337716583      0.7908371589286343      0.8926107470783119      0min49seg
+40       0.7739250080431902      0.7908259329725873      1.0243419620880605      0min21seg
 </pre></div></div>
 </div>
 </section>
@@ -583,17 +583,17 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="highlight"><pre>
 
 Final expression:
- 9.924*log(MedInc^2 * AveBedrms * Longitude^2) +
-7.982*log(MedInc * HouseAge * AveRooms * AveOccup^2 * Longitude^2) +
--9.092*log(HouseAge * AveRooms * AveBedrms * AveOccup^2 * Latitude * Longitude^2) +
-0.702*log(HouseAge^2 * AveBedrms * AveOccup^2 * Latitude^2 * Longitude^2) +
--25.846*log(MedInc) +
--62.377
+ 2.207*log(MedInc^2 * HouseAge * AveBedrms * Population^2 * Latitude) +
+-0.901*log(HouseAge^2 * AveRooms^2 * Population^2 * AveOccup * Longitude^2) +
+-1.392*log(MedInc^2 * AveRooms^2 * AveBedrms * Population^2 * Latitude^2 * Longitude^2) +
+2.96*log(AveRooms * Longitude^2) +
+0.0*sqrt.abs(MedInc^2 * AveRooms^2 * AveBedrms * Population * Longitude) +
+-1.305
 
-Elapsed time: 139.81290650367737
+Elapsed time: 114.72018790245056
 
-Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;AveOccup&#39; &#39;Latitude&#39;
- &#39;Longitude&#39;]
+Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;Population&#39; &#39;AveOccup&#39;
+ &#39;Latitude&#39; &#39;Longitude&#39;]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -663,60 +663,60 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
   <tbody>
     <tr>
       <th>0</th>
-      <td>9.924</td>
+      <td>2.207</td>
       <td>log</td>
-      <td>[2, 0, 0, 1, 0, 0, 0, 2]</td>
-      <td>0.238</td>
-      <td>0.323</td>
-      <td>0.748</td>
-      <td>85.569</td>
+      <td>[2, 1, 0, 1, 2, 0, 1, 0]</td>
+      <td>0.021</td>
+      <td>0.459</td>
+      <td>0.567</td>
+      <td>13.738</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>7.982</td>
+      <td>-0.901</td>
       <td>log</td>
-      <td>[1, 1, 1, 0, 0, 2, 0, 2]</td>
-      <td>0.223</td>
-      <td>0.426</td>
-      <td>0.407</td>
-      <td>57.724</td>
+      <td>[0, 2, 2, 0, 2, 1, 0, 2]</td>
+      <td>0.009</td>
+      <td>0.284</td>
+      <td>0.305</td>
+      <td>2.264</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-9.092</td>
+      <td>-1.392</td>
       <td>log</td>
-      <td>[0, 1, 1, 1, 0, 2, 1, 2]</td>
-      <td>0.222</td>
-      <td>0.361</td>
-      <td>0.439</td>
-      <td>55.374</td>
+      <td>[2, 0, 2, 1, 2, 0, 2, 2]</td>
+      <td>0.015</td>
+      <td>0.501</td>
+      <td>0.681</td>
+      <td>7.419</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.702</td>
+      <td>2.96</td>
       <td>log</td>
-      <td>[0, 2, 0, 1, 0, 2, 2, 2]</td>
-      <td>0.013</td>
-      <td>0.312</td>
-      <td>0.379</td>
-      <td>0.778</td>
+      <td>[0, 0, 1, 0, 0, 0, 0, 2]</td>
+      <td>0.046</td>
+      <td>0.175</td>
+      <td>0.270</td>
+      <td>0.686</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-25.846</td>
-      <td>log</td>
-      <td>[1, 0, 0, 0, 0, 0, 0, 0]</td>
-      <td>0.697</td>
-      <td>0.324</td>
-      <td>0.754</td>
-      <td>147.950</td>
+      <td>0.0</td>
+      <td>sqrt.abs</td>
+      <td>[2, 0, 2, 1, 1, 0, 0, 1]</td>
+      <td>0.0</td>
+      <td>0.357</td>
+      <td>0.603</td>
+      <td>0.168</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>-62.377</td>
+      <td>-1.305</td>
       <td>intercept</td>
       <td>---</td>
-      <td>1.501</td>
+      <td>0.403</td>
       <td>0.000</td>
       <td>0.000</td>
       <td>0.000</td>
