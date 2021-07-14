@@ -173,8 +173,8 @@
   <h1>Source code for itea.inspection._ITExpr_explainer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.3</span>
-<span class="c1"># Last modified: 06-09-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.4</span>
+<span class="c1"># Last modified: 07-12-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Model-specific interpretability methods.</span>
@@ -1031,7 +1031,7 @@
 <span class="sd">        intervals.</span>
 
 <span class="sd">        First, the output interval is discretized. Then, for each interval,</span>
-<span class="sd">        the partial effect of the sample data that evaluation is within the </span>
+<span class="sd">        the partial effect of the sample data that predict values within the </span>
 <span class="sd">        interval is calculated. Finally, they are normalized in order to </span>
 <span class="sd">        make the total contribution by 100%.</span>
 
@@ -1043,7 +1043,10 @@
 
 <span class="sd">        num_points : int, default = 20</span>
 <span class="sd">            the number of points to divide the interval when generating the </span>
-<span class="sd">            plots. This is ignored if ``itexpr == ITExpr_classifier``</span>
+<span class="sd">            plots. The value must be equal or greater than 3. Large values can</span>
+<span class="sd">            end up creating intervals where no predictions in the training data</span>
+<span class="sd">            lies within --- in this case, the method will raise an ValueError.</span>
+<span class="sd">            This parameter is ignored if ``itexpr == ITExpr_classifier``.</span>
 
 <span class="sd">        grouping_threshold : float, default = 0.05</span>
 <span class="sd">            The features will be iterated in order of importance, from the</span>
@@ -1091,13 +1094,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">figure_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">figure</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span>   <span class="o">=</span> <span class="n">ax</span>
         
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">)</span>
+
         <span class="c1"># Handling classification and regression separately</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
             <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
             <span class="n">num_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
             <span class="n">global_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_points</span><span class="p">)</span> <span class="p">)</span>
             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
-                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">==</span> <span class="n">c</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">predictions</span> <span class="o">==</span> <span class="n">c</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 
                 <span class="n">feature_importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:])[</span><span class="n">c</span><span class="p">]</span>
@@ -1106,14 +1111,18 @@
                 
                 <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_importances</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">),</span> <span class="n">num_points</span><span class="p">)</span>
+            <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">num_points</span><span class="p">)</span>
+
             <span class="n">global_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_points</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
 
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
                 <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">x_axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">)</span> <span class="o">&amp;</span>
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">&lt;</span> <span class="n">x_axis</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="p">(</span><span class="n">x_axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">predictions</span><span class="p">)</span> <span class="o">&amp;</span>
+                    <span class="p">(</span><span class="n">predictions</span> <span class="o">&lt;</span> <span class="n">x_axis</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
                 <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
 
                 <span class="n">feature_importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:])</span>                

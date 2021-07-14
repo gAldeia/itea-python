@@ -378,7 +378,7 @@ or not.</p></li>
 <dd><p>Partial effects plots, separing the training data into discrete
 intervals.</p>
 <p>First, the output interval is discretized. Then, for each interval,
-the partial effect of the sample data that evaluation is within the
+the partial effect of the sample data that predict values within the
 interval is calculated. Finally, they are normalized in order to
 make the total contribution by 100%.</p>
 <img alt="_images/plot_normalized_partial_effects_1.png" class="align-center" src="_images/plot_normalized_partial_effects_1.png" />
@@ -386,7 +386,10 @@ make the total contribution by 100%.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_points</strong> (<em>int</em><em>, </em><em>default = 20</em>) – the number of points to divide the interval when generating the
-plots. This is ignored if <code class="docutils literal notranslate"><span class="pre">itexpr</span> <span class="pre">==</span> <span class="pre">ITExpr_classifier</span></code></p></li>
+plots. The value must be equal or greater than 3. Large values can
+end up creating intervals where no predictions in the training data
+lies within — in this case, the method will raise an ValueError.
+This parameter is ignored if <code class="docutils literal notranslate"><span class="pre">itexpr</span> <span class="pre">==</span> <span class="pre">ITExpr_classifier</span></code>.</p></li>
 <li><p><strong>grouping_threshold</strong> (<em>float</em><em>, </em><em>default = 0.05</em>) – The features will be iterated in order of importance, from the
 smallest to the highest importance, and a group of the smallest
 features that sum up less than the given percentage of importance

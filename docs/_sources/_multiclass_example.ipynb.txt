@@ -75,17 +75,18 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "gen \t min_fitness \t mean_fitness \t max_fitness \t remaining (s)\n",
-      "0 \t 0.56 \t 0.8482 \t 0.97 \t 0min19seg\n",
-      "5 \t 0.74 \t 0.9617999999999999 \t 0.98 \t 0min12seg\n",
-      "10 \t 0.79 \t 0.9693999999999999 \t 0.99 \t 0min13seg\n",
-      "15 \t 0.95 \t 0.9822 \t 0.99 \t 0min9seg\n",
-      "20 \t 0.89 \t 0.9822 \t 0.99 \t 0min10seg\n",
-      "25 \t 0.86 \t 0.9824 \t 0.99 \t 0min8seg\n",
-      "30 \t 0.93 \t 0.9818000000000001 \t 0.99 \t 0min6seg\n",
-      "35 \t 0.96 \t 0.9826000000000001 \t 0.99 \t 0min5seg\n",
-      "40 \t 0.94 \t 0.9816000000000001 \t 0.99 \t 0min3seg\n",
-      "45 \t 0.66 \t 0.9738 \t 0.99 \t 0min2seg\n"
+      "gen | smallest fitness | mean fitness | highest fitness | remaining time (s)\n",
+      " ----------------------------------------------------------------------------\n",
+      "  0 |         0.560000 |     0.848200 |        0.970000 | 0min17seg   \n",
+      "  5 |         0.740000 |     0.961800 |        0.980000 | 0min12seg   \n",
+      " 10 |         0.790000 |     0.969400 |        0.990000 | 0min14seg   \n",
+      " 15 |         0.950000 |     0.982200 |        0.990000 | 0min9seg    \n",
+      " 20 |         0.890000 |     0.982200 |        0.990000 | 0min10seg   \n",
+      " 25 |         0.860000 |     0.982400 |        0.990000 | 0min8seg    \n",
+      " 30 |         0.930000 |     0.981800 |        0.990000 | 0min6seg    \n",
+      " 35 |         0.960000 |     0.982600 |        0.990000 | 0min5seg    \n",
+      " 40 |         0.940000 |     0.981600 |        0.990000 | 0min3seg    \n",
+      " 45 |         0.660000 |     0.973800 |        0.990000 | 0min1seg    \n"
      ]
     }
    ],
@@ -535,7 +536,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
@@ -568,6 +569,13 @@
     "plt.tight_layout()\n",
     "plt.show()"
    ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
   }
  ],
  "metadata": {

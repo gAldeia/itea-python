@@ -474,7 +474,7 @@ div.rendered_html tbody tr:hover {
 <section id="Creating-and-fitting-an-ITEA_regressor">
 <h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_regressor" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -518,17 +518,79 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+ ----------------------------------------------------------------------------
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.8796531277890931      1.0756715613041894      1.1537010152616711      0min44seg
-10       0.794826232055237       0.8285743030679675      0.9836791596555399      1min26seg
-20       0.7918577043287668      0.7941906241804908      0.8027295426319568      1min5seg
-30       0.7855557337716583      0.7908371589286343      0.8926107470783119      0min49seg
-40       0.7739250080431902      0.7908259329725873      1.0243419620880605      0min21seg
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-16-ce7ca4ff2e18&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     35</span>     random_state <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">42</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     36</span>     simplify_method <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;simplify_by_coef&#39;</span>
+<span class="ansi-green-fg">---&gt; 37</span><span class="ansi-red-fg"> ).fit(X_train, y_train)
+</span>
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/regression/_ITEA_regressor.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-fg">(self, X, y)</span>
+<span class="ansi-green-intense-fg ansi-bold">    178</span>
+<span class="ansi-green-intense-fg ansi-bold">    179</span>         self.bestsol_ = self._evolve(
+<span class="ansi-green-fg">--&gt; 180</span><span class="ansi-red-fg">             X, y, self.itexpr_class, self.greater_is_better)
+</span><span class="ansi-green-intense-fg ansi-bold">    181</span>
+<span class="ansi-green-intense-fg ansi-bold">    182</span>         self<span class="ansi-blue-fg">.</span>fitness_ <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>bestsol_<span class="ansi-blue-fg">.</span>_fitness
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py</span> in <span class="ansi-cyan-fg">_evolve</span><span class="ansi-blue-fg">(self, X, y, itexpr_class, greater_is_better)</span>
+<span class="ansi-green-intense-fg ansi-bold">    373</span>                 X <span class="ansi-blue-fg">=</span> X<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    374</span>                 y <span class="ansi-blue-fg">=</span> y<span class="ansi-blue-fg">,</span>
+<span class="ansi-green-fg">--&gt; 375</span><span class="ansi-red-fg">                 random_state = random_state)
+</span><span class="ansi-green-intense-fg ansi-bold">    376</span>
+<span class="ansi-green-intense-fg ansi-bold">    377</span>             <span class="ansi-red-fg"># After selection, all individuals in population are fitted</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITEA.py</span> in <span class="ansi-cyan-fg">_select_population</span><span class="ansi-blue-fg">(self, pop, select_f, simplify_f, size, X, y, random_state)</span>
+<span class="ansi-green-intense-fg ansi-bold">    301</span>             <span class="ansi-green-fg">if</span> simplify_f <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    302</span>                 <span class="ansi-green-fg">for</span> i <span class="ansi-green-fg">in</span> to_fit<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 303</span><span class="ansi-red-fg">                     </span>pop<span class="ansi-blue-fg">[</span>i<span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> simplify_f<span class="ansi-blue-fg">(</span>itexpr<span class="ansi-blue-fg">=</span>pop<span class="ansi-blue-fg">[</span>i<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">.</span>fit<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> X<span class="ansi-blue-fg">=</span>X<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    304</span>
+<span class="ansi-green-intense-fg ansi-bold">    305</span>             <span class="ansi-green-fg">for</span> i <span class="ansi-green-fg">in</span> to_fit<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/regression/_ITExpr_regressor.py</span> in <span class="ansi-cyan-fg">fit</span><span class="ansi-blue-fg">(self, X, y)</span>
+<span class="ansi-green-intense-fg ansi-bold">    173</span>                 self<span class="ansi-blue-fg">.</span>_is_fitted <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span>
+<span class="ansi-green-intense-fg ansi-bold">    174</span>
+<span class="ansi-green-fg">--&gt; 175</span><span class="ansi-red-fg">                 </span>pred <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>dot<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_eval<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>coef_<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">+</span> self<span class="ansi-blue-fg">.</span>intercept_
+<span class="ansi-green-intense-fg ansi-bold">    176</span>
+<span class="ansi-green-intense-fg ansi-bold">    177</span>                 self<span class="ansi-blue-fg">.</span>_fitness   <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>fitness_f<span class="ansi-blue-fg">(</span>pred<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/_base/_BaseITExpr.py</span> in <span class="ansi-cyan-fg">_eval</span><span class="ansi-blue-fg">(self, X)</span>
+<span class="ansi-green-intense-fg ansi-bold">    177</span>
+<span class="ansi-green-intense-fg ansi-bold">    178</span>         <span class="ansi-green-fg">for</span> i<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">(</span>fi<span class="ansi-blue-fg">,</span> ti<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">in</span> enumerate<span class="ansi-blue-fg">(</span> self<span class="ansi-blue-fg">.</span>expr <span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">--&gt; 179</span><span class="ansi-red-fg">             </span>Z<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">:</span><span class="ansi-blue-fg">,</span> i<span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>tfuncs<span class="ansi-blue-fg">[</span>fi<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">(</span> np<span class="ansi-blue-fg">.</span>prod<span class="ansi-blue-fg">(</span>np<span class="ansi-blue-fg">.</span>power<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">,</span> ti<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    180</span>
+<span class="ansi-green-intense-fg ansi-bold">    181</span>         <span class="ansi-green-fg">return</span> Z
+
+<span class="ansi-green-fg">&lt;__array_function__ internals&gt;</span> in <span class="ansi-cyan-fg">prod</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/numpy/core/fromnumeric.py</span> in <span class="ansi-cyan-fg">prod</span><span class="ansi-blue-fg">(a, axis, dtype, out, keepdims, initial, where)</span>
+<span class="ansi-green-intense-fg ansi-bold">   3029</span>     &#34;&#34;&#34;
+<span class="ansi-green-intense-fg ansi-bold">   3030</span>     return _wrapreduction(a, np.multiply, &#39;prod&#39;, axis, dtype, out,
+<span class="ansi-green-fg">-&gt; 3031</span><span class="ansi-red-fg">                           keepdims=keepdims, initial=initial, where=where)
+</span><span class="ansi-green-intense-fg ansi-bold">   3032</span>
+<span class="ansi-green-intense-fg ansi-bold">   3033</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/numpy/core/fromnumeric.py</span> in <span class="ansi-cyan-fg">_wrapreduction</span><span class="ansi-blue-fg">(obj, ufunc, method, axis, dtype, out, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     85</span>                 <span class="ansi-green-fg">return</span> reduction<span class="ansi-blue-fg">(</span>axis<span class="ansi-blue-fg">=</span>axis<span class="ansi-blue-fg">,</span> out<span class="ansi-blue-fg">=</span>out<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>passkwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     86</span>
+<span class="ansi-green-fg">---&gt; 87</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> ufunc<span class="ansi-blue-fg">.</span>reduce<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> axis<span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">,</span> out<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>passkwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     88</span>
+<span class="ansi-green-intense-fg ansi-bold">     89</span>
+
+<span class="ansi-red-fg">KeyboardInterrupt</span>:
 </pre></div></div>
 </div>
 </section>
@@ -590,7 +652,7 @@ Final expression:
 0.0*sqrt.abs(MedInc^2 * AveRooms^2 * AveBedrms * Population * Longitude) +
 -1.305
 
-Elapsed time: 114.72018790245056
+Elapsed time: 98.56233739852905
 
 Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;Population&#39; &#39;AveOccup&#39;
  &#39;Latitude&#39; &#39;Longitude&#39;]
@@ -785,21 +847,73 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 </div>
 <p>Finally, we can also plot the mean relative importances of each feature by calculating the average Partial Effect for each interval when the output is discretized.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-14-5675773f7e5b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>explainer<span class="ansi-blue-fg">.</span>plot_normalized_partial_effects<span class="ansi-blue-fg">(</span>grouping_threshold<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.1</span><span class="ansi-blue-fg">,</span> show<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> num_points<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">300</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> plt<span class="ansi-blue-fg">.</span>tight_layout<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/inspection/_ITExpr_explainer.py</span> in <span class="ansi-cyan-fg">plot_normalized_partial_effects</span><span class="ansi-blue-fg">(self, num_points, grouping_threshold, stack_kw, ax, show)</span>
+<span class="ansi-green-intense-fg ansi-bold">    944</span>
+<span class="ansi-green-intense-fg ansi-bold">    945</span>                 feature_importances = self.average_partial_effects(
+<span class="ansi-green-fg">--&gt; 946</span><span class="ansi-red-fg">                     self.X_[mask, :])
+</span><span class="ansi-green-intense-fg ansi-bold">    947</span>
+<span class="ansi-green-intense-fg ansi-bold">    948</span>                 feature_importances <span class="ansi-blue-fg">/=</span> np<span class="ansi-blue-fg">.</span>sum<span class="ansi-blue-fg">(</span>feature_importances<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">/</span><span class="ansi-cyan-fg">100</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/itea/inspection/_ITExpr_explainer.py</span> in <span class="ansi-cyan-fg">average_partial_effects</span><span class="ansi-blue-fg">(self, X)</span>
+<span class="ansi-green-intense-fg ansi-bold">    210</span>
+<span class="ansi-green-intense-fg ansi-bold">    211</span>         check_is_fitted<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 212</span><span class="ansi-red-fg">         </span>X <span class="ansi-blue-fg">=</span> check_array<span class="ansi-blue-fg">(</span>X<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    213</span>
+<span class="ansi-green-intense-fg ansi-bold">    214</span>         <span class="ansi-red-fg"># reminder: gradients[class, # obs, variable]</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/sklearn/utils/validation.py</span> in <span class="ansi-cyan-fg">inner_f</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">     61</span>             extra_args <span class="ansi-blue-fg">=</span> len<span class="ansi-blue-fg">(</span>args<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-</span> len<span class="ansi-blue-fg">(</span>all_args<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     62</span>             <span class="ansi-green-fg">if</span> extra_args <span class="ansi-blue-fg">&lt;=</span> <span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 63</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> f<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     64</span>
+<span class="ansi-green-intense-fg ansi-bold">     65</span>             <span class="ansi-red-fg"># extra_args &gt; 0</span>
+
+<span class="ansi-green-fg">~/anaconda3/lib/python3.7/site-packages/sklearn/utils/validation.py</span> in <span class="ansi-cyan-fg">check_array</span><span class="ansi-blue-fg">(array, accept_sparse, accept_large_sparse, dtype, order, copy, force_all_finite, ensure_2d, allow_nd, ensure_min_samples, ensure_min_features, estimator)</span>
+<span class="ansi-green-intense-fg ansi-bold">    727</span>                              <span class="ansi-blue-fg">&#34; minimum of %d is required%s.&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    728</span>                              % (n_samples, array.shape, ensure_min_samples,
+<span class="ansi-green-fg">--&gt; 729</span><span class="ansi-red-fg">                                 context))
+</span><span class="ansi-green-intense-fg ansi-bold">    730</span>
+<span class="ansi-green-intense-fg ansi-bold">    731</span>     <span class="ansi-green-fg">if</span> ensure_min_features <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">and</span> array<span class="ansi-blue-fg">.</span>ndim <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">ValueError</span>: Found array with 0 sample(s) (shape=(0, 8)) while a minimum of 1 is required.
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_regression_example_18_0.png" src="_images/_regression_example_18_0.png" />
+<img alt="_images/_regression_example_18_1.png" src="_images/_regression_example_18_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
 </div>
 </div>
 </section>

@@ -351,9 +351,11 @@ class BaseITEA(BaseEstimator):
 
         if self.verbose:
             print("gen | smallest fitness | mean fitness | highest fitness | "
-                  "remaining time (s)\n", "-"*76 )
+                  "remaining time (s)")
+
+            print("-"*76)
             
-            # Simple estimation of the remaining time
+            # Estimation of remaining time using a circular list
             last_5_times = np.full(shape=(5), fill_value = np.nan, dtype=float)
 
         for g in range(self.gens):

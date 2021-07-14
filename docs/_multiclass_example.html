@@ -528,17 +528,18 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.56    0.8482          0.97    0min19seg
-5        0.74    0.9617999999999999      0.98    0min12seg
-10       0.79    0.9693999999999999      0.99    0min13seg
-15       0.95    0.9822          0.99    0min9seg
-20       0.89    0.9822          0.99    0min10seg
-25       0.86    0.9824          0.99    0min8seg
-30       0.93    0.9818000000000001      0.99    0min6seg
-35       0.96    0.9826000000000001      0.99    0min5seg
-40       0.94    0.9816000000000001      0.99    0min3seg
-45       0.66    0.9738          0.99    0min2seg
+gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+ ----------------------------------------------------------------------------
+  0 |         0.560000 |     0.848200 |        0.970000 | 0min17seg
+  5 |         0.740000 |     0.961800 |        0.980000 | 0min12seg
+ 10 |         0.790000 |     0.969400 |        0.990000 | 0min14seg
+ 15 |         0.950000 |     0.982200 |        0.990000 | 0min9seg
+ 20 |         0.890000 |     0.982200 |        0.990000 | 0min10seg
+ 25 |         0.860000 |     0.982400 |        0.990000 | 0min8seg
+ 30 |         0.930000 |     0.981800 |        0.990000 | 0min6seg
+ 35 |         0.960000 |     0.982600 |        0.990000 | 0min5seg
+ 40 |         0.940000 |     0.981600 |        0.990000 | 0min3seg
+ 45 |         0.660000 |     0.973800 |        0.990000 | 0min1seg
 </pre></div></div>
 </div>
 <p>Since the <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and the best solution found by the ITEA <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> are both scikit-like models, we can use some base methods like <code class="docutils literal notranslate"><span class="pre">get_params</span></code>.</p>
@@ -848,7 +849,7 @@ weighted avg       0.98      0.98      0.98        50
 </div>
 <p>We can share the y axis and show errors hatchs:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -875,6 +876,15 @@ weighted avg       0.98      0.98      0.98        50
 </div>
 <div class="output_area docutils container">
 <img alt="_images/_multiclass_example_23_0.png" src="_images/_multiclass_example_23_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
 </div>
 </div>
 </section>

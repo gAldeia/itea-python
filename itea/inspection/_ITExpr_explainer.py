@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.3
-# Last modified: 06-09-2021 by Guilherme Aldeia
+# Version: 1.0.4
+# Last modified: 07-12-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -858,7 +858,7 @@ class ITExpr_explainer():
         intervals.
 
         First, the output interval is discretized. Then, for each interval,
-        the partial effect of the sample data that evaluation is within the 
+        the partial effect of the sample data that predict values within the 
         interval is calculated. Finally, they are normalized in order to 
         make the total contribution by 100%.
 
@@ -870,7 +870,12 @@ class ITExpr_explainer():
 
         num_points : int, default = 20
             the number of points to divide the interval when generating the 
-            plots. This is ignored if ``itexpr == ITExpr_classifier``
+            plots. The value must be equal or greater than 2. Large values can
+            end up creating intervals where no predictions in the training data
+            lies within resulting in points that are not evenly distributed, or
+            in a noisy plot. The adequate number of points can be different for
+            each dataset.
+            This parameter is ignored if ``itexpr == ITExpr_classifier``.
 
         grouping_threshold : float, default = 0.05
             The features will be iterated in order of importance, from the
@@ -918,29 +923,51 @@ class ITExpr_explainer():
             self.figure_ = ax.figure
             self.axes_   = ax
         
+        predictions = self.itexpr.predict(self.X_)
+
         # Handling classification and regression separately
         if hasattr(self.itexpr, 'classes_'):
-            x_axis = np.arange(len(self.itexpr.classes_))
             num_points = len(self.itexpr.classes_)
-            global_importances = np.zeros( (self.X_.shape[1], num_points) )
-            for c in range(num_points):
-                mask = np.where(self.y_ == c)[0]
+
+            global_importances  = np.zeros( (self.X_.shape[1], num_points) )
+
+            # We'll save the intervals with no predictions to exclude
+            invalid_importances = np.zeros(num_points, dtype=np.int32)
+
+            for i, c in enumerate(self.itexpr.classes_):
+                mask = np.where(predictions == c)[0]
                 
+                if len(mask)==0:
+                    invalid_importances[i] = 1
+                    continue
+
                 feature_importances = self.average_partial_effects(
-                    self.X_[mask, :])[c]
+                    self.X_[mask, :])[i]
 
                 feature_importances /= np.sum(feature_importances)/100
                 
-                global_importances[:, c] = feature_importances
-        else:
-            x_axis = np.linspace(np.min(self.y_), np.max(self.y_), num_points)
-            global_importances = np.zeros( (self.X_.shape[1], num_points-1) )
+                global_importances[:, i] = feature_importances
 
-            for i in range(num_points-1):
+            valid_importance_mask = np.where(invalid_importances != 1)[0]
+            global_importances = global_importances[:, valid_importance_mask]
+            x_axis = np.arange(len(valid_importance_mask))
+        else:
+            x_axis = np.linspace(
+                np.min(predictions), np.max(predictions), num_points+1)
+
+            global_importances = np.zeros( (self.X_.shape[1], num_points) )
+
+            invalid_importances = np.zeros(num_points, dtype=np.int32)
+
+            for i in range(num_points):
                 mask = np.where(
-                    (x_axis[i] <= self.y_) &
-                    (self.y_ < x_axis[i+1])
+                    (x_axis[i] <= predictions) &
+                    (predictions < x_axis[i+1])
                 )[0]
+
+                if len(mask)==0:
+                    invalid_importances[i] = 1
+                    continue
 
                 feature_importances = self.average_partial_effects(
                     self.X_[mask, :])                
@@ -949,7 +976,9 @@ class ITExpr_explainer():
                 
                 global_importances[:, i] = feature_importances
 
-            x_axis = x_axis[:-1]
+            valid_importance_mask = np.where(invalid_importances != 1)[0]
+            global_importances = global_importances[:, valid_importance_mask]
+            x_axis = (x_axis[:-1])[valid_importance_mask]
 
         labels = self.itexpr.labels
 
@@ -1004,9 +1033,10 @@ class ITExpr_explainer():
         self.axes_.set_ylabel("Relative importance (%)")
 
         if hasattr(self.itexpr, 'classes_'):
-            self.axes_.set_xticks(range(len(x_axis)))
+            self.axes_.set_xticks(x_axis)
             self.axes_.set_xticklabels(
-                self.itexpr.classes_, rotation=30, ha='right')
+                self.itexpr.classes_[valid_importance_mask],
+                rotation=30, ha='right')
             self.axes_.set_xlim( (0, len(x_axis)-1) )
         else:
             self.axes_.set_xlim( (x_axis[0], x_axis[-1]) )
