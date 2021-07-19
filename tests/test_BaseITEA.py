@@ -6,7 +6,6 @@ from sklearn.base import clone
 
 from itea._base import BaseITEA
 from itea.regression import ITExpr_regressor
-from sklearn.datasets   import make_regression
 
 
 def test_BaseITEA_check_args():
@@ -59,7 +58,7 @@ def test_BaseITEA_check_args():
 def test_population_size():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    baseitea = BaseITEA(popsize=10)
+    baseitea = BaseITEA(popsize=10, labels=['x0', 'x1'])
     baseitea._check_args(X, y)
 
     # we need to provide a subclass of BaseITExpr. Using the regressor just
@@ -74,7 +73,7 @@ def test_population_size():
 def test_mutation_size():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    baseitea = BaseITEA(popsize=10)
+    baseitea = BaseITEA(popsize=10, labels=['x0', 'x1'])
     baseitea._check_args(X, y)
 
     pop = baseitea._create_population(nvars=2, simplify_f=None, X=X, y=y,
@@ -91,7 +90,7 @@ def test_mutation_size():
 def test_mutation_dont_change_originals():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    baseitea = BaseITEA(popsize=50)
+    baseitea = BaseITEA(popsize=50, labels=['x0', 'x1'])
     baseitea._check_args(X, y)
 
     pop = baseitea._create_population(nvars=2, simplify_f=None, X=X, y=y,
@@ -112,7 +111,7 @@ def test_mutation_dont_change_originals():
 def test_selection():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    baseitea = BaseITEA(popsize=10)
+    baseitea = BaseITEA(popsize=10, labels=['x0', 'x1'])
     baseitea._check_args(X, y)
 
     pop = baseitea._create_population(nvars=2, simplify_f=None, X=X, y=y,
@@ -137,13 +136,17 @@ def test_random_state():
 
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    baseitea_1 = BaseITEA(popsize=10, gens=10, random_state=42)    
+    baseitea_1 = BaseITEA(popsize=10, gens=10,
+        labels=['x0', 'x1'], random_state=42)
+
     baseitea_1._check_args(X, y)
 
     bestsol_1 = baseitea_1._evolve(
         X=X, y=y, itexpr_class=ITExpr_regressor, greater_is_better=False)
 
-    baseitea_2 = BaseITEA(popsize=10, gens=10, random_state=42)    
+    baseitea_2 = BaseITEA(popsize=10, gens=10,
+        labels=['x0', 'x1'], random_state=42)    
+
     baseitea_2._check_args(X, y)
 
     bestsol_2 = baseitea_2._evolve(
@@ -155,7 +158,7 @@ def test_random_state():
 def test_virtual_methods():
     X, y = np.array([[1.0, 2.0]]), np.array([3.0])
 
-    baseitea = BaseITEA()
+    baseitea = BaseITEA(labels=['x0', 'x1'])
     baseitea._check_args(X, y)
 
     with pytest.raises(NotImplementedError):

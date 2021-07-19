@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.2
-# Last modified: 06-25-2021 by Guilherme Aldeia
+# Version: 1.0.3
+# Last modified: 07-14-2021 by Guilherme Aldeia
 
 
 """ITExpr sub-class, specialized to classification task.
@@ -165,6 +165,10 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         the IT expression domain then fits a logistic regressor using the
         IT expression as decision function. The logistic regressor is fitted
         by means of the saga method without any penalties.
+
+        If the expression fails to fit, its ``_fitness`` is set to -np.inf,
+        since the fitness function is the accuracy score and greater values
+        are better.
 
         Parameters
         ----------

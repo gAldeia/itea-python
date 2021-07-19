@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.5
-# Last modified: 07-12-2021 by Guilherme Aldeia
+# Version: 1.0.6
+# Last modified: 07-14-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -383,10 +383,11 @@ class BaseITEA(BaseEstimator):
             complexities = [p.complexity() for p in pop]
 
             for group, data in zip(groups, [fitnesses, n_terms, complexities]):
-                self.convergence_[group]['min' ].append(np.nanmin(data))
-                self.convergence_[group]['max' ].append(np.nanmax(data))
-                self.convergence_[group]['mean'].append(np.nanmean(data))
-                self.convergence_[group]['std' ].append(np.nanstd(data))
+                data_masked = np.ma.masked_invalid(data)
+                self.convergence_[group]['min' ].append(np.min(data_masked))
+                self.convergence_[group]['max' ].append(np.max(data_masked))
+                self.convergence_[group]['mean'].append(np.mean(data_masked))
+                self.convergence_[group]['std' ].append(np.std(data_masked))
                 
             if (self.verbose and g%self.verbose==0) or self.verbose==-1:
 

@@ -109,6 +109,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
@@ -549,6 +550,9 @@ method.</p>
 the IT expression domain then fits a logistic regressor using the
 IT expression as decision function. The logistic regressor is fitted
 by means of the saga method without any penalties.</p>
+<p>If the expression fails to fit, its <code class="docutils literal notranslate"><span class="pre">_fitness</span></code> is set to -np.inf,
+since the fitness function is the accuracy score and greater values
+are better.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

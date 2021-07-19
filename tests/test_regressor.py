@@ -2,7 +2,6 @@ import pytest
 
 import numpy           as np
 import jax.numpy       as jnp
-import statsmodels.api as sm
 
 from itea.regression import ITExpr_regressor, ITEA_regressor
 
@@ -51,7 +50,7 @@ def regression_toy_data():
 def linear_ITExpr():
     """Linear IT expresison that should fit perfectly to the toy data set.
     
-    The ITExpr has no explicit labels in this case.
+    The ITExpr has no explicit labels.
     """
 
     return ITExpr_regressor(
@@ -65,7 +64,9 @@ def linear_ITExpr():
 
 @pytest.fixture
 def nonlinear_ITExpr():
-    """non linear expression."""
+    """non linear expression.
+    
+    The ITExpr has no explicit labels."""
 
     return ITExpr_regressor(
         expr = [
@@ -160,25 +161,50 @@ def test_nonlinear_ITExpr_covariance_matrix(
 
     nonlinear_ITExpr.fit(X, y)
 
-    # Using statsmodels to create a linear regressor with the transformation
-    # functions of the nonlinear_ITExpr and evaluate the covariance matrix
-    X_with_intercept = np.ones( (X.shape[0], nonlinear_ITExpr.n_terms + 1) )
-    X_with_intercept[:, :-1] = nonlinear_ITExpr._eval(X)
-
-    ols = sm.OLS(y, X_with_intercept)
-    ols_result = ols.fit()
+    expected_cov_params = np.array(
+        [[ 2.36204730e+02,  7.30247102e+00, -1.40861044e-01, -6.13965636e+01],
+         [ 7.30247102e+00,  3.15815042e+02,  8.11634925e-01, -2.23485814e+02],
+         [-1.40861044e-01,  8.11634925e-01,  3.24270976e-01, -4.45872482e-01],
+         [-6.13965636e+01, -2.23485814e+02, -4.45872482e-01,  2.24715215e+02]])
 
     assert np.allclose(
         nonlinear_ITExpr.covariance_matrix(X, y),
-        ols_result.cov_params()
+        expected_cov_params
     )
+
+    # The 'expected_cov_params' was calculated with statsmodels using python
+    # 3.8. The statsmodels depends on a package that is not being updated
+    # anymore, so to avoid the crash of this test I've hardcoded the expected
+    # result. Using python <3.9 is possible to obtain this very matrix by
+    # uncommenting the lines below. It will use statsmodels to create a
+    # linear regressor with the transformation functions of the
+    # nonlinear_ITExpr and calculate the covariance matrix
+
+    #X_with_intercept = np.ones( (X.shape[0], nonlinear_ITExpr.n_terms + 1))
+    #X_with_intercept[:, :-1] = nonlinear_ITExpr._eval(X)
+    
+    #import statsmodels.api as sm
+
+    #ols = sm.OLS(y, X_with_intercept)
+    #ols_result = ols.fit()
+
+    #print(ols_result.cov_params()) # getting the result to use it hardcoded
+    
+    #assert np.allclose(nonlinear_ITExpr.covariance_matrix(X, y),
+    #    ols_result.cov_params())
 
 
 def test_ITEA_regressor_fit_predict(regression_toy_data):
     X, y, coef = regression_toy_data
 
+    # Passing simple labels, tfuncs and tfuncs_dx to suppress the warnings
     reg = ITEA_regressor(
-        gens=10, popsize=10, verbose=2, random_state=42).fit(X, y)
+        gens=10, popsize=10, verbose=2,
+        random_state=42,
+        labels = [f'x_{i}' for i in range(len(X[0]))],
+        tfuncs = tfuncs,
+        tfuncs_dx = tfuncs_dx
+    ).fit(X, y)
 
     # The fitness and bestsol attributes should exist after fit
     assert hasattr(reg, 'bestsol_')
@@ -201,9 +227,15 @@ def test_ITEA_regressor_fit_predict(regression_toy_data):
 def test_one_individual_one_generation(regression_toy_data):
     X, y, coef = regression_toy_data
 
-    # Should have a valid fitted expression after 1 generation
+    # Should have a valid fitted expression after 1 generation.
+    # Passing simple labels, tfuncs and tfuncs_dx to suppress the warnings
     reg = ITEA_regressor(
-        gens=1, popsize=1, verbose=-1, random_state=42).fit(X, y)
+        gens=1, popsize=1, verbose=-1,
+        random_state=42,
+        labels = [f'x_{i}' for i in range(len(X[0]))],
+        tfuncs = tfuncs,
+        tfuncs_dx = tfuncs_dx
+    ).fit(X, y)
 
     assert hasattr(reg, 'bestsol_')
     assert hasattr(reg, 'fitness_')

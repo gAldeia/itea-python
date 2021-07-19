@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
@@ -173,8 +174,8 @@
   <h1>Source code for itea.classification._ITExpr_classifier</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.2</span>
-<span class="c1"># Last modified: 06-25-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.3</span>
+<span class="c1"># Last modified: 07-14-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;ITExpr sub-class, specialized to classification task.</span>
@@ -338,6 +339,10 @@
 <span class="sd">        the IT expression domain then fits a logistic regressor using the</span>
 <span class="sd">        IT expression as decision function. The logistic regressor is fitted</span>
 <span class="sd">        by means of the saga method without any penalties.</span>
+
+<span class="sd">        If the expression fails to fit, its ``_fitness`` is set to -np.inf,</span>
+<span class="sd">        since the fitness function is the accuracy score and greater values</span>
+<span class="sd">        are better.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>

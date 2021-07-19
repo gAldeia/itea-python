@@ -111,6 +111,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
@@ -386,9 +387,11 @@ make the total contribution by 100%.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_points</strong> (<em>int</em><em>, </em><em>default = 20</em>) – the number of points to divide the interval when generating the
-plots. The value must be equal or greater than 3. Large values can
+plots. The value must be equal or greater than 2. Large values can
 end up creating intervals where no predictions in the training data
-lies within — in this case, the method will raise an ValueError.
+lies within resulting in points that are not evenly distributed, or
+in a noisy plot. The adequate number of points can be different for
+each dataset.
 This parameter is ignored if <code class="docutils literal notranslate"><span class="pre">itexpr</span> <span class="pre">==</span> <span class="pre">ITExpr_classifier</span></code>.</p></li>
 <li><p><strong>grouping_threshold</strong> (<em>float</em><em>, </em><em>default = 0.05</em>) – The features will be iterated in order of importance, from the
 smallest to the highest importance, and a group of the smallest
@@ -714,8 +717,11 @@ several interpretability plots for the expression.</p>
 <dd><p>automatically generate a pdf using the methods implemented in
 <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code>, <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>, and <code class="docutils literal notranslate"><span class="pre">ITExpr_texifier</span></code>.</p>
 <p>The idea is to simplify the generation of the plots and tables,
-taking from the user the need to understand, instantiate the classes
+removing from the user the need to understand, instantiate the classes
 and call the plots functions.</p>
+<p>All explanations are generated with the training data, and every
+item in the report can be obtained manually by using the
+<code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code>, <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>, and <code class="docutils literal notranslate"><span class="pre">ITExpr_texifier</span></code>.</p>
 <p>This method makes usage of the <code class="docutils literal notranslate"><span class="pre">PyLaTeX</span></code> package and requires a
 visible latex installation to work properly.</p>
 <p>The .tex file used to generate the pdf will also be saved on the

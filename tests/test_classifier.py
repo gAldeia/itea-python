@@ -2,7 +2,6 @@ import pytest
 
 import numpy           as np
 import jax.numpy       as jnp
-import statsmodels.api as sm
 
 from itea.classification import ITExpr_classifier, ITEA_classifier
 
@@ -11,6 +10,9 @@ from jax import grad, vmap
 from sklearn.datasets     import make_blobs
 from sklearn.exceptions   import NotFittedError
 from sklearn.linear_model import LogisticRegression
+
+from sklearn.utils._testing import ignore_warnings
+from sklearn.exceptions     import ConvergenceWarning
 
 
 # Using the identity, one trigonometric and one non-linear function
@@ -112,6 +114,7 @@ def test_linear_ITExpr_fit(
     assert np.isclose(linear_ITExpr._fitness, 1.0)
 
 
+@ignore_warnings(category=ConvergenceWarning)
 def test_linear_ITExpr_equals_scikit_logisticRegression(
     linear_ITExpr, classification_toy_data):
 
@@ -170,8 +173,14 @@ def test_nonlinear_ITExpr_derivatives_with_jax(
 def test_ITEA_classifier_fit_predict(classification_toy_data):
     X, y = classification_toy_data
 
+    # Passing simple labels, tfuncs and tfuncs_dx to suppress the warnings
     clf = ITEA_classifier(
-        gens=10, popsize=10, verbose=2, random_state=42).fit(X, y)
+        gens=10, popsize=10, verbose=2,
+        random_state=42,
+        labels = [f'x_{i}' for i in range(len(X[0]))],
+        tfuncs = tfuncs,
+        tfuncs_dx = tfuncs_dx
+    ).fit(X, y)
 
     # The fitness and bestsol attributes should exist after fit
     assert hasattr(clf, 'bestsol_')
@@ -196,8 +205,14 @@ def test_one_individual_one_generation(classification_toy_data):
     X, y = classification_toy_data
 
     # Should have a valid fitted expression after 1 generation
+    # Passing simple labels, tfuncs and tfuncs_dx to suppress the warnings
     clf = ITEA_classifier(
-        gens=1, popsize=1, verbose=-1, random_state=42).fit(X, y)
+        gens=1, popsize=1, verbose=-1,
+        random_state=42,
+        labels = [f'x_{i}' for i in range(len(X[0]))],
+        tfuncs = tfuncs,
+        tfuncs_dx = tfuncs_dx
+    ).fit(X, y)
 
     assert hasattr(clf, 'bestsol_')
     assert hasattr(clf, 'fitness_')

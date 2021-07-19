@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
@@ -173,8 +174,8 @@
   <h1>Source code for itea._base._BaseITEA</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.5</span>
-<span class="c1"># Last modified: 07-12-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.6</span>
+<span class="c1"># Last modified: 07-14-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.&quot;&quot;&quot;</span>
@@ -524,7 +525,7 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;gen | smallest fitness | mean fitness | highest fitness | &quot;</span>
-                  <span class="s2">&quot;remaining time (s)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                  <span class="s2">&quot;remaining time (s)&quot;</span><span class="p">)</span>
 
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">76</span><span class="p">)</span>
             
@@ -556,10 +557,11 @@
             <span class="n">complexities</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">complexity</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
 
             <span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="p">[</span><span class="n">fitnesses</span><span class="p">,</span> <span class="n">n_terms</span><span class="p">,</span> <span class="n">complexities</span><span class="p">]):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;min&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;max&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;std&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanstd</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+                <span class="n">data_masked</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;min&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data_masked</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;max&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data_masked</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data_masked</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">convergence_</span><span class="p">[</span><span class="n">group</span><span class="p">][</span><span class="s1">&#39;std&#39;</span> <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data_masked</span><span class="p">))</span>
                 
             <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="ow">and</span> <span class="n">g</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="o">==-</span><span class="mi">1</span><span class="p">:</span>
 

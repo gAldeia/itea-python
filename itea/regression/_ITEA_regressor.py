@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.2
-# Last modified: 06-25-2021 by Guilherme Aldeia
+# Version: 1.0.3
+# Last modified: 07-14-2021 by Guilherme Aldeia
 
 
 """Specialization of the base class BaseITEA for the classification task.
@@ -108,7 +108,8 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
             dictionary (for example itea.convergence_['fitness']['min'])
             is a list, containing the information of every generation.
             This dictionary can be used to inspect information about the
-            convergence of the evolutionary process.
+            convergence of the evolutionary process. The calculations are made
+            filtering infinity values.
 
         exectime_ : int
             time (in seconds) the evolutionary process took.

@@ -57,16 +57,16 @@
 \footnotesize%
 \begin{tabular}{lrrrrr}
 \toprule
-{} &     AveBedrms &        MedInc &      AveOccup &      AveRooms &      Latitude \\
+{} &     AveBedrms &        MedInc &     Longitude &      Latitude &      AveOccup \\
 \midrule
 count &  13828.000000 &  13828.000000 &  13828.000000 &  13828.000000 &  13828.000000 \\
-mean  &      1.097533 &      3.876745 &      3.128660 &      5.436556 &     35.651238 \\
-std   &      0.445688 &      1.903102 &     12.646130 &      2.449446 &      2.134064 \\
-min   &      0.333333 &      0.499900 &      0.692308 &      0.888889 &     32.550000 \\
-25\%   &      1.006623 &      2.568575 &      2.432189 &      4.459802 &     33.940000 \\
-50\%   &      1.049552 &      3.538750 &      2.819702 &      5.232422 &     34.270000 \\
-75\%   &      1.100283 &      4.756600 &      3.282093 &      6.058566 &     37.720000 \\
-max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.950000 \\
+mean  &      1.097533 &      3.876745 &   -119.585098 &     35.651238 &      3.128660 \\
+std   &      0.445688 &      1.903102 &      2.005127 &      2.134064 &     12.646130 \\
+min   &      0.333333 &      0.499900 &   -124.350000 &     32.550000 &      0.692308 \\
+25\%   &      1.006623 &      2.568575 &   -121.810000 &     33.940000 &      2.432189 \\
+50\%   &      1.049552 &      3.538750 &   -118.510000 &     34.270000 &      2.819702 \\
+75\%   &      1.100283 &      4.756600 &   -118.010000 &     37.720000 &      3.282093 \\
+max   &     25.636364 &     15.000100 &   -114.310000 &     41.950000 &   1243.333333 \\
 \bottomrule
 \end{tabular}
 %
@@ -85,9 +85,9 @@ max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.9
                 it is possible to repeat the exact execution by using the same
                 training data and the parameters listed below.%
 {\footnotesize \begin{verbatim}    expolim : (0, 2)
-    gens : 50
+    gens : 75
     max_terms : 5
-    popsize : 50
+    popsize : 75
     random_state : 42
     simplify_method : simplify_by_var
     verbose : 10
@@ -106,7 +106,7 @@ max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.9
 \section*{Evolution convergence}%
 \label{sec:Evolutionconvergence}%
 
-                The algorithm took 127.554 seconds to
+                The algorithm took 331.013 seconds to
                 completely run. Below are the plots for the average fitness
                 of the population and the best individual fitness for each
                 generation.\vfill%
@@ -114,7 +114,7 @@ max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.9
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.r_zzjcqe/fitness_convergence.pdf}%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.xxldqsu5/fitness_convergence.pdf}%
 \end{figure}
 
 %
@@ -128,9 +128,11 @@ max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.9
                 the best fitness on the last generation before the evolution
                 ends. Not necessarily it will be the simpliest or the global
                 optimum expression of the evoution. The final expression is a regressor with a fitness of
-                0.75408, and the number of IT terms is
+                0.741, and the number of IT terms is
                 5. Below is an LaTeX representation
-                of the expression:\vfill {\small \begin{dmath}ITExpr = \underbrace{\beta_0 \cdot log(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{\beta_2 \cdot log(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{\beta_3 \cdot log(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}} + \underbrace{\beta_4 \cdot log(MedInc)}_{\text{term 4}} + I_0\end{dmath} } \vfill \pagebreak
+                of the expression:
+                
+                \vfill {\small \begin{dmath}ITExpr = \underbrace{\beta_0 \cdot log(MedInc \cdot Population \cdot AveOccup \cdot Latitude^{2})}_{\text{term 0}} + \underbrace{\beta_1 \cdot log(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{\beta_2 \cdot log(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{\beta_3 \cdot log(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}} + \underbrace{\beta_4 \cdot log(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 4}} + I_0\end{dmath} } \vfill \pagebreak
 
 %
 \section*{Best expression metrics}%
@@ -163,14 +165,14 @@ On the next page is reported a table
 \footnotesize%
 \begin{tabular}{llllrrr}
 \toprule
-{} &     coef &       func & coef stderr &  disentang. &   M.I. &  pred. var. \\
+{} &      coef &       func & coef stderr &  disentang. &   M.I. &  pred. var. \\
 \midrule
-term 0 &    9.924 &        log &       0.238 &       0.323 &  0.748 &      85.569 \\
-term 1 &    7.982 &        log &       0.223 &       0.426 &  0.407 &      57.724 \\
-term 2 &   -9.092 &        log &       0.222 &       0.361 &  0.439 &      55.374 \\
-term 3 &    0.702 &        log &       0.013 &       0.312 &  0.379 &       0.778 \\
-term 4 &  -25.846 &        log &       0.697 &       0.324 &  0.754 &     147.950 \\
-term 5 &  -62.377 &  intercept &       1.501 &       0.000 &  0.000 &       0.000 \\
+term 0 &   -15.231 &        log &       0.331 &       0.610 &  1.399 &     214.205 \\
+term 1 &     1.323 &        log &        0.02 &       0.377 &  0.499 &       1.521 \\
+term 2 &    37.981 &        log &       0.816 &       0.610 &  1.486 &    1341.802 \\
+term 3 &    -0.399 &        log &       0.014 &       0.376 &  0.508 &       0.301 \\
+term 4 &   -11.439 &        log &       0.273 &       0.609 &  1.439 &     487.150 \\
+term 5 &  -202.481 &  intercept &       4.269 &       0.000 &  0.000 &       0.000 \\
 \bottomrule
 \end{tabular}
 %
@@ -182,7 +184,7 @@ term 5 &  -62.377 &  intercept &       1.501 &       0.000 &  0.000 &       0.00
 %
 \section*{Partial derivatives}%
 \label{sec:Partialderivatives}%
-{\footnotesize\begin{dmath}\frac{\partial}{\partial MedInc} ITExpr = \underbrace{2\beta_0 \cdot log'(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})(MedInc \cdot AveBedrms \cdot Longitude^{2})}_{\text{term 0}} + \underbrace{1\beta_1 \cdot log'(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})(HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{1\beta_4 \cdot log'(MedInc)()}_{\text{term 4}}\end{dmath}\begin{dmath}\frac{\partial}{\partial HouseAge} ITExpr = \underbrace{1\beta_1 \cdot log'(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})(MedInc \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{1\beta_2 \cdot log'(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})(AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(HouseAge \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}}\end{dmath}\begin{dmath}\frac{\partial}{\partial AveRooms} ITExpr = \underbrace{1\beta_1 \cdot log'(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})(MedInc \cdot HouseAge \cdot AveOccup^{2} \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{1\beta_2 \cdot log'(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})(HouseAge \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}}\end{dmath}\begin{dmath}\frac{\partial}{\partial AveBedrms} ITExpr = \underbrace{1\beta_0 \cdot log'(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})(MedInc^{2} \cdot Longitude^{2})}_{\text{term 0}} + \underbrace{1\beta_2 \cdot log'(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})(HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{1\beta_3 \cdot log'(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(HouseAge^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}}\end{dmath}\begin{dmath}\frac{\partial}{\partial Population} ITExpr = 0.0\end{dmath}\begin{dmath}\frac{\partial}{\partial AveOccup} ITExpr = \underbrace{2\beta_1 \cdot log'(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{2\beta_2 \cdot log'(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(HouseAge^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}}\end{dmath}\begin{dmath}\frac{\partial}{\partial Latitude} ITExpr = \underbrace{1\beta_2 \cdot log'(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})}_{\text{term 3}}\end{dmath}\begin{dmath}\frac{\partial}{\partial Longitude} ITExpr = \underbrace{2\beta_0 \cdot log'(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})(MedInc^{2} \cdot AveBedrms \cdot Longitude)}_{\text{term 0}} + \underbrace{2\beta_1 \cdot log'(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude^{2})(MedInc \cdot HouseAge \cdot AveRooms \cdot AveOccup^{2} \cdot Longitude)}_{\text{term 1}} + \underbrace{2\beta_2 \cdot log'(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})(HouseAge \cdot AveRooms \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude \cdot Longitude)}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(HouseAge^{2} \cdot AveBedrms \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude)}_{\text{term 3}}\end{dmath}} \vfill \pagebreak
+{\footnotesize\begin{dmath}\frac{\partial}{\partial MedInc} ITExpr = \underbrace{1\beta_0 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude^{2})(Population \cdot AveOccup \cdot Latitude^{2})}_{\text{term 0}} + \underbrace{2\beta_1 \cdot log'(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})(MedInc \cdot AveBedrms \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{1\beta_2 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})(Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})(MedInc \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}} + \underbrace{2\beta_4 \cdot log'(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(MedInc \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 4}}\end{dmath}\begin{dmath}\frac{\partial}{\partial HouseAge} ITExpr = 0.0\end{dmath}\begin{dmath}\frac{\partial}{\partial AveRooms} ITExpr = \underbrace{2\beta_3 \cdot log'(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot AveRooms \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}}\end{dmath}\begin{dmath}\frac{\partial}{\partial AveBedrms} ITExpr = \underbrace{1\beta_1 \cdot log'(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})(MedInc^{2} \cdot Longitude^{2})}_{\text{term 1}} + \underbrace{1\beta_3 \cdot log'(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot AveRooms^{2} \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}}\end{dmath}\begin{dmath}\frac{\partial}{\partial Population} ITExpr = \underbrace{1\beta_0 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude^{2})(MedInc \cdot AveOccup \cdot Latitude^{2})}_{\text{term 0}} + \underbrace{1\beta_2 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})(MedInc \cdot AveOccup \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{2\beta_4 \cdot log'(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot Population \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 4}}\end{dmath}\begin{dmath}\frac{\partial}{\partial AveOccup} ITExpr = \underbrace{1\beta_0 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude^{2})(MedInc \cdot Population \cdot Latitude^{2})}_{\text{term 0}} + \underbrace{1\beta_2 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})(MedInc \cdot Population \cdot Latitude \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{1\beta_3 \cdot log'(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 3}} + \underbrace{2\beta_4 \cdot log'(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot Population^{2} \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})}_{\text{term 4}}\end{dmath}\begin{dmath}\frac{\partial}{\partial Latitude} ITExpr = \underbrace{2\beta_0 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude^{2})(MedInc \cdot Population \cdot AveOccup \cdot Latitude)}_{\text{term 0}} + \underbrace{1\beta_2 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})(MedInc \cdot Population \cdot AveOccup \cdot Longitude^{2})}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude \cdot Longitude^{2})}_{\text{term 3}} + \underbrace{2\beta_4 \cdot log'(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude \cdot Longitude^{2})}_{\text{term 4}}\end{dmath}\begin{dmath}\frac{\partial}{\partial Longitude} ITExpr = \underbrace{2\beta_1 \cdot log'(MedInc^{2} \cdot AveBedrms \cdot Longitude^{2})(MedInc^{2} \cdot AveBedrms \cdot Longitude)}_{\text{term 1}} + \underbrace{2\beta_2 \cdot log'(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude^{2})(MedInc \cdot Population \cdot AveOccup \cdot Latitude \cdot Longitude)}_{\text{term 2}} + \underbrace{2\beta_3 \cdot log'(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot AveRooms^{2} \cdot AveBedrms \cdot AveOccup \cdot Latitude^{2} \cdot Longitude)}_{\text{term 3}} + \underbrace{2\beta_4 \cdot log'(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude^{2})(MedInc^{2} \cdot Population^{2} \cdot AveOccup^{2} \cdot Latitude^{2} \cdot Longitude)}_{\text{term 4}}\end{dmath}} \vfill \pagebreak
 
 %
 
@@ -207,7 +209,7 @@ term 5 &  -62.377 &  intercept &       1.501 &       0.000 &  0.000 &       0.00
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.r_zzjcqe/average_partial_effects.pdf}%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.xxldqsu5/average_partial_effects.pdf}%
 \end{figure}
 
 %
@@ -229,7 +231,7 @@ term 5 &  -62.377 &  intercept &       1.501 &       0.000 &  0.000 &       0.00
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.r_zzjcqe/normalized_partial_effects.pdf}%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.xxldqsu5/normalized_partial_effects.pdf}%
 \end{figure}
 
 %
@@ -250,7 +252,7 @@ term 5 &  -62.377 &  intercept &       1.501 &       0.000 &  0.000 &       0.00
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=\textwidth]{/tmp/pylatex-tmp.r_zzjcqe/partial_effets_at_means.pdf}%
+\includegraphics[width=\textwidth]{/tmp/pylatex-tmp.xxldqsu5/partial_effets_at_means.pdf}%
 \end{figure}
 
 %

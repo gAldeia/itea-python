@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.1
-# Last modified: 06-17-2021 by Guilherme Aldeia
+# Version: 1.0.2
+# Last modified: 07-14-2021 by Guilherme Aldeia
 
 
 """ITExpr sub-class, specialized to regression task.
@@ -110,6 +110,9 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
         This method performs the transformation of the original data in X to 
         the IT expression domain then fits a linear regression model to 
         calculate the best coefficients and intercept to the IT expression.
+
+        If the expression fails to fit, its ``_fitness`` is set to np.inf,
+        since the fitness function is the RMSE and smaller values are better.
 
         Parameters
         ----------

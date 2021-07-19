@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
@@ -1043,9 +1044,11 @@
 
 <span class="sd">        num_points : int, default = 20</span>
 <span class="sd">            the number of points to divide the interval when generating the </span>
-<span class="sd">            plots. The value must be equal or greater than 3. Large values can</span>
+<span class="sd">            plots. The value must be equal or greater than 2. Large values can</span>
 <span class="sd">            end up creating intervals where no predictions in the training data</span>
-<span class="sd">            lies within --- in this case, the method will raise an ValueError.</span>
+<span class="sd">            lies within resulting in points that are not evenly distributed, or</span>
+<span class="sd">            in a noisy plot. The adequate number of points can be different for</span>
+<span class="sd">            each dataset.</span>
 <span class="sd">            This parameter is ignored if ``itexpr == ITExpr_classifier``.</span>
 
 <span class="sd">        grouping_threshold : float, default = 0.05</span>
@@ -1098,31 +1101,47 @@
 
         <span class="c1"># Handling classification and regression separately</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
-            <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span>
             <span class="n">num_points</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
-            <span class="n">global_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_points</span><span class="p">)</span> <span class="p">)</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
+
+            <span class="n">global_importances</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_points</span><span class="p">)</span> <span class="p">)</span>
+
+            <span class="c1"># We&#39;ll save the intervals with no predictions to exclude</span>
+            <span class="n">invalid_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">):</span>
                 <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">predictions</span> <span class="o">==</span> <span class="n">c</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
                 
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">invalid_importances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
+
                 <span class="n">feature_importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:])[</span><span class="n">c</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:])[</span><span class="n">i</span><span class="p">]</span>
 
                 <span class="n">feature_importances</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span>
                 
-                <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_importances</span>
+                <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_importances</span>
+
+            <span class="n">valid_importance_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">invalid_importances</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">global_importances</span> <span class="o">=</span> <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">valid_importance_mask</span><span class="p">]</span>
+            <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_importance_mask</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">num_points</span><span class="p">)</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">num_points</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="n">global_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_points</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+            <span class="n">global_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_points</span><span class="p">)</span> <span class="p">)</span>
 
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">invalid_importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_points</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
                 <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
                     <span class="p">(</span><span class="n">x_axis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">predictions</span><span class="p">)</span> <span class="o">&amp;</span>
                     <span class="p">(</span><span class="n">predictions</span> <span class="o">&lt;</span> <span class="n">x_axis</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
                 <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-                <span class="nb">print</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">invalid_importances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">continue</span>
 
                 <span class="n">feature_importances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:])</span>                
@@ -1131,7 +1150,9 @@
                 
                 <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">feature_importances</span>
 
-            <span class="n">x_axis</span> <span class="o">=</span> <span class="n">x_axis</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">valid_importance_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">invalid_importances</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">global_importances</span> <span class="o">=</span> <span class="n">global_importances</span><span class="p">[:,</span> <span class="n">valid_importance_mask</span><span class="p">]</span>
+            <span class="n">x_axis</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_axis</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])[</span><span class="n">valid_importance_mask</span><span class="p">]</span>
 
         <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span>
 
@@ -1186,9 +1207,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Relative importance (%)&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">valid_importance_mask</span><span class="p">],</span>
+                <span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span> <span class="p">(</span><span class="n">x_axis</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_axis</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span>

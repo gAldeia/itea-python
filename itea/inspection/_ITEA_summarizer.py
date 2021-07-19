@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.1
-# Last modified: 13-06-2021 by Guilherme Aldeia
+# Version: 1.0.2
+# Last modified: 14-07-2021 by Guilherme Aldeia
 
 
 """ITEA_summarizer class.
@@ -229,7 +229,9 @@ class ITEA_summarizer:
                 f"""The final expression is a {type_itexpr} with a fitness of
                 {round(self.itea.fitness_, 5)}, and the number of IT terms is
                 {self.itea.bestsol_.n_terms}. Below is an LaTeX representation
-                of the expression:""" + 
+                of the expression:
+                
+                """ + 
 
                 r"\vfill {\small \begin{dmath}" + 
                 
@@ -639,8 +641,12 @@ class ITEA_summarizer:
         ``ITExpr_inspector``, ``ITExpr_explainer``, and ``ITExpr_texifier``.
 
         The idea is to simplify the generation of the plots and tables,
-        taking from the user the need to understand, instantiate the classes
+        removing from the user the need to understand, instantiate the classes
         and call the plots functions.
+        
+        All explanations are generated with the training data, and every
+        item in the report can be obtained manually by using the
+        ``ITExpr_inspector``, ``ITExpr_explainer``, and ``ITExpr_texifier``.
 
         This method makes usage of the ``PyLaTeX`` package and requires a 
         visible latex installation to work properly.

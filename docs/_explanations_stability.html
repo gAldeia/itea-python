@@ -45,7 +45,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Interacting with ProtoDash" href="_interacting_with_protodash.html" />
+    <link rel="next" title="Integrating with the Scikit: Pipeline and Gridsearch" href="_integrating_with_scikits_classes.html" />
     <link rel="prev" title="Using agnostic explainers" href="_agnostic_explainers.html" /> 
 </head>
 
@@ -105,6 +105,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
@@ -458,7 +459,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># automatically differentiable implementation of numpy</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span> <span class="c1"># v0.2.13</span>
 
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
@@ -471,7 +472,8 @@ div.rendered_html tbody tr:hover {
 <span class="kn">from</span> <span class="nn">itea.classification</span> <span class="kn">import</span> <span class="n">ITEA_classifier</span>
 <span class="kn">from</span> <span class="nn">itea.inspection</span>     <span class="kn">import</span> <span class="o">*</span>
 
-<span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span><span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;itea.*&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -958,7 +960,7 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="_interacting_with_protodash.html" class="btn btn-neutral float-right" title="Interacting with ProtoDash" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="_integrating_with_scikits_classes.html" class="btn btn-neutral float-right" title="Integrating with the Scikit: Pipeline and Gridsearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="_agnostic_explainers.html" class="btn btn-neutral float-left" title="Using agnostic explainers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
