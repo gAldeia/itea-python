@@ -9,7 +9,6 @@ itea._base
 .. contents:: :local:
    :depth: 3
    
-
 --------
 
 .. _BaseITEA docs:

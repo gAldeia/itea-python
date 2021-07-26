@@ -1,6 +1,7 @@
 # itea-python
 
 ![code coverage](https://galdeia.github.io/itea-python/_images/coverage.svg)
+![python version](https://galdeia.github.io/itea-python/_images/pythonversion.svg)
 
 itea is a python implementation of the Interaction-Transformation Evolutionary
 Algorithm described in the paper "Franca, F., & Aldeia, G. (2020).
@@ -26,7 +27,8 @@ Documentation is available [here](https://galdeia.github.io/itea-python/).
 
 ## Installation
 
-ITEA is currently in tests and is available [at test.pypi](https://test.pypi.org/project/itea)
+ITEA is currently in tests and is available
+[at test.pypi](https://test.pypi.org/project/itea)
 
 Since packages uploaded on test.pypi index will search for dependencies in 
 the same index, to install the test version you can run:
@@ -44,9 +46,13 @@ $ pip install .
 
 ## Using the ITEA algorithm
 
-Before jumping into using the library, here are some tips that might make it easier to use.
+Before jumping into using the library, here are some tips and examples
+that might make it easier to use.
 
-ITEA can be used for regression (with the ``ITEA_regressor`` class) or for classification (``ITEA_classifier``). Both classes inherit from base classes in the scikit-learn library, and implement very similar methods. The simplest use is to create an instance and use the fit method.
+ITEA can be used for regression (with the ``ITEA_regressor`` class) or
+for classification (``ITEA_classifier``). Both classes inherit from base
+classes in the scikit-learn library, and implement very similar methods. 
+The simplest use is to create an instance and use the fit method.
 
 ```python
 from sklearn import datasets
@@ -69,7 +75,9 @@ X_clf, targets = iris_data['data'], iris_data['target']
 clf = ITEA_classifier().fit(X_clf, targets)
 ```
 
-The convention is to always pass arguments by name for all that are not mandatory and have default values ​​defined. To specify a setting other than the default, we must pass the arguments by name:
+The convention is to always pass arguments by name for all that are not
+mandatory and have default values ​​defined. To specify a setting other than
+the default, we must pass the arguments by name:
 
 ```python
 reg = ITEA_regressor(gens=50, popsize=200).fit(X_reg, y_reg)
@@ -78,11 +86,18 @@ reg = ITEA_regressor(gens=50, popsize=200).fit(X_reg, y_reg)
 reg = ITEA_regressor(50, 200).fit(X_reg, y_reg)
 ```
 
-The [documentation](https://galdeia.github.io/itea-python/index.html) presents the default values ​​for each algorithm, with exaplanations of what they represent.
+The [documentation](https://galdeia.github.io/itea-python/index.html) presents
+the default values ​​for each algorithm, with exaplanations of what they
+represent.
 
-After performing the evolution (fitting the ``ITEA``), the best symbolic expression can be accessed by the ``bestsol_`` attribute. The best expression is an already fitted sckit estimator. The bestsol_ is used to predict, calculate the score, print the expression, and to obtain interpretability with model-agnostic (or the model-specific ``ITExpr_explainer``) explainers.
+After performing the evolution (fitting the ``ITEA``), the best symbolic
+expression can be accessed by the ``bestsol_`` attribute. The best expression
+is an already fitted sckit estimator. The bestsol_ is used to predict,
+calculate the score, print the expression, and to obtain interpretability
+with model-agnostic (or the model-specific ``ITExpr_explainer``) explainers.
 
-The ``ITEA`` instance implements the predict method, but essentially it just uses bestsol's predict.
+The ``ITEA`` instance implements the predict method, but essentially it just
+uses bestsol's predict.
 
 ```python
 final_itexpr = reg.bestsol_
@@ -103,7 +118,10 @@ final_itexpr.predict(X_reg)
 reg.predict(X_reg)
 ```
 
-The ITEA Package also implements some classes focused on interpretability, providing mechanisms to inspect and better understand the returned symbolic expressions. We can obtain importance values ​​from expression attributes and even generate graphs:
+The ITEA Package also implements some classes focused on interpretability,
+providing mechanisms to inspect and better understand the returned symbolic
+expressions. We can obtain importance values ​​from expression attributes and
+even generate graphs:
 
 ```python
 explainer = ITExpr_explainer(
@@ -119,9 +137,12 @@ explainer.plot_feature_importances(
 
 ![feature importances plot](https://galdeia.github.io/itea-python/_images/_regression_example_17_0.png)
 
-Explainers do not inherit any scikit interfaces, but implements a similar usage. So, the steps to use the explainers are: 1. Instanciate the explainer; 2. Fit; 3. Generate the plots.
+Explainers do not inherit any scikit interfaces, but implements a similar usage.
+So, the steps to use the explainers are: 1. Instanciate the explainer; 2. Fit;
+3. Generate the plots.
 
-That said, if you're familiar with scikit's ecosystem of regressors and classifiers, you'll have no problem using ITEA and its explainers.
+That said, if you're familiar with scikit's ecosystem of regressors and
+classifiers, you'll have no problem using ITEA and its explainers.
 
 For more examples, see:
 

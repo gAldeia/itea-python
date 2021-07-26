@@ -7,6 +7,8 @@ Welcome to itea's documentation!
 ================================
 
 .. image:: assets/images/coverage.svg
+.. image:: assets/images/pythonversion.svg
+|
 
 itea is a python implementation of the Interaction-Transformation Evolutionary
 Algorithm described in the paper "Franca, F., & Aldeia, G. (2020).
@@ -26,6 +28,13 @@ of the estimators follows their guidelines.
 
 
 .. toctree::
+   :caption: Getting started:
+   :maxdepth: 2
+   
+   gettingstarted
+
+
+.. toctree::
    :caption: ITEA package documentation:
    :maxdepth: 3
 
@@ -36,13 +45,11 @@ of the estimators follows their guidelines.
 
 
 .. toctree::
-   :caption: Examples:
+   :caption: Example notebooks:
    :titlesonly:
    :glob:
 
    _*
-
-
 
 Indices and tables
 ==================

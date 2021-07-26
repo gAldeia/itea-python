@@ -23,12 +23,15 @@ author = 'Guilherme Aldeia'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0.0'
+version = '1.0.0'
 
 html_title = 'Interaction-Transformation Evolutionary Algorithm'
 html_short_title = 'itea'
 html_logo = 'assets/images/itea-logo.png'
 html_favicon = 'assets/images/favicon.png'
 autoclass_content = 'both'
+titles_only = False
+display_version = True
 
 # -- General configuration ---------------------------------------------------
 

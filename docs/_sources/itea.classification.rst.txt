@@ -9,7 +9,6 @@ itea.classification
 .. contents:: :local:
    :depth: 3
 
-
 ---------------
 
 ITEA_classifier
@@ -22,7 +21,6 @@ For a more detailed description of the arguments, check the
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 -----------------
 
