@@ -187,8 +187,8 @@
 <span class="kn">from</span> <span class="nn">sklearn.base</span>             <span class="kn">import</span> <span class="n">RegressorMixin</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_array</span><span class="p">,</span> <span class="n">check_is_fitted</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span>          <span class="kn">import</span> <span class="n">mean_squared_error</span>
-<span class="kn">from</span> <span class="nn">scipy.linalg</span>             <span class="kn">import</span> <span class="n">lstsq</span>
 <span class="kn">from</span> <span class="nn">sklearn.exceptions</span>       <span class="kn">import</span> <span class="n">NotFittedError</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span>             <span class="kn">import</span> <span class="n">lstsq</span>
 
 <span class="kn">from</span> <span class="nn">itea._base</span> <span class="kn">import</span> <span class="n">BaseITExpr</span>
 
@@ -285,7 +285,8 @@
 <span class="sd">        the IT expression domain then fits a linear regression model to </span>
 <span class="sd">        calculate the best coefficients and intercept to the IT expression.</span>
 
-<span class="sd">        If the expression fails to fit, its ``_fitness`` is set to np.inf.</span>
+<span class="sd">        If the expression fails to fit, its ``_fitness`` is set to np.inf,</span>
+<span class="sd">        since the fitness function is the RMSE and smaller values are better.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>

@@ -102,6 +102,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_regression_example.html">California housing regression</a></li>
@@ -173,8 +174,8 @@
   <h1>Source code for itea.classification._ITEA_classifier</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.0</span>
-<span class="c1"># Last modified: 05-30-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.1</span>
+<span class="c1"># Last modified: 07-14-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Specialization of the base class BaseITEA for the classification task.</span>
@@ -297,7 +298,8 @@
 <span class="sd">            dictionary (for example itea.convergence_[&#39;fitness&#39;][&#39;min&#39;])</span>
 <span class="sd">            is a list, containing the information of every generation.</span>
 <span class="sd">            This dictionary can be used to inspect information about the</span>
-<span class="sd">            convergence of the evolutionary process.</span>
+<span class="sd">            convergence of the evolutionary process. The calculations are made</span>
+<span class="sd">            filtering infinity values.</span>
 
 <span class="sd">        exectime_ : int</span>
 <span class="sd">            time (in seconds) the evolutionary process took.</span>

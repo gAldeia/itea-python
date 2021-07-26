@@ -449,7 +449,7 @@ div.rendered_html tbody tr:hover {
 <h1>California housing regression<a class="headerlink" href="#California-housing-regression" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook we’ll use the <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code> to search for a good expression, that will be encapsulated inside the <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> class, and it will be used for the regression task of predicting California housing prices.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -461,7 +461,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span>
 
 <span class="kn">from</span> <span class="nn">itea.regression</span> <span class="kn">import</span> <span class="n">ITEA_regressor</span>
 <span class="kn">from</span> <span class="nn">itea.inspection</span> <span class="kn">import</span> <span class="o">*</span>
@@ -476,7 +476,7 @@ div.rendered_html tbody tr:hover {
 <section id="Creating-and-fitting-an-ITEA_regressor">
 <h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_regressor" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -520,7 +520,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
@@ -528,43 +528,9 @@ div.rendered_html tbody tr:hover {
 gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 ----------------------------------------------------------------------------
   0 |         0.879653 |     1.075672 |        1.153701 | 0min41seg
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/galdeia/anaconda3/lib/python3.7/site-packages/numpy/lib/nanfunctions.py:1539: RuntimeWarning: invalid value encountered in subtract
-  np.subtract(arr, avg, out=arr, casting=&#39;unsafe&#39;)
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
- 10 |         0.794826 |     0.828574 |        0.983679 | 1min25seg
- 20 |         0.791858 |     0.794191 |        0.802730 | 1min1seg
- 30 |         0.785556 |     0.790837 |        0.892611 | 0min49seg
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/galdeia/anaconda3/lib/python3.7/site-packages/numpy/lib/nanfunctions.py:1539: RuntimeWarning: invalid value encountered in subtract
-  np.subtract(arr, avg, out=arr, casting=&#39;unsafe&#39;)
-/home/galdeia/anaconda3/lib/python3.7/site-packages/numpy/lib/nanfunctions.py:1539: RuntimeWarning: invalid value encountered in subtract
-  np.subtract(arr, avg, out=arr, casting=&#39;unsafe&#39;)
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
+ 10 |         0.794826 |     0.828574 |        0.983679 | 1min19seg
+ 20 |         0.791858 |     0.794191 |        0.802730 | 1min0seg
+ 30 |         0.785556 |     0.790837 |        0.892611 | 0min52seg
  40 |         0.773925 |     0.790826 |        1.024342 | 0min20seg
 </pre></div></div>
 </div>
@@ -627,7 +593,7 @@ Final expression:
 0.0*sqrt.abs(MedInc^2 * AveRooms^2 * AveBedrms * Population * Longitude) +
 -1.305
 
-Elapsed time: 114.52683877944946
+Elapsed time: 108.7409245967865
 
 Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;Population&#39; &#39;AveOccup&#39;
  &#39;Latitude&#39; &#39;Longitude&#39;]
@@ -842,15 +808,6 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 </div>
 <div class="output_area docutils container">
 <img alt="_images/_regression_example_18_0.png" src="_images/_regression_example_18_0.png" />
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>
-</pre></div>
 </div>
 </div>
 </section>

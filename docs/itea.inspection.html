@@ -285,7 +285,10 @@ calculated by:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importance for
-the predicted outcomes of the model.</p>
+the predicted outcomes of the model. If X is a single observation,
+the partial effects are calculated and returned directly. If X
+contains multiple observations, then the mean partial effect for
+each variable through all observations is returned.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>ape_values</strong> – the importance of each feature of X, for each class found in the
@@ -333,6 +336,59 @@ plots and explanations.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="itea.inspection.ITExpr_explainer.integrated_gradients">
+<span class="sig-name descname"><span class="pre">integrated_gradients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">300</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/inspection/_ITExpr_explainer.html#ITExpr_explainer.integrated_gradients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.inspection.ITExpr_explainer.integrated_gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feature importance estimation through the Integrated Gradients
+method.</p>
+<p>The idea of the integrated gradient is to calculate a local
+importance score for a feature <img class="math" src="_images/math/5aa339d4daf45a810dda332e3c80a0698e526e04.png" alt="i"/> by evaluating —
+given a baseline <img class="math" src="_images/math/430b7dd8c5474ce3209895891168978b566a7ecb.png" alt="\mathbf{x}'"/> and a specific point
+<img class="math" src="_images/math/5369e693370bbbd19fea43055b8f96596bff42a6.png" alt="\mathbf{x}"/> — the integral of the models’ gradients
+<img class="math" src="_images/math/51d7523a1d8dcffab9e61bd05df834b63c6f9238.png" alt="\frac{\partial f}{\partial x_i}"/> along a straight
+line between the baseline and the specific point. Since gradients
+describe how minimal local changes interfere with the
+model’s predictions, the calculated importance represents the
+accumulation of the gradient of each variable to go from the baseline
+to the specific point.</p>
+<p><img class="math" src="_images/math/c09c72c88aa35f22d4503a15d6e5721ef9352582.png" alt="IntegratedGrads_{i}^{approx} (\mathbf{x}) =
+\frac{(x_i - x_{i}')}{m} \sum_{k = 1}^{m}
+\frac{\partial \widehat {f} (\mathbf{x}' +
+\frac{k}{m}(\mathbf{x} - \mathbf{x}'))} {\partial x_i}"/></p>
+<p>In our implementation, the baseline used is the average value of the
+training attributes used in <code class="docutils literal notranslate"><span class="pre">fit(X_train,</span> <span class="pre">y_train)</span></code>, thus the
+calculated value is close to SHAP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importance for
+the predicted outcomes of the model. If X is a single observation,
+the integrated gradients are calculated and returned directly. If X
+contains multiple observations, then the mean integrated gradients
+for each variable through all observations is returned.</p></li>
+<li><p><strong>m_steps</strong> (<em>int</em><em>, </em><em>default=300</em>) – number of steps <img class="math" src="_images/math/e9bc7da808d33a16a8347f27a519bd067186aa66.png" alt="m"/> used in the Riemman summation
+approximation of the integral. Small values leads to a poor
+approximation, while higher values decreases the error at the cost
+of a higher computational cost.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>ig</strong> – the importance of each feature of X, for each class found in the
+given itexpr. If itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>, then the
+returned array will have the shape (1, n_features).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>numpy.array of shape (n_classes, n_features)</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The Integrated Gradient method was proposed in the paper:
+“Mukund Sundararajan, Ankur Taly, and Qiqi Yan. 2017.
+Axiomatic attribution for deep networks. In Proceedings of the
+34th International Conference on Machine Learning - Volume
+70 (ICML’17). JMLR.org, 3319–3328.”</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="itea.inspection.ITExpr_explainer.plot_feature_importances">
 <span class="sig-name descname"><span class="pre">plot_feature_importances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barh_kw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">importance_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/inspection/_ITExpr_explainer.html#ITExpr_explainer.plot_feature_importances"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.inspection.ITExpr_explainer.plot_feature_importances" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bar plot of the feature importance, that can be calculated with
@@ -360,7 +416,7 @@ list of valid classes. If the training data was encoded as integers,
 then the target must be an int or a list of integers.
 This argument is ignored if the itexpr is an <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code>.</p></li>
 <li><p><strong>importance_method</strong> (<em>string</em><em>, </em><em>default='pe'</em>) – string specifying which method should be used to estimate feature
-importance. Available methods are: <code class="docutils literal notranslate"><span class="pre">['pe',</span> <span class="pre">'shapley']</span></code>.</p></li>
+importance. Available methods are: <code class="docutils literal notranslate"><span class="pre">['pe',</span> <span class="pre">'shapley',</span> <span class="pre">'ig']</span></code>.</p></li>
 <li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot should be displayed
 or not.</p></li>
 </ul>
@@ -497,7 +553,7 @@ the model, or their indexes if <code class="docutils literal notranslate"><span 
 <dt class="sig sig-object py" id="itea.inspection.ITExpr_explainer.shapley_values">
 <span class="sig-name descname"><span class="pre">shapley_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/inspection/_ITExpr_explainer.html#ITExpr_explainer.shapley_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.inspection.ITExpr_explainer.shapley_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Feature importance estimation through approximation of the
-shapley values with the gradient information.</p>
+Shapley values with the gradient information.</p>
 <p>The shapley values come from the coalitional game theory and were
 proposed as a feature importance measures by Scott Lundberg in
 “Scott M. Lundberg and Su-In Lee. 2017. A unified approach to
@@ -516,7 +572,10 @@ prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>X</strong> (<em>numpy.array of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – data from which we want to extract the feature importance for
-the predicted outcomes of the model.</p>
+the predicted outcomes of the model. If X is a single observation,
+the shapley values are calculated and returned directly. If X
+contains multiple observations, then the mean shapley value for
+each variable through all observations is returned.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>shapley_values</strong> – the importance of each feature of X, for each class found in the

@@ -174,8 +174,8 @@
   <h1>Source code for itea.inspection._ITExpr_explainer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.4</span>
-<span class="c1"># Last modified: 07-12-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.6</span>
+<span class="c1"># Last modified: 07-24-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Model-specific interpretability methods.</span>
@@ -365,7 +365,10 @@
 <span class="sd">        ----------</span>
 <span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
 <span class="sd">            data from which we want to extract the feature importance for</span>
-<span class="sd">            the predicted outcomes of the model.</span>
+<span class="sd">            the predicted outcomes of the model. If X is a single observation,</span>
+<span class="sd">            the partial effects are calculated and returned directly. If X </span>
+<span class="sd">            contains multiple observations, then the mean partial effect for</span>
+<span class="sd">            each variable through all observations is returned.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -394,7 +397,7 @@
 
 <div class="viewcode-block" id="ITExpr_explainer.shapley_values"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_explainer.shapley_values">[docs]</a>    <span class="k">def</span> <span class="nf">shapley_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Feature importance estimation through approximation of the </span>
-<span class="sd">        shapley values with the gradient information.</span>
+<span class="sd">        Shapley values with the gradient information.</span>
 
 <span class="sd">        The shapley values come from the coalitional game theory and were</span>
 <span class="sd">        proposed as a feature importance measures by Scott Lundberg in </span>
@@ -421,7 +424,10 @@
 <span class="sd">        ----------</span>
 <span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
 <span class="sd">            data from which we want to extract the feature importance for</span>
-<span class="sd">            the predicted outcomes of the model.</span>
+<span class="sd">            the predicted outcomes of the model. If X is a single observation,</span>
+<span class="sd">            the shapley values are calculated and returned directly. If X </span>
+<span class="sd">            contains multiple observations, then the mean shapley value for</span>
+<span class="sd">            each variable through all observations is returned.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -448,6 +454,7 @@
         <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
         <span class="c1"># gradients are evaluated with training data</span>
+        <span class="c1"># reminder: gradients[class, # obs, variable]</span>
         <span class="n">gradients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs_dx</span><span class="p">,</span> <span class="n">logit</span><span class="o">=</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">))</span>
 
@@ -460,6 +467,107 @@
                     <span class="n">gradients</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">importances</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ITExpr_explainer.integrated_gradients"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_explainer.integrated_gradients">[docs]</a>    <span class="k">def</span> <span class="nf">integrated_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">m_steps</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Feature importance estimation through the Integrated Gradients</span>
+<span class="sd">        method.</span>
+
+<span class="sd">        The idea of the integrated gradient is to calculate a local</span>
+<span class="sd">        importance score for a feature :math:`i` by evaluating ---</span>
+<span class="sd">        given a baseline :math:`\mathbf{x}&#39;` and a specific point</span>
+<span class="sd">        :math:`\mathbf{x}` --- the integral of the models&#39; gradients</span>
+<span class="sd">        :math:`\frac{\partial f}{\partial x_i}` along a straight</span>
+<span class="sd">        line between the baseline and the specific point. Since gradients</span>
+<span class="sd">        describe how minimal local changes interfere with the</span>
+<span class="sd">        model&#39;s predictions, the calculated importance represents the</span>
+<span class="sd">        accumulation of the gradient of each variable to go from the baseline</span>
+<span class="sd">        to the specific point.</span>
+
+<span class="sd">        :math:`IntegratedGrads_{i}^{approx} (\mathbf{x}) =</span>
+<span class="sd">        \frac{(x_i - x_{i}&#39;)}{m} \sum_{k = 1}^{m}</span>
+<span class="sd">        \frac{\partial \widehat {f} (\mathbf{x}&#39; +</span>
+<span class="sd">        \frac{k}{m}(\mathbf{x} - \mathbf{x}&#39;))} {\partial x_i}`</span>
+
+<span class="sd">        In our implementation, the baseline used is the average value of the</span>
+<span class="sd">        training attributes used in ``fit(X_train, y_train)``, thus the</span>
+<span class="sd">        calculated value is close to SHAP.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : numpy.array of shape (n_samples, n_features)</span>
+<span class="sd">            data from which we want to extract the feature importance for</span>
+<span class="sd">            the predicted outcomes of the model. If X is a single observation,</span>
+<span class="sd">            the integrated gradients are calculated and returned directly. If X </span>
+<span class="sd">            contains multiple observations, then the mean integrated gradients</span>
+<span class="sd">            for each variable through all observations is returned.</span>
+
+<span class="sd">        m_steps : int, default=300</span>
+<span class="sd">            number of steps :math:`m` used in the Riemman summation</span>
+<span class="sd">            approximation of the integral. Small values leads to a poor</span>
+<span class="sd">            approximation, while higher values decreases the error at the cost</span>
+<span class="sd">            of a higher computational cost.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ig : numpy.array of shape (n_classes, n_features)</span>
+<span class="sd">            the importance of each feature of X, for each class found in the</span>
+<span class="sd">            given itexpr. If itexpr is an ``ITExpr_regressor``, then the</span>
+<span class="sd">            returned array will have the shape (1, n_features).</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        The Integrated Gradient method was proposed in the paper:</span>
+<span class="sd">        &quot;Mukund Sundararajan, Ankur Taly, and Qiqi Yan. 2017. </span>
+<span class="sd">        Axiomatic attribution for deep networks. In Proceedings of the</span>
+<span class="sd">        34th International Conference on Machine Learning - Volume</span>
+<span class="sd">        70 (ICML&#39;17). JMLR.org, 3319–3328.&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">x_baseline</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Generate m_steps intervals for integral approximation below.</span>
+        <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">m_steps</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># This will be the final IG explanation</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">):</span>
+            <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_classes</span> <span class="o">=</span> <span class="mi">1</span>
+            
+        <span class="n">integrated_gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">)</span>
+        
+        <span class="c1"># Lets calculate the IG for each observation and take the mean</span>
+        <span class="c1"># to explain. This is done to make it possible to estimate local and</span>
+        <span class="c1"># global explanations, where the global is the mean over all given</span>
+        <span class="c1"># observations.</span>
+        <span class="k">for</span> <span class="n">obs_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">obs_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x_baseline</span>
+
+            <span class="n">interpolated</span> <span class="o">=</span> <span class="n">x_baseline</span> <span class="o">+</span> <span class="p">(</span><span class="n">delta</span> <span class="o">*</span> <span class="n">alphas</span><span class="p">)</span>
+
+            <span class="c1"># equation gradients, used in IG</span>
+            <span class="c1"># reminder: gradients[class, # obs, variable]</span>
+            <span class="n">gradients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">interpolated</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs_dx</span><span class="p">)</span>
+
+            <span class="c1"># for each class </span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gradients</span><span class="p">)):</span>
+
+                <span class="c1"># Integral approximation using Riemman summation. This is the</span>
+                <span class="c1"># trapezoidal sum</span>
+                <span class="n">riemann_sum</span> <span class="o">=</span> <span class="p">(</span><span class="n">gradients</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">gradients</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:])</span><span class="o">/</span><span class="mf">2.0</span>
+
+                <span class="c1"># Taking the mean and scaling</span>
+                <span class="n">integrated_gradients</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="n">obs_idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">riemann_sum</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_baseline</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">integrated_gradients</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span></div>
+    
 
 
 <div class="viewcode-block" id="ITExpr_explainer.plot_feature_importances"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITExpr_explainer.plot_feature_importances">[docs]</a>    <span class="k">def</span> <span class="nf">plot_feature_importances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -511,7 +619,7 @@
 
 <span class="sd">        importance_method : string, default=&#39;pe&#39;</span>
 <span class="sd">            string specifying which method should be used to estimate feature</span>
-<span class="sd">            importance. Available methods are: ``[&#39;pe&#39;, &#39;shapley&#39;]``.</span>
+<span class="sd">            importance. Available methods are: ``[&#39;pe&#39;, &#39;shapley&#39;, &#39;ig&#39;]``.</span>
 <span class="sd">        </span>
 <span class="sd">        show : bool, default=True</span>
 <span class="sd">            boolean value indicating if the generated plot should be displayed</span>
@@ -543,10 +651,19 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span>   <span class="o">=</span> <span class="n">ax</span>
 
         <span class="c1"># picking the importance method</span>
-        <span class="k">if</span> <span class="n">importance_method</span> <span class="o">==</span> <span class="s1">&#39;shapley&#39;</span><span class="p">:</span> 
-            <span class="n">importance_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapley_values</span>
+        <span class="n">importance_methods</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;shapley&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapley_values</span><span class="p">,</span>
+            <span class="s1">&#39;pe&#39;</span>     <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">,</span>
+            <span class="s1">&#39;ig&#39;</span>     <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">integrated_gradients</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">importance_method</span> <span class="ow">in</span> <span class="n">importance_methods</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> 
+            <span class="n">importance_f</span> <span class="o">=</span> <span class="n">importance_methods</span><span class="p">[</span><span class="n">importance_method</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">importance_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">average_partial_effects</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Expected importance_method to be &#39;pe&#39;, &#39;shapley&#39; or &#39;ig&#39;. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;got </span><span class="si">{</span><span class="n">importance_method</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
         <span class="c1"># finding out if itexpr is a classification or regression specialization</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="p">,</span> <span class="s1">&#39;classes_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">classes_</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">:</span>

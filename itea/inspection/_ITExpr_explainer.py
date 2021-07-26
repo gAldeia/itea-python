@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.4
-# Last modified: 07-12-2021 by Guilherme Aldeia
+# Version: 1.0.6
+# Last modified: 07-24-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -191,7 +191,10 @@ class ITExpr_explainer():
         ----------
         X : numpy.array of shape (n_samples, n_features)
             data from which we want to extract the feature importance for
-            the predicted outcomes of the model.
+            the predicted outcomes of the model. If X is a single observation,
+            the partial effects are calculated and returned directly. If X 
+            contains multiple observations, then the mean partial effect for
+            each variable through all observations is returned.
 
         Returns
         -------
@@ -220,7 +223,7 @@ class ITExpr_explainer():
 
     def shapley_values(self, X):
         r"""Feature importance estimation through approximation of the 
-        shapley values with the gradient information.
+        Shapley values with the gradient information.
 
         The shapley values come from the coalitional game theory and were
         proposed as a feature importance measures by Scott Lundberg in 
@@ -247,7 +250,10 @@ class ITExpr_explainer():
         ----------
         X : numpy.array of shape (n_samples, n_features)
             data from which we want to extract the feature importance for
-            the predicted outcomes of the model.
+            the predicted outcomes of the model. If X is a single observation,
+            the shapley values are calculated and returned directly. If X 
+            contains multiple observations, then the mean shapley value for
+            each variable through all observations is returned.
 
         Returns
         -------
@@ -274,6 +280,7 @@ class ITExpr_explainer():
         X = check_array(X)
 
         # gradients are evaluated with training data
+        # reminder: gradients[class, # obs, variable]
         gradients = self.itexpr.gradient(
             self.X_, self.tfuncs_dx, logit=hasattr(self.itexpr, 'classes_'))
 
@@ -286,6 +293,107 @@ class ITExpr_explainer():
                     gradients[c, :, i].mean() * (X[:, i] - self.X_[:, i].mean())
 
         return np.mean(np.abs(importances), axis=1)
+
+
+    def integrated_gradients(self, X, m_steps=300):
+        r"""Feature importance estimation through the Integrated Gradients
+        method.
+
+        The idea of the integrated gradient is to calculate a local
+        importance score for a feature :math:`i` by evaluating ---
+        given a baseline :math:`\mathbf{x}'` and a specific point
+        :math:`\mathbf{x}` --- the integral of the models' gradients
+        :math:`\frac{\partial f}{\partial x_i}` along a straight
+        line between the baseline and the specific point. Since gradients
+        describe how minimal local changes interfere with the
+        model's predictions, the calculated importance represents the
+        accumulation of the gradient of each variable to go from the baseline
+        to the specific point.
+
+        :math:`IntegratedGrads_{i}^{approx} (\mathbf{x}) =
+        \frac{(x_i - x_{i}')}{m} \sum_{k = 1}^{m}
+        \frac{\partial \widehat {f} (\mathbf{x}' +
+        \frac{k}{m}(\mathbf{x} - \mathbf{x}'))} {\partial x_i}`
+
+        In our implementation, the baseline used is the average value of the
+        training attributes used in ``fit(X_train, y_train)``, thus the
+        calculated value is close to SHAP.
+
+        Parameters
+        ----------
+        X : numpy.array of shape (n_samples, n_features)
+            data from which we want to extract the feature importance for
+            the predicted outcomes of the model. If X is a single observation,
+            the integrated gradients are calculated and returned directly. If X 
+            contains multiple observations, then the mean integrated gradients
+            for each variable through all observations is returned.
+
+        m_steps : int, default=300
+            number of steps :math:`m` used in the Riemman summation
+            approximation of the integral. Small values leads to a poor
+            approximation, while higher values decreases the error at the cost
+            of a higher computational cost.
+
+        Returns
+        -------
+        ig : numpy.array of shape (n_classes, n_features)
+            the importance of each feature of X, for each class found in the
+            given itexpr. If itexpr is an ``ITExpr_regressor``, then the
+            returned array will have the shape (1, n_features).
+
+        Notes
+        -----
+        The Integrated Gradient method was proposed in the paper:
+        "Mukund Sundararajan, Ankur Taly, and Qiqi Yan. 2017. 
+        Axiomatic attribution for deep networks. In Proceedings of the
+        34th International Conference on Machine Learning - Volume
+        70 (ICML'17). JMLR.org, 3319–3328."
+        """
+
+        check_is_fitted(self)
+        X = check_array(X)
+
+        x_baseline = np.mean(self.X_, axis=0).reshape(1, -1)
+        
+        # Generate m_steps intervals for integral approximation below.
+        alphas = np.linspace(start=0.0, stop=1.0, num=m_steps+1).reshape(-1, 1)
+        
+        # This will be the final IG explanation
+        if hasattr(self.itexpr, 'classes_'):
+            n_classes = len(self.itexpr.classes_)
+        else:
+            n_classes = 1
+            
+        integrated_gradients = np.zeros( (n_classes, X.shape[0], X.shape[1]) )
+        
+        # Lets calculate the IG for each observation and take the mean
+        # to explain. This is done to make it possible to estimate local and
+        # global explanations, where the global is the mean over all given
+        # observations.
+        for obs_idx in range(X.shape[0]):
+            x = X[obs_idx, :].reshape(1, -1)
+            
+            delta = x - x_baseline
+
+            interpolated = x_baseline + (delta * alphas)
+
+            # equation gradients, used in IG
+            # reminder: gradients[class, # obs, variable]
+            gradients = self.itexpr.gradient(interpolated, self.tfuncs_dx)
+
+            # for each class 
+            for c in range(len(gradients)):
+
+                # Integral approximation using Riemman summation. This is the
+                # trapezoidal sum
+                riemann_sum = (gradients[c, :-1, :] + gradients[c, 1:, :])/2.0
+
+                # Taking the mean and scaling
+                integrated_gradients[c, obs_idx] = (
+                    riemann_sum.mean(axis=0) * (x - x_baseline))
+
+        return np.abs(np.mean(integrated_gradients, axis=1))
+    
 
 
     def plot_feature_importances(self,
@@ -337,7 +445,7 @@ class ITExpr_explainer():
 
         importance_method : string, default='pe'
             string specifying which method should be used to estimate feature
-            importance. Available methods are: ``['pe', 'shapley']``.
+            importance. Available methods are: ``['pe', 'shapley', 'ig']``.
         
         show : bool, default=True
             boolean value indicating if the generated plot should be displayed
@@ -369,10 +477,19 @@ class ITExpr_explainer():
             self.axes_   = ax
 
         # picking the importance method
-        if importance_method == 'shapley': 
-            importance_f = self.shapley_values
+        importance_methods = {
+            'shapley': self.shapley_values,
+            'pe'     : self.average_partial_effects,
+            'ig'     : self.integrated_gradients
+        }
+
+        if importance_method in importance_methods.keys(): 
+            importance_f = importance_methods[importance_method]
         else:
-            importance_f = self.average_partial_effects
+            raise ValueError(
+                f"Expected importance_method to be 'pe', 'shapley' or 'ig'. "
+                f"got {importance_method}"
+            )
 
         # finding out if itexpr is a classification or regression specialization
         if hasattr(self.itexpr, 'classes_') and np.size(self.itexpr.classes_)>2:

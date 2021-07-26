@@ -451,6 +451,7 @@ div.rendered_html tbody tr:hover {
 <p>In this notebook, we’ll create a simple IT expression and use popular model-agnostic explainer methods to obtain feature importances for the final model.</p>
 <p>The explainers we are going to use are SHAP, LIME, and PDP.</p>
 <p>To contrast with our model-specific explainer based on the Partial Effects, the same dataset used in the regression notebook will be used.</p>
+<p>Many explainers are still in development and can change in future versions. The versions used in this notebook are commented below.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -459,26 +460,27 @@ div.rendered_html tbody tr:hover {
 <span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">import</span> <span class="nn">shap</span> <span class="c1">#0.34.0</span>
+<span class="kn">import</span> <span class="nn">sage</span> <span class="c1">#https://github.com/iancovert/sage</span>
+
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="kn">from</span> <span class="nn">itea.regression</span> <span class="kn">import</span> <span class="n">ITEA_regressor</span>
 <span class="kn">from</span> <span class="nn">itea.inspection</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="kn">import</span> <span class="nn">shap</span>
-<span class="kn">import</span> <span class="nn">sage</span>
+<span class="kn">from</span> <span class="nn">lime</span> <span class="kn">import</span> <span class="n">lime_tabular</span> <span class="c1">#0.1.1.37</span>
 
-<span class="kn">from</span> <span class="nn">lime</span> <span class="kn">import</span> <span class="n">lime_tabular</span>
-<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">plot_partial_dependence</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">plot_partial_dependence</span> <span class="c1"># 0.24.2</span>
 
-<span class="kn">from</span> <span class="nn">interpret.blackbox</span> <span class="kn">import</span> <span class="n">MorrisSensitivity</span>
+<span class="kn">from</span> <span class="nn">interpret.blackbox</span> <span class="kn">import</span> <span class="n">MorrisSensitivity</span> <span class="c1">#0.2.5</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span><span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;itea.*&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;itea&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -514,8 +516,8 @@ div.rendered_html tbody tr:hover {
 <span class="p">}</span>
 
 <span class="n">reg</span> <span class="o">=</span> <span class="n">ITEA_regressor</span><span class="p">(</span>
-    <span class="n">gens</span>         <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
-    <span class="n">popsize</span>      <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="n">gens</span>         <span class="o">=</span> <span class="mi">75</span><span class="p">,</span>
+    <span class="n">popsize</span>      <span class="o">=</span> <span class="mi">75</span><span class="p">,</span>
     <span class="n">max_terms</span>    <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
     <span class="n">expolim</span>      <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
     <span class="n">verbose</span>      <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
@@ -527,6 +529,8 @@ div.rendered_html tbody tr:hover {
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
 <span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">bestsol_</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">final_itexpr</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -535,12 +539,17 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.9379050391920672      1.1237760220234088      1.1537010152616711      0min34seg
-10       0.8272846090261381      0.881735672398493       1.0369699871900457      1min43seg
-20       0.8136939314899935      0.8272938408550969      1.0107234916933154      1min25seg
-30       0.7662163369724707      0.7870666345437662      0.8239470965278956      0min54seg
-40       0.7446027645943587      0.7688907157500813      0.8071489614021656      0min25seg
+gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+----------------------------------------------------------------------------
+  0 |         0.879653 |     1.109206 |        1.153697 | 1min12seg
+ 10 |         0.815819 |     0.852481 |        1.133898 | 4min33seg
+ 20 |         0.785301 |     0.795977 |        0.872630 | 3min41seg
+ 30 |         0.774451 |     0.780758 |        0.826534 | 3min24seg
+ 40 |         0.769231 |     0.776211 |        0.800035 | 2min35seg
+ 50 |         0.769231 |     0.774910 |        0.861931 | 2min1seg
+ 60 |         0.763084 |     0.780482 |        0.995355 | 1min9seg
+ 70 |         0.748003 |     0.773957 |        0.860793 | 0min20seg
+-15.231*log(MedInc * Population * AveOccup * Latitude^2) + 1.323*log(MedInc^2 * AveBedrms * Longitude^2) + 37.981*log(MedInc * Population * AveOccup * Latitude * Longitude^2) + -0.399*log(MedInc^2 * AveRooms^2 * AveBedrms * AveOccup * Latitude^2 * Longitude^2) + -11.439*log(MedInc^2 * Population^2 * AveOccup^2 * Latitude^2 * Longitude^2) + -202.481
 </pre></div></div>
 </div>
 <section id="Explaining-with-PDP">
@@ -635,8 +644,10 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <span class="p">)</span>
 
 <span class="n">shap</span><span class="o">.</span><span class="n">summary_plot</span><span class="p">(</span>
-    <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:]),</span>
-    <span class="n">shap</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:],</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">),</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span>
+        <span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:],</span> <span class="n">l1_reg</span><span class="o">=</span><span class="s1">&#39;num_features(10)&#39;</span><span class="p">),</span>
+    <span class="n">shap</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:],</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">),</span> <span class="mi">100</span><span class="p">),</span>
     <span class="n">plot_type</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span>
 <span class="p">)</span>
 </pre></div>
@@ -646,7 +657,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "d9b8ba56b2c14a0f852e9d2f6ba5680e", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "fb5c63e2a1434468b8bfe9d246f1b000", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -671,7 +682,8 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span>
     <span class="n">shap_explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">,</span>
-    <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]),</span>
+    <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span>
+        <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">l1_reg</span><span class="o">=</span><span class="s1">&#39;num_features(10)&#39;</span><span class="p">),</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span>
     <span class="n">matplotlib</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
@@ -693,7 +705,8 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span>
     <span class="s2">&quot;AveOccup&quot;</span><span class="p">,</span>
-    <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:]),</span>
+    <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span>
+        <span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:],</span> <span class="n">l1_reg</span><span class="o">=</span><span class="s1">&#39;num_features(10)&#39;</span><span class="p">),</span>
     <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:],</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
@@ -703,7 +716,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "42221bff8cb94646acd42ae927970ef6", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "008ee725123b4e8e84e8cc0f945691c7", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -37834,25 +37847,25 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divJE9MMCGVO8H3ZH3"></div>
+        <div class="lime top_div" id="top_divL1XUENEGN9SH3AU"></div>
 
         <script>
-        var top_div = d3.select('#top_divJE9MMCGVO8H3ZH3').classed('lime top_div', true);
+        var top_div = d3.select('#top_divL1XUENEGN9SH3AU').classed('lime top_div', true);
 
 
                     var pp_div = top_div.append('div')
                                         .classed('lime predicted_value', true);
                     var pp_svg = pp_div.append('svg').style('width', '100%');
-                    var pp = new lime.PredictedValue(pp_svg, 0.34337565053237995, -3.8883298650439855, 7.4037611743066805);
+                    var pp = new lime.PredictedValue(pp_svg, 0.28196742727425317, -3.763290302298742, 7.566858594158589);
 
         var exp_div;
             var exp = new lime.Explanation(["negative", "positive"]);
 
             exp_div = top_div.append('div').classed('lime explanation', true);
-            exp.show([["MedInc <= 2.57", -1.7388560595391218], ["AveOccup > 3.28", -1.6133682396756397], ["AveRooms <= 4.46", 0.5524554441308227], ["34.27 < Latitude <= 37.72", -0.24148244480938844], ["1.01 < AveBedrms <= 1.05", -0.21850496372034553], ["-121.81 < Longitude <= -118.51", 0.13197123031033917], ["1170.50 < Population <= 1729.00", -0.02625108126772774], ["18.00 < HouseAge <= 29.00", 0.012993004331881088]], 1, exp_div);
+            exp.show([["MedInc <= 2.57", -1.4483624030342772], ["AveOccup > 3.28", -1.0524820731822282], ["34.27 < Latitude <= 37.72", -0.48569508192318894], ["AveRooms <= 4.46", 0.47416240766622475], ["-121.81 < Longitude <= -118.51", 0.46985865859207276], ["1.01 < AveBedrms <= 1.05", -0.15150561686760314], ["18.00 < HouseAge <= 29.00", -0.022629475606034986], ["1170.50 < Population <= 1729.00", 0.016447572467936048]], 1, exp_div);
 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["MedInc", "1.68", -1.7388560595391218], ["AveOccup", "3.88", -1.6133682396756397], ["AveRooms", "4.19", 0.5524554441308227], ["Latitude", "36.06", -0.24148244480938844], ["AveBedrms", "1.02", -0.21850496372034553], ["Longitude", "-119.01", 0.13197123031033917], ["Population", "1392.00", -0.02625108126772774], ["HouseAge", "25.00", 0.012993004331881088]], 1, raw_div);
+            exp.show_raw_tabular([["MedInc", "1.68", -1.4483624030342772], ["AveOccup", "3.88", -1.0524820731822282], ["Latitude", "36.06", -0.48569508192318894], ["AveRooms", "4.19", 0.47416240766622475], ["Longitude", "-119.01", 0.46985865859207276], ["AveBedrms", "1.02", -0.15150561686760314], ["HouseAge", "25.00", -0.022629475606034986], ["Population", "1392.00", 0.016447572467936048]], 1, raw_div);
 
         </script>
         </body></html></div>
@@ -37910,12 +37923,12 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;names&#39;: [&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;, &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], &#39;scores&#39;: masked_array(data=[5.959504710120908, 1.0141329042866714,
-                   4.737214619262825, 5.586442484117953, 0.0,
-                   2.9624736861747123, 1.9367002779619282,
-                   1.54083991726877],
+{&#39;names&#39;: [&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;, &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], &#39;scores&#39;: masked_array(data=[5.1898983877305955, 0.0, 3.4694871758931534,
+                   3.2587057616663047, 0.7891995123475715,
+                   1.9386656396830597, 4.06142399820332,
+                   4.4510886539917704],
              mask=[False, False, False, False, False, False, False, False],
-       fill_value=1e+20), &#39;convergence_index&#39;: 0.038716050317714495}
+       fill_value=1e+20), &#39;convergence_index&#39;: 0.04545696662135615}
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -37929,7 +37942,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <section id="Explaining-with-sage">
 <h2>Explaining with sage<a class="headerlink" href="#Explaining-with-sage" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -37940,7 +37953,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -37953,7 +37966,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "34fc4cb9fda242b89cf41af30c868786", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "3e58f796be84401a90b945504fae684f", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -37971,7 +37984,7 @@ gen      min_fitness     mean_fitness    max_fitness     remaining (s)
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -37992,7 +38005,7 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "318e77233164434ca110a3a80e02becd", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "f26c785819b74562a7d561962558c47d", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -38016,7 +38029,7 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 <p>To compare the explanations from different explainers with the explanations through Partial Effects, we’ll use the <code class="docutils literal notranslate"><span class="pre">autoreport()</span></code> method to create a pdf file.</p>
 <p>This file will have several explanations of the given <code class="docutils literal notranslate"><span class="pre">itexpr</span></code>, and the file generated from the cell below can be downloaded <a class="reference external" href="https://galdeia.github.io/itea-python/_static/files/Report.pdf">by clicking here</a>.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>

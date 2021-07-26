@@ -174,8 +174,8 @@
   <h1>Source code for itea._base._BaseITEA</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.6</span>
-<span class="c1"># Last modified: 07-14-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.7</span>
+<span class="c1"># Last modified: 07-21-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.&quot;&quot;&quot;</span>
@@ -525,7 +525,7 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;gen | smallest fitness | mean fitness | highest fitness | &quot;</span>
-                  <span class="s2">&quot;remaining time (s)&quot;</span><span class="p">)</span>
+                  <span class="s2">&quot;remaining time&quot;</span><span class="p">)</span>
 
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">76</span><span class="p">)</span>
             
@@ -571,7 +571,7 @@
                 <span class="n">remaining</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">last_5_times</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gens</span> <span class="o">-</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
                 
-                <span class="n">remaining_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">remaining</span><span class="o">//</span><span class="mi">60</span><span class="si">}</span><span class="s2">min</span><span class="si">{</span><span class="n">remaining</span> <span class="o">%</span> <span class="mi">60</span><span class="si">}</span><span class="s2">seg&quot;</span>
+                <span class="n">remaining_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">remaining</span><span class="o">//</span><span class="mi">60</span><span class="si">}</span><span class="s2">min</span><span class="si">{</span><span class="n">remaining</span> <span class="o">%</span> <span class="mi">60</span><span class="si">}</span><span class="s2">sec&quot;</span>
 
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:3d}</span><span class="s2"> | </span><span class="si">{:16.6f}</span><span class="s2"> | </span><span class="si">{:12.6f}</span><span class="s2"> | </span><span class="si">{:15.6f}</span><span class="s2"> | </span><span class="si">{:12s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">g</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">fitnesses</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">fitnesses</span><span class="p">),</span>

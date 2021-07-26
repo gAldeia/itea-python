@@ -13,8 +13,8 @@ import numpy as np
 from sklearn.base             import RegressorMixin
 from sklearn.utils.validation import check_array, check_is_fitted
 from sklearn.metrics          import mean_squared_error
-from scipy.linalg             import lstsq
 from sklearn.exceptions       import NotFittedError
+from scipy.linalg             import lstsq
 
 from itea._base import BaseITExpr
 

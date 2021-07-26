@@ -10,6 +10,7 @@ setup(
     long_description_content_type = 'text/markdown',
     author           = "Guilherme Aldeia",
     license          = "BSD-3-Clause",
+    
     install_requires = [
         "numpy>=1.18.2",
         "scikit-learn>=0.23.1",
@@ -24,6 +25,17 @@ setup(
     include_package_data = True,
     python_requires = '>=3.7',
     setup_requires  = ["wheel", "pytest-runner", "coverage", "coverage-badge"],
-    tests_require   = ["pytest", "jax", "statsmodels"],
+
+    # Aditional packages not included in install requires
+    tests_require   = [
+        # Used in tests
+        "pytest",
+
+        # Used in profiling
+        "snakeviz",
+
+        # Used in benchmarking
+        "filelock"
+        ],
     test_suite      = "tests",
 )

@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.6
-# Last modified: 07-14-2021 by Guilherme Aldeia
+# Version: 1.0.7
+# Last modified: 07-21-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -351,7 +351,7 @@ class BaseITEA(BaseEstimator):
 
         if self.verbose:
             print("gen | smallest fitness | mean fitness | highest fitness | "
-                  "remaining time (s)")
+                  "remaining time")
 
             print("-"*76)
             
@@ -397,7 +397,7 @@ class BaseITEA(BaseEstimator):
                 remaining = int(np.ceil(
                     np.nanmean(last_5_times) * (self.gens - g - 1)))
                 
-                remaining_str = f"{remaining//60}min{remaining % 60}seg"
+                remaining_str = f"{remaining//60}min{remaining % 60}sec"
 
                 print("{:3d} | {:16.6f} | {:12.6f} | {:15.6f} | {:12s}".format(
                     g, np.min(fitnesses), np.mean(fitnesses),

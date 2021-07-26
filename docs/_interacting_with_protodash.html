@@ -461,13 +461,13 @@ div.rendered_html tbody tr:hover {
 <span class="c1"># automatically differentiable implementation of numpy</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span> <span class="c1"># v0.2.13</span>
 
-<span class="kn">import</span> <span class="nn">shap</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="kn">import</span> <span class="nn">shap</span> <span class="c1">#0.34.0</span>
 
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+<span class="kn">from</span> <span class="nn">sklearn</span>         <span class="kn">import</span> <span class="n">datasets</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Math</span><span class="p">,</span> <span class="n">Latex</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span>         <span class="kn">import</span> <span class="n">display</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -475,12 +475,11 @@ div.rendered_html tbody tr:hover {
 <span class="kn">from</span> <span class="nn">itea.inspection</span>     <span class="kn">import</span> <span class="o">*</span>
 
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
 
-<span class="kn">from</span> <span class="nn">aix360.algorithms.protodash</span> <span class="kn">import</span> <span class="n">ProtodashExplainer</span><span class="p">,</span> <span class="n">get_Gaussian_Data</span>
+<span class="kn">from</span> <span class="nn">aix360.algorithms.protodash</span> <span class="kn">import</span> <span class="n">ProtodashExplainer</span> <span class="c1">#0.2.1</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span><span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;itea.*&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;itea&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -508,11 +507,11 @@ div.rendered_html tbody tr:hover {
 <span class="p">}</span>
 
 <span class="n">clf</span> <span class="o">=</span> <span class="n">ITEA_classifier</span><span class="p">(</span>
-    <span class="n">gens</span>            <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
-    <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="n">gens</span>            <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
     <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-    <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">verbose</span>         <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
     <span class="n">tfuncs</span>          <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">,</span>
     <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -530,75 +529,18 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen      min_fitness     mean_fitness    max_fitness     remaining (s)
-0        0.10390689941812137     0.10415073427542255     0.1055694098088113      64min25seg
-5        0.10390689941812137     0.10555832640620674     0.1055694098088113      13min10seg
-10       0.1055694098088113      0.10556940980881134     0.1055694098088113      12min40seg
-15       0.10390689941812137     0.10556386810750903     0.1055694098088113      13min39seg
-20       0.1055694098088113      0.10628151842615687     0.1778886118038238      14min43seg
-25       0.1055694098088113      0.1146411748406761      0.22527015793848712     21min19seg
-30       0.11970074812967581     0.15483236353560545     0.2344139650872818      33min40seg
-35       0.19866999168744803     0.22126904959822669     0.2801330008312552      50min5seg
-40       0.2344139650872818      0.28497644776946524     0.343308395677473       74min0seg
-45       0.2801330008312552      0.34155167636464395     0.3574397339983375      77min16seg
-50       0.343308395677473       0.3556802438348573      0.4056525353283458      83min33seg
-55       0.35245220282626766     0.3745358825159324      0.4147963424771405      88min16seg
-60       0.4023275145469659      0.4109420892213909      0.45552784704904403     87min29seg
-65       0.39567747298420614     0.44171515655306176     0.4688279301745636      83min31seg
-70       0.46633416458852867     0.4815876974231089      0.6184538653366584      93min48seg
-75       0.5045719035743973      0.5571044610695484      0.6192851205320034      95min32seg
-80       0.5793848711554447      0.6256719312829038      0.6891105569409809      98min57seg
-85       0.6209476309226932      0.6870268772513163      0.6965918536990856      99min14seg
-90       0.655860349127182       0.6957273482959269      0.7215295095594347      93min57seg
-95       0.6907730673316709      0.7160598503740648      0.771404821280133       89min0seg
-100      0.7165419783873649      0.7529093931837075      0.7813798836242727      90min46seg
-105      0.7506234413965087      0.7741008589637018      0.7980049875311721      89min16seg
-110      0.773067331670823       0.7917484067608755      0.8054862842892768      81min46seg
-115      0.7880299251870324      0.8044416735937933      0.8137988362427265      83min36seg
-120      0.7980049875311721      0.8105070656691605      0.8187863674147964      80min40seg
-125      0.799667497921862       0.8179163203103352      0.829592684954281       76min14seg
-130      0.801330008312552       0.8235743973399834      0.8420615128844555      76min31seg
-135      0.8196176226101413      0.834328068717096       0.8495428096425602      77min44seg
-140      0.8345802161263508      0.8445497367691882      0.8603491271820449      74min35seg
-145      0.8337489609310058      0.8522942643391521      0.8603491271820449      71min10seg
-150      0.8503740648379052      0.8595428096425602      0.8669991687448046      67min32seg
-155      0.8520365752285952      0.8656719312829038      0.8786367414796342      64min40seg
-160      0.8636741479634248      0.8715987808257136      0.8786367414796342      63min45seg
-165      0.8586866167913549      0.8786256580770297      0.8861180382377389      61min17seg
-170      0.8503740648379052      0.8833915211970075      0.8960931005818786      57min4seg
-175      0.8769742310889443      0.8879301745635911      0.8960931005818786      56min37seg
-180      0.8819617622610141      0.8908174009420892      0.8960931005818786      57min37seg
-185      0.8894430590191189      0.8946190080354669      0.9002493765586035      53min28seg
-190      0.8694929343308395      0.898653366583541       0.9035743973399833      53min19seg
-195      0.8994181213632585      0.9029260182876142      0.9185369908561929      48min3seg
-200      0.8927680798004988      0.9116154059296203      0.9201995012468828      44min55seg
-205      0.9052369077306733      0.9185840953172624      0.9251870324189526      45min15seg
-210      0.8994181213632585      0.9208811305070657      0.9293433083956775      40min35seg
-215      0.8969243557772236      0.9259767248545302      0.9343308395677473      36min54seg
-220      0.9210307564422278      0.9297506234413966      0.9334995843724023      36min48seg
-225      0.9235245220282626      0.9330645608201718      0.9351620947630923      32min5seg
-230      0.9251870324189526      0.9349847603214186      0.940980881130507       31min26seg
-235      0.9243557772236076      0.9377029648101969      0.942643391521197       27min31seg
-240      0.9235245220282626      0.9404045441950679      0.943474646716542       25min59seg
-245      0.9393183707398172      0.9416154059296205      0.9443059019118869      24min38seg
-250      0.9343308395677473      0.9435272928789137      0.9459684123025769      20min57seg
-255      0.9251870324189526      0.9450180105292325      0.9467996674979219      19min53seg
-260      0.9351620947630923      0.9463230811859243      0.9484621778886118      17min57seg
-265      0.9459684123025769      0.9473510667775008      0.9501246882793017      14min59seg
-270      0.9368246051537822      0.9485813244666113      0.9501246882793017      12min59seg
-275      0.9326683291770573      0.9496813521751176      0.9509559434746467      11min1seg
-280      0.9334995843724023      0.9498947076752563      0.9526184538653366      7min45seg
-285      0.9334995843724023      0.9509642560266002      0.9559434746467166      6min6seg
-290      0.9443059019118869      0.9525020781379884      0.9559434746467166      4min17seg
-295      0.940149625935162       0.9545857578276531      0.9559434746467166      1min50seg
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
+gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+----------------------------------------------------------------------------
+  0 |         0.103907 |     0.104023 |        0.105569 | 10min6seg
+ 10 |         0.105569 |     0.105569 |        0.105569 | 1min11seg
+ 20 |         0.105569 |     0.107406 |        0.161264 | 2min43seg
+ 30 |         0.161264 |     0.168412 |        0.201164 | 5min13seg
+ 40 |         0.234414 |     0.274763 |        0.312552 | 6min22seg
+ 50 |         0.325021 |     0.382643 |        0.426434 | 6min7seg
+ 60 |         0.426434 |     0.485046 |        0.551122 | 5min12seg
+ 70 |         0.551122 |     0.601355 |        0.634248 | 4min25seg
+ 80 |         0.632585 |     0.634813 |        0.635910 | 2min54seg
+ 90 |         0.637573 |     0.671771 |        0.684954 | 1min16seg
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -642,20 +584,20 @@ array([&#39;pixel_0_0&#39;, &#39;pixel_0_1&#39;, &#39;pixel_0_2&#39;, &#39;pixel
 <div class="highlight"><pre>
               precision    recall  f1-score   support
 
-           0       0.93      0.91      0.92        55
-           1       0.89      0.85      0.87        55
-           2       0.92      0.94      0.93        52
-           3       0.83      0.88      0.85        56
-           4       0.92      0.89      0.90        64
-           5       0.96      0.90      0.93        73
-           6       0.95      0.96      0.96        57
-           7       0.91      0.98      0.95        62
-           8       0.82      0.77      0.79        52
-           9       0.89      0.91      0.90        68
+           0       0.72      0.80      0.76        55
+           1       0.67      0.58      0.62        55
+           2       0.48      0.83      0.61        52
+           3       0.69      0.61      0.65        56
+           4       0.78      0.80      0.79        64
+           5       0.69      0.55      0.61        73
+           6       0.79      0.88      0.83        57
+           7       0.67      0.58      0.62        62
+           8       0.50      0.33      0.40        52
+           9       0.66      0.71      0.68        68
 
-    accuracy                           0.90       594
-   macro avg       0.90      0.90      0.90       594
-weighted avg       0.90      0.90      0.90       594
+    accuracy                           0.66       594
+   macro avg       0.67      0.67      0.66       594
+weighted avg       0.67      0.66      0.66       594
 
 </pre></div></div>
 </div>
@@ -678,19 +620,11 @@ weighted avg       0.90      0.90      0.90       594
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_interacting_with_protodash_6_1.png" src="_images/_interacting_with_protodash_6_1.png" />
+<img alt="_images/_interacting_with_protodash_6_0.png" src="_images/_interacting_with_protodash_6_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -828,23 +762,15 @@ elementwise comparison failed; returning scalar instead, but in the future will 
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_interacting_with_protodash_10_1.png" src="_images/_interacting_with_protodash_10_1.png" />
+<img alt="_images/_interacting_with_protodash_10_0.png" src="_images/_interacting_with_protodash_10_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -857,7 +783,8 @@ It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generat
 
 <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">):</span>
 
-    <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">importances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span>
+            <span class="n">X_train</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">l1_reg</span><span class="o">=</span><span class="s1">&#39;num_features(10)&#39;</span><span class="p">))</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">importances</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature importance</span><span class="se">\n</span><span class="s2">prototype of class </span><span class="si">{</span><span class="n">y_train</span><span class="p">[</span><span class="n">s</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -878,28 +805,11 @@ It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generat
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior will change from a conditional use of AIC to simply &#34;num_features(10)&#34;!
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_interacting_with_protodash_11_1.png" src="_images/_interacting_with_protodash_11_1.png" />
+<img alt="_images/_interacting_with_protodash_11_0.png" src="_images/_interacting_with_protodash_11_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -939,19 +849,11 @@ l1_reg=&#34;auto&#34; is deprecated and in the next version (v0.29) the behavior
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-It wasn&#39;t specified a dict for tfuncs_dx. They will be automatically generated using Jax. For this, make sure that the tfuncs uses the jax.numpy instead of numpy to create the transformation functions. You can access the automatic derivatives with explainer.tfuncs_dx.
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_interacting_with_protodash_12_1.png" src="_images/_interacting_with_protodash_12_1.png" />
+<img alt="_images/_interacting_with_protodash_12_0.png" src="_images/_interacting_with_protodash_12_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
