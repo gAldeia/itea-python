@@ -69,6 +69,10 @@
           
             
             
+              <div class="version">
+                1.0.0
+              </div>
+            
           
 
           
@@ -91,14 +95,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
+<p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
@@ -639,6 +648,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">check_array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
         <span class="c1"># handling the ax attribute</span>
         <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -743,7 +753,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;average(|</span><span class="si">{</span><span class="n">importance_method</span><span class="si">}</span><span class="s1"> values|)&#39;</span><span class="p">)</span>
+        <span class="c1"># Setting the xlabel to inform if it is a single observation or multiple </span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;average(|</span><span class="si">{</span><span class="n">importance_method</span><span class="si">}</span><span class="s1"> values|)&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes_</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;|</span><span class="si">{</span><span class="n">importance_method</span><span class="si">}</span><span class="s1"> values|&#39;</span><span class="p">)</span>
 
         <span class="c1"># annotating the importance values</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">final_importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="mi">50</span>

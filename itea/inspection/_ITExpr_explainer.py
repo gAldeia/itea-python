@@ -1,6 +1,6 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.6
+# Version: 1.0.7
 # Last modified: 07-24-2021 by Guilherme Aldeia
 
 
@@ -465,6 +465,7 @@ class ITExpr_explainer():
         """
 
         check_is_fitted(self)
+        X = check_array(X)
 
         # handling the ax attribute
         if ax is None:
@@ -569,7 +570,11 @@ class ITExpr_explainer():
         self.axes_.set_yticks(range(len(labels)))
         self.axes_.set_yticklabels(labels[::-1])
 
-        self.axes_.set_xlabel(f'average(|{importance_method} values|)')
+        # Setting the xlabel to inform if it is a single observation or multiple 
+        if X.shape[0] > 1:
+            self.axes_.set_xlabel(f'average(|{importance_method} values|)')
+        else:
+            self.axes_.set_xlabel(f'|{importance_method} values|')
 
         # annotating the importance values
         offset = np.max(np.sum(final_importances, axis=0))/50
