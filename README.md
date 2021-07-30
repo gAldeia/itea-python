@@ -34,7 +34,7 @@ Since packages uploaded on test.pypi index will search for dependencies in
 the same index, to install the test version you can run:
 
 ```shell
-$ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple itea
+$ pip install itea
 ```
 
 Alternatively, you can download the source code at the 
