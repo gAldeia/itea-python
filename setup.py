@@ -3,14 +3,14 @@ from setuptools import find_packages, setup
 setup(
     name             = "itea",
     packages         = find_packages(),
-    version          = "1.0.22",
+    version          = "1.0.0",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
-    long_description = open('README.md', encoding='utf-8').read(),
+    # Only the introduction in README
+    long_description = open('README.md', encoding='utf-8').read()[:1047],
     long_description_content_type = 'text/markdown',
     author           = "Guilherme Aldeia",
     license          = "BSD-3-Clause",
-    
     install_requires = [
         "numpy>=1.18.2",
         "scikit-learn>=0.23.1",
@@ -37,5 +37,5 @@ setup(
         # Used in benchmarking
         "filelock"
         ],
-    test_suite      = "tests",
+    test_suite = "tests",
 )

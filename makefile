@@ -41,5 +41,5 @@ clean:
 	rm -r .pytest_cache
 	rm `find ./ -name '__pycache__'` -rf
 
-# Upload on test.py:
+# Upload on test.py: (to upload on pypi remove '--repository testpypi')
 # python -m twine upload --repository testpypi dist/*

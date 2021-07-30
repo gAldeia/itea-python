@@ -27,8 +27,8 @@ Documentation is available [here](https://galdeia.github.io/itea-python/).
 
 ## Installation
 
-ITEA is currently in tests and is available
-[at test.pypi](https://test.pypi.org/project/itea)
+ITEA is currently available
+[at pypi](https://test.pypi.org/project/itea)
 
 Since packages uploaded on test.pypi index will search for dependencies in 
 the same index, to install the test version you can run:
