@@ -46,7 +46,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="itea.regression" href="itea.regression.html" />
-    <link rel="prev" title="Getting started" href="gettingstarted.html" /> 
+    <link rel="prev" title="Installing" href="gettingstarted.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -100,8 +100,8 @@
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-working-examples">Minimal working examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul class="current">
@@ -117,7 +117,7 @@
 <p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
@@ -232,7 +232,7 @@ for internal usage.</p>
 <span id="baseitea-docs"></span><h2><a class="toc-backref" href="#id1">BaseITEA</a><a class="headerlink" href="#baseitea" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea._base.BaseITEA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">fit_kw=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">predictor_kw=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>Base class to be inherited for classification and regression tasks.</p>
 <p>This class implements argument checks and generic evolutionary methods
@@ -298,8 +298,8 @@ tfuncs) and the value is a vectorized function
 representing its derivative. When set to None, the
 itea package will use automatic differentiation
 through jax to create the derivatives.</p></li>
-<li><p><strong>fit_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default = None</em>) – dictionary with parameters to pass as configuration arguments
-to the fit method in the  <code class="docutils literal notranslate"><span class="pre">BaseITExpr</span></code> subclass.
+<li><p><strong>predictor_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default = None</em>) – dictionary with parameters to pass as named arguments
+to the constructor method in the  <code class="docutils literal notranslate"><span class="pre">BaseITExpr</span></code> subclass.
 If none is given, then a empty dict will be used.</p></li>
 </ul>
 </dd>
@@ -511,7 +511,7 @@ used is <code class="docutils literal notranslate"><span class="pre">'</span> <s
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="itea.regression.html" class="btn btn-neutral float-right" title="itea.regression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="gettingstarted.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gettingstarted.html" class="btn btn-neutral float-left" title="Installing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

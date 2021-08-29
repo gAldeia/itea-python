@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.7
-# Last modified: 07-21-2021 by Guilherme Aldeia
+# Version: 1.0.8
+# Last modified: 08-29-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -46,14 +46,14 @@ class BaseITEA(BaseEstimator):
         gens            = 100,
         popsize         = 100,
         expolim         = (-2, 2),
-        max_terms         = 5,
+        max_terms       = 5,
         simplify_method = None,
         random_state    = None,
         verbose         = None,
         labels          = [],
         tfuncs          = {'id': lambda x: x},
         tfuncs_dx       = None,
-        fit_kw          = None  
+        predictor_kw    = None  
     ):
         """Constructor method.
 
@@ -129,9 +129,9 @@ class BaseITEA(BaseEstimator):
             itea package will use automatic differentiation 
             through jax to create the derivatives.
 
-        fit_kw : dict or None, default = None
-            dictionary with parameters to pass as configuration arguments
-            to the fit method in the  ``BaseITExpr`` subclass.
+        predictor_kw : dict or None, default = None
+            dictionary with parameters to pass as named arguments
+            to the constructor method in the  ``BaseITExpr`` subclass.
             If none is given, then a empty dict will be used.
         """
 
@@ -145,7 +145,7 @@ class BaseITEA(BaseEstimator):
         self.labels          = labels
         self.verbose         = verbose
         self.simplify_method = simplify_method
-        self.fit_kw          = fit_kw
+        self.predictor_kw    = predictor_kw
 
 
     def _check_args(self, X, y):
@@ -213,8 +213,8 @@ class BaseITEA(BaseEstimator):
             
             self.labels = [f'x_{i}' for i in range(len(X[0]))]
 
-        if self.fit_kw == None:
-            self.fit_kw = {}
+        if self.predictor_kw == None:
+            self.predictor_kw = {}
 
 
     def _create_population(
@@ -241,7 +241,7 @@ class BaseITEA(BaseEstimator):
             
             itexpr = itexpr_class(
                 expr=sanitize(expr), tfuncs=self.tfuncs, labels=self.labels,
-                **self.fit_kw
+                **self.predictor_kw
             )
     
             with np.errstate(all='ignore'):
@@ -268,7 +268,7 @@ class BaseITEA(BaseEstimator):
                           self.tfuncs, nvars, random_state) for p in pop]
 
         newpop = [itexpr_class(expr = sanitize(expr), tfuncs = self.tfuncs,
-                    labels = self.labels, **self.fit_kw) for expr in mutated]
+                 labels = self.labels, **self.predictor_kw) for expr in mutated]
 
         return newpop
 

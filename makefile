@@ -30,7 +30,9 @@ doc: $(EXAMPLES)
 	rm ./docsource/source/_*.ipynb
 
 build-dist: 
-	rm -r ./dist/*
+	if [ -d "./dist/*" ]; then \
+        rm -r ./dist/*; \
+    fi \
 	
 	${PYTHON} setup.py develop
 	${PYTHON} setup.py sdist

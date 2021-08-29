@@ -100,8 +100,8 @@
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-working-examples">Minimal working examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul class="current">
@@ -117,7 +117,7 @@
 <p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
@@ -238,7 +238,7 @@ strongly discourage the direct instantiation  of <code class="docutils literal n
 <a class="reference internal" href="base.html#baseitea-docs"><span class="std std-ref">BaseITEA</span></a> documentation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea.classification.ITEA_classifier">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITEA_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_classifier.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method='simplify_by_coef'</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">fit_kw=None</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITEA_classifier.html#ITEA_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITEA_classifier" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.classification.</span></span><span class="sig-name descname"><span class="pre">ITEA_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_classifier.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">predictor_kw=None</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/classification/_ITEA_classifier.html#ITEA_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.classification.ITEA_classifier" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base.html#itea._base.BaseITEA" title="itea._base._BaseITEA.BaseITEA"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.ClassifierMixin</span></code></p>
 <p>This is the implementation of the ITEA for the classification task.</p>
 <p>The expressions will be used as the linear model in a logistic
@@ -279,9 +279,10 @@ functions and the values are unary vectorized functions.</p></li>
 given transformations functions, the same scheme.
 When set to None, the itea package will use automatic
 differentiation  through jax to create the derivatives.</p></li>
-<li><p><strong>fit_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default = None</em>) – dictionary with parameters to fit the logistic regressor model
-used in the <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier.fit()</span></code>. If none is given, then the
-default configuration for the customizable parameters will be:
+<li><p><strong>predictor_kw</strong> (<em>dict</em><em> or </em><em>None</em><em>, </em><em>default = None</em>) – dictionary with parameters to the constructor of the inner
+logistic regressor model used in the <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier.fit()</span></code>.
+If none is given, then the default configuration for the
+customizable parameters will be:
 <code class="docutils literal notranslate"><span class="pre">{'max_iter':100,</span> <span class="pre">'alpha':0.,</span> <span class="pre">'beta':0.}</span></code>,
 where <code class="docutils literal notranslate"><span class="pre">max_iter</span></code> is the maximum number of iterations of the
 gradient optimizer, and <code class="docutils literal notranslate"><span class="pre">alpha</span></code> and <code class="docutils literal notranslate"><span class="pre">beta</span></code> are the elasticnet

@@ -112,7 +112,7 @@
 <p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
@@ -534,13 +534,13 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
-  0 |         0.879653 |     1.075672 |        1.153701 | 0min41seg
- 10 |         0.794826 |     0.828574 |        0.983679 | 1min19seg
- 20 |         0.791858 |     0.794191 |        0.802730 | 1min0seg
- 30 |         0.785556 |     0.790837 |        0.892611 | 0min52seg
- 40 |         0.773925 |     0.790826 |        1.024342 | 0min20seg
+  0 |         0.879653 |     1.075672 |        1.153701 | 0min39sec
+ 10 |         0.794826 |     0.828574 |        0.983679 | 1min6sec
+ 20 |         0.791858 |     0.794191 |        0.802730 | 0min51sec
+ 30 |         0.785556 |     0.790837 |        0.892611 | 0min39sec
+ 40 |         0.773925 |     0.790826 |        1.024342 | 0min16sec
 </pre></div></div>
 </div>
 </section>
@@ -602,7 +602,7 @@ Final expression:
 0.0*sqrt.abs(MedInc^2 * AveRooms^2 * AveBedrms * Population * Longitude) +
 -1.305
 
-Elapsed time: 108.7409245967865
+Elapsed time: 89.46564817428589
 
 Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;Population&#39; &#39;AveOccup&#39;
  &#39;Latitude&#39; &#39;Longitude&#39;]
@@ -610,6 +610,26 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># just remembering that ITEA and ITExpr implements scikits</span>
+<span class="c1"># base classes. We can check all parameters with:</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">get_params</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;expr&#39;: [(&#39;log&#39;, [2, 1, 0, 1, 2, 0, 1, 0]), (&#39;log&#39;, [0, 2, 2, 0, 2, 1, 0, 2]), (&#39;log&#39;, [2, 0, 2, 1, 2, 0, 2, 2]), (&#39;log&#39;, [0, 0, 1, 0, 0, 0, 0, 2]), (&#39;sqrt.abs&#39;, [2, 0, 2, 1, 1, 0, 0, 1])], &#39;labels&#39;: array([&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
+       &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], dtype=&#39;&lt;U10&#39;), &#39;tfuncs&#39;: {&#39;log&#39;: &lt;ufunc &#39;log&#39;&gt;, &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7f9434071050&gt;, &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7f9434071320&gt;, &#39;sin&#39;: &lt;ufunc &#39;sin&#39;&gt;, &#39;cos&#39;: &lt;ufunc &#39;cos&#39;&gt;, &#39;exp&#39;: &lt;ufunc &#39;exp&#39;&gt;}}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -624,12 +644,12 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_regression_example_10_0.png" src="_images/_regression_example_10_0.png" />
+<img alt="_images/_regression_example_11_0.png" src="_images/_regression_example_11_0.png" />
 </div>
 </div>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code> to see information for each term.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -742,7 +762,7 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_regressor</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_regressor-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
 <p>We can obtain feature importances using the Partial Effects and the <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -762,12 +782,12 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_regression_example_14_0.png" src="_images/_regression_example_14_0.png" />
+<img alt="_images/_regression_example_15_0.png" src="_images/_regression_example_15_0.png" />
 </div>
 </div>
 <p>The Partial Effects at the Means can help understand how the contribution of each variable changes according to its values when their covariables are fixed at the means.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -792,12 +812,12 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_regression_example_16_0.png" src="_images/_regression_example_16_0.png" />
+<img alt="_images/_regression_example_17_0.png" src="_images/_regression_example_17_0.png" />
 </div>
 </div>
 <p>Finally, we can also plot the mean relative importances of each feature by calculating the average Partial Effect for each interval when the output is discretized.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -816,7 +836,7 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_regression_example_18_0.png" src="_images/_regression_example_18_0.png" />
+<img alt="_images/_regression_example_19_0.png" src="_images/_regression_example_19_0.png" />
 </div>
 </div>
 </section>

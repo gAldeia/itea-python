@@ -100,8 +100,8 @@
             
               <p class="caption"><span class="caption-text">Getting started:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-working-examples">Minimal working examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
 <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul class="current">
@@ -117,7 +117,7 @@
 <p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_multiclass_example.html">Iris classification</a></li>
@@ -238,12 +238,14 @@ strongly discourage the direct instantiation of <code class="docutils literal no
 <a class="reference internal" href="base.html#baseitea-docs"><span class="std std-ref">BaseITEA</span></a> documentation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea.regression.ITEA_regressor">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.regression.</span></span><span class="sig-name descname"><span class="pre">ITEA_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_regressor.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method='simplify_by_coef'</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/regression/_ITEA_regressor.html#ITEA_regressor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.regression.ITEA_regressor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea.regression.</span></span><span class="sig-name descname"><span class="pre">ITEA_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">ITEA_regressor.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/regression/_ITEA_regressor.html#ITEA_regressor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.regression.ITEA_regressor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="base.html#itea._base.BaseITEA" title="itea._base._BaseITEA.BaseITEA"><code class="xref py py-class docutils literal notranslate"><span class="pre">itea._base._BaseITEA.BaseITEA</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.RegressorMixin</span></code></p>
 <p>This is the implementation of the ITEA for the regression task.</p>
 <p>The expressions will have their coefficients adjusted by means of the
 scikit’s linearRegression method. The fitness will be measured using
 the RMSE metric (smaller is better).</p>
+<p>Notice that this method does not have the <code class="docutils literal notranslate"><span class="pre">estimator_kw</span></code> as there is
+in the <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code>.</p>
 <p>Constructor method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

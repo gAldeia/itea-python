@@ -1,15 +1,18 @@
 from setuptools import find_packages, setup
 
+description = open('README.md', encoding='utf-8').read()
+
 setup(
     name             = "itea",
     packages         = find_packages(),
     version          = "1.0.0",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
-    # Only the introduction in README
-    long_description = open('README.md', encoding='utf-8').read()[:1047],
+    # Only the "introduction" in README (text below the horizontal rule)
+    long_description = description[:description.find('-----')],
     long_description_content_type = 'text/markdown',
     author           = "Guilherme Aldeia",
+    author_email="guilherme.aldeia@ufabc.edu.br",
     license          = "BSD-3-Clause",
     install_requires = [
         "numpy>=1.18.2",

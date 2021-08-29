@@ -113,7 +113,7 @@
 <p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Iris classification</a></li>
@@ -542,14 +542,14 @@ div.rendered_html tbody tr:hover {
 gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
   0 |         0.560000 |     0.848200 |        0.970000 | 0min20sec
-  5 |         0.740000 |     0.961800 |        0.980000 | 0min14sec
- 10 |         0.790000 |     0.969400 |        0.990000 | 0min15sec
- 15 |         0.950000 |     0.982200 |        0.990000 | 0min10sec
- 20 |         0.890000 |     0.982200 |        0.990000 | 0min10sec
- 25 |         0.860000 |     0.982400 |        0.990000 | 0min9sec
- 30 |         0.930000 |     0.981800 |        0.990000 | 0min12sec
- 35 |         0.960000 |     0.982600 |        0.990000 | 0min10sec
- 40 |         0.940000 |     0.981600 |        0.990000 | 0min5sec
+  5 |         0.740000 |     0.961800 |        0.980000 | 0min16sec
+ 10 |         0.790000 |     0.969400 |        0.990000 | 0min12sec
+ 15 |         0.950000 |     0.982200 |        0.990000 | 0min11sec
+ 20 |         0.890000 |     0.982200 |        0.990000 | 0min16sec
+ 25 |         0.860000 |     0.982400 |        0.990000 | 0min12sec
+ 30 |         0.930000 |     0.981800 |        0.990000 | 0min6sec
+ 35 |         0.960000 |     0.982600 |        0.990000 | 0min5sec
+ 40 |         0.940000 |     0.981600 |        0.990000 | 0min3sec
  45 |         0.660000 |     0.973800 |        0.990000 | 0min2sec
 </pre></div></div>
 </div>
@@ -942,6 +942,31 @@ weighted avg       0.98      0.98      0.98        50
 <div class="output_area docutils container">
 <img alt="_images/_multiclass_example_25_0.png" src="_images/_multiclass_example_25_0.png" />
 </div>
+</div>
+<p>In this example, wew didn’t specified the dictionary with the derivatives of every t ransformation function. <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code> will use jax library to automatically infer the derivatives, as long as you have used <code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> instead of the traditional <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
+<p>This means that, after fitting the <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>, we have an dictionary of the vectorized version of the derivatives for each transformation function!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># printing the derivative of sin, without having to implement it by hand</span>
+<span class="c1"># (remember that is a vectorized function, and the input should be a np array)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">explainer</span><span class="o">.</span><span class="n">tfuncs_dx</span><span class="p">[</span><span class="s1">&#39;log&#39;</span><span class="p">](</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[1.         0.5        0.33333334]
+</pre></div></div>
 </div>
 </section>
 </section>

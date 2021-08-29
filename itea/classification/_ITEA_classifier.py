@@ -35,11 +35,11 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         tfuncs_dx       = None,
         expolim         = (-2, 2),
         max_terms       = 5,
-        simplify_method = 'simplify_by_coef', 
+        simplify_method = None, 
         random_state    = None,
         verbose         = None,
         labels          = [],
-        fit_kw          = None,
+        predictor_kw    = None,
         **kwargs
     ):
         """Constructor method.
@@ -97,10 +97,11 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             When set to None, the itea package will use automatic
             differentiation  through jax to create the derivatives.
 
-        fit_kw : dict or None, default = None
-            dictionary with parameters to fit the logistic regressor model
-            used in the ``ITExpr_classifier.fit()``. If none is given, then the
-            default configuration for the customizable parameters will be: 
+        predictor_kw : dict or None, default = None
+            dictionary with parameters to the constructor of the inner
+            logistic regressor model used in the ``ITExpr_classifier.fit()``.
+            If none is given, then the default configuration for the
+            customizable parameters will be: 
             ``{'max_iter':100, 'alpha':0., 'beta':0.}``,
             where ``max_iter`` is the maximum number of iterations of the
             gradient optimizer, and ``alpha`` and ``beta`` are the elasticnet
@@ -144,7 +145,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             simplify_method = simplify_method, 
             random_state    = random_state,
             verbose         = verbose,
-            fit_kw          = fit_kw,
+            predictor_kw    = predictor_kw,
             labels          = labels)
 
         self.itexpr_class      = ITExpr_classifier
@@ -173,11 +174,11 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
                              "values. the given y array contains only 1 "
                              "target value.")
 
-        default_fit_kw = {'max_iter':100, 'alpha':0., 'beta':0.}
-        if self.fit_kw is None:
-            self.fit_kw = default_fit_kw
+        default_predictor_kw = {'max_iter':100, 'alpha':0., 'beta':0.}
+        if self.predictor_kw is None:
+            self.predictor_kw = default_predictor_kw
         else:
-            self.fit_kw = {**default_fit_kw, **self.fit_kw}
+            self.predictor_kw = {**default_predictor_kw, **self.predictor_kw}
 
 
     def fit(self, X, y):

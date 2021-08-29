@@ -69,6 +69,10 @@
           
             
             
+              <div class="version">
+                1.0.0
+              </div>
+            
           
 
           
@@ -91,17 +95,22 @@
               
             
             
-              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
+<p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
@@ -209,11 +218,11 @@
         <span class="n">tfuncs_dx</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
         <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_coef&#39;</span><span class="p">,</span> 
+        <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
         <span class="n">random_state</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span>         <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">labels</span>          <span class="o">=</span> <span class="p">[],</span>
-        <span class="n">fit_kw</span>          <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">predictor_kw</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor method.</span>
@@ -271,10 +280,11 @@
 <span class="sd">            When set to None, the itea package will use automatic</span>
 <span class="sd">            differentiation  through jax to create the derivatives.</span>
 
-<span class="sd">        fit_kw : dict or None, default = None</span>
-<span class="sd">            dictionary with parameters to fit the logistic regressor model</span>
-<span class="sd">            used in the ``ITExpr_classifier.fit()``. If none is given, then the</span>
-<span class="sd">            default configuration for the customizable parameters will be: </span>
+<span class="sd">        predictor_kw : dict or None, default = None</span>
+<span class="sd">            dictionary with parameters to the constructor of the inner</span>
+<span class="sd">            logistic regressor model used in the ``ITExpr_classifier.fit()``.</span>
+<span class="sd">            If none is given, then the default configuration for the</span>
+<span class="sd">            customizable parameters will be: </span>
 <span class="sd">            ``{&#39;max_iter&#39;:100, &#39;alpha&#39;:0., &#39;beta&#39;:0.}``,</span>
 <span class="sd">            where ``max_iter`` is the maximum number of iterations of the</span>
 <span class="sd">            gradient optimizer, and ``alpha`` and ``beta`` are the elasticnet</span>
@@ -318,7 +328,7 @@
             <span class="n">simplify_method</span> <span class="o">=</span> <span class="n">simplify_method</span><span class="p">,</span> 
             <span class="n">random_state</span>    <span class="o">=</span> <span class="n">random_state</span><span class="p">,</span>
             <span class="n">verbose</span>         <span class="o">=</span> <span class="n">verbose</span><span class="p">,</span>
-            <span class="n">fit_kw</span>          <span class="o">=</span> <span class="n">fit_kw</span><span class="p">,</span>
+            <span class="n">predictor_kw</span>    <span class="o">=</span> <span class="n">predictor_kw</span><span class="p">,</span>
             <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span>      <span class="o">=</span> <span class="n">ITExpr_classifier</span>
@@ -347,11 +357,11 @@
                              <span class="s2">&quot;values. the given y array contains only 1 &quot;</span>
                              <span class="s2">&quot;target value.&quot;</span><span class="p">)</span>
 
-        <span class="n">default_fit_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_iter&#39;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span> <span class="o">=</span> <span class="n">default_fit_kw</span>
+        <span class="n">default_predictor_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;max_iter&#39;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span> <span class="o">=</span> <span class="n">default_predictor_kw</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">default_fit_kw</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">default_predictor_kw</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span><span class="p">}</span>
 
 
 <div class="viewcode-block" id="ITEA_classifier.fit"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITEA_classifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>

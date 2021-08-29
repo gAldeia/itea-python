@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.3
-# Last modified: 07-14-2021 by Guilherme Aldeia
+# Version: 1.0.4
+# Last modified: 08-29-2021 by Guilherme Aldeia
 
 
 """Specialization of the base class BaseITEA for the classification task.
@@ -21,6 +21,9 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
     The expressions will have their coefficients adjusted by means of the
     scikit's linearRegression method. The fitness will be measured using
     the RMSE metric (smaller is better).
+
+    Notice that this method does not have the ``estimator_kw`` as there is
+    in the ``ITEA_classifier``.
     """    
     
     def __init__(self, *, 
@@ -30,7 +33,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         tfuncs_dx       = None,
         expolim         = (-2, 2),
         max_terms       = 5,
-        simplify_method = 'simplify_by_coef', 
+        simplify_method = None, 
         random_state    = None,
         verbose         = None,
         labels          = [],
@@ -125,7 +128,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
             simplify_method = simplify_method, 
             random_state    = random_state,
             verbose         = verbose,
-            fit_kw          = {},
+            predictor_kw    = {},
             labels          = labels)
 
         self.itexpr_class      = ITExpr_regressor

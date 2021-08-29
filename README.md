@@ -2,6 +2,7 @@
 
 ![code coverage](https://galdeia.github.io/itea-python/_images/coverage.svg)
 ![python version](https://galdeia.github.io/itea-python/_images/pythonversion.svg)
+[![PyPI version](https://badge.fury.io/py/itea.svg)](https://badge.fury.io/py/itea)
 
 itea is a python implementation of the Interaction-Transformation Evolutionary
 Algorithm described in the paper "Franca, F., & Aldeia, G. (2020).
@@ -24,14 +25,12 @@ of the estimators follow their guidelines.
 
 Documentation is available [here](https://galdeia.github.io/itea-python/).
 
+-----
 
 ## Installation
 
 ITEA is currently available
-[at pypi](https://test.pypi.org/project/itea)
-
-Since packages uploaded on test.pypi index will search for dependencies in 
-the same index, to install the test version you can run:
+[at pypi](https://pypi.org/project/itea), and can be easily installed by doing:
 
 ```shell
 $ pip install itea
@@ -216,6 +215,47 @@ results = pd.read_csv('regression_benchmark_res.csv')
 # Will print the mean of all executions in the results file for each data set
 print(results.drop(columns=['Rep']).groupby('Dataset').mean())
 ```
+
+
+## Acknowledgements
+
+This module is a compilation of my undergraduate thesis in computer science
+(2019) and my academic master dissertation (2021), both developed under
+[@folivetti](https://github.com/folivetti) guidance and supervision.
+
+During this journey, there were people from inside and outside the Federal
+University of ABC who helped me with tips, criticisms, and suggestions.
+
+My special thanks to all of you.
+
+
+## Citations
+
+Throughout the documentation there are papers mentioned that inspired
+me with the implementations. Below they are all listed for a quick reference
+(cited in plain text with APA formatting).
+
+* Disentanglement: _La Cava, W., Moore, J.H. Learning feature spaces for
+        regression with genetic programming. Genet Program Evolvable Mach
+        21, 433–467 (2020)_
+* SAGA: _Defazio, A., Bach F. & Lacoste-Julien S. (2014). SAGA: A Fast
+        Incremental Gradient Method With Support for Non-Strongly Convex
+        Composite Objectives_
+* ITEA: _França, F., & Aldeia, G. (2020). Interaction-Transformation
+        Evolutionary Algorithm for Symbolic Regression. Evolutionary
+        Computation, 1-25._
+* Partial Effects: _Aldeia, G. & França, F. (2021).
+        Measuring Feature Importance of Symbolic Regression Models
+        GECCO._
+* SHAP: _Scott M. Lundberg and Su-In Lee. 2017. A unified approach to
+        interpreting model predictions. NIPS_
+* Integrated Gradients: _Mukund Sundararajan, Ankur Taly, and Qiqi Yan. 2017. 
+        Axiomatic attribution for deep networks. In Proceedings of the
+        34th International Conference on Machine Learning - Volume
+        70 (ICML'17). JMLR.org, 3319–3328._
+* Feature contribution plot: _R. M. Filho, A. Lacerda and G. L. Pappa,
+        "Explaining Symbolic Regression Predictions," 2020 IEEE Congress on
+        Evolutionary Computation (CEC)._
 
 
 ## Contributing

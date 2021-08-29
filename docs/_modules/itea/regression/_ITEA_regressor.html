@@ -69,6 +69,10 @@
           
             
             
+              <div class="version">
+                1.0.0
+              </div>
+            
           
 
           
@@ -91,17 +95,22 @@
               
             
             
-              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
+<p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
@@ -174,8 +183,8 @@
   <h1>Source code for itea.regression._ITEA_regressor</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.3</span>
-<span class="c1"># Last modified: 07-14-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.4</span>
+<span class="c1"># Last modified: 08-29-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Specialization of the base class BaseITEA for the classification task.</span>
@@ -195,6 +204,9 @@
 <span class="sd">    The expressions will have their coefficients adjusted by means of the</span>
 <span class="sd">    scikit&#39;s linearRegression method. The fitness will be measured using</span>
 <span class="sd">    the RMSE metric (smaller is better).</span>
+
+<span class="sd">    Notice that this method does not have the ``estimator_kw`` as there is</span>
+<span class="sd">    in the ``ITEA_classifier``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>    
     
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> 
@@ -204,7 +216,7 @@
         <span class="n">tfuncs_dx</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
         <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="n">simplify_method</span> <span class="o">=</span> <span class="s1">&#39;simplify_by_coef&#39;</span><span class="p">,</span> 
+        <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
         <span class="n">random_state</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span>         <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">labels</span>          <span class="o">=</span> <span class="p">[],</span>
@@ -299,7 +311,7 @@
             <span class="n">simplify_method</span> <span class="o">=</span> <span class="n">simplify_method</span><span class="p">,</span> 
             <span class="n">random_state</span>    <span class="o">=</span> <span class="n">random_state</span><span class="p">,</span>
             <span class="n">verbose</span>         <span class="o">=</span> <span class="n">verbose</span><span class="p">,</span>
-            <span class="n">fit_kw</span>          <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">predictor_kw</span>    <span class="o">=</span> <span class="p">{},</span>
             <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span>      <span class="o">=</span> <span class="n">ITExpr_regressor</span>

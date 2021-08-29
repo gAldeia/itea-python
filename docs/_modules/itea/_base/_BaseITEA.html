@@ -69,6 +69,10 @@
           
             
             
+              <div class="version">
+                1.0.0
+              </div>
+            
           
 
           
@@ -91,17 +95,22 @@
               
             
             
-              <p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+              <p class="caption"><span class="caption-text">Getting started:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
+<p class="caption"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_stability.html">Explanations Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_integrating_with_scikits_classes.html">Integrating with the Scikit: Pipeline and Gridsearch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_interacting_with_protodash.html">Interacting with ProtoDash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_multiclass_example.html">Iris classification</a></li>
@@ -174,8 +183,8 @@
   <h1>Source code for itea._base._BaseITEA</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.7</span>
-<span class="c1"># Last modified: 07-21-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.8</span>
+<span class="c1"># Last modified: 08-29-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.&quot;&quot;&quot;</span>
@@ -220,14 +229,14 @@
         <span class="n">gens</span>            <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
         <span class="n">popsize</span>         <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
         <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-        <span class="n">max_terms</span>         <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
         <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">random_state</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span>         <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">labels</span>          <span class="o">=</span> <span class="p">[],</span>
         <span class="n">tfuncs</span>          <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">},</span>
         <span class="n">tfuncs_dx</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">fit_kw</span>          <span class="o">=</span> <span class="kc">None</span>  
+        <span class="n">predictor_kw</span>    <span class="o">=</span> <span class="kc">None</span>  
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor method.</span>
 
@@ -303,9 +312,9 @@
 <span class="sd">            itea package will use automatic differentiation </span>
 <span class="sd">            through jax to create the derivatives.</span>
 
-<span class="sd">        fit_kw : dict or None, default = None</span>
-<span class="sd">            dictionary with parameters to pass as configuration arguments</span>
-<span class="sd">            to the fit method in the  ``BaseITExpr`` subclass.</span>
+<span class="sd">        predictor_kw : dict or None, default = None</span>
+<span class="sd">            dictionary with parameters to pass as named arguments</span>
+<span class="sd">            to the constructor method in the  ``BaseITExpr`` subclass.</span>
 <span class="sd">            If none is given, then a empty dict will be used.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -319,7 +328,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span>         <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="o">=</span> <span class="n">simplify_method</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span>          <span class="o">=</span> <span class="n">fit_kw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span>    <span class="o">=</span> <span class="n">predictor_kw</span>
 
 
     <span class="k">def</span> <span class="nf">_check_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -387,8 +396,8 @@
             
             <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;x_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span> <span class="o">=</span> <span class="p">{}</span>
 
 
     <span class="k">def</span> <span class="nf">_create_population</span><span class="p">(</span>
@@ -415,7 +424,7 @@
             
             <span class="n">itexpr</span> <span class="o">=</span> <span class="n">itexpr_class</span><span class="p">(</span>
                 <span class="n">expr</span><span class="o">=</span><span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
-                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span>
             <span class="p">)</span>
     
             <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
@@ -442,7 +451,7 @@
                           <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">nvars</span><span class="p">,</span> <span class="n">random_state</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
 
         <span class="n">newpop</span> <span class="o">=</span> <span class="p">[</span><span class="n">itexpr_class</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span>
-                    <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_kw</span><span class="p">)</span> <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">mutated</span><span class="p">]</span>
+                 <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span><span class="p">)</span> <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">mutated</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">newpop</span>
 
