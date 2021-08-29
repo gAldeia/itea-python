@@ -8,8 +8,6 @@ Welcome to itea's documentation!
 
 .. image:: assets/images/coverage.svg
 .. image:: assets/images/pythonversion.svg
-|
-
 .. image:: https://badge.fury.io/py/itea.svg
    :target: https://badge.fury.io/py/itea
 .. image:: https://readthedocs.org/projects/itea-python/badge/?version=latest

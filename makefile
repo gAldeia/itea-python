@@ -22,14 +22,14 @@ doc: $(EXAMPLES)
 	$(info [${EXAMPLES}])
 
 	# remove previous notebooks, ignore nonexistent
-	rm -f ./docsource/source/_*.ipynb
+	#rm -f ./docsource/source/_*.ipynb
 
 	$(foreach example, $(EXAMPLES), $(shell cp $(example) ./docsource/source/$(addprefix _, $(notdir $(example)))))
 	
 	# May require pip install Jinja2==2.11
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
-	
+
 
 build-dist: 
 	if [ -d "./dist/*" ]; then \
