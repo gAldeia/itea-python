@@ -26,7 +26,7 @@ of the estimators follow their guidelines.
 
 ## Documentation
 
-Documentation is available [here](https://galdeia.github.io/itea-python/).
+Documentation is available at [readthedocs](https://itea-python.readthedocs.io/en/latest).
 
 -----
 
