@@ -29,6 +29,7 @@ doc: $(EXAMPLES)
 	# May require pip install Jinja2==2.11
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
+	
 
 build-dist: 
 	if [ -d "./dist/*" ]; then \
