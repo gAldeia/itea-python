@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.7
-# Last modified: 07-24-2021 by Guilherme Aldeia
+# Version: 1.0.8
+# Last modified: 09-03-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -426,7 +426,10 @@ class ITExpr_explainer():
         ax : matplotlib.axes or None, default=None
             axis to generate the plot. If none is given, then a new axis is
             created. if is a single axis, the plot will be drawn within the
-            given axis.
+            given axis. The new axis and figure created can be accessed through
+            the ``axes_`` and ``figure_`` attributes. Notice that, if multiple
+            plot functions were called, then ``axes_`` and ``figure_``
+            corresponds to the latest plot generated.
 
         grouping_threshold : float, default = 0.05
             The features will be iterated in order of importance, from the
@@ -807,7 +810,10 @@ class ITExpr_explainer():
             axis to generate the plot. If none is given, then a new axis is
             created. If is a single axis, the plot will be drawn within the
             given axis. If ax is a list, then it must have the same number of
-            elements in ``features``.
+            elements in ``features``.  The new axis and figure created can be
+            accessed through the ``axes_`` and ``figure_`` attributes. Notice
+            that, if multiple plot functions were called, then ``axes_`` and
+            ``figure_`` corresponds to the latest plot generated.
 
         show_err : bool, default=True
             boolean variable indicating if the standard error should be plotted.
@@ -1014,7 +1020,10 @@ class ITExpr_explainer():
         ax : matplotlib.axes or None, default=None
             axis to generate the plot. If none is given, then a new axis is
             created. if is a single axis, the plot will be drawn within the
-            given axis.
+            given axis.  The new axis and figure created can be accessed through
+            the ``axes_`` and ``figure_`` attributes. Notice that, if multiple
+            plot functions were called, then ``axes_`` and ``figure_``
+            corresponds to the latest plot generated.
 
         show : bool, default=True
             boolean value indicating if the generated plot should be displayed

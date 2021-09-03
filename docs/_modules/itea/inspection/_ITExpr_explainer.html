@@ -183,8 +183,8 @@
   <h1>Source code for itea.inspection._ITExpr_explainer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.7</span>
-<span class="c1"># Last modified: 07-24-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.8</span>
+<span class="c1"># Last modified: 09-03-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Model-specific interpretability methods.</span>
@@ -609,7 +609,10 @@
 <span class="sd">        ax : matplotlib.axes or None, default=None</span>
 <span class="sd">            axis to generate the plot. If none is given, then a new axis is</span>
 <span class="sd">            created. if is a single axis, the plot will be drawn within the</span>
-<span class="sd">            given axis.</span>
+<span class="sd">            given axis. The new axis and figure created can be accessed through</span>
+<span class="sd">            the ``axes_`` and ``figure_`` attributes. Notice that, if multiple</span>
+<span class="sd">            plot functions were called, then ``axes_`` and ``figure_``</span>
+<span class="sd">            corresponds to the latest plot generated.</span>
 
 <span class="sd">        grouping_threshold : float, default = 0.05</span>
 <span class="sd">            The features will be iterated in order of importance, from the</span>
@@ -990,7 +993,10 @@
 <span class="sd">            axis to generate the plot. If none is given, then a new axis is</span>
 <span class="sd">            created. If is a single axis, the plot will be drawn within the</span>
 <span class="sd">            given axis. If ax is a list, then it must have the same number of</span>
-<span class="sd">            elements in ``features``.</span>
+<span class="sd">            elements in ``features``.  The new axis and figure created can be</span>
+<span class="sd">            accessed through the ``axes_`` and ``figure_`` attributes. Notice</span>
+<span class="sd">            that, if multiple plot functions were called, then ``axes_`` and</span>
+<span class="sd">            ``figure_`` corresponds to the latest plot generated.</span>
 
 <span class="sd">        show_err : bool, default=True</span>
 <span class="sd">            boolean variable indicating if the standard error should be plotted.</span>
@@ -1197,7 +1203,10 @@
 <span class="sd">        ax : matplotlib.axes or None, default=None</span>
 <span class="sd">            axis to generate the plot. If none is given, then a new axis is</span>
 <span class="sd">            created. if is a single axis, the plot will be drawn within the</span>
-<span class="sd">            given axis.</span>
+<span class="sd">            given axis.  The new axis and figure created can be accessed through</span>
+<span class="sd">            the ``axes_`` and ``figure_`` attributes. Notice that, if multiple</span>
+<span class="sd">            plot functions were called, then ``axes_`` and ``figure_``</span>
+<span class="sd">            corresponds to the latest plot generated.</span>
 
 <span class="sd">        show : bool, default=True</span>
 <span class="sd">            boolean value indicating if the generated plot should be displayed</span>

@@ -183,8 +183,8 @@
   <h1>Source code for itea._base._BaseITEA</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.8</span>
-<span class="c1"># Last modified: 08-29-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.9</span>
+<span class="c1"># Last modified: 09-03-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;Base class to be inherited for classification and regression tasks.&quot;&quot;&quot;</span>
@@ -611,6 +611,8 @@
         <span class="n">itexpr</span><span class="o">.</span><span class="n">selected_features_</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">selected_features</span><span class="p">()</span>
 
         <span class="n">itexpr</span><span class="o">.</span><span class="n">feature_importances_</span> <span class="o">=</span> <span class="n">explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_importances_</span> <span class="o">=</span> <span class="n">itexpr</span><span class="o">.</span><span class="n">feature_importances_</span>
 
 
 <div class="viewcode-block" id="BaseITEA.fit"><a class="viewcode-back" href="../../../base.html#itea._base.BaseITEA.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>

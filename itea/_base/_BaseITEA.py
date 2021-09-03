@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.8
-# Last modified: 08-29-2021 by Guilherme Aldeia
+# Version: 1.0.9
+# Last modified: 09-03-2021 by Guilherme Aldeia
 
 
 """Base class to be inherited for classification and regression tasks."""
@@ -428,6 +428,8 @@ class BaseITEA(BaseEstimator):
         itexpr.selected_features_ = explainer.selected_features()
 
         itexpr.feature_importances_ = explainer.average_partial_effects(X)
+
+        self.feature_importances_ = itexpr.feature_importances_
 
 
     def fit(self, X, y):

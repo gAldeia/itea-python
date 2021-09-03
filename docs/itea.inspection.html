@@ -412,7 +412,10 @@ the Partial effects (PE) or Shapley Values (shapley).</p>
 When set to None, then <code class="docutils literal notranslate"><span class="pre">bar_kw=</span> <span class="pre">{'alpha':1.0,</span> <span class="pre">'align':'center'}</span></code>.</p></li>
 <li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is
 created. if is a single axis, the plot will be drawn within the
-given axis.</p></li>
+given axis. The new axis and figure created can be accessed through
+the <code class="docutils literal notranslate"><span class="pre">axes_</span></code> and <code class="docutils literal notranslate"><span class="pre">figure_</span></code> attributes. Notice that, if multiple
+plot functions were called, then <code class="docutils literal notranslate"><span class="pre">axes_</span></code> and <code class="docutils literal notranslate"><span class="pre">figure_</span></code>
+corresponds to the latest plot generated.</p></li>
 <li><p><strong>grouping_threshold</strong> (<em>float</em><em>, </em><em>default = 0.05</em>) – The features will be iterated in order of importance, from the
 smallest to the highest importance, and a group of the smallest
 features that sum up less than the given percentage of importance
@@ -468,7 +471,10 @@ When set to None, then stack_kw is <code class="docutils literal notranslate"><s
 <span class="pre">'labels':</span> <span class="pre">labels,</span> <span class="pre">'edgecolor':</span> <span class="pre">'k',</span> <span class="pre">'alpha':</span> <span class="pre">0.75}</span></code>.</p></li>
 <li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is
 created. if is a single axis, the plot will be drawn within the
-given axis.</p></li>
+given axis.  The new axis and figure created can be accessed through
+the <code class="docutils literal notranslate"><span class="pre">axes_</span></code> and <code class="docutils literal notranslate"><span class="pre">figure_</span></code> attributes. Notice that, if multiple
+plot functions were called, then <code class="docutils literal notranslate"><span class="pre">axes_</span></code> and <code class="docutils literal notranslate"><span class="pre">figure_</span></code>
+corresponds to the latest plot generated.</p></li>
 <li><p><strong>show</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean value indicating if the generated plot should be displayed
 or not.</p></li>
 </ul>
@@ -517,7 +523,10 @@ When set to None, then <code class="docutils literal notranslate"><span class="p
 <li><p><strong>ax</strong> (<em>matplotlib.axes</em><em> or </em><em>list of matplotlib.axes</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – axis to generate the plot. If none is given, then a new axis is
 created. If is a single axis, the plot will be drawn within the
 given axis. If ax is a list, then it must have the same number of
-elements in <code class="docutils literal notranslate"><span class="pre">features</span></code>.</p></li>
+elements in <code class="docutils literal notranslate"><span class="pre">features</span></code>.  The new axis and figure created can be
+accessed through the <code class="docutils literal notranslate"><span class="pre">axes_</span></code> and <code class="docutils literal notranslate"><span class="pre">figure_</span></code> attributes. Notice
+that, if multiple plot functions were called, then <code class="docutils literal notranslate"><span class="pre">axes_</span></code> and
+<code class="docutils literal notranslate"><span class="pre">figure_</span></code> corresponds to the latest plot generated.</p></li>
 <li><p><strong>show_err</strong> (<em>bool</em><em>, </em><em>default=True</em>) – boolean variable indicating if the standard error should be plotted.</p></li>
 <li><p><strong>share_y</strong> (<em>bool</em><em>, </em><em>default True</em>) – boolean variable to specify if the axis should have the same
 interval on the y axis.</p></li>

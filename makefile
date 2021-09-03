@@ -17,7 +17,7 @@ coverage:
 	coverage-badge > ./docsource/source/assets/images/coverage.svg
 	coverage erase
 
-doc: $(EXAMPLES)
+copy-notebooks:
 	$(info The following examples will be included in the documentation:)
 	$(info [${EXAMPLES}])
 
@@ -25,20 +25,23 @@ doc: $(EXAMPLES)
 	#rm -f ./docsource/source/_*.ipynb
 
 	$(foreach example, $(EXAMPLES), $(shell cp $(example) ./docsource/source/$(addprefix _, $(notdir $(example)))))
-	
+
+generate-report: ./examples/generate_report_example.py
+	${PYTHON} ./examples/generate_report_example.py
+
+	$(shell cp ./examples/Report.pdf ./docsource/source/assets/files/Report.pdf)
+
+doc: $(EXAMPLES) copy-notebooks generate-report
 	# May require pip install Jinja2==2.11
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
 
-
 build-dist: 
-	if [ -d "./dist/*" ]; then \
-        rm -r ./dist/*; \
-    fi \
-	
+	rm -f ./dist/*
+
 	${PYTHON} setup.py develop
 	${PYTHON} setup.py sdist
-	
+
 	${PYTHON} -m pip install ./dist/*.tar.gz
 
 clean:
