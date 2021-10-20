@@ -22,8 +22,8 @@ copyright = '2021, Guilherme Aldeia'
 author = 'Guilherme Aldeia'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.0'
-version = '1.0.0'
+release = 'latest'
+version = 'latest'
 
 html_title = 'Interaction-Transformation Evolutionary Algorithm'
 html_short_title = 'itea'

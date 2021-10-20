@@ -1,8 +1,9 @@
 # itea-python
 
+<img src="https://galdeia.github.io/itea-python/_static/itea-logo.png" alt="drawing" width="300"/><br>
+
 ![code coverage](https://galdeia.github.io/itea-python/_images/coverage.svg)
 ![python version](https://galdeia.github.io/itea-python/_images/pythonversion.svg)
-
 
 [![PyPI version](https://badge.fury.io/py/itea.svg)](https://badge.fury.io/py/itea)
 [![Documentation Status](https://readthedocs.org/projects/itea-python/badge/?version=latest)](https://itea-python.readthedocs.io/en/latest/?badge=latest)
@@ -151,7 +152,6 @@ For more examples, see:
 * [A working notebook using ``ITEA_classifier``](https://galdeia.github.io/itea-python/_multiclass_example.html)
 * [A working notebook using ``ITEA_regressor``](https://galdeia.github.io/itea-python/_regression_example.html)
 * [More examples of the ITEA package](https://galdeia.github.io/itea-python/index.html)
-* 
 
 ## Testing
 
