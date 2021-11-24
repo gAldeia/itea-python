@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Iris classification &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -73,7 +72,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -98,19 +97,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
@@ -455,7 +454,7 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Iris-classification">
+<div class="section" id="Iris-classification">
 <h1>Iris classification<a class="headerlink" href="#Iris-classification" title="Permalink to this headline">¶</a></h1>
 <p>This notebook will walk through the process of using the ITEA for classification (<code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code>) and interpreting the final expression with the <code class="docutils literal notranslate"><span class="pre">itea.inspection</span></code> tools.</p>
 <div class="nbinput nblast docutils container">
@@ -489,7 +488,7 @@ div.rendered_html tbody tr:hover {
 <p>This data set contains 3 different classes of Iris flowers and has 4 features: sepal width, sepal length, petal width, and petal length.</p>
 <p>One example of each flower is illustrated in the figure below.</p>
 <img alt="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" src="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" />
-<section id="Creating-and-fitting-an-ITEA_classifier">
+<div class="section" id="Creating-and-fitting-an-ITEA_classifier">
 <h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_classifier" title="Permalink to this headline">¶</a></h2>
 <p>In this execution, we will fix the random_state argument to allow reproductible executions of the ITEA algorithm.</p>
 <p>The IT expression is used as the decision function in a logistic regression. The inner logistic regression uses the saga solver described in <em>“Defazio, A., Bach F. &amp; Lacoste-Julien S. (2014). SAGA: A Fast Incremental Gradient Method With Support for Non-Strongly Convex Composite Objectives”</em>.</p>
@@ -585,8 +584,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
   &#39;exp&#39;: &lt;function jax._src.numpy.lax_numpy._one_to_one_unop.&lt;locals&gt;.&lt;lambda&gt;(x)&gt;}}
 </pre></div></div>
 </div>
-</section>
-<section id="Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier">
+</div>
+<div class="section" id="Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier">
 <h2>Inspecting the results from <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code><a class="headerlink" href="#Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is a fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
 <div class="nbinput docutils container">
@@ -769,8 +768,8 @@ weighted avg       0.98      0.98      0.98        50
 <p><img src="_images/math/b28dc4d8e223ea7732709de2d4b8f4c4028c9516.png" alt="$ \frac{\partial}{\partial sepal length (cm)} ITExpr = \underbrace{1\beta_1 \cdot id'(\frac{sepal length (cm)}{sepal width (cm) \cdot petal length (cm)})(\frac{1}{sepal width (cm) \cdot petal length (cm)})}_{\text{term 1 partial derivative}}$"/></p>
 </div></div>
 </div>
-</section>
-<section id="Explaining-the-IT_classifier-expression-using-Partial-Effects">
+</div>
+<div class="section" id="Explaining-the-IT_classifier-expression-using-Partial-Effects">
 <h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_classifier</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_classifier-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
 <p>Now let’s create an instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <p>We can calculate feature importances with Partial Effects (PE) or approximate the Shapley values using PE. There is also support to use Integrated Gradients as a feature importance method.</p>
@@ -968,8 +967,8 @@ weighted avg       0.98      0.98      0.98        50
 [1.         0.5        0.33333334]
 </pre></div></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Integrating with the Scikit: Pipeline and Gridsearch &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -73,7 +72,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -98,19 +97,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
@@ -455,7 +454,7 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Integrating-with-the-Scikit:-Pipeline-and-Gridsearch">
+<div class="section" id="Integrating-with-the-Scikit:-Pipeline-and-Gridsearch">
 <h1>Integrating with the Scikit: Pipeline and Gridsearch<a class="headerlink" href="#Integrating-with-the-Scikit:-Pipeline-and-Gridsearch" title="Permalink to this headline">¶</a></h1>
 <p>ITEA implementations inherits scikits’ base classes. This means that we can integrate the ITEA with methods like Pipeline and Gridsearch. In this notebook, we’ll show some examples on how to take advantage of that to tune an predictor.</p>
 <div class="nbinput nblast docutils container">
@@ -494,7 +493,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<section id="Loading-the-data">
+<div class="section" id="Loading-the-data">
 <h2>Loading the data<a class="headerlink" href="#Loading-the-data" title="Permalink to this headline">¶</a></h2>
 <p>First, let’s load the data, and split it into a training and testing partition. The training partition will be used for the training and validation process, and only after obtaining a final method will we perform the training with this data and the test with the test partition.</p>
 <div class="nbinput nblast docutils container">
@@ -511,8 +510,8 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-</section>
-<section id="Inspectioning-the-data">
+</div>
+<div class="section" id="Inspectioning-the-data">
 <h2>Inspectioning the data<a class="headerlink" href="#Inspectioning-the-data" title="Permalink to this headline">¶</a></h2>
 <p>Let’s look at some descriptive statistics for the variables.</p>
 <p>Suppose that, to reduce the complexity of the final model, we are interested in obtaining a subset of these variables.</p>
@@ -734,7 +733,7 @@ div.rendered_html tbody tr:hover {
 
     <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">&#39;$\rho&#39;</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;= </span><span class="si">{</span><span class="n">r</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span>
-        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.9</span><span class="p">),</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">),</span>
         <span class="n">xycoords</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
         <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
             <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
@@ -765,8 +764,8 @@ div.rendered_html tbody tr:hover {
 <img alt="_images/_integrating_with_scikits_classes_9_0.png" src="_images/_integrating_with_scikits_classes_9_0.png" />
 </div>
 </div>
-</section>
-<section id="Creating-a-pipeline">
+</div>
+<div class="section" id="Creating-a-pipeline">
 <h2>Creating a pipeline<a class="headerlink" href="#Creating-a-pipeline" title="Permalink to this headline">¶</a></h2>
 <p>scikit provides a Pipeline class, which serves to nest a sequence of transformations and a final estimator. With this, we can automate the date transformation steps for an estimator.</p>
 <p>Let’s do the variable selection step and fit an ITEA regressor into a pipeline.</p>
@@ -868,8 +867,8 @@ Pipeline(steps=[(&#39;selectKbest&#39;,
 116.811*sqrt.abs(RM^2 * PTRATIO^-1 * LSTAT^-1) + -2837.853*sqrt.abs(PTRATIO^-2 * LSTAT^-2) + 4.241*sqrt.abs(INDUS^2 * RM^-2 * PTRATIO^2 * LSTAT^-2) + -3.051*sqrt.abs(INDUS * RM * PTRATIO * LSTAT^-1) + -131.327*sqrt.abs(INDUS^-1 * RM * PTRATIO^-2) + 9.193
 </pre></div></div>
 </div>
-</section>
-<section id="Finetuning-with-gridsearch">
+</div>
+<div class="section" id="Finetuning-with-gridsearch">
 <h2>Finetuning with gridsearch<a class="headerlink" href="#Finetuning-with-gridsearch" title="Permalink to this headline">¶</a></h2>
 <p>ITEA has several hyperparameters, and although the method can be used with default values (which deliver fast execution with satisfactory results), it may be necessary to further investigate a suitable configuration for the domain of the problem in which the regressor is being applied.</p>
 <p>Imagine we want to limit the final expression to something that isn’t too complex. We can achieve this by several ways.</p>
@@ -1062,8 +1061,8 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <img alt="_images/_integrating_with_scikits_classes_19_1.png" src="_images/_integrating_with_scikits_classes_19_1.png" />
 </div>
 </div>
-</section>
-<section id="Creating-and-fitting-a-model-with-the-best-configuration">
+</div>
+<div class="section" id="Creating-and-fitting-a-model-with-the-best-configuration">
 <h2>Creating and fitting a model with the best configuration<a class="headerlink" href="#Creating-and-fitting-a-model-with-the-best-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Finally, let’s create an instance of ITEA with the best configuration, and then use the test data to see how the final model performs as a predictor.</p>
 <p>Additionally, let’s look at some interpretability graphs.</p>
@@ -1194,8 +1193,8 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <img alt="_images/_integrating_with_scikits_classes_29_0.png" src="_images/_integrating_with_scikits_classes_29_0.png" />
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>itea._base &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -73,7 +72,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -98,12 +97,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">itea._base</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#baseitea">BaseITEA</a></li>
@@ -114,7 +113,7 @@
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
@@ -213,7 +212,7 @@
     text-align: unset;
 }
 </style>
-<section id="module-itea._base">
+<div class="section" id="module-itea._base">
 <span id="itea-base"></span><h1>itea._base<a class="headerlink" href="#module-itea._base" title="Permalink to this headline">¶</a></h1>
 <p>Interaction Transformation Base classes</p>
 <p>Implementation of two base classes to be inherited and specialized for each
@@ -228,11 +227,11 @@ for internal usage.</p>
 </ul>
 </div>
 <hr class="docutils" />
-<section id="baseitea">
+<div class="section" id="baseitea">
 <span id="baseitea-docs"></span><h2><a class="toc-backref" href="#id1">BaseITEA</a><a class="headerlink" href="#baseitea" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea._base.BaseITEA">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">gens=100</span></em>, <em class="sig-param"><span class="pre">popsize=100</span></em>, <em class="sig-param"><span class="pre">expolim=(-2</span></em>, <em class="sig-param"><span class="pre">2)</span></em>, <em class="sig-param"><span class="pre">max_terms=5</span></em>, <em class="sig-param"><span class="pre">simplify_method=None</span></em>, <em class="sig-param"><span class="pre">random_state=None</span></em>, <em class="sig-param"><span class="pre">verbose=None</span></em>, <em class="sig-param"><span class="pre">labels=[]</span></em>, <em class="sig-param"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></em>, <em class="sig-param"><span class="pre">tfuncs_dx=None</span></em>, <em class="sig-param"><span class="pre">predictor_kw=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITEA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gens=100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">popsize=100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expolim=(-2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">2)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_terms=5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simplify_method=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels=[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs={'id':</span> <span class="pre">&lt;function</span> <span class="pre">BaseITEA.&lt;lambda&gt;&gt;}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs_dx=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictor_kw=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITEA.html#BaseITEA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITEA" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>Base class to be inherited for classification and regression tasks.</p>
 <p>This class implements argument checks and generic evolutionary methods
@@ -325,12 +324,12 @@ If none is given, then a empty dict will be used.</p></li>
 </dd></dl>
 
 <hr class="docutils" />
-</section>
-<section id="baseitexpr">
+</div>
+<div class="section" id="baseitexpr">
 <span id="baseitexpr-docs"></span><h2><a class="toc-backref" href="#id2">BaseITExpr</a><a class="headerlink" href="#baseitexpr" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="itea._base.BaseITExpr">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITExpr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">itea._base.</span></span><span class="sig-name descname"><span class="pre">BaseITExpr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tfuncs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/_base/_BaseITExpr.html#BaseITExpr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea._base.BaseITExpr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sklearn.base.BaseEstimator</span></code></p>
 <p>This class describes the structure that an <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code> should have, and
 implements only the methods that have similar behavior for classification
@@ -501,8 +500,8 @@ used is <code class="docutils literal notranslate"><span class="pre">'</span> <s
 
 </dd></dl>
 
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

@@ -27,7 +27,16 @@ setup(
     package_data = {'examples' : ['examples']},
     include_package_data = True,
     python_requires = '>=3.7',
-    setup_requires  = ["wheel", "pytest-runner", "coverage", "coverage-badge"],
+    setup_requires  = [
+        "wheel",
+        "pytest-runner",
+        "coverage",
+        "coverage-badge",
+
+        #required to build the docs
+        "Jinja2==2.11",  
+        "nbsphinx"
+    ],
 
     # Aditional packages not included in install requires
     tests_require   = [

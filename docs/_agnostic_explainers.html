@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Using agnostic explainers &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -73,7 +72,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -98,19 +97,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
@@ -455,7 +454,7 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Using-agnostic-explainers">
+<div class="section" id="Using-agnostic-explainers">
 <h1>Using agnostic explainers<a class="headerlink" href="#Using-agnostic-explainers" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook, we’ll create a simple IT expression and use popular model-agnostic explainer methods to obtain feature importances for the final model.</p>
 <p>The explainers we are going to use are SHAP, LIME, and PDP.</p>
@@ -561,7 +560,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 -15.231*log(MedInc * Population * AveOccup * Latitude^2) + 1.323*log(MedInc^2 * AveBedrms * Longitude^2) + 37.981*log(MedInc * Population * AveOccup * Latitude * Longitude^2) + -0.399*log(MedInc^2 * AveRooms^2 * AveBedrms * AveOccup * Latitude^2 * Longitude^2) + -11.439*log(MedInc^2 * Population^2 * AveOccup^2 * Latitude^2 * Longitude^2) + -202.481
 </pre></div></div>
 </div>
-<section id="Explaining-with-PDP">
+<div class="section" id="Explaining-with-PDP">
 <h2>Explaining with PDP<a class="headerlink" href="#Explaining-with-PDP" title="Permalink to this headline">¶</a></h2>
 <p>Since <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> is a subclass of scikit-learn base classes <code class="docutils literal notranslate"><span class="pre">RegressorMixin</span></code> and <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, we can use the Partial Dependency Plot (PDP) and Individual Conditional Expectation (ICE), that works with any scikit estimator.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">plot_partial_dependence</span></code> function from scikit-learn package allows explaining any scikit machine learning model. It can be used to explain an ITEA model.</p>
@@ -637,8 +636,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <img alt="_images/_agnostic_explainers_8_0.png" src="_images/_agnostic_explainers_8_0.png" />
 </div>
 </div>
-</section>
-<section id="Explaining-with-SHAP">
+</div>
+<div class="section" id="Explaining-with-SHAP">
 <h2>Explaining with SHAP<a class="headerlink" href="#Explaining-with-SHAP" title="Permalink to this headline">¶</a></h2>
 <p>The SHapley Additive exPlanations (SHAP) was proposed in <em>Lundberg, Scott &amp; Lee, Su-In. (2017). A Unified Approach to Interpreting Model Predictions. Advances in Neural Information Processing Systems. Curran Associates, Inc..</em></p>
 <p>SHAP package implements several visualization plots, including the bar plot.</p>
@@ -742,8 +741,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <img alt="_images/_agnostic_explainers_14_2.png" src="_images/_agnostic_explainers_14_2.png" />
 </div>
 </div>
-</section>
-<section id="Explaining-with-LIME">
+</div>
+<div class="section" id="Explaining-with-LIME">
 <h2>Explaining with LIME<a class="headerlink" href="#Explaining-with-LIME" title="Permalink to this headline">¶</a></h2>
 <p>Local Interpretable Model-agnostic Explainer (LIME) was proposed in <em>Ribeiro, Marco Tulio, Sameer Singh, and Carlos Guestrin. “Why should I trust you?: Explaining the predictions of any classifier.” Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. ACM, 2016.</em></p>
 <div class="nbinput docutils container">
@@ -37879,8 +37878,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
         </script>
         </body></html></div>
 </div>
-</section>
-<section id="Morris-Sensitivity">
+</div>
+<div class="section" id="Morris-Sensitivity">
 <h2>Morris Sensitivity<a class="headerlink" href="#Morris-Sensitivity" title="Permalink to this headline">¶</a></h2>
 <p>InterpretML is an interpretability dashboard with the implementation of many model agnostic explainers created by Microsoft, reported in the paper <em>“InterpretML: A Unified Framework for Machine Learning Interpretability” (H. Nori, S. Jenkins, P. Koch, and R. Caruana 2019)</em>.</p>
 <p>While they implement the SHAP, LIME, and PDP, those were already used in the previous cells in this notebook (although they have interactive plots, which can be cool for deep interpretability analyses). One new model agnostic explainer that they provide and can be used with ITEA is the Morris Sensitivity explainer.</p>
@@ -37947,8 +37946,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <img alt="_images/_agnostic_explainers_18_1.png" src="_images/_agnostic_explainers_18_1.png" />
 </div>
 </div>
-</section>
-<section id="Explaining-with-sage">
+</div>
+<div class="section" id="Explaining-with-sage">
 <h2>Explaining with sage<a class="headerlink" href="#Explaining-with-sage" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -38031,8 +38030,8 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 <img alt="_images/_agnostic_explainers_22_3.png" src="_images/_agnostic_explainers_22_3.png" />
 </div>
 </div>
-</section>
-<section id="Generating-explanations-with-ITEA_summarizer">
+</div>
+<div class="section" id="Generating-explanations-with-ITEA_summarizer">
 <h2>Generating explanations with <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code><a class="headerlink" href="#Generating-explanations-with-ITEA_summarizer" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code> provides a method to automatically generate multiple interpretability plots given an <code class="docutils literal notranslate"><span class="pre">ITEA</span></code> instance.</p>
 <p>To compare the explanations from different explainers with the explanations through Partial Effects, we’ll use the <code class="docutils literal notranslate"><span class="pre">autoreport()</span></code> method to create a pdf file.</p>
@@ -38050,8 +38049,8 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 </pre></div>
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

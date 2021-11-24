@@ -9,11 +9,10 @@ Welcome to itea's documentation!
 .. image:: assets/images/coverage.svg
 .. image:: assets/images/pythonversion.svg
 .. image:: https://badge.fury.io/py/itea.svg
-   :target: https://badge.fury.io/py/itea
+  :target: https://badge.fury.io/py/itea
 .. image:: https://readthedocs.org/projects/itea-python/badge/?version=latest
-   :target: https://itea-python.readthedocs.io/en/latest/?badge=latest
-   :alt: Documentation Status
-|
+  :target: https://itea-python.readthedocs.io/en/latest/?badge=latest
+  :alt: Documentation Status
 
 itea is a python implementation of the Interaction-Transformation Evolutionary
 Algorithm described in the paper "Franca, F., & Aldeia, G. (2020).
@@ -33,28 +32,28 @@ of the estimators follows their guidelines.
 
 
 .. toctree::
-   :caption: Getting started:
-   :maxdepth: 2
+  :caption: Getting started:
+  :maxdepth: 2
    
-   gettingstarted
+  gettingstarted
 
 
 .. toctree::
-   :caption: ITEA package documentation:
-   :maxdepth: 3
+  :caption: ITEA package documentation:
+  :maxdepth: 3
 
-   base
-   itea.regression
-   itea.classification
-   itea.inspection
+  base
+  itea.regression
+  itea.classification
+  itea.inspection
 
 
 .. toctree::
-   :caption: Example notebooks:
-   :titlesonly:
-   :glob:
+  :caption: Example notebooks:
+  :titlesonly:
+  :glob:
 
-   _*
+  _*
 
 Indices and tables
 ==================

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Installing &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -73,7 +72,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -98,7 +97,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#official-releases">Official releases</a></li>
@@ -112,14 +111,14 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
@@ -218,21 +217,21 @@
     text-align: unset;
 }
 </style>
-<section id="installing">
+<div class="section" id="installing">
 <h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
 <p>There is two types of releases that you can install: official releases and
 under-development-but-latest releases.</p>
 <p>The documentation is always up to date to the latest releases, but this
 releases are only pushed to PyPi when enough testing, profilling and
 code coverage increase is done.</p>
-<section id="official-releases">
+<div class="section" id="official-releases">
 <h2>Official releases<a class="headerlink" href="#official-releases" title="Permalink to this headline">¶</a></h2>
 <p>All official releases are uploaded in PyPi. To install via pip, simply run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m pip install itea</span>
 </pre></div>
 </div>
-</section>
-<section id="latest-releases">
+</div>
+<div class="section" id="latest-releases">
 <h2>Latest releases<a class="headerlink" href="#latest-releases" title="Permalink to this headline">¶</a></h2>
 <p>The latest releases are always committed to GitHub before more intensively
 tested to be released on PyPi. To install, just download the GitHub repository
@@ -241,9 +240,9 @@ and run (on the root):</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python -m pip install .</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="minimal-examples">
+</div>
+</div>
+<div class="section" id="minimal-examples">
 <h1>Minimal examples<a class="headerlink" href="#minimal-examples" title="Permalink to this headline">¶</a></h1>
 <p>Before jumping into using the library, here are some tips and examples that
 might make it easier to use.</p>
@@ -251,7 +250,7 @@ might make it easier to use.</p>
 classification (<code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code>). Both classes inherit from base classes
 in the scikit-learn library, and implement very similar methods. The simplest
 use is to create an instance and use the fit method.</p>
-<section id="fitting-an-estimator">
+<div class="section" id="fitting-an-estimator">
 <h2>Fitting an estimator<a class="headerlink" href="#fitting-an-estimator" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 
@@ -284,8 +283,8 @@ the default, we must pass the arguments by name:</p>
 </div>
 <p>The documentation presents the default values ​​for each algorithm, with
 exaplanations of what they represent.</p>
-</section>
-<section id="using-the-final-symbolic-expression-to-make-predictions">
+</div>
+<div class="section" id="using-the-final-symbolic-expression-to-make-predictions">
 <h2>Using the final Symbolic Expression to make predictions<a class="headerlink" href="#using-the-final-symbolic-expression-to-make-predictions" title="Permalink to this headline">¶</a></h2>
 <p>After performing the evolution (fitting the <code class="docutils literal notranslate"><span class="pre">ITEA</span></code>), the best symbolic
 expression can be accessed by the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute. The best expression
@@ -315,8 +314,8 @@ uses bestsol’s predict.</p>
 <span class="go">-62.377</span>
 </pre></div>
 </div>
-</section>
-<section id="explaining-an-it-expression">
+</div>
+<div class="section" id="explaining-an-it-expression">
 <h2>Explaining an IT expression<a class="headerlink" href="#explaining-an-it-expression" title="Permalink to this headline">¶</a></h2>
 <p>The ITEA Package also implements some classes focused on interpretability,
 providing mechanisms to inspect and better understand the returned
@@ -339,8 +338,8 @@ So, the steps to use the explainers are: 1. Instanciate the explainer; 2. Fit;
 3. Generate the plots.</p>
 <p>That said, if you’re familiar with scikit’s ecosystem of regressors and
 classifiers, you’ll have no problem using ITEA and its explainers.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

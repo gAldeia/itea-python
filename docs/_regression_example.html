@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>California housing regression &mdash; Interaction-Transformation Evolutionary Algorithm</title>
@@ -72,7 +71,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -97,19 +96,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_explanations_metrics.html">Explanations metrics</a></li>
@@ -454,7 +453,7 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="California-housing-regression">
+<div class="section" id="California-housing-regression">
 <h1>California housing regression<a class="headerlink" href="#California-housing-regression" title="Permalink to this headline">¶</a></h1>
 <p>In this notebook we’ll use the <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code> to search for a good expression, that will be encapsulated inside the <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> class, and it will be used for the regression task of predicting California housing prices.</p>
 <div class="nbinput nblast docutils container">
@@ -482,7 +481,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <p>The California Housing data set contains 8 features.</p>
 <p>In this notebook, we’ll provide the transformation functions and their derivatives, instead of using the itea feature of extracting the derivatives using Jax.</p>
-<section id="Creating-and-fitting-an-ITEA_regressor">
+<div class="section" id="Creating-and-fitting-an-ITEA_regressor">
 <h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_regressor" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -543,8 +542,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
  40 |         0.773925 |     0.790826 |        1.024342 | 0min16sec
 </pre></div></div>
 </div>
-</section>
-<section id="Inspecting-the-results-from-ITEA_regressor-and-ITExpr_regressor">
+</div>
+<div class="section" id="Inspecting-the-results-from-ITEA_regressor-and-ITExpr_regressor">
 <h2>Inspecting the results from <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code><a class="headerlink" href="#Inspecting-the-results-from-ITEA_regressor-and-ITExpr_regressor" title="Permalink to this headline">¶</a></h2>
 <p>We can see the convergence of the fitness, the number of terms, or tree complexity by using the <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code>, an inspector class focused on the <code class="docutils literal notranslate"><span class="pre">ITEA</span></code>:</p>
 <div class="nbinput docutils container">
@@ -757,8 +756,8 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 </table>
 </div></div>
 </div>
-</section>
-<section id="Explaining-the-IT_regressor-expression-using-Partial-Effects">
+</div>
+<div class="section" id="Explaining-the-IT_regressor-expression-using-Partial-Effects">
 <h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_regressor</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_regressor-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
 <p>We can obtain feature importances using the Partial Effects and the <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <div class="nbinput docutils container">
@@ -839,8 +838,8 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <img alt="_images/_regression_example_19_0.png" src="_images/_regression_example_19_0.png" />
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

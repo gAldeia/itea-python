@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.8
-# Last modified: 09-03-2021 by Guilherme Aldeia
+# Version: 1.0.9
+# Last modified: 11-24-2021 by Guilherme Aldeia
 
 
 """Model-specific interpretability methods.
@@ -1111,7 +1111,8 @@ class ITExpr_explainer():
             global_importances = global_importances[:, valid_importance_mask]
             x_axis = (x_axis[:-1])[valid_importance_mask]
 
-        labels = self.itexpr.labels
+        # It must be a np array so we can use lists as indexes to sort labels
+        labels = np.array(self.itexpr.labels)
 
         # order is going from the highest to the smallest important features
         order = np.argsort(-np.sum(global_importances, axis=1))
