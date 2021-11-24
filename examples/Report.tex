@@ -106,7 +106,7 @@ max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.9
 \section*{Evolution convergence}%
 \label{sec:Evolutionconvergence}%
 
-                The algorithm took 67.721 seconds to
+                The algorithm took 76.86 seconds to
                 completely run. Below are the plots for the average fitness
                 of the population and the best individual fitness for each
                 generation.\vfill%
@@ -114,7 +114,7 @@ max   &     25.636364 &     15.000100 &   1243.333333 &    141.909091 &     41.9
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.f36rdrbd/fitness_convergence.pdf}%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.ipbc_flv/fitness_convergence.pdf}%
 \end{figure}
 
 %
@@ -188,16 +188,16 @@ term 5 &  -4.299 &  intercept &       0.079 &       0.000 &  0.000 &       0.000
 
 %
 
-            \lhead{post-execution --- ITEA automatic report}
-            \chead{}
-            \rhead{\today, \currenttime}
-            
-            \lfoot{}
-            \cfoot{}
-            \rfoot{\thepage\ | \pageref{LastPage}}
-        %
-\section*{\textit{Average partial Effects}}%
-\label{sec:textitAveragepartialEffects}%
+                \lhead{post-execution --- ITEA automatic report}
+                \chead{}
+                \rhead{\today, \currenttime}
+                
+                \lfoot{}
+                \cfoot{}
+                \rfoot{\thepage\ | \pageref{LastPage}}
+            %
+\section*{Global importances with \textit{Average partial Effects}}%
+\label{sec:GlobalimportanceswithtextitAveragepartialEffects}%
 
                 Feature importances with Average Partial Effects. This method
                 attributes the importance to the i-th variable by calculating
@@ -209,7 +209,67 @@ term 5 &  -4.299 &  intercept &       0.079 &       0.000 &  0.000 &       0.000
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.f36rdrbd/average_partial_effects.pdf}%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.ipbc_flv/pe.pdf}%
+\end{figure}
+
+%
+\vfill \pagebreak
+
+%
+
+                \lhead{post-execution --- ITEA automatic report}
+                \chead{}
+                \rhead{\today, \currenttime}
+                
+                \lfoot{}
+                \cfoot{}
+                \rfoot{\thepage\ | \pageref{LastPage}}
+            %
+\section*{Global importances with \textit{Integrated Gradients}}%
+\label{sec:GlobalimportanceswithtextitIntegratedGradients}%
+
+                Feature importance using the Average Integrated Gradients
+                importances. The idea is to calculate a local
+                importance score for a feature $i$ by evaluating the integral of
+                the models' gradients $\frac{\partial f}{\partial x_i}$ along a
+                straight line between one baseline and the specific point.
+            
+                \vfill%
+
+
+\begin{figure}[H]%
+\centering%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.ipbc_flv/ig.pdf}%
+\end{figure}
+
+%
+\vfill \pagebreak
+
+%
+
+                \lhead{post-execution --- ITEA automatic report}
+                \chead{}
+                \rhead{\today, \currenttime}
+                
+                \lfoot{}
+                \cfoot{}
+                \rfoot{\thepage\ | \pageref{LastPage}}
+            %
+\section*{Global importances with \textit{Shapley Values}}%
+\label{sec:GlobalimportanceswithtextitShapleyValues}%
+
+                Feature importance with the average approximation of the 
+                Shapley values. The shapley values are based on coalition game
+                theory, where players contribute differently to the team. The
+                Shapley value is the total contribution of the player, and
+                represents the overall contribution of the player.
+            
+                \vfill%
+
+
+\begin{figure}[H]%
+\centering%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.ipbc_flv/shapley.pdf}%
 \end{figure}
 
 %
@@ -231,7 +291,7 @@ term 5 &  -4.299 &  intercept &       0.079 &       0.000 &  0.000 &       0.000
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.f36rdrbd/normalized_partial_effects.pdf}%
+\includegraphics[width=0.8\textwidth]{/tmp/pylatex-tmp.ipbc_flv/normalized_partial_effects.pdf}%
 \end{figure}
 
 %
@@ -252,7 +312,7 @@ term 5 &  -4.299 &  intercept &       0.079 &       0.000 &  0.000 &       0.000
 
 \begin{figure}[H]%
 \centering%
-\includegraphics[width=\textwidth]{/tmp/pylatex-tmp.f36rdrbd/partial_effets_at_means.pdf}%
+\includegraphics[width=\textwidth]{/tmp/pylatex-tmp.ipbc_flv/partial_effets_at_means.pdf}%
 \end{figure}
 
 %

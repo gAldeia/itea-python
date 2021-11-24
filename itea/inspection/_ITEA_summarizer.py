@@ -1,7 +1,7 @@
 # Author:  Guilherme Aldeia
 # Contact: guilherme.aldeia@ufabc.edu.br
-# Version: 1.0.2
-# Last modified: 14-07-2021 by Guilherme Aldeia
+# Version: 1.0.3
+# Last modified: 24-11-2021 by Guilherme Aldeia
 
 
 """ITEA_summarizer class.
@@ -303,56 +303,104 @@ class ITEA_summarizer:
             doc.append(NoEscape(out + r"} \vfill \pagebreak"))
 
 
-    def _report_post_execution(self, doc, save_path):
+    def _report_post_execution(self, doc, save_path, importance_methods):
         """Post hoc interpretations of the ITExpr. Several plots will be
         generated.
         """
+        if importance_methods is None:
+            importance_methods = 'pe'
 
-        doc.append(NoEscape(r"""
-            \lhead{post-execution --- ITEA automatic report}
-            \chead{}
-            \rhead{\today, \currenttime}
-            
-            \lfoot{}
-            \cfoot{}
-            \rfoot{\thepage\ | \pageref{LastPage}}
-        """))
+        importance_methods=np.array([importance_methods]).flatten()
 
-        # Average partial effects
-        with doc.create(Section(
-            NoEscape(r'\textit{Average partial Effects}'), numbering=False)):   
+        if not set(importance_methods).issubset(set(['pe', 'ig', 'shapley'])):
+            raise ValueError(f'importance_methods not in est.classes_, ', 
+                             f'got {importance_methods}')
 
-            doc.append(NoEscape(r"""
+        explainer_headers = {
+            'pe': r'Global importances with \textit{Average partial Effects}',
+            'ig': r'Global importances with \textit{Integrated Gradients}',
+            'shapley': r'Global importances with \textit{Shapley Values}',
+        }
+
+        explainers_descriptions = {
+            'pe' : r"""
                 Feature importances with Average Partial Effects. This method
                 attributes the importance to the i-th variable by calculating
                 the average of the partial derivative w.r.t. i, evaluated for
                 all data in the training set.
 
-                \vfill"""))
+                \vfill""",
 
-            fig, axs = plt.subplots(1, 1, figsize=(8, 4))
-
-            self.explainer_.plot_feature_importances(
-                X = self.X_,
-                ax = axs,
-                importance_method  = 'pe',
-                grouping_threshold = 0.05,
-                target = None,
-                barh_kw = {'edgecolor' : 'k'},
-                show = False
-            )
-
-            plt.tight_layout()
-            plt.savefig(f"{save_path}/average_partial_effects.pdf")
-            plt.close()
+            'ig' : r"""
+                Feature importance using the Average Integrated Gradients
+                importances. The idea is to calculate a local
+                importance score for a feature $i$ by evaluating the integral of
+                the models' gradients $\frac{\partial f}{\partial x_i}$ along a
+                straight line between one baseline and the specific point.
             
-            with doc.create(Figure(position='H')) as figure_plot:
-                figure_plot.add_image(
-                    f"{save_path}/average_partial_effects.pdf",
-                    width=NoEscape(r'0.8\textwidth')
-            )
+                \vfill""",
+
+            'shapley' : r"""
+                Feature importance with the average approximation of the 
+                Shapley values. The shapley values are based on coalition game
+                theory, where players contribute differently to the team. The
+                Shapley value is the total contribution of the player, and
+                represents the overall contribution of the player.
+            
+                \vfill"""
+        }
+
+        explainer_colors = {
+            'pe' : 'green',
+            'ig' : 'blue',
+            'shapley' : 'red'
+        }
+
+        # One image for each explainer
+        for importance_method in importance_methods:
+            
+            doc.append(NoEscape(r"""
+                \lhead{post-execution --- ITEA automatic report}
+                \chead{}
+                \rhead{\today, \currenttime}
                 
-            doc.append(NoEscape(r"\vfill \pagebreak"))
+                \lfoot{}
+                \cfoot{}
+                \rfoot{\thepage\ | \pageref{LastPage}}
+            """))
+
+            # Average partial effects
+            with doc.create(Section(
+                NoEscape(explainer_headers[importance_method]), numbering=False)):   
+
+                doc.append(NoEscape(explainers_descriptions[importance_method]))
+
+                fig, axs = plt.subplots(1, 1, figsize=(8, 4))
+
+                self.explainer_.plot_feature_importances(
+                    X = self.X_,
+                    ax = axs,
+                    importance_method  = importance_method,
+                    grouping_threshold = 0.05,
+                    target = None,
+                    barh_kw = {
+                        'edgecolor' : 'k',
+                        'alpha' : 0.8,
+                        'facecolor' : explainer_colors[importance_method]},
+                    show = False
+                )
+
+                plt.tight_layout()
+                plt.savefig(f"{save_path}/{importance_method}.pdf")
+                plt.close()
+                
+                with doc.create(Figure(position='H')) as figure_plot:
+                    figure_plot.add_image(
+                        f"{save_path}/{importance_method}.pdf",
+                        width=NoEscape(r'0.8\textwidth')
+                )
+                    
+                doc.append(NoEscape(r"\vfill \pagebreak"))
 
         # Normalized partial effects
         with doc.create(Section(
@@ -636,7 +684,8 @@ class ITEA_summarizer:
             plt.show()
 
 
-    def autoreport(self, save_path='.', name_suffix='', use_temp_folder=True):      
+    def autoreport(self,
+        importance_methods=None, save_path='.',name_suffix='', use_temp_folder=True):      
         """automatically generate a pdf using the methods implemented in
         ``ITExpr_inspector``, ``ITExpr_explainer``, and ``ITExpr_texifier``.
 
@@ -659,6 +708,13 @@ class ITEA_summarizer:
 
         Parameters
         ----------
+        importance_methods : string or list[strings] or None, default=None
+            Feature importance method(s) used to generate explanations in
+            the report. Must be one of the possible explainers implemented 
+            (``['pe', 'ig', 'shapley']``) or a list containing one or more
+            of the explainers. If None, then ``'pe'`` will be used. The report
+            will contain one page for each method specified here.
+
         save_path : string, default='.'
             path to save the pdf report. The file will be saved as "Report.pdf",
             unless a ``name_suffix`` is provided.
@@ -686,7 +742,7 @@ class ITEA_summarizer:
         self._report_frontpage(doc, temp_path)
         self._report_pre_execution(doc, temp_path)
         self._report_execution(doc, temp_path)
-        self._report_post_execution(doc, temp_path)
+        self._report_post_execution(doc, temp_path, importance_methods)
 
         doc.generate_pdf(f'{save_path}/Report{name_suffix}', clean_tex=False)
 

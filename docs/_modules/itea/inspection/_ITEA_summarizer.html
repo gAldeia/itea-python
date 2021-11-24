@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -95,19 +95,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
@@ -183,8 +183,8 @@
   <h1>Source code for itea.inspection._ITEA_summarizer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Author:  Guilherme Aldeia</span>
 <span class="c1"># Contact: guilherme.aldeia@ufabc.edu.br</span>
-<span class="c1"># Version: 1.0.2</span>
-<span class="c1"># Last modified: 14-07-2021 by Guilherme Aldeia</span>
+<span class="c1"># Version: 1.0.3</span>
+<span class="c1"># Last modified: 24-11-2021 by Guilherme Aldeia</span>
 
 
 <span class="sd">&quot;&quot;&quot;ITEA_summarizer class.</span>
@@ -486,56 +486,104 @@
             <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="n">out</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot;} \vfill \pagebreak&quot;</span><span class="p">))</span>
 
 
-    <span class="k">def</span> <span class="nf">_report_post_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_report_post_execution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">importance_methods</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Post hoc interpretations of the ITExpr. Several plots will be</span>
 <span class="sd">        generated.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">importance_methods</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">importance_methods</span> <span class="o">=</span> <span class="s1">&#39;pe&#39;</span>
 
-        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">            \lhead{post-execution --- ITEA automatic report}</span>
-<span class="s2">            \chead</span><span class="si">{}</span><span class="s2"></span>
-<span class="s2">            \rhead{\today, \currenttime}</span>
-<span class="s2">            </span>
-<span class="s2">            \lfoot</span><span class="si">{}</span><span class="s2"></span>
-<span class="s2">            \cfoot</span><span class="si">{}</span><span class="s2"></span>
-<span class="s2">            \rfoot{\thepage\ | \pageref</span><span class="si">{LastPage}</span><span class="s2">}</span>
-<span class="s2">        &quot;&quot;&quot;</span><span class="p">))</span>
+        <span class="n">importance_methods</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">importance_methods</span><span class="p">])</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
-        <span class="c1"># Average partial effects</span>
-        <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
-            <span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\textit{Average partial Effects}&#39;</span><span class="p">),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>   
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">importance_methods</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="s1">&#39;ig&#39;</span><span class="p">,</span> <span class="s1">&#39;shapley&#39;</span><span class="p">])):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;importance_methods not in est.classes_, &#39;</span><span class="p">,</span> 
+                             <span class="sa">f</span><span class="s1">&#39;got </span><span class="si">{</span><span class="n">importance_methods</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+        <span class="n">explainer_headers</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;pe&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Global importances with \textit{Average partial Effects}&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ig&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Global importances with \textit{Integrated Gradients}&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;shapley&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;Global importances with \textit{Shapley Values}&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">explainers_descriptions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;pe&#39;</span> <span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">                Feature importances with Average Partial Effects. This method</span>
 <span class="s2">                attributes the importance to the i-th variable by calculating</span>
 <span class="s2">                the average of the partial derivative w.r.t. i, evaluated for</span>
 <span class="s2">                all data in the training set.</span>
 
-<span class="s2">                \vfill&quot;&quot;&quot;</span><span class="p">))</span>
+<span class="s2">                \vfill&quot;&quot;&quot;</span><span class="p">,</span>
 
-            <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+            <span class="s1">&#39;ig&#39;</span> <span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                Feature importance using the Average Integrated Gradients</span>
+<span class="s2">                importances. The idea is to calculate a local</span>
+<span class="s2">                importance score for a feature $i$ by evaluating the integral of</span>
+<span class="s2">                the models&#39; gradients $\frac{\partial f}{\partial x_i}$ along a</span>
+<span class="s2">                straight line between one baseline and the specific point.</span>
+<span class="s2">            </span>
+<span class="s2">                \vfill&quot;&quot;&quot;</span><span class="p">,</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">explainer_</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
-                <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span>
-                <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">,</span>
-                <span class="n">importance_method</span>  <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span>
-                <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
-                <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                <span class="n">barh_kw</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">},</span>
-                <span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="p">)</span>
+            <span class="s1">&#39;shapley&#39;</span> <span class="p">:</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                Feature importance with the average approximation of the </span>
+<span class="s2">                Shapley values. The shapley values are based on coalition game</span>
+<span class="s2">                theory, where players contribute differently to the team. The</span>
+<span class="s2">                Shapley value is the total contribution of the player, and</span>
+<span class="s2">                represents the overall contribution of the player.</span>
+<span class="s2">            </span>
+<span class="s2">                \vfill&quot;&quot;&quot;</span>
+        <span class="p">}</span>
 
-            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/average_partial_effects.pdf&quot;</span><span class="p">)</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">explainer_colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;pe&#39;</span> <span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ig&#39;</span> <span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;shapley&#39;</span> <span class="p">:</span> <span class="s1">&#39;red&#39;</span>
+        <span class="p">}</span>
+
+        <span class="c1"># One image for each explainer</span>
+        <span class="k">for</span> <span class="n">importance_method</span> <span class="ow">in</span> <span class="n">importance_methods</span><span class="p">:</span>
             
-            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Figure</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">figure_plot</span><span class="p">:</span>
-                <span class="n">figure_plot</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/average_partial_effects.pdf&quot;</span><span class="p">,</span>
-                    <span class="n">width</span><span class="o">=</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;0.8\textwidth&#39;</span><span class="p">)</span>
-            <span class="p">)</span>
+            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                \lhead{post-execution --- ITEA automatic report}</span>
+<span class="s2">                \chead</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">                \rhead{\today, \currenttime}</span>
+<span class="s2">                </span>
+<span class="s2">                \lfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">                \cfoot</span><span class="si">{}</span><span class="s2"></span>
+<span class="s2">                \rfoot{\thepage\ | \pageref</span><span class="si">{LastPage}</span><span class="s2">}</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">))</span>
+
+            <span class="c1"># Average partial effects</span>
+            <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
+                <span class="n">NoEscape</span><span class="p">(</span><span class="n">explainer_headers</span><span class="p">[</span><span class="n">importance_method</span><span class="p">]),</span> <span class="n">numbering</span><span class="o">=</span><span class="kc">False</span><span class="p">)):</span>   
+
+                <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="n">explainers_descriptions</span><span class="p">[</span><span class="n">importance_method</span><span class="p">]))</span>
+
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">explainer_</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+                    <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_</span><span class="p">,</span>
+                    <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">,</span>
+                    <span class="n">importance_method</span>  <span class="o">=</span> <span class="n">importance_method</span><span class="p">,</span>
+                    <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+                    <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">barh_kw</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;edgecolor&#39;</span> <span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;alpha&#39;</span> <span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                        <span class="s1">&#39;facecolor&#39;</span> <span class="p">:</span> <span class="n">explainer_colors</span><span class="p">[</span><span class="n">importance_method</span><span class="p">]},</span>
+                    <span class="n">show</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="p">)</span>
+
+                <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">importance_method</span><span class="si">}</span><span class="s2">.pdf&quot;</span><span class="p">)</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 
-            <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
+                <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Figure</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="n">figure_plot</span><span class="p">:</span>
+                    <span class="n">figure_plot</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">importance_method</span><span class="si">}</span><span class="s2">.pdf&quot;</span><span class="p">,</span>
+                        <span class="n">width</span><span class="o">=</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;0.8\textwidth&#39;</span><span class="p">)</span>
+                <span class="p">)</span>
+                    
+                <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">NoEscape</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\vfill \pagebreak&quot;</span><span class="p">))</span>
 
         <span class="c1"># Normalized partial effects</span>
         <span class="k">with</span> <span class="n">doc</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">Section</span><span class="p">(</span>
@@ -819,7 +867,8 @@
             <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="ITEA_summarizer.autoreport"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITEA_summarizer.autoreport">[docs]</a>    <span class="k">def</span> <span class="nf">autoreport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">name_suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">use_temp_folder</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>      
+<div class="viewcode-block" id="ITEA_summarizer.autoreport"><a class="viewcode-back" href="../../../itea.inspection.html#itea.inspection.ITEA_summarizer.autoreport">[docs]</a>    <span class="k">def</span> <span class="nf">autoreport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">importance_methods</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">name_suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">use_temp_folder</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>      
         <span class="sd">&quot;&quot;&quot;automatically generate a pdf using the methods implemented in</span>
 <span class="sd">        ``ITExpr_inspector``, ``ITExpr_explainer``, and ``ITExpr_texifier``.</span>
 
@@ -842,6 +891,13 @@
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
+<span class="sd">        importance_methods : string or list[strings] or None, default=None</span>
+<span class="sd">            Feature importance method(s) used to generate explanations in</span>
+<span class="sd">            the report. Must be one of the possible explainers implemented </span>
+<span class="sd">            (``[&#39;pe&#39;, &#39;ig&#39;, &#39;shapley&#39;]``) or a list containing one or more</span>
+<span class="sd">            of the explainers. If None, then ``&#39;pe&#39;`` will be used. The report</span>
+<span class="sd">            will contain one page for each method specified here.</span>
+
 <span class="sd">        save_path : string, default=&#39;.&#39;</span>
 <span class="sd">            path to save the pdf report. The file will be saved as &quot;Report.pdf&quot;,</span>
 <span class="sd">            unless a ``name_suffix`` is provided.</span>
@@ -869,7 +925,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_report_frontpage</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_report_pre_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_report_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_report_post_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_report_post_execution</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">,</span> <span class="n">importance_methods</span><span class="p">)</span>
 
         <span class="n">doc</span><span class="o">.</span><span class="n">generate_pdf</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">/Report</span><span class="si">{</span><span class="n">name_suffix</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">clean_tex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 

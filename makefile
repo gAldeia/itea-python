@@ -2,7 +2,7 @@ PYTHON = python
 
 EXAMPLES := $(shell find "./examples/"  -maxdepth 1 -name '*.ipynb')
 
-all: coverage doc build-dist clean
+all: build-dist coverage doc clean
 
 profile:
 	# before profiling remind of do make all to compile and install the modifications!
@@ -11,6 +11,14 @@ profile:
 
 test:
 	${PYTHON} setup.py pytest
+
+build-dist: 
+	rm -f ./dist/*
+
+	${PYTHON} setup.py develop
+	${PYTHON} setup.py sdist
+
+	${PYTHON} -m pip install ./dist/*.tar.gz
 
 coverage: 
 	${PYTHON} -m coverage run --source=. setup.py pytest
@@ -35,14 +43,6 @@ doc: $(EXAMPLES) copy-notebooks generate-report
 	# May require pip install Jinja2==2.11
 	sphinx-build -b html ./docsource/source ./docs
 	touch ./docs/.nojekyll
-
-build-dist: 
-	rm -f ./dist/*
-
-	${PYTHON} setup.py develop
-	${PYTHON} setup.py sdist
-
-	${PYTHON} -m pip install ./dist/*.tar.gz
 
 clean:
 	rm -r .pytest_cache

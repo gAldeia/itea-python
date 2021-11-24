@@ -789,7 +789,7 @@ several interpretability plots for the expression.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="itea.inspection.ITEA_summarizer.autoreport">
-<span class="sig-name descname"><span class="pre">autoreport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_temp_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/inspection/_ITEA_summarizer.html#ITEA_summarizer.autoreport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.inspection.ITEA_summarizer.autoreport" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">autoreport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">importance_methods</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_temp_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/itea/inspection/_ITEA_summarizer.html#ITEA_summarizer.autoreport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#itea.inspection.ITEA_summarizer.autoreport" title="Permalink to this definition">¶</a></dt>
 <dd><p>automatically generate a pdf using the methods implemented in
 <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code>, <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>, and <code class="docutils literal notranslate"><span class="pre">ITExpr_texifier</span></code>.</p>
 <p>The idea is to simplify the generation of the plots and tables,
@@ -807,6 +807,11 @@ designed path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>importance_methods</strong> (<em>string</em><em> or </em><em>list</em><em>[</em><em>strings</em><em>] or </em><em>None</em><em>, </em><em>default=None</em>) – Feature importance method(s) used to generate explanations in
+the report. Must be one of the possible explainers implemented
+(<code class="docutils literal notranslate"><span class="pre">['pe',</span> <span class="pre">'ig',</span> <span class="pre">'shapley']</span></code>) or a list containing one or more
+of the explainers. If None, then <code class="docutils literal notranslate"><span class="pre">'pe'</span></code> will be used. The report
+will contain one page for each method specified here.</p></li>
 <li><p><strong>save_path</strong> (<em>string</em><em>, </em><em>default='.'</em>) – path to save the pdf report. The file will be saved as “Report.pdf”,
 unless a <code class="docutils literal notranslate"><span class="pre">name_suffix</span></code> is provided.
 A Te</p></li>

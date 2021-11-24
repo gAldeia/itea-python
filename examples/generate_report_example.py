@@ -62,5 +62,7 @@ if __name__ == '__main__':
     summarizer = (
         ITEA_summarizer(itea=reg)
         .fit(X_train, y_train)
-        .autoreport(save_path='./examples/')
+        .autoreport(
+            importance_methods=['pe', 'ig', 'shapley'], 
+            save_path='./examples/')
     )
