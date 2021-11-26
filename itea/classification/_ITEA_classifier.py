@@ -229,8 +229,10 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         
         self._check_args(X, y)
 
-        self._greater_is_better = True if self.fitness_f == 'accuracy_score' \
-            else False 
+        if self.fitness_f in ['accuracy_score', None]:
+            self._greater_is_better = True
+        else:
+            self._greater_is_better = False 
 
         # Ignoring convergence warnings only
         with warnings.catch_warnings():

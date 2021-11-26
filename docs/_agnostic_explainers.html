@@ -547,16 +547,16 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
-  0 |         0.879653 |     1.109206 |        1.153697 | 1min12seg
- 10 |         0.815819 |     0.852481 |        1.133898 | 4min33seg
- 20 |         0.785301 |     0.795977 |        0.872630 | 3min41seg
- 30 |         0.774451 |     0.780758 |        0.826534 | 3min24seg
- 40 |         0.769231 |     0.776211 |        0.800035 | 2min35seg
- 50 |         0.769231 |     0.774910 |        0.861931 | 2min1seg
- 60 |         0.763084 |     0.780482 |        0.995355 | 1min9seg
- 70 |         0.748003 |     0.773957 |        0.860793 | 0min20seg
+  0 |         0.879653 |     1.109206 |        1.153697 | 1min21sec
+ 10 |         0.815819 |     0.852481 |        1.133898 | 4min29sec
+ 20 |         0.785301 |     0.795977 |        0.872630 | 3min27sec
+ 30 |         0.774451 |     0.780758 |        0.826534 | 3min16sec
+ 40 |         0.769231 |     0.776211 |        0.800035 | 2min27sec
+ 50 |         0.769231 |     0.774910 |        0.861931 | 1min55sec
+ 60 |         0.763084 |     0.780482 |        0.995355 | 1min7sec
+ 70 |         0.748003 |     0.773957 |        0.860793 | 0min20sec
 -15.231*log(MedInc * Population * AveOccup * Latitude^2) + 1.323*log(MedInc^2 * AveBedrms * Longitude^2) + 37.981*log(MedInc * Population * AveOccup * Latitude * Longitude^2) + -0.399*log(MedInc^2 * AveRooms^2 * AveBedrms * AveOccup * Latitude^2 * Longitude^2) + -11.439*log(MedInc^2 * Population^2 * AveOccup^2 * Latitude^2 * Longitude^2) + -202.481
 </pre></div></div>
 </div>
@@ -665,7 +665,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "fb5c63e2a1434468b8bfe9d246f1b000", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "a441518eaf324732932ec1ada5be2af7", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -724,7 +724,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "008ee725123b4e8e84e8cc0f945691c7", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "0ec628e3194c4e5eacd796138d4a9035", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -28157,7 +28157,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
         this.color = _d2.default.scale.category10();
         this.color('predicted_value');
         // + 2 is due to it being a float
-        var num_digits = Math.floor(Math.max(Math.log10(min_value), Math.log10(max_value))) + 2;
+        console.log('CREATING THIS');
+        var num_digits = Math.floor(Math.max(Math.log10(Math.abs(min_value)), Math.log10(Math.abs(max_value)))) + 2;
         num_digits = Math.max(num_digits, 3);
 
         var corner_width = 12 * num_digits;
@@ -37855,25 +37856,25 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map </script></head><body>
-        <div class="lime top_div" id="top_divL1XUENEGN9SH3AU"></div>
+        <div class="lime top_div" id="top_div0AB6WFC4BHT8VBQ"></div>
 
         <script>
-        var top_div = d3.select('#top_divL1XUENEGN9SH3AU').classed('lime top_div', true);
+        var top_div = d3.select('#top_div0AB6WFC4BHT8VBQ').classed('lime top_div', true);
 
 
                     var pp_div = top_div.append('div')
                                         .classed('lime predicted_value', true);
                     var pp_svg = pp_div.append('svg').style('width', '100%');
-                    var pp = new lime.PredictedValue(pp_svg, 0.28196742727425317, -3.763290302298742, 7.566858594158589);
+                    var pp = new lime.PredictedValue(pp_svg, 0.28196742727425317, -3.583480794523439, 6.998453776091935);
 
         var exp_div;
             var exp = new lime.Explanation(["negative", "positive"]);
 
             exp_div = top_div.append('div').classed('lime explanation', true);
-            exp.show([["MedInc <= 2.57", -1.4483624030342772], ["AveOccup > 3.28", -1.0524820731822282], ["34.27 < Latitude <= 37.72", -0.48569508192318894], ["AveRooms <= 4.46", 0.47416240766622475], ["-121.81 < Longitude <= -118.51", 0.46985865859207276], ["1.01 < AveBedrms <= 1.05", -0.15150561686760314], ["18.00 < HouseAge <= 29.00", -0.022629475606034986], ["1170.50 < Population <= 1729.00", 0.016447572467936048]], 1, exp_div);
+            exp.show([["MedInc <= 2.57", -1.453173449308923], ["AveOccup > 3.28", -1.0832949121757307], ["-121.81 < Longitude <= -118.51", 0.4834881015216839], ["34.27 < Latitude <= 37.72", -0.4695356355414705], ["AveRooms <= 4.46", 0.44396652708988416], ["1.01 < AveBedrms <= 1.05", -0.12465505195061194], ["18.00 < HouseAge <= 29.00", 0.033335316202563366], ["1170.50 < Population <= 1729.00", 0.01064929047662758]], 1, exp_div);
 
         var raw_div = top_div.append('div');
-            exp.show_raw_tabular([["MedInc", "1.68", -1.4483624030342772], ["AveOccup", "3.88", -1.0524820731822282], ["Latitude", "36.06", -0.48569508192318894], ["AveRooms", "4.19", 0.47416240766622475], ["Longitude", "-119.01", 0.46985865859207276], ["AveBedrms", "1.02", -0.15150561686760314], ["HouseAge", "25.00", -0.022629475606034986], ["Population", "1392.00", 0.016447572467936048]], 1, raw_div);
+            exp.show_raw_tabular([["MedInc", "1.68", -1.453173449308923], ["AveOccup", "3.88", -1.0832949121757307], ["Longitude", "-119.01", 0.4834881015216839], ["Latitude", "36.06", -0.4695356355414705], ["AveRooms", "4.19", 0.44396652708988416], ["AveBedrms", "1.02", -0.12465505195061194], ["HouseAge", "25.00", 0.033335316202563366], ["Population", "1392.00", 0.01064929047662758]], 1, raw_div);
 
         </script>
         </body></html></div>
@@ -37931,12 +37932,12 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;names&#39;: [&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;, &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], &#39;scores&#39;: masked_array(data=[5.1898983877305955, 0.0, 3.4694871758931534,
-                   3.2587057616663047, 0.7891995123475715,
-                   1.9386656396830597, 4.06142399820332,
-                   4.4510886539917704],
+{&#39;names&#39;: [&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;, &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], &#39;scores&#39;: masked_array(data=[5.338079860378901, 0.0, 3.234932254223549,
+                   3.3656159672731563, 0.8078390455963547,
+                   1.9215062891530326, 4.056309025452067,
+                   4.454333671566609],
              mask=[False, False, False, False, False, False, False, False],
-       fill_value=1e+20), &#39;convergence_index&#39;: 0.04545696662135615}
+       fill_value=1e+20), &#39;convergence_index&#39;: 0.04371404122595719}
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -37974,7 +37975,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "3e58f796be84401a90b945504fae684f", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e30188c204ba46c0ae1c04844bd742f4", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -38013,7 +38014,7 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "f26c785819b74562a7d561962558c47d", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6cdeb98b48e84e6d9313a66a905a7c98", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">

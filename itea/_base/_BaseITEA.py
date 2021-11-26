@@ -333,7 +333,7 @@ class BaseITEA(BaseEstimator):
         if greater_is_better:
             # making sure infinite fitness are negative
             select_f = lambda comp: comp[np.argmax(
-                [c._fitness if np.isfinite(c) else -np.inf for c in comp])]
+                [c._fitness if np.isfinite(c._fitness) else -np.inf for c in comp])]
         else: # smaller is better. By default invalid itexprs have +inf fitness
             select_f = lambda comp: comp[np.argmin([c._fitness for c in comp])] 
 
@@ -418,8 +418,10 @@ class BaseITEA(BaseEstimator):
 
         # At this point, all individuals in the population are fitted.
         if greater_is_better:
-            return pop[np.argmax([p._fitness for p in pop])]
-        else:
+            # making sure infinite fitness are negative
+            return pop[np.argmax(
+                [p._fitness if np.isfinite(p._fitness) else -np.inf for p in pop])]
+        else: # smaller is better. By default invalid itexprs have +inf fitness
             return pop[np.argmin([p._fitness for p in pop])]
 
 

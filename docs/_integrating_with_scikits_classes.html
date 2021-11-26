@@ -717,7 +717,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[&#39;INDUS&#39; &#39;RM&#39; &#39;PTRATIO&#39; &#39;LSTAT&#39;]
+[&#39;INDUS&#39; &#39;NOX&#39; &#39;RM&#39; &#39;LSTAT&#39;]
 </pre></div></div>
 </div>
 <p>Without going into further details or making use of pre-processing rigor, let’s just look at the correlation between the selected variables and the dependent variable (target variable).</p>
@@ -813,16 +813,16 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
+gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
-  0 |         4.494823 |     6.006768 |        9.383432 | 0min5seg
- 10 |         4.347476 |     4.472462 |        4.570941 | 0min5seg
- 20 |         4.127689 |     4.343628 |        4.883814 | 0min5seg
- 30 |         3.960637 |     4.200705 |        4.868010 | 0min4seg
- 40 |         3.911052 |     4.054753 |        4.577973 | 0min3seg
- 50 |         3.858766 |     4.021206 |        5.124044 | 0min2seg
- 60 |         3.737821 |     3.963594 |        4.741590 | 0min2seg
- 70 |         3.722064 |     3.857224 |        4.538259 | 0min1seg
+  0 |         4.768589 |     5.768432 |        9.387225 | 0min2sec
+ 10 |         4.301443 |     4.560781 |        4.914515 | 0min2sec
+ 20 |         4.218327 |     4.367407 |        4.679878 | 0min2sec
+ 30 |         4.058739 |     4.215670 |        6.612622 | 0min2sec
+ 40 |         3.962236 |     4.207883 |        6.405873 | 0min2sec
+ 50 |         3.962236 |     4.176876 |        7.135065 | 0min1sec
+ 60 |         3.962236 |     4.186288 |        4.764542 | 0min1sec
+ 70 |         3.916771 |     4.141421 |        4.779798 | 0min1sec
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -833,19 +833,19 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time (s)
 <div class="highlight"><pre>
 Pipeline(steps=[(&#39;selectKbest&#39;,
                  SelectKBest(k=4,
-                             score_func=&lt;function mutual_info_regression at 0x7fa48c67e0e0&gt;)),
+                             score_func=&lt;function mutual_info_regression at 0x7f89b6d52dd0&gt;)),
                 (&#39;itea&#39;,
                  ITEA_regressor(gens=75,
-                                labels=array([&#39;INDUS&#39;, &#39;RM&#39;, &#39;PTRATIO&#39;, &#39;LSTAT&#39;], dtype=&#39;&lt;U7&#39;),
+                                labels=array([&#39;INDUS&#39;, &#39;NOX&#39;, &#39;RM&#39;, &#39;LSTAT&#39;], dtype=&#39;&lt;U7&#39;),
                                 popsize=75,
                                 tfuncs={&#39;exp&#39;: &lt;ufunc &#39;exp&#39;&gt;,
-                                        &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7fa47ac53440&gt;,
+                                        &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7f89ab6f3dd0&gt;,
                                         &#39;log&#39;: &lt;ufunc &#39;log&#39;&gt;,
-                                        &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7fa47ac533b0&gt;},
+                                        &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7f89ab6f3950&gt;},
                                 tfuncs_dx={&#39;exp&#39;: &lt;ufunc &#39;exp&#39;&gt;,
-                                           &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7fa47ac537a0&gt;,
-                                           &#39;log&#39;: &lt;function &lt;lambda&gt; at 0x7fa47ac53680&gt;,
-                                           &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7fa47ac53710&gt;},
+                                           &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7f89aafe2a70&gt;,
+                                           &#39;log&#39;: &lt;function &lt;lambda&gt; at 0x7f89aafe2950&gt;,
+                                           &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7f89aafe29e0&gt;},
                                 verbose=10))])
 </pre></div></div>
 </div>
@@ -864,7 +864,7 @@ Pipeline(steps=[(&#39;selectKbest&#39;,
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-116.811*sqrt.abs(RM^2 * PTRATIO^-1 * LSTAT^-1) + -2837.853*sqrt.abs(PTRATIO^-2 * LSTAT^-2) + 4.241*sqrt.abs(INDUS^2 * RM^-2 * PTRATIO^2 * LSTAT^-2) + -3.051*sqrt.abs(INDUS * RM * PTRATIO * LSTAT^-1) + -131.327*sqrt.abs(INDUS^-1 * RM * PTRATIO^-2) + 9.193
+0.086*id(INDUS * NOX^-2 * RM^2) + -18.892*log(NOX^-2 * RM * LSTAT^2) + -18.139*log(NOX^-1 * LSTAT^-2) + -0.002*sqrt.abs(INDUS^2 * NOX^2 * RM^2 * LSTAT) + 0.705*id(INDUS * NOX^-2 * RM^2 * LSTAT^-2) + -21.588
 </pre></div></div>
 </div>
 </div>
@@ -969,7 +969,7 @@ n_candidates: 2
 n_resources: 336
 Fitting 3 folds for each of 2 candidates, totalling 6 fits
 ----------
-662.42 seconds
+222.4 seconds
 </pre></div></div>
 </div>
 <p>Now that we have the best result, let’s preview the grid of different settings for exponent limits and subsets of transform functions, and let’s also create a final model with the best found setting.</p>
@@ -1046,12 +1046,12 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[[   -5.09395879   -44.23346839   -13.67869625   -44.57780959]
- [  -27.11242274 -1744.38996182    -7.85684035   -13.56452419]
- [  -90.89203357  -511.10179513   -13.56799273    -7.08779375]
- [   -4.12283391  -106.49487754    -4.24583462   -25.97841441]
- [  -77.87515235  -274.05549217    -9.78675854   -14.95150352]
- [  -80.43944342   -93.74354187   -67.71280793   -12.00016489]]
+[[-1.97417141e+02 -2.46071938e+01 -8.44492769e+01 -1.03811080e+01]
+ [-1.15262941e+01 -6.56115272e+15 -5.41812874e+02 -1.82725318e+01]
+ [-3.63525617e+01 -2.17213496e+01 -9.62046613e+01 -3.41900820e+01]
+ [-1.26314994e+01 -7.06547429e+00 -4.19566596e+00 -3.05124383e+01]
+ [-2.26318495e+01 -7.44435538e+01 -5.82059580e+02 -5.72124969e+00]
+ [-2.61751169e+01 -1.14023381e+01 -4.14897391e+00 -5.76394867e+00]]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -1088,7 +1088,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.7179862092020228
+0.7876885603830583
 </pre></div></div>
 </div>
 <p>ITEA is an estimator, and the interpretability classes only work with instances of <code class="docutils literal notranslate"><span class="pre">ITEA</span></code> or <code class="docutils literal notranslate"><span class="pre">ITExpr</span></code>.</p>

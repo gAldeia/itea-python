@@ -196,7 +196,10 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         
         self._check_args(X, y)
 
-        self._greater_is_better = True if self.fitness_f == 'r2' else False 
+        if self.fitness_f in ['r2']:
+            self._greater_is_better = True
+        else:
+            self._greater_is_better = False 
 
         self.bestsol_ = self._evolve(
             X, y, self.itexpr_class, self._greater_is_better)

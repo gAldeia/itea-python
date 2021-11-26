@@ -535,11 +535,11 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
-  0 |         0.879653 |     1.075672 |        1.153701 | 0min39sec
- 10 |         0.794826 |     0.828574 |        0.983679 | 1min6sec
- 20 |         0.791858 |     0.794191 |        0.802730 | 0min51sec
- 30 |         0.785556 |     0.790837 |        0.892611 | 0min39sec
- 40 |         0.773925 |     0.790826 |        1.024342 | 0min16sec
+  0 |         0.879653 |     1.075672 |        1.153701 | 0min41sec
+ 10 |         0.794826 |     0.828574 |        0.983679 | 1min9sec
+ 20 |         0.791858 |     0.794191 |        0.802730 | 0min57sec
+ 30 |         0.785556 |     0.790837 |        0.892611 | 0min43sec
+ 40 |         0.773925 |     0.790826 |        1.024342 | 0min19sec
 </pre></div></div>
 </div>
 </div>
@@ -601,7 +601,7 @@ Final expression:
 0.0*sqrt.abs(MedInc^2 * AveRooms^2 * AveBedrms * Population * Longitude) +
 -1.305
 
-Elapsed time: 89.46564817428589
+Elapsed time: 98.63136196136475
 
 Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;Population&#39; &#39;AveOccup&#39;
  &#39;Latitude&#39; &#39;Longitude&#39;]
@@ -614,7 +614,7 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># just remembering that ITEA and ITExpr implements scikits</span>
 <span class="c1"># base classes. We can check all parameters with:</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">get_params</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">get_params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -623,8 +623,17 @@ Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;expr&#39;: [(&#39;log&#39;, [2, 1, 0, 1, 2, 0, 1, 0]), (&#39;log&#39;, [0, 2, 2, 0, 2, 1, 0, 2]), (&#39;log&#39;, [2, 0, 2, 1, 2, 0, 2, 2]), (&#39;log&#39;, [0, 0, 1, 0, 0, 0, 0, 2]), (&#39;sqrt.abs&#39;, [2, 0, 2, 1, 1, 0, 0, 1])], &#39;labels&#39;: array([&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
-       &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], dtype=&#39;&lt;U10&#39;), &#39;tfuncs&#39;: {&#39;log&#39;: &lt;ufunc &#39;log&#39;&gt;, &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7f9434071050&gt;, &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7f9434071320&gt;, &#39;sin&#39;: &lt;ufunc &#39;sin&#39;&gt;, &#39;cos&#39;: &lt;ufunc &#39;cos&#39;&gt;, &#39;exp&#39;: &lt;ufunc &#39;exp&#39;&gt;}}
+&lt;bound method BaseEstimator.get_params of ITExpr_regressor(expr=[(&#39;log&#39;, [2, 1, 0, 1, 2, 0, 1, 0]),
+                       (&#39;log&#39;, [0, 2, 2, 0, 2, 1, 0, 2]),
+                       (&#39;log&#39;, [2, 0, 2, 1, 2, 0, 2, 2]),
+                       (&#39;log&#39;, [0, 0, 1, 0, 0, 0, 0, 2]),
+                       (&#39;sqrt.abs&#39;, [2, 0, 2, 1, 1, 0, 0, 1])],
+                 labels=array([&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
+       &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], dtype=&#39;&lt;U10&#39;),
+                 tfuncs={&#39;cos&#39;: &lt;ufunc &#39;cos&#39;&gt;, &#39;exp&#39;: &lt;ufunc &#39;exp&#39;&gt;,
+                         &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7f9a607e9440&gt;,
+                         &#39;log&#39;: &lt;ufunc &#39;log&#39;&gt;, &#39;sin&#39;: &lt;ufunc &#39;sin&#39;&gt;,
+                         &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7f9a61057b00&gt;})&gt;
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">

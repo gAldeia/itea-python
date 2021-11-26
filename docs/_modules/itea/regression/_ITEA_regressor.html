@@ -379,7 +379,10 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_args</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_greater_is_better</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">==</span> <span class="s1">&#39;r2&#39;</span> <span class="k">else</span> <span class="kc">False</span> 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_greater_is_better</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_greater_is_better</span> <span class="o">=</span> <span class="kc">False</span> 
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bestsol_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evolve</span><span class="p">(</span>
             <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_greater_is_better</span><span class="p">)</span>
