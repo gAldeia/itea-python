@@ -200,12 +200,8 @@ the results in a .csv file.
 To run the benchmark, inside the ``./benchmark/regression`` folder:
 
 ```shell
-$ python regression_benchmark.py <data set name>
+$ python regression_benchmark.py
 ```
-
-You can run multiple processes at the same time, as long as there is no
-concurrent execution over the same data set. The .lock file will prevent
-racing conditions.
 
 You can check the performance of the results by analyzing the 
 ``regression_benchmark_res.csv``. For a quick check, on python:
