@@ -5,7 +5,7 @@ description = open('README.md', encoding='utf-8').read()
 setup(
     name             = "itea",
     packages         = find_packages(),
-    version          = "1.0.2",
+    version          = "1.1.0",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
     # Only the "introduction" in README (text below the horizontal rule)
@@ -42,7 +42,7 @@ setup(
     tests_require   = [
         # Used in tests
         "pytest",
-        "pytest-html"
+        "pytest-html",
 
         # Used in profiling
         "snakeviz",

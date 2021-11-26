@@ -12,7 +12,7 @@ import numpy as np
 
 from sklearn.base             import RegressorMixin
 from sklearn.utils.validation import check_array, check_is_fitted
-from sklearn.metrics          import mean_squared_error
+from sklearn.metrics          import mean_squared_error, r2_score
 from sklearn.exceptions       import NotFittedError
 from scipy.linalg             import lstsq
 
@@ -24,7 +24,7 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
     in ``ITEA_regressor.bestsol_``.
     """
 
-    def __init__(self, *, expr, tfuncs, labels = [], **kwargs):
+    def __init__(self, *, expr, tfuncs, labels = [], fitness_f=None, **kwargs):
         r"""Constructor method.
 
         Parameters
@@ -45,6 +45,12 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
             list containing the labels of the variables that will be used.
             When the list of labels is empty, the variables are named
             :math:`x_0, x_1, \cdots`.
+
+        fitness_f : string or None, default=None
+            String with the method to evaluate the fitness of the expressions.
+            Can be one of ``['rmse', 'mse', 'r2']``. If none is given, then
+            'rmse' is used as default fitness function for the regression
+            task. Raises ValueError if the attribute value is not correct.
 
         Attributes
         ----------
@@ -67,8 +73,7 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
         super(ITExpr_regressor, self).__init__(
             expr=expr, tfuncs=tfuncs, labels=labels)
 
-        self.fitness_f = lambda pred, y: mean_squared_error(
-            pred, y, squared=False)
+        self.fitness_f = fitness_f
 
 
     def covariance_matrix(self, X, y):
@@ -177,10 +182,21 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
 
                 pred = np.dot(self._eval(X), self.coef_) + self.intercept_
                 
-                self._fitness   = self.fitness_f(pred, y)
+                if self.fitness_f == 'rmse' or self.fitness_f == None:
+                    self._fitness = mean_squared_error(pred, y, squared=False)
+                elif self.fitness_f == 'mse':
+                    self._fitness = mean_squared_error(pred, y, squared=True)
+                elif self.fitness_f == 'r2':
+                    self._fitness = r2_score(pred, y)
+                else:
+                    raise ValueError('Unknown fitness function. passed '
+                        f'value for fitness_f is {self.fitness_f}, expected '
+                        'one of ["rmse", "mse", "r2"]')
             else:
                 self.coef_      = np.ones(self.n_terms)
                 self.intercept_ = 0.0
+
+                # Infinite fitness are filtered of the population in ITEA
                 self._fitness   = np.inf
 
                 # Failed to fit. Default values were set and the is_fitted

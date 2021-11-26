@@ -1,4 +1,5 @@
 import pytest
+from scipy.optimize import check_grad
 
 import numpy           as np
 import jax.numpy       as jnp

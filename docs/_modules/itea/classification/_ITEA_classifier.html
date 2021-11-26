@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -95,19 +95,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
@@ -218,6 +218,7 @@
         <span class="n">tfuncs_dx</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">expolim</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
         <span class="n">max_terms</span>       <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">fitness_f</span>       <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">simplify_method</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
         <span class="n">random_state</span>    <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">verbose</span>         <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -241,6 +242,11 @@
 
 <span class="sd">        max_terms : int, default=5</span>
 <span class="sd">            the max number of IT terms allowed.</span>
+
+<span class="sd">        fitness_f : string or None, default=&#39;accuracy_score&#39;</span>
+<span class="sd">            String with the method to evaluate the fitness of the expressions.</span>
+<span class="sd">            Can be one of ``[&#39;accuracy_score&#39;]``. If none is given, then</span>
+<span class="sd">            the accuracy_score function will be used.</span>
 
 <span class="sd">        simplify_method : string or None, default=None</span>
 <span class="sd">            String with the name of the simplification method to be used</span>
@@ -332,7 +338,10 @@
             <span class="n">labels</span>          <span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span>      <span class="o">=</span> <span class="n">ITExpr_classifier</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">greater_is_better</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># BaseITEA sets this value to None. Here we overwrite the original</span>
+        <span class="c1"># value with the value specific for the task (regression/classification)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">=</span> <span class="n">fitness_f</span>
 
 
     <span class="k">def</span> <span class="nf">_check_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -363,6 +372,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">default_predictor_kw</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span><span class="p">}</span>
 
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;accuracy_score&#39;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown fitness function for the &#39;</span>
+                        <span class="s1">&#39;classification task. The value you have passed for &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;the attribute fitness_f is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="si">}</span><span class="s1">, &#39;</span>
+                        <span class="s1">&#39;expected one of [&quot;accuracy_score&quot;]&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ITEA_classifier.fit"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITEA_classifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Performs the evolutionary process.</span>
@@ -396,11 +412,14 @@
         
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_args</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_greater_is_better</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">==</span> <span class="s1">&#39;accuracy_score&#39;</span> \
+            <span class="k">else</span> <span class="kc">False</span> 
+
         <span class="c1"># Ignoring convergence warnings only</span>
         <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">ConvergenceWarning</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bestsol_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evolve</span><span class="p">(</span>
-                <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">greater_is_better</span><span class="p">)</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr_class</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_greater_is_better</span><span class="p">)</span>
             
         <span class="bp">self</span><span class="o">.</span><span class="n">fitness_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">_fitness</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">classes_</span>

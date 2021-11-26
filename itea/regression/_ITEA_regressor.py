@@ -33,6 +33,7 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         tfuncs_dx       = None,
         expolim         = (-2, 2),
         max_terms       = 5,
+        fitness_f       = None,
         simplify_method = None, 
         random_state    = None,
         verbose         = None,
@@ -55,6 +56,11 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
 
         max_terms : int, default=5
             the max number of IT terms allowed.
+
+        fitness_f : string or None, default='rmse'
+            String with the method to evaluate the fitness of the expressions.
+            Can be one of ``['rmse', 'mse', 'r2']``. If none is given, then
+            the rmse function will be used.
 
         simplify_method : string or None, default=None
             String with the name of the simplification method to be used
@@ -131,8 +137,11 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
             predictor_kw    = {},
             labels          = labels)
 
-        self.itexpr_class      = ITExpr_regressor
-        self.greater_is_better = False
+        self.itexpr_class = ITExpr_regressor
+
+        # BaseITEA sets this value to None. Here we overwrite the original
+        # value with the value specific for the task (regression/classification)
+        self.fitness_f = fitness_f
 
 
     def _check_args(self, X, y):
@@ -147,6 +156,13 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         """
 
         super()._check_args(X, y)
+
+        if self.fitness_f is not None:
+            if self.fitness_f not in ['rmse', 'mse', 'r2']:
+                raise ValueError('Unknown fitness function for the regression '
+                        'task. The value you have passed for the attribute '
+                        f'fitness_f is {self.fitness_f}, expected one of '
+                        '["rmse", "mse", "r2"]')
 
 
     def fit(self, X, y):
@@ -180,8 +196,10 @@ class ITEA_regressor(BaseITEA, RegressorMixin):
         
         self._check_args(X, y)
 
+        self._greater_is_better = True if self.fitness_f == 'r2' else False 
+
         self.bestsol_ = self._evolve(
-            X, y, self.itexpr_class, self.greater_is_better)
+            X, y, self.itexpr_class, self._greater_is_better)
         
         self.fitness_ = self.bestsol_._fitness
 

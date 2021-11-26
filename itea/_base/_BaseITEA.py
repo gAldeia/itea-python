@@ -147,6 +147,11 @@ class BaseITEA(BaseEstimator):
         self.simplify_method = simplify_method
         self.predictor_kw    = predictor_kw
 
+        # This should always be none for the base class, so the default
+        # fitness function for each task (regression/classification) is
+        # correctly used.
+        self.fitness_f = None
+
 
     def _check_args(self, X, y):
         """This method provides a simple verification of the arguments to be
@@ -241,7 +246,7 @@ class BaseITEA(BaseEstimator):
             
             itexpr = itexpr_class(
                 expr=sanitize(expr), tfuncs=self.tfuncs, labels=self.labels,
-                **self.predictor_kw
+                fitness_f = self.fitness_f, **self.predictor_kw
             )
     
             with np.errstate(all='ignore'):
@@ -267,8 +272,11 @@ class BaseITEA(BaseEstimator):
         mutated = [mutate_individual(p.expr, self.max_terms, self.expolim,
                           self.tfuncs, nvars, random_state) for p in pop]
 
-        newpop = [itexpr_class(expr = sanitize(expr), tfuncs = self.tfuncs,
-                 labels = self.labels, **self.predictor_kw) for expr in mutated]
+        newpop = [itexpr_class(
+                    expr = sanitize(expr), tfuncs = self.tfuncs,
+                    labels = self.labels,
+                    fitness_f = self.fitness_f, **self.predictor_kw
+                    ) for expr in mutated]
 
         return newpop
 
@@ -323,8 +331,10 @@ class BaseITEA(BaseEstimator):
         # Takes an array of competitors and returns the most valuable to the
         # task
         if greater_is_better:
-            select_f = lambda comp: comp[np.argmax([c._fitness for c in comp])]
-        else:
+            # making sure infinite fitness are negative
+            select_f = lambda comp: comp[np.argmax(
+                [c._fitness if np.isfinite(c) else -np.inf for c in comp])]
+        else: # smaller is better. By default invalid itexprs have +inf fitness
             select_f = lambda comp: comp[np.argmin([c._fitness for c in comp])] 
 
         if self.simplify_method is not None:

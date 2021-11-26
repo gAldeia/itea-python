@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -95,19 +95,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
@@ -330,6 +330,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="o">=</span> <span class="n">simplify_method</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span>    <span class="o">=</span> <span class="n">predictor_kw</span>
 
+        <span class="c1"># This should always be none for the base class, so the default</span>
+        <span class="c1"># fitness function for each task (regression/classification) is</span>
+        <span class="c1"># correctly used.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">=</span> <span class="kc">None</span>
+
 
     <span class="k">def</span> <span class="nf">_check_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This method provides a simple verification of the arguments to be</span>
@@ -424,7 +429,7 @@
             
             <span class="n">itexpr</span> <span class="o">=</span> <span class="n">itexpr_class</span><span class="p">(</span>
                 <span class="n">expr</span><span class="o">=</span><span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
-                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span>
+                <span class="n">fitness_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span>
             <span class="p">)</span>
     
             <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">):</span>
@@ -450,8 +455,11 @@
         <span class="n">mutated</span> <span class="o">=</span> <span class="p">[</span><span class="n">mutate_individual</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">expr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">expolim</span><span class="p">,</span>
                           <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">nvars</span><span class="p">,</span> <span class="n">random_state</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">]</span>
 
-        <span class="n">newpop</span> <span class="o">=</span> <span class="p">[</span><span class="n">itexpr_class</span><span class="p">(</span><span class="n">expr</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span>
-                 <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span><span class="p">)</span> <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">mutated</span><span class="p">]</span>
+        <span class="n">newpop</span> <span class="o">=</span> <span class="p">[</span><span class="n">itexpr_class</span><span class="p">(</span>
+                    <span class="n">expr</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="n">expr</span><span class="p">),</span> <span class="n">tfuncs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfuncs</span><span class="p">,</span>
+                    <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span>
+                    <span class="n">fitness_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">predictor_kw</span>
+                    <span class="p">)</span> <span class="k">for</span> <span class="n">expr</span> <span class="ow">in</span> <span class="n">mutated</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="n">newpop</span>
 
@@ -506,8 +514,10 @@
         <span class="c1"># Takes an array of competitors and returns the most valuable to the</span>
         <span class="c1"># task</span>
         <span class="k">if</span> <span class="n">greater_is_better</span><span class="p">:</span>
-            <span class="n">select_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">comp</span><span class="p">:</span> <span class="n">comp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">])]</span>
-        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># making sure infinite fitness are negative</span>
+            <span class="n">select_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">comp</span><span class="p">:</span> <span class="n">comp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">else</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">])]</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># smaller is better. By default invalid itexprs have +inf fitness</span>
             <span class="n">select_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">comp</span><span class="p">:</span> <span class="n">comp</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">_fitness</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">])]</span> 
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simplify_method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

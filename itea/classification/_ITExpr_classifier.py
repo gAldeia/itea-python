@@ -29,10 +29,8 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
     in ``ITEA_classifier.bestsol_``.
     """
 
-    def __init__(self, *,
-        expr, tfuncs, labels = [],
-        max_iter=100, alpha=0., beta=0.,
-        **kwargs
+    def __init__(self, *, expr, tfuncs, labels = [], fitness_f=None, 
+        max_iter=100, alpha=0., beta=0., **kwargs
     ):
         r"""Constructor method.
 
@@ -54,6 +52,12 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
             list containing the labels of the variables that will be used.
             When the list of labels is empty, the variables are named
             :math:`x_0, x_1, \cdots`.
+
+        fitness_f : string or None, default=None
+            String with the method to evaluate the fitness of the expressions.
+            Can be one of ``['accuracy_score']``. If none is given, then
+            the accuracy_score function will be used. Raises ValueError if the
+            attribute value is not correct.
 
         max_iter : int, default=100
             the maximum number of iterations that the optimization gradient
@@ -109,7 +113,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
         self.alpha    = alpha
         self.beta     = beta
 
-        self.fitness_f = accuracy_score
+        self.fitness_f = fitness_f
 
 
     def covariance_matrix(self, X, y):
@@ -340,11 +344,16 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                 
                 pred = self.classes_[np.argmax(softmax(prob), axis=1)]
 
-                self._fitness   = self.fitness_f(pred, y)
+                if self.fitness_f == 'accuracy_score' or self.fitness_f == None:
+                    self._fitness = accuracy_score(pred, y)
+                else:
+                    raise ValueError('Unknown fitness function. passed '
+                        f'value for fitness_f is {self.fitness_f}, expected '
+                        'one of ["accuracy_score"]')
             else:
                 self.classes_   = np.unique(y) 
                 self.intercept_ = np.zeros( (len(self.classes_)) ) 
-                self._fitness   = -np.inf
+                self._fitness   = np.inf
                 self.coef_      = np.ones(
                     (len(self.classes_), self.n_terms) ) 
 

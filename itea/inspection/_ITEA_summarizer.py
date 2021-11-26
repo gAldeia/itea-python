@@ -635,7 +635,7 @@ class ITEA_summarizer:
             self.axes_   = ax
             self.figure_ = ax.ravel()[0].figure
     
-        best_of_generation = 'max' if self.itea.greater_is_better else 'min'        
+        best_of_generation = 'max' if self.itea._greater_is_better else 'min'        
         gens = range(len(self.itea.convergence_['fitness']['mean']))
 
         for (axi, d) in zip(self.axes_.ravel(), data):

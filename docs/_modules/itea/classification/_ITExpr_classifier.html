@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                1.0.0
+                latest
               </div>
             
           
@@ -95,19 +95,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Getting started:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html#minimal-examples">Minimal examples</a></li>
 </ul>
-<p class="caption"><span class="caption-text">ITEA package documentation:</span></p>
+<p class="caption" role="heading"><span class="caption-text">ITEA package documentation:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../base.html">itea._base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.regression.html">itea.regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.classification.html">itea.classification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../itea.inspection.html">itea.inspection</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Example notebooks:</span></p>
+<p class="caption" role="heading"><span class="caption-text">Example notebooks:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_agnostic_explainers.html">Using agnostic explainers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_explanations_metrics.html">Explanations metrics</a></li>
@@ -212,10 +212,8 @@
 <span class="sd">    in ``ITEA_classifier.bestsol_``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span>
-        <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span>
-        <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">fitness_f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method.</span>
 
@@ -237,6 +235,12 @@
 <span class="sd">            list containing the labels of the variables that will be used.</span>
 <span class="sd">            When the list of labels is empty, the variables are named</span>
 <span class="sd">            :math:`x_0, x_1, \cdots`.</span>
+
+<span class="sd">        fitness_f : string or None, default=None</span>
+<span class="sd">            String with the method to evaluate the fitness of the expressions.</span>
+<span class="sd">            Can be one of ``[&#39;accuracy_score&#39;]``. If none is given, then</span>
+<span class="sd">            the accuracy_score function will be used. Raises ValueError if the</span>
+<span class="sd">            attribute value is not correct.</span>
 
 <span class="sd">        max_iter : int, default=100</span>
 <span class="sd">            the maximum number of iterations that the optimization gradient</span>
@@ -292,7 +296,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>    <span class="o">=</span> <span class="n">alpha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span>     <span class="o">=</span> <span class="n">beta</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">=</span> <span class="n">accuracy_score</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">=</span> <span class="n">fitness_f</span>
 
 
 <div class="viewcode-block" id="ITExpr_classifier.covariance_matrix"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -523,11 +527,16 @@
                 
                 <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">softmax</span><span class="p">(</span><span class="n">prob</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">==</span> <span class="s1">&#39;accuracy_score&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown fitness function. passed &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;value for fitness_f is </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fitness_f</span><span class="si">}</span><span class="s1">, expected &#39;</span>
+                        <span class="s1">&#39;one of [&quot;accuracy_score&quot;]&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">))</span> <span class="p">)</span> 
-                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fitness</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
                     <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_terms</span><span class="p">)</span> <span class="p">)</span> 
 

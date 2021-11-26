@@ -150,7 +150,7 @@ def test_linear_BaseITExpr_gradient(linear_baseITExpr, sample_data, logit):
     
 
 @pytest.mark.parametrize("logit", [False, True])
-def tes_gradient(
+def test_nonlinear_BaseITExpr_gradient(
     nonlinear_baseITExpr, sample_data, logit):
 
     X, _ = sample_data

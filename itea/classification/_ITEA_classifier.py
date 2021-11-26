@@ -35,6 +35,7 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         tfuncs_dx       = None,
         expolim         = (-2, 2),
         max_terms       = 5,
+        fitness_f       = None,
         simplify_method = None, 
         random_state    = None,
         verbose         = None,
@@ -58,6 +59,11 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
 
         max_terms : int, default=5
             the max number of IT terms allowed.
+
+        fitness_f : string or None, default='accuracy_score'
+            String with the method to evaluate the fitness of the expressions.
+            Can be one of ``['accuracy_score']``. If none is given, then
+            the accuracy_score function will be used.
 
         simplify_method : string or None, default=None
             String with the name of the simplification method to be used
@@ -149,7 +155,10 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
             labels          = labels)
 
         self.itexpr_class      = ITExpr_classifier
-        self.greater_is_better = True
+
+        # BaseITEA sets this value to None. Here we overwrite the original
+        # value with the value specific for the task (regression/classification)
+        self.fitness_f = fitness_f
 
 
     def _check_args(self, X, y):
@@ -180,6 +189,13 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         else:
             self.predictor_kw = {**default_predictor_kw, **self.predictor_kw}
 
+        
+        if self.fitness_f is not None:
+            if self.fitness_f not in ['accuracy_score']:
+                raise ValueError('Unknown fitness function for the '
+                        'classification task. The value you have passed for '
+                        f'the attribute fitness_f is {self.fitness_f}, '
+                        'expected one of ["accuracy_score"]')
 
     def fit(self, X, y):
         """Performs the evolutionary process.
@@ -213,11 +229,14 @@ class ITEA_classifier(BaseITEA, ClassifierMixin):
         
         self._check_args(X, y)
 
+        self._greater_is_better = True if self.fitness_f == 'accuracy_score' \
+            else False 
+
         # Ignoring convergence warnings only
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore", category=ConvergenceWarning)
             self.bestsol_ = self._evolve(
-                X, y, self.itexpr_class, self.greater_is_better)
+                X, y, self.itexpr_class, self._greater_is_better)
             
         self.fitness_ = self.bestsol_._fitness
         self.classes_ = self.bestsol_.classes_

@@ -52,7 +52,7 @@ def experiment_worker(ds_name, rep):
 
     with FileLock(filelock_name):
         try:
-            ds_data = pd.read_csv(f'{datasets_folder}/{ds_name}', delimiter=',')
+            ds_data = pd.read_csv(f'{datasets_folder}/{ds_name}.csv', delimiter=',')
         except Exception as e:
             print(f'Could not load {ds_name} data set. Got exception {e}')
             sys.exit()
@@ -66,10 +66,10 @@ def experiment_worker(ds_name, rep):
         if os.path.isfile(results_fname):
             resultsDF = pd.read_csv(results_fname)
             results   = resultsDF.to_dict('list')
-    
+
         # Checking if this ds_name-repetition was already executed    
         if len(resultsDF[
-            (resultsDF['Dataset']==ds_name) & (resultsDF['Rep']==rep)])==1:
+            (resultsDF['Dataset']==ds_name) & (resultsDF['Rep']==rep)])>0:
 
             print(f'already executed experiment {ds_name}-{rep}')
 
@@ -117,8 +117,11 @@ def experiment_worker(ds_name, rep):
 
 if __name__ == '__main__':
 
-    # Finding available datasets
-    datasets = [os.path.basename(ds) for ds in glob.glob('data sets/*.csv')]
+    # Finding available datasets in the specific folder. data sets must be
+    # a csv file with a header. Removing the path and file extension
+    # before creating the final data sets list
+    datasets = [os.path.splitext(os.path.basename(ds))[0]
+        for ds in glob.glob('data sets/*.csv')]
 
     parser = argparse.ArgumentParser()
 
