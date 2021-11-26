@@ -10,7 +10,9 @@ profile:
 	snakeviz ./profiling/profiling_results.dat
 
 test:
-	${PYTHON} setup.py pytest
+	# Create detailed html file. Ignore warnings
+	${PYTHON} -m pytest tests/*.py \
+		-ra --html=tests/tests-report.html --self-contained-html -p no:warnings
 
 build-dist: 
 	rm -f ./dist/*

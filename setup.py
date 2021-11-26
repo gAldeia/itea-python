@@ -42,6 +42,7 @@ setup(
     tests_require   = [
         # Used in tests
         "pytest",
+        "pytest-html"
 
         # Used in profiling
         "snakeviz",
