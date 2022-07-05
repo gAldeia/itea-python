@@ -391,6 +391,12 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
     def predict_proba(self, X):
         """Predict probabilities for each possible target for
         each sample in X.
+        
+        If the expression fails to predict a finite value, then the default
+        returned value is zero for the corresponding class. If the expression
+        evaluates to infinity, then the largest possible finite number is
+        returned.
+
 
         Parameters
         ----------
@@ -419,8 +425,15 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
 
         X = check_array(X)
 
-        prob = (safe_sparse_dot(
-            self._eval(X), self.coef_.T) + self.intercept_)
+        prob = np.nan_to_num(
+                safe_sparse_dot(
+                    self._eval(X), self.coef_.T) + self.intercept_,
+                nan=0.0,
+                posinf=0.0,
+                neginf=0.0
+            )
+
+        print(prob)
         
         # If is a binary classification, then we need to create the
         # complementary probability for the second class
@@ -428,4 +441,5 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
             prob = np.hstack( (np.ones(X.shape[0]).reshape(-1, 1), prob) )  
             prob[:, 0] -= prob[:, 1]
         
+        print(prob)
         return softmax(prob)

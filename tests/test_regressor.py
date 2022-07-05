@@ -12,6 +12,7 @@ from sklearn.datasets     import make_regression
 from sklearn.linear_model import LinearRegression
 from sklearn.exceptions   import NotFittedError
 
+from sklearn.utils._testing import ignore_warnings
 
 # Using the identity, one trigonometric and one non-linear function
 tfuncs = {
@@ -142,6 +143,28 @@ def test_linear_ITExpr_predict(
     X, y, coef = regression_toy_data
 
     assert np.allclose(linear_ITExpr.fit(X, y).predict(X), y)
+
+
+@ignore_warnings(category=RuntimeWarning)
+def test_linear_ITExpr_predict_nan():
+
+    # Forcing to have an expression with 1/x
+    X = np.array([[1], [2], [3], [4], [5]])
+    y = np.array([1/1, 1/2, 1/3, 1/4, 1/5])
+
+    nan_input = np.array([[0]])
+
+    itexpr = ITExpr_regressor(
+        expr = [
+            ('id', [-1.0]),
+        ],
+        tfuncs = tfuncs
+    )
+
+    # shoudn't raise any error, and should return the intercept
+    assert np.allclose(
+        itexpr.fit(X, y).predict(nan_input),
+        itexpr.intercept_)
 
 
 def test_nonlinear_ITExpr_derivatives_with_jax(

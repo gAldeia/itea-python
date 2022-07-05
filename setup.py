@@ -22,7 +22,8 @@ setup(
         "jax>=0.2.13",
         "jaxlib>=0.1.67",
         "scipy>=1.5.2",
-        "pylatex==1.4.1"
+        "pylatex==1.4.1",
+        "docutils==0.17.1"
     ],
     package_data = {'examples' : ['examples']},
     include_package_data = True,

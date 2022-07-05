@@ -15,6 +15,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.utils._testing import ignore_warnings
 from sklearn.exceptions     import ConvergenceWarning
 
+from sklearn.utils._testing import ignore_warnings
 
 # Using the identity, one trigonometric and one non-linear function
 tfuncs = {
@@ -158,6 +159,39 @@ def test_linear_ITExpr_predict_proba(
     probas = linear_ITExpr.fit(X, y).predict_proba(X)
     for p, yi in zip(probas, y):
         assert np.argmax(p) == yi
+
+
+@ignore_warnings(category=RuntimeWarning)
+def test_linear_ITExpr_predict_proba_nan():
+    # If predict_proba handles correctly nans, then
+    # predict should also do the same.
+
+    X = np.array([[2], [2], [2], [4], [4]])
+    y = np.array([ 2,   2,   2,   4,   4 ])
+
+    nan_input = np.array([[0, 0]])
+
+    itexpr = ITExpr_classifier(
+        expr = [
+            ('id', [-1.0, -1.0]),
+            ('id', [-1.0, -1.0]),
+        ],
+        tfuncs = tfuncs
+    ).fit(X, y)
+
+    print(itexpr)
+
+    # Our probability of having class 2 should be zero,
+    # since we forced an error that would set the
+    # prob(class=2) to zero. The probabilities then
+    # are [1.0, 0.0] (for two classes, the second
+    # prob is the probability of pred being equal to 
+    # the class, while the first prob is the opposite).
+    # Then, softmax([1.0, 0.0]) == [0.73105858, 0.26894142]
+    # shoudn't raise any error, and should return the intercept
+    assert np.allclose(
+        itexpr.fit(X, y).predict_proba(nan_input),
+        [0.73105858, 0.26894142])
 
 
 def test_nonlinear_ITExpr_derivatives_with_jax(

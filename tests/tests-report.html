@@ -429,27 +429,24 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>tests-report.html</h1>
-    <p>Report generated on 26-Nov-2021 at 15:30:47 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <p>Report generated on 05-Jul-2022 at 12:39:20 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
-        <td>JAVA_HOME</td>
-        <td>/usr/lib/jvm/java-14-oracle</td></tr>
-      <tr>
         <td>Packages</td>
-        <td>{"pluggy": "0.13.1", "py": "1.10.0", "pytest": "6.2.4"}</td></tr>
+        <td>{"pluggy": "1.0.0", "py": "1.11.0", "pytest": "6.2.5"}</td></tr>
       <tr>
         <td>Platform</td>
-        <td>Linux-4.4.0-19041-Microsoft-x86_64-with-debian-buster-sid</td></tr>
+        <td>Linux-5.13.0-51-generic-x86_64-with-debian-bullseye-sid</td></tr>
       <tr>
         <td>Plugins</td>
-        <td>{"anyio": "3.1.0", "dash": "1.20.0", "forked": "1.3.0", "html": "3.1.1", "metadata": "1.11.0", "typeguard": "2.12.1", "xdist": "2.3.0"}</td></tr>
+        <td>{"dash": "2.0.0", "html": "3.1.1", "metadata": "1.11.0"}</td></tr>
       <tr>
         <td>Python</td>
-        <td>3.7.6</td></tr></table>
+        <td>3.7.12</td></tr></table>
     <h2>Summary</h2>
-    <p>56 tests ran in 9.10 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">56 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>57 tests ran in 2.64 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">56 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">1 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -460,6 +457,17 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <th class="sortable links" col="links">Links</th></tr>
         <tr hidden="true" id="not-found-message">
           <th colspan="4">No results found. Try to check the filters</th></tr></thead>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">tests/test_regressor.py::test_linear_ITExpr_predict_nan</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log">def test_linear_ITExpr_predict_nan():<br/>    <br/>        # Forcing to have an expression with 1/x<br/>        X = np.array([[1], [2], [3], [4], [5]])<br/>        y = np.array([1/1, 1/2, 1/3, 1/4, 1/5])<br/>    <br/>        nan_input = np.array([[0]])<br/>    <br/>        itexpr = ITExpr_regressor(<br/>            expr = [<br/>                (&#x27;id&#x27;, [-1.0]),<br/>            ],<br/>            tfuncs = tfuncs<br/>        )<br/>    <br/>        # shoudn&#x27;t raise any error, and should return the intercept<br/>&gt;       assert np.allclose(<br/>            itexpr.fit(X, y).predict(nan_input),<br/>            itexpr.intercept_)<br/><span class="error">E       AssertionError: assert False</span><br/><span class="error">E        +  where False = &lt;function allclose at 0x7f994b212680&gt;(array([1.79769313e+308]), 0.0)</span><br/><span class="error">E        +    where &lt;function allclose at 0x7f994b212680&gt; = np.allclose</span><br/><span class="error">E        +    and   array([1.79769313e+308]) = &lt;bound method ITExpr_regressor.predict of ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;func...nop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;})&gt;(array([[0]]))</span><br/><span class="error">E        +      where &lt;bound method ITExpr_regressor.predict of ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;func...nop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;})&gt; = ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915e9a7a0&gt;,\n        ...unop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;}).predict</span><br/><span class="error">E        +        where ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915e9a7a0&gt;,\n        ...unop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;}) = &lt;bound method ITExpr_regressor.fit of ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;function...nop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;})&gt;(array([[1],\n       [2],\n       [3],\n       [4],\n       [5]]), array([1.        , 0.5       , 0.33333333, 0.25      , 0.2       ]))</span><br/><span class="error">E        +          where &lt;bound method ITExpr_regressor.fit of ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;function...nop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;})&gt; = ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915e9a7a0&gt;,\n        ...unop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;}).fit</span><br/><span class="error">E        +    and   0.0 = ITExpr_regressor(expr=[(&#x27;id&#x27;, [-1.0])],\n                 tfuncs={&#x27;id&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915e9a7a0&gt;,\n        ...unop.&lt;locals&gt;.&lt;lambda&gt; at 0x7f991d385950&gt;,\n                         &#x27;sqrt.abs&#x27;: &lt;function &lt;lambda&gt; at 0x7f9915d908c0&gt;}).intercept_</span><br/><br/>tests/test_regressor.py:163: AssertionError<br/> ------------------------------Captured stderr call------------------------------ <br/>/home/guilherme/Documents/github/itea-python/itea/_base/_BaseITExpr.py:179: RuntimeWarning: divide by zero encountered in power
+  Z[:, i] = self.tfuncs[fi]( np.prod(np.power(X, ti), axis=1) )
+<br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
@@ -473,7 +481,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_BaseITEA.py::test_population_size</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -482,7 +490,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_BaseITEA.py::test_mutation_size</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -491,7 +499,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_BaseITEA.py::test_mutation_dont_change_originals</td>
-          <td class="col-duration">0.15</td>
+          <td class="col-duration">0.06</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -500,7 +508,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_BaseITEA.py::test_selection</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -509,7 +517,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_BaseITEA.py::test_random_state</td>
-          <td class="col-duration">0.39</td>
+          <td class="col-duration">0.15</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -599,7 +607,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_BaseITExpr.py::test_nonlinear_BaseITExpr_gradient[True]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -644,7 +652,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_linear_ITExpr_fit</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -653,7 +661,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_linear_ITExpr_equals_scikit_logisticRegression</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -662,7 +670,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_linear_ITExpr_predict</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -671,7 +679,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_linear_ITExpr_predict_proba</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -680,7 +688,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_nonlinear_ITExpr_derivatives_with_jax</td>
-          <td class="col-duration">0.34</td>
+          <td class="col-duration">0.16</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -689,23 +697,23 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_ITEA_classifier_fit_predict</td>
-          <td class="col-duration">1.76</td>
+          <td class="col-duration">0.25</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
             <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
-  0 |         0.310000 |     0.549000 |        1.000000 | 0min2sec    
-  2 |         0.260000 |     0.320000 |        0.440000 | 0min2sec    
-  4 |         0.260000 |     0.293000 |        0.350000 | 0min1sec    
-  6 |         0.260000 |     0.272000 |        0.330000 | 0min1sec    
-  8 |         0.260000 |     0.347000 |        0.890000 | 0min1sec    
+  0 |         0.790000 |     0.881000 |        1.000000 | 0min1sec    
+  2 |         0.900000 |     0.940000 |        1.000000 | 0min1sec    
+  4 |         0.930000 |     0.990000 |        1.000000 | 0min1sec    
+  6 |         0.910000 |     0.991000 |        1.000000 | 0min1sec    
+  8 |         0.890000 |     0.982000 |        1.000000 | 0min1sec    
 <br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_classifier.py::test_one_individual_one_generation</td>
-          <td class="col-duration">0.12</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -717,7 +725,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_manipulators.py::test_uniform_generator_valid_exprs</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -726,7 +734,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_manipulators.py::test_uniform_generator_random_state</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -762,7 +770,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutation_drop_valid_exprs</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -771,7 +779,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutation_term_valid_exprs</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -780,42 +788,6 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_incremental_mutation[_mutation_add]</td>
-          <td class="col-duration">0.04</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_mutations.py::test_incremental_mutation[_mutation_interp]</td>
-          <td class="col-duration">0.04</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_mutations.py::test_incremental_mutation[_mutation_intern]</td>
-          <td class="col-duration">0.04</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_add]</td>
-          <td class="col-duration">0.03</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_drop]</td>
           <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -824,8 +796,44 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_mutations.py::test_incremental_mutation[_mutation_interp]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_mutations.py::test_incremental_mutation[_mutation_intern]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_add]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_drop]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_intern]</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -834,7 +842,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_interp]</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -843,7 +851,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_dont_change_originals[_mutation_term]</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -852,7 +860,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_reproductible_random_state[_mutation_add]</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -861,7 +869,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_reproductible_random_state[_mutation_drop]</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -870,7 +878,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_reproductible_random_state[_mutation_intern]</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -879,7 +887,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_reproductible_random_state[_mutation_interp]</td>
-          <td class="col-duration">0.05</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -888,7 +896,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_mutations.py::test_mutations_reproductible_random_state[_mutation_term]</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -942,7 +950,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_regressor.py::test_nonlinear_ITExpr_derivatives_with_jax</td>
-          <td class="col-duration">0.09</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -951,7 +959,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_regressor.py::test_nonlinear_ITExpr_covariance_matrix</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -960,7 +968,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_regressor.py::test_ITEA_regressor_fit_predict</td>
-          <td class="col-duration">1.98</td>
+          <td class="col-duration">0.15</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -976,7 +984,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_regressor.py::test_one_individual_one_generation</td>
-          <td class="col-duration">0.03</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">

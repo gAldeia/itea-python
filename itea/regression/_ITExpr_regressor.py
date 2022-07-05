@@ -208,6 +208,9 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
 
     def predict(self, X):
         """Predicts the response value for each sample in X.
+        
+        If the expression fails to predict a finite value, then the default
+        returned value is the expression's intercept.
 
         Parameters
         ----------
@@ -236,4 +239,9 @@ class ITExpr_regressor(BaseITExpr, RegressorMixin):
 
         X = check_array(X)
 
-        return np.dot(self._eval(X), self.coef_) + self.intercept_
+        return np.nan_to_num(
+            np.dot(self._eval(X), self.coef_) + self.intercept_,
+            nan=self.intercept_,
+            posinf=self.intercept_,
+            neginf=self.intercept_
+        )

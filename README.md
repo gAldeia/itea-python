@@ -47,6 +47,8 @@ Alternatively, you can download the source code at the
 $ pip install .
 ```
 
+> **NOTE:** If pip fails to install the latest version, you will need to update `pip` and `setuptools`, and install an older version of `docutils<0.18` (such as v0.17.1).
+
 ## Using the ITEA algorithm
 
 Before jumping into using the library, here are some tips and examples
