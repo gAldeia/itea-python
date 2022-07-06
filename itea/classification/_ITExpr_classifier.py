@@ -433,13 +433,10 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                 neginf=0.0
             )
 
-        print(prob)
-        
         # If is a binary classification, then we need to create the
         # complementary probability for the second class
         if len(self.classes_) <= 2:
             prob = np.hstack( (np.ones(X.shape[0]).reshape(-1, 1), prob) )  
             prob[:, 0] -= prob[:, 1]
         
-        print(prob)
         return softmax(prob)

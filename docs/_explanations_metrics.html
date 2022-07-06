@@ -1,83 +1,41 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Explanations metrics &mdash; Interaction-Transformation Evolutionary Algorithm</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.png"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Integrating with the Scikit: Pipeline and Gridsearch" href="_integrating_with_scikits_classes.html" />
     <link rel="prev" title="Using agnostic explainers" href="_agnostic_explainers.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
-          
-
-          
-            
             <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 latest
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,18 +43,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
@@ -119,71 +66,30 @@
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Explanations metrics</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/_explanations_metrics.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -394,11 +300,12 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -407,10 +314,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -422,12 +333,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -454,16 +368,15 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Explanations-metrics">
-<h1>Explanations metrics<a class="headerlink" href="#Explanations-metrics" title="Permalink to this headline">¶</a></h1>
+<section id="Explanations-metrics">
+<h1>Explanations metrics<a class="headerlink" href="#Explanations-metrics" title="Permalink to this heading"></a></h1>
 <p>In this notebook, we will explore how to calculate the stability of a local explanation for the Partial Effects explainer. We’ll first start creating a classifier and fitting it with the iris data set. Then, we’ll define the stability metric function and see how stable are the explanations.</p>
 <p>This example was inspired by the usage of the stability metric in <em>Plumb, Gregory, Maruan, Al-Shedivat, Ángel Alexander, Cabrera, Adam, Perer, Eric, Xing, and Ameet, Talwalkar. “Regularizing Black-box Models for Improved Interpretability.” . Advances in Neural Information Processing Systems (pp. 10526–10536). Curran Associates, Inc., 2020.</em></p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># automatically differentiable implementation of numpy</span>
@@ -490,8 +403,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">iris_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span>      <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 <span class="n">labels</span>    <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
 <span class="n">targets</span>   <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;target_names&#39;</span><span class="p">]</span>
@@ -544,8 +456,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
  45 |         0.660000 |     0.973800 |        0.990000 | 0min1sec
 </pre></div></div>
 </div>
-<div class="section" id="Local-explanations-with-the-Partial-Effects">
-<h2>Local explanations with the Partial Effects<a class="headerlink" href="#Local-explanations-with-the-Partial-Effects" title="Permalink to this headline">¶</a></h2>
+<section id="Local-explanations-with-the-Partial-Effects">
+<h2>Local explanations with the Partial Effects<a class="headerlink" href="#Local-explanations-with-the-Partial-Effects" title="Permalink to this heading"></a></h2>
 <p>To calculate the local explanations, we can use the function <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer.average_partial_effects</span></code>, passing as an argument a single sample we want to explain.</p>
 <p>We can see the explanation both visually or as an array with the importance for each feature.</p>
 <p>Let’s start by creating an explainer instance.</p>
@@ -554,8 +466,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
     <span class="n">itexpr</span><span class="o">=</span><span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span>
     <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
@@ -568,8 +479,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
     <span class="n">importance_method</span> <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span>
     <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
@@ -592,8 +502,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -613,8 +522,7 @@ array([[6.85112219e-03, 5.00492617e-02, 4.76003440e-02, 1.51608147e-01],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
     <span class="n">explainer</span><span class="o">.</span><span class="n">average_partial_effects</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
     <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
 <span class="p">)</span>
@@ -630,9 +538,9 @@ array([[6.85112219e-03, 5.00492617e-02, 4.76003440e-02, 1.51608147e-01],
 array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Stability-of-an-explanation">
-<h2>Stability of an explanation<a class="headerlink" href="#Stability-of-an-explanation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Stability-of-an-explanation">
+<h2>Stability of an explanation<a class="headerlink" href="#Stability-of-an-explanation" title="Permalink to this heading"></a></h2>
 <p>In the mentioned paper, the authors discuss metrics to evaluate model agnostic explainers.</p>
 <p>The stability measures how much the explanation changes when the feature slightly changes, where lower values are better. Higher values imply that, when the feature being explained changes in a small proportion, the feature importances responds in a much larger proportion, then the explainer is not reliable since it is not locally stable, and cannot be trusted for the given instance.</p>
 <p>Let <img class="math" src="_images/math/dc72c8b3d50b5d8f8e1059b84df06ba2627ac1a7.png" alt="f:\mathbf{x} \rightarrow y"/>, with <img class="math" src="_images/math/6c49d5774c7a67ba3ecda7bbd7fb5637ede032e2.png" alt="\mathbf{x} = \{x_0, x_1, ..., x_n\}"/> be a model we want to explain, and <img class="math" src="_images/math/9b1df625ee0eb6ba423bf6516916201700d4e93d.png" alt="g: (f, \mathbf{x}_i) \rightarrow \mathbf{e}"/> a explainer that takes a model and a instance to explain and attributes one feature importance for each <img class="math" src="_images/math/9153b1ceb005926ad936db10b06fb2d5e3d90135.png" alt="x \in \mathbf{x}_i"/>.</p>
@@ -644,8 +552,7 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">explain_single</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">explain_single</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;wrapping the process to explain a single instance.</span>
 
 <span class="sd">    The input x should be a single observation of shape (n_features, ).</span>
@@ -711,8 +618,7 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">stability</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stability</span><span class="p">(</span>
     <span class="n">explain_single</span><span class="p">,</span>
     <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">neighborhood</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
@@ -729,17 +635,16 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 0.010499048473435793
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Increasing-the-neighborhood-to-measure-stability">
-<h2>Increasing the neighborhood to measure stability<a class="headerlink" href="#Increasing-the-neighborhood-to-measure-stability" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Increasing-the-neighborhood-to-measure-stability">
+<h2>Increasing the neighborhood to measure stability<a class="headerlink" href="#Increasing-the-neighborhood-to-measure-stability" title="Permalink to this heading"></a></h2>
 <p>In the original work, the authors used fixed values for creating the neighborhood to evaluate stability.</p>
 <p>I think this can be limiting in some situations. To verify, we will evaluate how stability changes when we increase the size of the neighborhood.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 
 <span class="n">factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
@@ -767,9 +672,9 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 <img alt="_images/_explanations_metrics_16_0.png" src="_images/_explanations_metrics_16_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="The-Jaccard-Index">
-<h2>The Jaccard Index<a class="headerlink" href="#The-Jaccard-Index" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="The-Jaccard-Index">
+<h2>The Jaccard Index<a class="headerlink" href="#The-Jaccard-Index" title="Permalink to this heading"></a></h2>
 <p>In <em>Zhengze Zhou, Giles Hooker, Fei Wang. “S-LIME: Stabilized-LIME for Model Explanation”. In Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD ’21), August 14–18, 2021, Virtual Event, Singapore</em>, the authors used the Jaccrd index to evaluate the stability of a function.</p>
 <div class="math">
 <p><img src="_images/math/789046274f48d169d2b183f6de0dff6f99e1a5a0.png" alt="J(A, B) = \frac{|A \cap B|}{|A \cup B|}."/></p>
@@ -804,15 +709,14 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 </tr>
 </tbody>
 </table>
-<div class="section" id="Adaptating-the-Jaccard-Index">
-<h3>Adaptating the Jaccard Index<a class="headerlink" href="#Adaptating-the-Jaccard-Index" title="Permalink to this headline">¶</a></h3>
+<section id="Adaptating-the-Jaccard-Index">
+<h3>Adaptating the Jaccard Index<a class="headerlink" href="#Adaptating-the-Jaccard-Index" title="Permalink to this heading"></a></h3>
 <p>In the cell below the Jaccard Index is used to evaluate stability, but since the Partial Effects explanation method is deterministic, the calculation will be performed on the neighborhood of the test point. We can use <code class="docutils literal notranslate"><span class="pre">explain_single</span></code> and <code class="docutils literal notranslate"><span class="pre">neighborhood</span></code> functions previously declared.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">jaccard_index</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">jaccard_index</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Method to calculate the ratio of the intersection</span>
 <span class="sd">    over the union of two sets. This is known as Jaccard</span>
 <span class="sd">    index and ranges from 0 to 1, measuring how simmilar</span>
@@ -883,8 +787,7 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ks</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">fs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
 
 <span class="n">jaccard_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -960,10 +863,10 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 </table>
 </div></div>
 </div>
-</div>
-</div>
-<div class="section" id="(in)fidelity">
-<h2>(in)fidelity<a class="headerlink" href="#(in)fidelity" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="(in)fidelity">
+<h2>(in)fidelity<a class="headerlink" href="#(in)fidelity" title="Permalink to this heading"></a></h2>
 <p>If we know the subset of most relevant features, it is expected that the explanation will attribute high values for this features.</p>
 <p>The idea of infidelity is to measure the difference between two terms: * <em>i)</em> the dot product between a significant perturbation to a given input <img class="math" src="_images/math/888f7c323ac0341871e867220ae2d76467d74d6e.png" alt="x"/> we are trying to explain and its explanation, and * <em>ii)</em> the output observed for the perturbed point.</p>
 <div class="math">
@@ -975,8 +878,7 @@ array([0.11090412, 0.72765944, 0.71995339, 2.25884477])
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">housing_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_california_housing</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">housing_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_california_housing</span><span class="p">()</span>
 <span class="n">X_reg</span><span class="p">,</span> <span class="n">y_reg</span> <span class="o">=</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 <span class="n">labels</span>       <span class="o">=</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
 
@@ -1034,8 +936,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer_reg</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer_reg</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
     <span class="n">itexpr</span><span class="o">=</span><span class="n">reg</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span><span class="p">,</span> <span class="n">tfuncs_dx</span><span class="o">=</span><span class="n">tfuncs_dx</span>
 <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_reg</span><span class="p">,</span> <span class="n">y_train_reg</span><span class="p">)</span>
 
@@ -1052,8 +953,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">infidelity</span><span class="p">(</span><span class="n">explainer</span><span class="p">,</span> <span class="n">predictor</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">neighborhood</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">infidelity</span><span class="p">(</span><span class="n">explainer</span><span class="p">,</span> <span class="n">predictor</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">neighborhood</span><span class="p">):</span>
 
     <span class="n">original_explanation</span> <span class="o">=</span> <span class="n">explainer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">original_prediction</span>  <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
@@ -1068,8 +968,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 
 <span class="n">num_samples</span> <span class="o">=</span> <span class="mi">300</span>
 
@@ -1100,55 +999,38 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <img alt="_images/_explanations_metrics_25_0.png" src="_images/_explanations_metrics_25_0.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="_integrating_with_scikits_classes.html" class="btn btn-neutral float-right" title="Integrating with the Scikit: Pipeline and Gridsearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="_agnostic_explainers.html" class="btn btn-neutral float-left" title="Using agnostic explainers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_integrating_with_scikits_classes.html" class="btn btn-neutral float-right" title="Integrating with the Scikit: Pipeline and Gridsearch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Guilherme Aldeia.
-
-    </p>
+    <p>&#169; Copyright 2021, Guilherme Aldeia.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

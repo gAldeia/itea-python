@@ -19,6 +19,8 @@ from matplotlib.gridspec      import GridSpecFromSubplotSpec
 
 from sklearn.exceptions import NotFittedError
 
+from scipy.stats.mstats import mquantiles
+from matplotlib         import transforms
 
 class ITExpr_explainer():
     """Class to explain ITExpr expressions.
@@ -759,6 +761,7 @@ class ITExpr_explainer():
         ax          = None,
         show_err    = True,
         share_y     = True,
+        rug         = True,
         show        = True
     ):
         """Partial effects plots for the given features, when their
@@ -821,6 +824,9 @@ class ITExpr_explainer():
         share_y : bool, default True
             boolean variable to specify if the axis should have the same
             interval on the y axis.
+
+        rug : bool, default True
+            whether to show the distribution as a rug
 
         show :  bool, default=True
             boolean value indicating if the generated plot should be displayed
@@ -967,7 +973,33 @@ class ITExpr_explainer():
             if share_y:
                 margin = (ymax - ymin)*0.05
                 axi.set_ylim( (ymin - margin, ymax + margin) )
+            else:
+                ymin = np.min(partial_effects[:, feature_idx])
+                ymax = np.max(partial_effects[:, feature_idx])
+
+                # Handling constant partial effects
+                if ymin == ymax:
+                    axi.set_ylim((ymin*0.99, ymax*1.01))
+                    ymin = ymin * 0.991
                 
+            if rug==True:
+                # Dividing the interval into 10 deciles and plotting above the 
+                # x axis
+                deciles = mquantiles(
+                    X[:, feature_idx],
+                    prob=np.arange(0.1, 1.1, 0.1),limit=(loval, hival))            
+                
+                trans = transforms.blended_transform_factory(
+                    axi.transData, axi.transAxes)
+                
+                axi.vlines(
+                    deciles,
+                    0,
+                    0.05,
+                    transform=trans,
+                    color="k",
+                )
+
             if hasattr(self.itexpr, 'classes_'):
                 axi.legend()
 

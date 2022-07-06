@@ -1,83 +1,41 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Using agnostic explainers &mdash; Interaction-Transformation Evolutionary Algorithm</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.png"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Explanations metrics" href="_explanations_metrics.html" />
     <link rel="prev" title="itea.inspection" href="itea.inspection.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
-          
-
-          
-            
             <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 latest
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,18 +43,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
@@ -119,71 +66,30 @@
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Using agnostic explainers</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/_agnostic_explainers.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -394,11 +300,12 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -407,10 +314,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -422,12 +333,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -454,8 +368,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Using-agnostic-explainers">
-<h1>Using agnostic explainers<a class="headerlink" href="#Using-agnostic-explainers" title="Permalink to this headline">¶</a></h1>
+<section id="Using-agnostic-explainers">
+<h1>Using agnostic explainers<a class="headerlink" href="#Using-agnostic-explainers" title="Permalink to this heading"></a></h1>
 <p>In this notebook, we’ll create a simple IT expression and use popular model-agnostic explainer methods to obtain feature importances for the final model.</p>
 <p>The explainers we are going to use are SHAP, LIME, and PDP.</p>
 <p>To contrast with our model-specific explainer based on the Partial Effects, the same dataset used in the regression notebook will be used.</p>
@@ -464,8 +378,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">import</span> <span class="nn">shap</span> <span class="c1">#0.34.0</span>
@@ -497,8 +410,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">housing_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_california_housing</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">housing_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_california_housing</span><span class="p">()</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span>   <span class="o">=</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
 
@@ -560,8 +472,8 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 -15.231*log(MedInc * Population * AveOccup * Latitude^2) + 1.323*log(MedInc^2 * AveBedrms * Longitude^2) + 37.981*log(MedInc * Population * AveOccup * Latitude * Longitude^2) + -0.399*log(MedInc^2 * AveRooms^2 * AveBedrms * AveOccup * Latitude^2 * Longitude^2) + -11.439*log(MedInc^2 * Population^2 * AveOccup^2 * Latitude^2 * Longitude^2) + -202.481
 </pre></div></div>
 </div>
-<div class="section" id="Explaining-with-PDP">
-<h2>Explaining with PDP<a class="headerlink" href="#Explaining-with-PDP" title="Permalink to this headline">¶</a></h2>
+<section id="Explaining-with-PDP">
+<h2>Explaining with PDP<a class="headerlink" href="#Explaining-with-PDP" title="Permalink to this heading"></a></h2>
 <p>Since <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> is a subclass of scikit-learn base classes <code class="docutils literal notranslate"><span class="pre">RegressorMixin</span></code> and <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, we can use the Partial Dependency Plot (PDP) and Individual Conditional Expectation (ICE), that works with any scikit estimator.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">plot_partial_dependence</span></code> function from scikit-learn package allows explaining any scikit machine learning model. It can be used to explain an ITEA model.</p>
 <p>The PDP is discussed and the ICE is proposed in paper <em>A. Goldstein, A. Kapelner, J. Bleich, and E. Pitkin, Peeking Inside the Black Box: Visualizing Statistical Learning With Plots of Individual Conditional Expectation, Journal of Computational and Graphical Statistics, 24(1): 44-65, Springer, 2015.</em></p>
@@ -569,8 +481,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="n">plot_partial_dependence</span><span class="p">(</span>
     <span class="n">estimator</span> <span class="o">=</span> <span class="n">final_itexpr</span><span class="p">,</span>
@@ -605,8 +516,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="n">top1</span><span class="p">,</span> <span class="n">top2</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 
@@ -636,17 +546,16 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <img alt="_images/_agnostic_explainers_8_0.png" src="_images/_agnostic_explainers_8_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Explaining-with-SHAP">
-<h2>Explaining with SHAP<a class="headerlink" href="#Explaining-with-SHAP" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Explaining-with-SHAP">
+<h2>Explaining with SHAP<a class="headerlink" href="#Explaining-with-SHAP" title="Permalink to this heading"></a></h2>
 <p>The SHapley Additive exPlanations (SHAP) was proposed in <em>Lundberg, Scott &amp; Lee, Su-In. (2017). A Unified Approach to Interpreting Model Predictions. Advances in Neural Information Processing Systems. Curran Associates, Inc..</em></p>
 <p>SHAP package implements several visualization plots, including the bar plot.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">shap_explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">KernelExplainer</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap_explainer</span> <span class="o">=</span> <span class="n">shap</span><span class="o">.</span><span class="n">KernelExplainer</span><span class="p">(</span>
     <span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span>
     <span class="n">shap</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
 <span class="p">)</span>
@@ -687,8 +596,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">force_plot</span><span class="p">(</span>
     <span class="n">shap_explainer</span><span class="o">.</span><span class="n">expected_value</span><span class="p">,</span>
     <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span>
         <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">l1_reg</span><span class="o">=</span><span class="s1">&#39;num_features(10)&#39;</span><span class="p">),</span>
@@ -710,8 +618,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shap</span><span class="o">.</span><span class="n">dependence_plot</span><span class="p">(</span>
     <span class="s2">&quot;AveOccup&quot;</span><span class="p">,</span>
     <span class="n">shap_explainer</span><span class="o">.</span><span class="n">shap_values</span><span class="p">(</span>
         <span class="n">X_test</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:],</span> <span class="n">l1_reg</span><span class="o">=</span><span class="s1">&#39;num_features(10)&#39;</span><span class="p">),</span>
@@ -741,16 +648,15 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <img alt="_images/_agnostic_explainers_14_2.png" src="_images/_agnostic_explainers_14_2.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Explaining-with-LIME">
-<h2>Explaining with LIME<a class="headerlink" href="#Explaining-with-LIME" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Explaining-with-LIME">
+<h2>Explaining with LIME<a class="headerlink" href="#Explaining-with-LIME" title="Permalink to this heading"></a></h2>
 <p>Local Interpretable Model-agnostic Explainer (LIME) was proposed in <em>Ribeiro, Marco Tulio, Sameer Singh, and Carlos Guestrin. “Why should I trust you?: Explaining the predictions of any classifier.” Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. ACM, 2016.</em></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">lime_tabular</span><span class="o">.</span><span class="n">LimeTabularExplainer</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">lime_tabular</span><span class="o">.</span><span class="n">LimeTabularExplainer</span><span class="p">(</span>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span> <span class="n">labels</span><span class="p">)</span>
 
 <span class="c1"># LIME only supports local explanations.</span>
@@ -37879,9 +37785,9 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
         </script>
         </body></html></div>
 </div>
-</div>
-<div class="section" id="Morris-Sensitivity">
-<h2>Morris Sensitivity<a class="headerlink" href="#Morris-Sensitivity" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Morris-Sensitivity">
+<h2>Morris Sensitivity<a class="headerlink" href="#Morris-Sensitivity" title="Permalink to this heading"></a></h2>
 <p>InterpretML is an interpretability dashboard with the implementation of many model agnostic explainers created by Microsoft, reported in the paper <em>“InterpretML: A Unified Framework for Machine Learning Interpretability” (H. Nori, S. Jenkins, P. Koch, and R. Caruana 2019)</em>.</p>
 <p>While they implement the SHAP, LIME, and PDP, those were already used in the previous cells in this notebook (although they have interactive plots, which can be cool for deep interpretability analyses). One new model agnostic explainer that they provide and can be used with ITEA is the Morris Sensitivity explainer.</p>
 <p>This method changes one step at a time (OAT) to evaluate the sensitivity of the model regarding each variable independently (meaning that it <a class="reference external" href="%5Bhttps://interpret.ml/docs/msa.html">cannot differentiate interactions with non-linearities</a>), but have a fast computation of the feature importances in a global perspective.</p>
@@ -37890,8 +37796,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">msa</span> <span class="o">=</span> <span class="n">MorrisSensitivity</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">msa</span> <span class="o">=</span> <span class="n">MorrisSensitivity</span><span class="p">(</span>
     <span class="n">predict_fn</span><span class="o">=</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
     <span class="n">feature_types</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;continuous&#39;</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span>
 <span class="p">)</span>
@@ -37947,15 +37852,14 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <img alt="_images/_agnostic_explainers_18_1.png" src="_images/_agnostic_explainers_18_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Explaining-with-sage">
-<h2>Explaining with sage<a class="headerlink" href="#Explaining-with-sage" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Explaining-with-sage">
+<h2>Explaining with sage<a class="headerlink" href="#Explaining-with-sage" title="Permalink to this heading"></a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Setup and calculate</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup and calculate</span>
 <span class="n">imputer</span>   <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">MarginalImputer</span><span class="p">(</span><span class="n">final_itexpr</span><span class="p">,</span> <span class="n">X_test</span><span class="p">[:</span><span class="mi">512</span><span class="p">])</span>
 <span class="n">estimator</span> <span class="o">=</span> <span class="n">sage</span><span class="o">.</span><span class="n">PermutationEstimator</span><span class="p">(</span><span class="n">imputer</span><span class="p">,</span> <span class="s1">&#39;mse&#39;</span><span class="p">)</span>
 </pre></div>
@@ -37965,8 +37869,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sage_values</span> <span class="o">=</span> <span class="n">estimator</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sage_values</span> <span class="o">=</span> <span class="n">estimator</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 <span class="n">sage_values</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -37996,8 +37899,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">sensitivity</span> <span class="o">=</span> <span class="n">estimator</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sensitivity</span> <span class="o">=</span> <span class="n">estimator</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 <span class="n">sensitivity</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">final_itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Model Sensitivity&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -38031,9 +37933,9 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 <img alt="_images/_agnostic_explainers_22_3.png" src="_images/_agnostic_explainers_22_3.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Generating-explanations-with-ITEA_summarizer">
-<h2>Generating explanations with <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code><a class="headerlink" href="#Generating-explanations-with-ITEA_summarizer" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Generating-explanations-with-ITEA_summarizer">
+<h2>Generating explanations with <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code><a class="headerlink" href="#Generating-explanations-with-ITEA_summarizer" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code> provides a method to automatically generate multiple interpretability plots given an <code class="docutils literal notranslate"><span class="pre">ITEA</span></code> instance.</p>
 <p>To compare the explanations from different explainers with the explanations through Partial Effects, we’ll use the <code class="docutils literal notranslate"><span class="pre">autoreport()</span></code> method to create a pdf file.</p>
 <p>This file will have several explanations of the given <code class="docutils literal notranslate"><span class="pre">itexpr</span></code>, and the file generated from the cell below can be downloaded <a class="reference external" href="https://galdeia.github.io/itea-python/_static/files/Report.pdf">by clicking here</a>.</p>
@@ -38041,8 +37943,7 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">summarizer</span> <span class="o">=</span> <span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summarizer</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">ITEA_summarizer</span><span class="p">(</span><span class="n">itea</span><span class="o">=</span><span class="n">reg</span><span class="p">)</span>
     <span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
     <span class="o">.</span><span class="n">autoreport</span><span class="p">(</span><span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
@@ -38050,55 +37951,38 @@ Calculating model sensitivity (Shapley Effects, not SAGE)
 </pre></div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="_explanations_metrics.html" class="btn btn-neutral float-right" title="Explanations metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="itea.inspection.html" class="btn btn-neutral float-left" title="itea.inspection" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_explanations_metrics.html" class="btn btn-neutral float-right" title="Explanations metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Guilherme Aldeia.
-
-    </p>
+    <p>&#169; Copyright 2021, Guilherme Aldeia.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

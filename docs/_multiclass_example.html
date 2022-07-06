@@ -1,83 +1,41 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Iris classification &mdash; Interaction-Transformation Evolutionary Algorithm</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.png"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="California housing regression" href="_regression_example.html" />
     <link rel="prev" title="Interacting with ProtoDash" href="_interacting_with_protodash.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
-          
-
-          
-            
             <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 latest
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,18 +43,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
@@ -119,71 +66,30 @@
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Iris classification</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/_multiclass_example.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -394,11 +300,12 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -407,10 +314,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -422,12 +333,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -454,15 +368,14 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Iris-classification">
-<h1>Iris classification<a class="headerlink" href="#Iris-classification" title="Permalink to this headline">¶</a></h1>
+<section id="Iris-classification">
+<h1>Iris classification<a class="headerlink" href="#Iris-classification" title="Permalink to this heading"></a></h1>
 <p>This notebook will walk through the process of using the ITEA for classification (<code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code>) and interpreting the final expression with the <code class="docutils literal notranslate"><span class="pre">itea.inspection</span></code> tools.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>  <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="c1"># automatically differentiable implementation of numpy</span>
@@ -488,8 +401,8 @@ div.rendered_html tbody tr:hover {
 <p>This data set contains 3 different classes of Iris flowers and has 4 features: sepal width, sepal length, petal width, and petal length.</p>
 <p>One example of each flower is illustrated in the figure below.</p>
 <img alt="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" src="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" />
-<div class="section" id="Creating-and-fitting-an-ITEA_classifier">
-<h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_classifier" title="Permalink to this headline">¶</a></h2>
+<section id="Creating-and-fitting-an-ITEA_classifier">
+<h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_classifier" title="Permalink to this heading"></a></h2>
 <p>In this execution, we will fix the random_state argument to allow reproductible executions of the ITEA algorithm.</p>
 <p>The IT expression is used as the decision function in a logistic regression. The inner logistic regression uses the saga solver described in <em>“Defazio, A., Bach F. &amp; Lacoste-Julien S. (2014). SAGA: A Fast Incremental Gradient Method With Support for Non-Strongly Convex Composite Objectives”</em>.</p>
 <p>The method will solve a <strong>multinomial</strong> classification problem with the softmax funcion applied over the decision function. By default, no regularization os performed (although the user can controlate this by setting values to alpha and beta parameters), and a maximum of 100 iterations of the saga solver is performed for each expression.</p>
@@ -497,8 +410,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">iris_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span>      <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 <span class="n">labels</span>    <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
 <span class="n">targets</span>   <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;target_names&#39;</span><span class="p">]</span>
@@ -540,16 +452,216 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 gen | smallest fitness | mean fitness | highest fitness | remaining time
 ----------------------------------------------------------------------------
-  0 |         0.560000 |     0.848200 |        0.970000 | 0min19sec
-  5 |         0.740000 |     0.961800 |        0.980000 | 0min12sec
- 10 |         0.790000 |     0.969400 |        0.990000 | 0min13sec
- 15 |         0.950000 |     0.982200 |        0.990000 | 0min10sec
- 20 |         0.890000 |     0.982200 |        0.990000 | 0min10sec
- 25 |         0.860000 |     0.982400 |        0.990000 | 0min9sec
- 30 |         0.930000 |     0.981800 |        0.990000 | 0min6sec
- 35 |         0.960000 |     0.982600 |        0.990000 | 0min5sec
- 40 |         0.940000 |     0.981600 |        0.990000 | 0min3sec
+  0 |         0.560000 |     0.848200 |        0.970000 | 0min25sec
+  5 |         0.740000 |     0.961800 |        0.980000 | 0min17sec
+ 10 |         0.790000 |     0.969400 |        0.990000 | 0min18sec
+ 15 |         0.950000 |     0.982200 |        0.990000 | 0min16sec
+ 20 |         0.890000 |     0.982200 |        0.990000 | 0min16sec
+ 25 |         0.860000 |     0.982400 |        0.990000 | 0min14sec
+ 30 |         0.930000 |     0.981800 |        0.990000 | 0min11sec
+ 35 |         0.960000 |     0.982600 |        0.990000 | 0min9sec
+ 40 |         0.940000 |     0.981600 |        0.990000 | 0min5sec
  45 |         0.660000 |     0.973800 |        0.990000 | 0min2sec
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
 </pre></div></div>
 </div>
 <p>Since the <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and the best solution found by the ITEA <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> are both scikit-like models, we can use some base methods like <code class="docutils literal notranslate"><span class="pre">get_params</span></code>.</p>
@@ -558,8 +670,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># clf.get_params()          returns the ITEA parameters</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># clf.get_params()          returns the ITEA parameters</span>
 <span class="c1"># clf.bestsol_.get_params() returns the best expression parameters</span>
 
 <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
@@ -585,16 +696,15 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
   &#39;exp&#39;: &lt;function jax._src.numpy.lax_numpy._one_to_one_unop.&lt;locals&gt;.&lt;lambda&gt;(x)&gt;}}
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier">
-<h2>Inspecting the results from <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code><a class="headerlink" href="#Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier">
+<h2>Inspecting the results from <code class="docutils literal notranslate"><span class="pre">ITEA_classifier</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code><a class="headerlink" href="#Inspecting-the-results-from-ITEA_classifier-and-ITExpr_classifier" title="Permalink to this heading"></a></h2>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">clf</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is a fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_classifier</span></code> ready to be used.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">bestsol_</span>
 
 <span class="n">final_itexpr</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">term_separator</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 </pre></div>
@@ -613,8 +723,7 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span>
     <span class="n">y_test</span><span class="p">,</span>
     <span class="n">final_itexpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">),</span>
     <span class="n">target_names</span><span class="o">=</span><span class="n">targets</span>
@@ -627,6 +736,106 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+[[ -4.02811439   4.09552253  -0.06740814]
+ [  8.04678144   3.73334863 -11.78013006]
+ [-25.69525491   5.07990062  20.61535429]
+ [ -5.69393944   4.17068294   1.52325649]
+ [ -5.83219083   4.1986043    1.63358654]
+ [  8.75031113   3.78316762 -12.53347875]
+ [ -1.54165804   4.0147075   -2.47304945]
+ [-13.46787553   4.5187255    8.94915002]
+ [ -8.71190099   4.38767156   4.32422943]
+ [ -2.09416749   4.04693701  -1.95276951]
+ [-10.5345392    4.36550049   6.1690387 ]
+ [  9.87306767   3.77052049 -13.64358817]
+ [ 10.07377061   3.79200388 -13.86577449]
+ [  9.3967409    3.75096174 -13.14770264]
+ [  8.19469394   3.73229496 -11.9269889 ]
+ [ -5.71857045   4.14683158   1.57173887]
+ [-16.26424324   4.61851454  11.6457287 ]
+ [ -1.87956906   4.04801282  -2.16844376]
+ [ -4.48062916   4.11121768   0.36941147]
+ [-16.85337767   4.66185174  12.19152592]
+ [  8.41332984   3.73303519 -12.14636503]
+ [ -9.14664428   4.30920058   4.83744369]
+ [  7.95575453   3.75469749 -11.71045202]
+ [-15.80254838   4.61333442  11.18921395]
+ [-11.8703563    4.39292123   7.47743508]
+ [-14.56982205   4.56636375  10.0034583 ]
+ [-15.39371896   4.61959879  10.77412017]
+ [-16.26772053   4.6124286   11.65529193]
+ [  9.38268067   3.79316191 -13.17584258]
+ [  8.65743626   3.7449776  -12.40241387]
+ [ 10.53400912   3.80292799 -14.33693711]
+ [  7.93730214   3.72967441 -11.66697655]
+ [ -3.74009925   4.09513234  -0.35503309]
+ [  8.2574353    3.72362263 -11.98105793]
+ [  9.2446809    3.75981475 -13.00449565]
+ [-13.1982359    4.53778778   8.66044812]
+ [ -4.62780738   4.11431159   0.51349579]
+ [  8.86868321   3.74582689 -12.6145101 ]
+ [  8.91870802   3.7442575  -12.66296552]
+ [  8.36657765   3.70140949 -12.06798714]
+ [-12.52327581   4.46801132   8.05526449]
+ [ -4.94551302   4.10459465   0.84091838]
+ [ -5.41299282   4.15774829   1.25524453]
+ [  9.00982106   3.77410786 -12.78392892]
+ [  8.80122415   3.74077847 -12.54200262]
+ [ -0.72752126   4.01581387  -3.28829261]
+ [ -7.91706109   4.264654     3.65240709]
+ [-10.68651954   4.36182926   6.32469028]
+ [ -4.04197303   4.113173    -0.07119997]
+ [-16.41341745   4.60409132  11.80932613]]
+[[ -4.02811439   4.09552253  -0.06740814]
+ [  8.04678144   3.73334863 -11.78013006]
+ [-25.69525491   5.07990062  20.61535429]
+ [ -5.69393944   4.17068294   1.52325649]
+ [ -5.83219083   4.1986043    1.63358654]
+ [  8.75031113   3.78316762 -12.53347875]
+ [ -1.54165804   4.0147075   -2.47304945]
+ [-13.46787553   4.5187255    8.94915002]
+ [ -8.71190099   4.38767156   4.32422943]
+ [ -2.09416749   4.04693701  -1.95276951]
+ [-10.5345392    4.36550049   6.1690387 ]
+ [  9.87306767   3.77052049 -13.64358817]
+ [ 10.07377061   3.79200388 -13.86577449]
+ [  9.3967409    3.75096174 -13.14770264]
+ [  8.19469394   3.73229496 -11.9269889 ]
+ [ -5.71857045   4.14683158   1.57173887]
+ [-16.26424324   4.61851454  11.6457287 ]
+ [ -1.87956906   4.04801282  -2.16844376]
+ [ -4.48062916   4.11121768   0.36941147]
+ [-16.85337767   4.66185174  12.19152592]
+ [  8.41332984   3.73303519 -12.14636503]
+ [ -9.14664428   4.30920058   4.83744369]
+ [  7.95575453   3.75469749 -11.71045202]
+ [-15.80254838   4.61333442  11.18921395]
+ [-11.8703563    4.39292123   7.47743508]
+ [-14.56982205   4.56636375  10.0034583 ]
+ [-15.39371896   4.61959879  10.77412017]
+ [-16.26772053   4.6124286   11.65529193]
+ [  9.38268067   3.79316191 -13.17584258]
+ [  8.65743626   3.7449776  -12.40241387]
+ [ 10.53400912   3.80292799 -14.33693711]
+ [  7.93730214   3.72967441 -11.66697655]
+ [ -3.74009925   4.09513234  -0.35503309]
+ [  8.2574353    3.72362263 -11.98105793]
+ [  9.2446809    3.75981475 -13.00449565]
+ [-13.1982359    4.53778778   8.66044812]
+ [ -4.62780738   4.11431159   0.51349579]
+ [  8.86868321   3.74582689 -12.6145101 ]
+ [  8.91870802   3.7442575  -12.66296552]
+ [  8.36657765   3.70140949 -12.06798714]
+ [-12.52327581   4.46801132   8.05526449]
+ [ -4.94551302   4.10459465   0.84091838]
+ [ -5.41299282   4.15774829   1.25524453]
+ [  9.00982106   3.77410786 -12.78392892]
+ [  8.80122415   3.74077847 -12.54200262]
+ [ -0.72752126   4.01581387  -3.28829261]
+ [ -7.91706109   4.264654     3.65240709]
+ [-10.68651954   4.36182926   6.32469028]
+ [ -4.04197303   4.113173    -0.07119997]
+ [-16.41341745   4.60409132  11.80932613]]
               precision    recall  f1-score   support
 
       setosa       1.00      1.00      1.00        19
@@ -644,14 +853,220 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">ITExpr_inspector</span><span class="p">(</span>
         <span class="n">itexpr</span><span class="o">=</span><span class="n">final_itexpr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="o">=</span><span class="n">tfuncs</span>
     <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">terms_analysis</span><span class="p">()</span>
 <span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
@@ -724,8 +1139,7 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># The final expression</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The final expression</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span>
     <span class="s1">&#39;$ ITExpr = &#39;</span> <span class="o">+</span> <span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span>
         <span class="n">final_itexpr</span><span class="p">,</span>
@@ -747,8 +1161,7 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># List containing the partial derivatives</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List containing the partial derivatives</span>
 <span class="n">derivatives_latex</span> <span class="o">=</span> <span class="n">ITExpr_texifier</span><span class="o">.</span><span class="n">derivatives_to_latex</span><span class="p">(</span>
     <span class="n">final_itexpr</span><span class="p">,</span>
     <span class="n">term_wrapper</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">term</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;\underbrace{&#39;</span> <span class="o">+</span> <span class="n">term</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;}_{\text{term &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39; partial derivative}}&#39;</span>
@@ -769,17 +1182,16 @@ weighted avg       0.98      0.98      0.98        50
 <p><img src="_images/math/b28dc4d8e223ea7732709de2d4b8f4c4028c9516.png" alt="$ \frac{\partial}{\partial sepal length (cm)} ITExpr = \underbrace{1\beta_1 \cdot id'(\frac{sepal length (cm)}{sepal width (cm) \cdot petal length (cm)})(\frac{1}{sepal width (cm) \cdot petal length (cm)})}_{\text{term 1 partial derivative}}$"/></p>
 </div></div>
 </div>
-</div>
-<div class="section" id="Explaining-the-IT_classifier-expression-using-Partial-Effects">
-<h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_classifier</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_classifier-expression-using-Partial-Effects" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Explaining-the-IT_classifier-expression-using-Partial-Effects">
+<h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_classifier</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_classifier-expression-using-Partial-Effects" title="Permalink to this heading"></a></h2>
 <p>Now let’s create an instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
 <p>We can calculate feature importances with Partial Effects (PE) or approximate the Shapley values using PE. There is also support to use Integrated Gradients as a feature importance method.</p>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># First lets create and fit the explainer with training data</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First lets create and fit the explainer with training data</span>
 
 <span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
     <span class="n">itexpr</span><span class="o">=</span><span class="n">final_itexpr</span><span class="p">,</span>
@@ -788,12 +1200,218 @@ weighted avg       0.98      0.98      0.98        50
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+</pre></div></div>
+</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">for</span> <span class="n">method</span><span class="p">,</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="p">[</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">method</span><span class="p">,</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;pe&#39;</span><span class="p">,</span>      <span class="s1">&#39;Partial Effects&#39;</span><span class="p">),</span>
     <span class="p">(</span><span class="s1">&#39;shapley&#39;</span><span class="p">,</span> <span class="s1">&#39;Shapley Values&#39;</span><span class="p">),</span>
     <span class="p">(</span><span class="s1">&#39;ig&#39;</span><span class="p">,</span>      <span class="s1">&#39;Integrated Gradients&#39;</span><span class="p">)</span>
@@ -842,8 +1460,7 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
     <span class="n">importance_method</span> <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span> <span class="c1"># change to &#39;shapley&#39;</span>
     <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
@@ -867,8 +1484,7 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="n">explainer</span><span class="o">.</span><span class="n">plot_partial_effects_at_means</span><span class="p">(</span>
     <span class="n">X</span>          <span class="o">=</span> <span class="n">X_test</span><span class="p">,</span> <span class="c1"># Obtaining explanations for test data</span>
@@ -898,8 +1514,7 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="n">explainer</span><span class="o">.</span><span class="n">plot_partial_effects_at_means</span><span class="p">(</span>
     <span class="n">X</span>          <span class="o">=</span> <span class="n">X_test</span><span class="p">,</span> <span class="c1"># Obtaining explanations for test data</span>
@@ -928,19 +1543,225 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span><span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+[[-3.31368860e+00  4.06461458e+00 -7.50925981e-01]
+ [-1.81368714e+01  4.70976680e+00  1.34271046e+01]
+ [-5.52207611e+00  4.14178194e+00  1.38029417e+00]
+ [ 9.16273578e+00  3.75572768e+00 -1.29184635e+01]
+ [-1.88679951e+01  4.75593307e+00  1.41120620e+01]
+ [-1.10642230e+00  3.98880147e+00 -2.88237917e+00]
+ [ 9.42111812e+00  3.76787257e+00 -1.31889907e+01]
+ [ 9.30225417e+00  3.77637528e+00 -1.30786295e+01]
+ [ 6.77810757e+00  3.70985060e+00 -1.04879582e+01]
+ [-1.32430855e+00  4.08763437e+00 -2.76332582e+00]
+ [-1.05418826e+01  4.40217296e+00  6.13970962e+00]
+ [ 7.43400171e+00  3.69666625e+00 -1.11306680e+01]
+ [ 9.02708516e+00  3.76238731e+00 -1.27894725e+01]
+ [ 7.53884036e+00  3.76927042e+00 -1.13081108e+01]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [ 8.90538887e+00  3.74857383e+00 -1.26539627e+01]
+ [-2.33018207e+00  4.01193045e+00 -1.68174838e+00]
+ [-1.46702238e+01  4.51174559e+00  1.01584782e+01]
+ [ 9.04974055e+00  3.75440121e+00 -1.28041418e+01]
+ [-3.39600026e+00  4.08203912e+00 -6.86038862e-01]
+ [-1.45008203e+01  4.57554280e+00  9.92527750e+00]
+ [ 8.67975760e+00  3.72885152e+00 -1.24086091e+01]
+ [-8.82247560e+00  4.29502670e+00  4.52744889e+00]
+ [-1.25232758e+01  4.46801132e+00  8.05526449e+00]
+ [-1.85283471e+00  4.09689468e+00 -2.24405997e+00]
+ [-5.59977830e+00  4.13846024e+00  1.46131806e+00]
+ [-1.32978430e+01  4.46482430e+00  8.83301869e+00]
+ [-4.61931093e+00  4.18545254e+00  4.33858395e-01]
+ [ 7.47984706e+00  3.72786992e+00 -1.12077170e+01]
+ [ 4.06710892e-02  3.99871753e+00 -4.03938862e+00]
+ [-1.31262017e+01  4.50799038e+00  8.61821131e+00]
+ [ 9.35458220e+00  3.76619413e+00 -1.31207763e+01]
+ [ 1.05593253e+01  3.81309461e+00 -1.43724199e+01]
+ [-1.86383816e+00  4.06067668e+00 -2.19683852e+00]
+ [-8.41993515e+00  4.29043243e+00  4.12950272e+00]
+ [ 9.14250801e+00  3.76269980e+00 -1.29052078e+01]
+ [-1.67137532e+01  4.65447209e+00  1.20592811e+01]
+ [ 8.80254773e+00  3.74417747e+00 -1.25467252e+01]
+ [ 7.36589935e+00  3.76968418e+00 -1.11355835e+01]
+ [-8.04746159e+00  4.24406247e+00  3.80339913e+00]
+ [ 7.55149343e-01  3.97563478e+00 -4.73078413e+00]
+ [-1.54173995e+01  4.58161954e+00  1.08357800e+01]
+ [-9.46974754e+00  4.33380215e+00  5.13594539e+00]
+ [-9.52179864e+00  4.32838251e+00  5.19341613e+00]
+ [-1.82409299e+01  4.73179286e+00  1.35091370e+01]
+ [-3.91983870e+00  4.13085270e+00 -2.11014002e-01]
+ [ 9.30092104e+00  3.76936788e+00 -1.30702889e+01]
+ [ 1.07657010e+01  3.80400778e+00 -1.45697088e+01]
+ [-1.09269174e+01  4.45225318e+00  6.47466424e+00]
+ [-1.16418155e+01  4.40576480e+00  7.23605071e+00]
+ [ 8.80412749e+00  3.74823435e+00 -1.25523618e+01]
+ [ 8.95256992e+00  3.76543114e+00 -1.27180011e+01]
+ [ 9.58605349e+00  3.77693876e+00 -1.33629923e+01]
+ [-8.62572243e+00  4.33146951e+00  4.29425292e+00]
+ [-1.49097956e+01  4.53607376e+00  1.03737219e+01]
+ [ 8.54364931e+00  3.74959909e+00 -1.22932484e+01]
+ [-1.39428381e+01  4.52931654e+00  9.41352155e+00]
+ [-1.80895607e+01  4.67696191e+00  1.34125988e+01]
+ [ 9.62291874e+00  3.77598407e+00 -1.33989028e+01]
+ [-5.45007199e+00  4.15372067e+00  1.29635132e+00]
+ [-6.17674427e+00  4.21390902e+00  1.96283525e+00]
+ [-9.66918135e+00  4.35493981e+00  5.31424153e+00]
+ [-4.23863719e+00  4.10612844e+00  1.32508740e-01]
+ [-1.39117153e+01  4.51166716e+00  9.40004817e+00]
+ [ 8.08114084e+00  3.71145763e+00 -1.17925985e+01]
+ [-1.29340392e+01  4.48277018e+00  8.45126898e+00]
+ [-4.45367123e+00  4.11737578e+00  3.36295447e-01]
+ [-1.19049082e+01  4.43734417e+00  7.46756400e+00]
+ [ 3.36468343e-01  3.96995554e+00 -4.30642389e+00]
+ [-3.91088661e+00  4.10424182e+00 -1.93355209e-01]
+ [-4.83641209e+00  4.12281647e+00  7.13595624e-01]
+ [ 1.11268308e+01  3.88153548e+00 -1.50083662e+01]
+ [-4.11539328e+00  4.11411561e+00  1.27766742e-03]
+ [-4.02428136e+00  4.10338743e+00 -7.91060763e-02]
+ [ 8.70672148e+00  3.73673856e+00 -1.24434600e+01]
+ [-2.82285381e+00  4.03603152e+00 -1.21317771e+00]
+ [-1.43257698e+01  4.54113946e+00  9.78463033e+00]
+ [-1.30659315e+01  4.46274609e+00  8.60318537e+00]
+ [ 8.09170427e+00  3.74832794e+00 -1.18400322e+01]
+ [ 1.44590166e-01  3.97522975e+00 -4.11981992e+00]
+ [-1.66960690e+01  4.63035137e+00  1.20657176e+01]
+ [-9.95843172e+00  4.34613422e+00  5.61229750e+00]
+ [ 9.01897050e+00  3.73037488e+00 -1.27493454e+01]
+ [-1.66309346e+01  4.64121927e+00  1.19897153e+01]
+ [ 9.75275270e+00  3.78717964e+00 -1.35399323e+01]
+ [-5.95084467e+00  4.17996818e+00  1.77087649e+00]
+ [-1.53519416e+01  4.60423194e+00  1.07477097e+01]
+ [-1.21039376e+01  4.43313191e+00  7.67080572e+00]
+ [-3.27337696e+00  4.07606153e+00 -8.02684576e-01]
+ [-1.11484193e+01  4.39181729e+00  6.75660204e+00]
+ [-5.67763727e+00  4.24583710e+00  1.43180017e+00]
+ [-3.31188000e+00  4.08563518e+00 -7.73755183e-01]
+ [-1.21246459e+01  4.44352381e+00  7.68112206e+00]
+ [-9.93105376e+00  4.33173138e+00  5.59932238e+00]
+ [ 8.49875509e+00  3.73668705e+00 -1.22354421e+01]
+ [-2.77701230e+00  4.07558940e+00 -1.29857709e+00]
+ [-9.66915166e+00  4.34292746e+00  5.32622420e+00]
+ [ 1.01464283e+01  3.78843570e+00 -1.39348640e+01]
+ [-2.65083139e+00  4.07584949e+00 -1.42501809e+00]
+ [-1.54716472e+01  4.59477639e+00  1.08768708e+01]]
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/_multiclass_example_25_0.png" src="_images/_multiclass_example_25_0.png" />
+<img alt="_images/_multiclass_example_25_1.png" src="_images/_multiclass_example_25_1.png" />
 </div>
 </div>
 <p>In this example, wew didn’t specified the dictionary with the derivatives of every t ransformation function. <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code> will use jax library to automatically infer the derivatives, as long as you have used <code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> instead of the traditional <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
@@ -949,8 +1770,7 @@ weighted avg       0.98      0.98      0.98        50
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># printing the derivative of sin, without having to implement it by hand</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># printing the derivative of sin, without having to implement it by hand</span>
 <span class="c1"># (remember that is a vectorized function, and the input should be a np array)</span>
 <span class="nb">print</span><span class="p">(</span>
     <span class="n">explainer</span><span class="o">.</span><span class="n">tfuncs_dx</span><span class="p">[</span><span class="s1">&#39;log&#39;</span><span class="p">](</span>
@@ -968,55 +1788,38 @@ weighted avg       0.98      0.98      0.98        50
 [1.         0.5        0.33333334]
 </pre></div></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="_regression_example.html" class="btn btn-neutral float-right" title="California housing regression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="_interacting_with_protodash.html" class="btn btn-neutral float-left" title="Interacting with ProtoDash" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_regression_example.html" class="btn btn-neutral float-right" title="California housing regression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Guilherme Aldeia.
-
-    </p>
+    <p>&#169; Copyright 2021, Guilherme Aldeia.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

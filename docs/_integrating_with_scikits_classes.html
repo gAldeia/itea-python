@@ -1,83 +1,41 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Integrating with the Scikit: Pipeline and Gridsearch &mdash; Interaction-Transformation Evolutionary Algorithm</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.png"/>
-  
-
-  
-  
-
-  
-
-  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Interacting with ProtoDash" href="_interacting_with_protodash.html" />
     <link rel="prev" title="Explanations metrics" href="_explanations_metrics.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
-          
-
-          
-            
             <img src="_static/itea-logo.png" class="logo" alt="Logo"/>
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 latest
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -85,18 +43,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Getting started:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Installing</a></li>
@@ -119,71 +66,30 @@
 <li class="toctree-l1"><a class="reference internal" href="_regression_example.html">California housing regression</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">ITEA: Interaction-Transformation Evolutionary Algorithm</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Integrating with the Scikit: Pipeline and Gridsearch</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/_integrating_with_scikits_classes.ipynb.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS for nbsphinx extension */
@@ -394,11 +300,12 @@ div.nboutput.container div.output_area > div[class^='highlight']{
 }
 
 /* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
-.prompt a.copybtn {
+.prompt .copybtn {
     display: none;
 }
 
 /* Some additional styling taken form the Jupyter notebook CSS */
+.jp-RenderedHTMLCommon table,
 div.rendered_html table {
   border: none;
   border-collapse: collapse;
@@ -407,10 +314,14 @@ div.rendered_html table {
   font-size: 12px;
   table-layout: fixed;
 }
+.jp-RenderedHTMLCommon thead,
 div.rendered_html thead {
   border-bottom: 1px solid black;
   vertical-align: bottom;
 }
+.jp-RenderedHTMLCommon tr,
+.jp-RenderedHTMLCommon th,
+.jp-RenderedHTMLCommon td,
 div.rendered_html tr,
 div.rendered_html th,
 div.rendered_html td {
@@ -422,12 +333,15 @@ div.rendered_html td {
   max-width: none;
   border: none;
 }
+.jp-RenderedHTMLCommon th,
 div.rendered_html th {
   font-weight: bold;
 }
+.jp-RenderedHTMLCommon tbody tr:nth-child(odd),
 div.rendered_html tbody tr:nth-child(odd) {
   background: #f5f5f5;
 }
+.jp-RenderedHTMLCommon tbody tr:hover,
 div.rendered_html tbody tr:hover {
   background: rgba(66, 165, 245, 0.2);
 }
@@ -454,15 +368,14 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Integrating-with-the-Scikit:-Pipeline-and-Gridsearch">
-<h1>Integrating with the Scikit: Pipeline and Gridsearch<a class="headerlink" href="#Integrating-with-the-Scikit:-Pipeline-and-Gridsearch" title="Permalink to this headline">¶</a></h1>
+<section id="Integrating-with-the-Scikit:-Pipeline-and-Gridsearch">
+<h1>Integrating with the Scikit: Pipeline and Gridsearch<a class="headerlink" href="#Integrating-with-the-Scikit:-Pipeline-and-Gridsearch" title="Permalink to this heading"></a></h1>
 <p>ITEA implementations inherits scikits’ base classes. This means that we can integrate the ITEA with methods like Pipeline and Gridsearch. In this notebook, we’ll show some examples on how to take advantage of that to tune an predictor.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span>  <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span>   <span class="k">as</span> <span class="nn">np</span>
@@ -493,15 +406,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-<div class="section" id="Loading-the-data">
-<h2>Loading the data<a class="headerlink" href="#Loading-the-data" title="Permalink to this headline">¶</a></h2>
+<section id="Loading-the-data">
+<h2>Loading the data<a class="headerlink" href="#Loading-the-data" title="Permalink to this heading"></a></h2>
 <p>First, let’s load the data, and split it into a training and testing partition. The training partition will be used for the training and validation process, and only after obtaining a final method will we perform the training with this data and the test with the test partition.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">boston_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_boston</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boston_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_boston</span><span class="p">()</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span>        <span class="o">=</span> <span class="n">boston_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">boston_data</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
 <span class="n">labels</span>      <span class="o">=</span> <span class="n">boston_data</span><span class="p">[</span><span class="s1">&#39;feature_names&#39;</span><span class="p">]</span>
 
@@ -510,17 +422,16 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="Inspectioning-the-data">
-<h2>Inspectioning the data<a class="headerlink" href="#Inspectioning-the-data" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Inspectioning-the-data">
+<h2>Inspectioning the data<a class="headerlink" href="#Inspectioning-the-data" title="Permalink to this heading"></a></h2>
 <p>Let’s look at some descriptive statistics for the variables.</p>
 <p>Suppose that, to reduce the complexity of the final model, we are interested in obtaining a subset of these variables.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -701,8 +612,7 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">feature_selector</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">mutual_info_regression</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_selector</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">mutual_info_regression</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
 <span class="n">X_new</span>      <span class="o">=</span> <span class="n">feature_selector</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">mask</span>       <span class="o">=</span> <span class="n">feature_selector</span><span class="o">.</span><span class="n">get_support</span><span class="p">()</span>
@@ -725,15 +635,14 @@ div.rendered_html tbody tr:hover {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">corrfunc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">corrfunc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kws</span><span class="p">):</span>
 
     <span class="n">r</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">&#39;$\rho&#39;</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;= </span><span class="si">{</span><span class="n">r</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span>
-        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span> <span class="o">.</span><span class="mi">9</span><span class="p">),</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="mf">.9</span><span class="p">),</span>
         <span class="n">xycoords</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
         <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
             <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
@@ -764,17 +673,16 @@ div.rendered_html tbody tr:hover {
 <img alt="_images/_integrating_with_scikits_classes_9_0.png" src="_images/_integrating_with_scikits_classes_9_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Creating-a-pipeline">
-<h2>Creating a pipeline<a class="headerlink" href="#Creating-a-pipeline" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Creating-a-pipeline">
+<h2>Creating a pipeline<a class="headerlink" href="#Creating-a-pipeline" title="Permalink to this heading"></a></h2>
 <p>scikit provides a Pipeline class, which serves to nest a sequence of transformations and a final estimator. With this, we can automate the date transformation steps for an estimator.</p>
 <p>Let’s do the variable selection step and fit an ITEA regressor into a pipeline.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">tfuncs</span> <span class="o">=</span> <span class="p">{</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfuncs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;log&#39;</span>      <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
     <span class="s1">&#39;sqrt.abs&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
     <span class="s1">&#39;id&#39;</span>       <span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -854,8 +762,7 @@ Pipeline(steps=[(&#39;selectKbest&#39;,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">pipeline</span><span class="p">[</span><span class="s1">&#39;itea&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pipeline</span><span class="p">[</span><span class="s1">&#39;itea&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -867,9 +774,9 @@ Pipeline(steps=[(&#39;selectKbest&#39;,
 0.086*id(INDUS * NOX^-2 * RM^2) + -18.892*log(NOX^-2 * RM * LSTAT^2) + -18.139*log(NOX^-1 * LSTAT^-2) + -0.002*sqrt.abs(INDUS^2 * NOX^2 * RM^2 * LSTAT) + 0.705*id(INDUS * NOX^-2 * RM^2 * LSTAT^-2) + -21.588
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Finetuning-with-gridsearch">
-<h2>Finetuning with gridsearch<a class="headerlink" href="#Finetuning-with-gridsearch" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Finetuning-with-gridsearch">
+<h2>Finetuning with gridsearch<a class="headerlink" href="#Finetuning-with-gridsearch" title="Permalink to this heading"></a></h2>
 <p>ITEA has several hyperparameters, and although the method can be used with default values (which deliver fast execution with satisfactory results), it may be necessary to further investigate a suitable configuration for the domain of the problem in which the regressor is being applied.</p>
 <p>Imagine we want to limit the final expression to something that isn’t too complex. We can achieve this by several ways.</p>
 <p>We can have several expression sizes, exponents limits, and different transformation functions. Let’s choose some values for each configuration to perform the gridsearch.</p>
@@ -880,8 +787,7 @@ Pipeline(steps=[(&#39;selectKbest&#39;,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">permutations</span>
 
 <span class="n">two_tfuncs</span> <span class="o">=</span> <span class="n">permutations</span><span class="p">([</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt.abs&#39;</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">],</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
@@ -908,8 +814,7 @@ Pipeline(steps=[(&#39;selectKbest&#39;,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">gridsearch</span> <span class="o">=</span> <span class="n">HalvingGridSearchCV</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gridsearch</span> <span class="o">=</span> <span class="n">HalvingGridSearchCV</span><span class="p">(</span>
     <span class="n">estimator</span><span class="o">=</span><span class="n">pipeline</span><span class="p">,</span>
     <span class="n">param_grid</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
@@ -978,8 +883,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="n">results_aux</span> <span class="o">=</span> <span class="n">gridsearch</span><span class="o">.</span><span class="n">cv_results_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
@@ -1061,17 +965,16 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <img alt="_images/_integrating_with_scikits_classes_19_1.png" src="_images/_integrating_with_scikits_classes_19_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="Creating-and-fitting-a-model-with-the-best-configuration">
-<h2>Creating and fitting a model with the best configuration<a class="headerlink" href="#Creating-and-fitting-a-model-with-the-best-configuration" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="Creating-and-fitting-a-model-with-the-best-configuration">
+<h2>Creating and fitting a model with the best configuration<a class="headerlink" href="#Creating-and-fitting-a-model-with-the-best-configuration" title="Permalink to this heading"></a></h2>
 <p>Finally, let’s create an instance of ITEA with the best configuration, and then use the test data to see how the final model performs as a predictor.</p>
 <p>Additionally, let’s look at some interpretability graphs.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># best_pipeline is be a pipeline!</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># best_pipeline is be a pipeline!</span>
 <span class="n">best_pipeline</span> <span class="o">=</span> <span class="n">gridsearch</span><span class="o">.</span><span class="n">best_estimator_</span>
 
 <span class="c1"># predict(), score() and other estimators methods will</span>
@@ -1098,8 +1001,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">just_transformers</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">just_transformers</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 
     <span class="n">Xt</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">transformer</span> <span class="ow">in</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">steps</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
@@ -1114,8 +1016,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
     <span class="n">itexpr</span>    <span class="o">=</span> <span class="n">best_pipeline</span><span class="p">[</span><span class="s1">&#39;itea&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bestsol_</span><span class="p">,</span>
     <span class="n">tfuncs</span>    <span class="o">=</span> <span class="n">tfuncs</span><span class="p">,</span>
     <span class="n">tfuncs_dx</span> <span class="o">=</span> <span class="n">tfuncs_dx</span>
@@ -1128,8 +1029,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_feature_importances</span><span class="p">(</span>
     <span class="n">X</span><span class="o">=</span><span class="n">just_transformers</span><span class="p">(</span><span class="n">best_pipeline</span><span class="p">,</span> <span class="n">X_train</span><span class="p">),</span>
     <span class="n">importance_method</span><span class="o">=</span><span class="s1">&#39;pe&#39;</span><span class="p">,</span>
     <span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
@@ -1149,8 +1049,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span><span class="o">.</span><span class="n">plot_normalized_partial_effects</span><span class="p">(</span>
     <span class="n">grouping_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_points</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -1168,8 +1067,7 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
 <span class="n">explainer</span><span class="o">.</span><span class="n">plot_partial_effects_at_means</span><span class="p">(</span>
     <span class="n">X</span><span class="o">=</span><span class="n">just_transformers</span><span class="p">(</span><span class="n">best_pipeline</span><span class="p">,</span> <span class="n">X_test</span><span class="p">),</span>
@@ -1193,55 +1091,38 @@ Fitting 3 folds for each of 2 candidates, totalling 6 fits
 <img alt="_images/_integrating_with_scikits_classes_29_0.png" src="_images/_integrating_with_scikits_classes_29_0.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="_interacting_with_protodash.html" class="btn btn-neutral float-right" title="Interacting with ProtoDash" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="_explanations_metrics.html" class="btn btn-neutral float-left" title="Explanations metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="_interacting_with_protodash.html" class="btn btn-neutral float-right" title="Interacting with ProtoDash" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Guilherme Aldeia.
-
-    </p>
+    <p>&#169; Copyright 2021, Guilherme Aldeia.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
