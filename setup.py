@@ -36,6 +36,9 @@ setup(
 
         #required to build the docs
         "Jinja2==2.11",  
+        "markupsafe==2.0.1",
+        "sphinx_rtd_theme==1.0.0",
+        "ipython==8.5.0",
         "nbsphinx"
     ],
 
