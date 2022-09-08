@@ -496,6 +496,7 @@
         <span class="n">grouping_threshold</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
         <span class="n">target</span>             <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">importance_method</span>  <span class="o">=</span> <span class="s1">&#39;pe&#39;</span><span class="p">,</span>
+        <span class="n">show_avg_values</span>    <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">show</span>               <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Bar plot of the feature importance, that can be calculated with</span>
@@ -541,6 +542,10 @@
 <span class="sd">        importance_method : string, default=&#39;pe&#39;</span>
 <span class="sd">            string specifying which method should be used to estimate feature</span>
 <span class="sd">            importance. Available methods are: ``[&#39;pe&#39;, &#39;shapley&#39;, &#39;ig&#39;]``.</span>
+
+<span class="sd">        show_avg_values : bool, default=True</span>
+<span class="sd">            determines if the average feature value should be displayed </span>
+<span class="sd">            left to the feature names in the y axis.</span>
 <span class="sd">        </span>
 <span class="sd">        show : bool, default=True</span>
 <span class="sd">            boolean value indicating if the generated plot should be displayed</span>
@@ -606,10 +611,12 @@
         <span class="c1"># classifying the features importances</span>
         <span class="n">mean_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">y_ticks_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">y_ticks_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="n">show_avg_values</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">&#39;</span>
                 <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">mean_values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itexpr</span><span class="o">.</span><span class="n">labels</span><span class="p">)])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">y_ticks_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1"> = x_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">y_ticks_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1"> = x_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="n">show_avg_values</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;x_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span>
                 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mean_values</span><span class="p">)])</span>
         
         <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
@@ -916,7 +923,9 @@
 <span class="sd">            interval on the y axis.</span>
 
 <span class="sd">        rug : bool, default True</span>
-<span class="sd">            whether to show the distribution as a rug</span>
+<span class="sd">            whether to show the distribution as a rug. The input data will be</span>
+<span class="sd">            divided into 10 deciles, which will be showed right above the x</span>
+<span class="sd">            axis line.</span>
 
 <span class="sd">        show :  bool, default=True</span>
 <span class="sd">            boolean value indicating if the generated plot should be displayed</span>

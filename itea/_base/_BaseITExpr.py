@@ -145,7 +145,7 @@ class BaseITExpr(BaseEstimator):
             for i, l in enumerate(self.labels):
                 expr_str = expr_str.replace(f"placeholder_{i}", l)
         else:
-            expr_str = expr_str.replace(f"placeholder_", "x")
+            expr_str = expr_str.replace(f"placeholder_", "x_")
 
         return expr_str  + f"{term_separator}{intercept.round(places)}"
 

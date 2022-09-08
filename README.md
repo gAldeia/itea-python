@@ -47,6 +47,12 @@ Alternatively, you can download the source code at the
 $ pip install .
 ```
 
+> **NOTE:** you may need to install some requirements if  `itea` is being installed via the github source code. This can be achieved by running:
+>
+> ```pip install -r requirements.txt```
+>
+> You will also need to have a \LaTeX compiler and pandoc installed to build the docs.
+
 > **NOTE:** If pip fails to install the latest version, you will need to update `pip` and `setuptools`, and install an older version of `docutils<0.18` (such as v0.17.1).
 
 ## Using the ITEA algorithm

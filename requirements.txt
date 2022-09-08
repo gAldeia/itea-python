@@ -8,4 +8,16 @@ jax>=0.2.13
 jaxlib>=0.1.67
 scipy>=1.5.2
 pylatex==1.4.1
+docutils==0.17.1
+
+# setup requires
+wheel
+pytest-runner
+coverage
+coverage-badge
+
+Jinja2==2.11
+markupsafe==2.0.1
+sphinx_rtd_theme
+ipython
 nbsphinx

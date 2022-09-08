@@ -397,7 +397,7 @@ div.rendered_html tbody tr:hover {
 <section id="Creating-and-fitting-an-ITEA_regressor">
 <h2>Creating and fitting an <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code><a class="headerlink" href="#Creating-and-fitting-an-ITEA_regressor" title="Permalink to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">housing_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_california_housing</span><span class="p">()</span>
@@ -451,14 +451,15 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
  10 |         0.794826 |     0.828574 |        0.983679 | 2min7sec
  20 |         0.788833 |     0.799124 |        0.850923 | 1min39sec
  30 |         0.740517 |     0.783561 |        0.806966 | 1min9sec
+ 40 |         0.756137 |     0.777656 |        0.806420 | 0min57sec
 </pre></div></div>
 </div>
 </section>
 <section id="Inspecting-the-results-from-ITEA_regressor-and-ITExpr_regressor">
 <h2>Inspecting the results from <code class="docutils literal notranslate"><span class="pre">ITEA_regressor</span></code> and <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code><a class="headerlink" href="#Inspecting-the-results-from-ITEA_regressor-and-ITExpr_regressor" title="Permalink to this heading"></a></h2>
 <p>We can see the convergence of the fitness, the number of terms, or tree complexity by using the <code class="docutils literal notranslate"><span class="pre">ITEA_summarizer</span></code>, an inspector class focused on the <code class="docutils literal notranslate"><span class="pre">ITEA</span></code>:</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -476,9 +477,16 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_regression_example_7_0.png" src="_images/_regression_example_7_0.png" />
+</div>
+</div>
 <p>Now that we have fitted the ITEA, our <code class="docutils literal notranslate"><span class="pre">reg</span></code> contains the <code class="docutils literal notranslate"><span class="pre">bestsol_</span></code> attribute, which is a fitted instance of <code class="docutils literal notranslate"><span class="pre">ITExpr_regressor</span></code> ready to be used. Let us see the final expression and the execution time.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">final_itexpr</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">bestsol_</span>
@@ -489,8 +497,28 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Final expression:
+ 9.361*log(MedInc^2 * HouseAge * AveRooms * AveBedrms * Population^2 * Latitude * Longitude^2) +
+-9.662*log(HouseAge * Population^2 * AveOccup * Longitude^2) +
+-8.436*log(MedInc^2 * HouseAge^2 * AveRooms^2 * AveBedrms * Population^2 * Latitude^2) +
+-1.954*log(AveRooms) +
+8.739*log(HouseAge^2 * AveRooms * Population^2 * AveOccup * Longitude^2) +
+-53.078
+
+Elapsed time: 210.53795051574707
+
+Selected Features: [&#39;MedInc&#39; &#39;HouseAge&#39; &#39;AveRooms&#39; &#39;AveBedrms&#39; &#39;Population&#39; &#39;AveOccup&#39;
+ &#39;Latitude&#39; &#39;Longitude&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># just remembering that ITEA and ITExpr implements scikits</span>
@@ -499,8 +527,26 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;bound method BaseEstimator.get_params of ITExpr_regressor(expr=[(&#39;log&#39;, [2, 1, 1, 1, 2, 0, 1, 2]),
+                       (&#39;log&#39;, [0, 1, 0, 0, 2, 1, 0, 2]),
+                       (&#39;log&#39;, [2, 2, 2, 1, 2, 0, 2, 0]),
+                       (&#39;log&#39;, [0, 0, 1, 0, 0, 0, 0, 0]),
+                       (&#39;log&#39;, [0, 2, 1, 0, 2, 1, 0, 2])],
+                 labels=array([&#39;MedInc&#39;, &#39;HouseAge&#39;, &#39;AveRooms&#39;, &#39;AveBedrms&#39;, &#39;Population&#39;,
+       &#39;AveOccup&#39;, &#39;Latitude&#39;, &#39;Longitude&#39;], dtype=&#39;&lt;U10&#39;),
+                 tfuncs={&#39;cos&#39;: &lt;ufunc &#39;cos&#39;&gt;, &#39;exp&#39;: &lt;ufunc &#39;exp&#39;&gt;,
+                         &#39;id&#39;: &lt;function &lt;lambda&gt; at 0x7f4ab0369680&gt;,
+                         &#39;log&#39;: &lt;ufunc &#39;log&#39;&gt;, &#39;sin&#39;: &lt;ufunc &#39;sin&#39;&gt;,
+                         &#39;sqrt.abs&#39;: &lt;function &lt;lambda&gt; at 0x7f4ab0369f80&gt;})&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -510,9 +556,16 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_regression_example_11_0.png" src="_images/_regression_example_11_0.png" />
+</div>
+</div>
 <p>We can use the <code class="docutils literal notranslate"><span class="pre">ITExpr_inspector</span></code> to see information for each term.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -523,12 +576,108 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>coef</th>
+      <th>func</th>
+      <th>strengths</th>
+      <th>coef\nstderr.</th>
+      <th>mean pairwise\ndisentanglement</th>
+      <th>mean mutual\ninformation</th>
+      <th>prediction\nvar.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9.361</td>
+      <td>log</td>
+      <td>[2, 1, 1, 1, 2, 0, 1, 2]</td>
+      <td>0.22</td>
+      <td>0.535</td>
+      <td>0.603</td>
+      <td>268.140</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-9.662</td>
+      <td>log</td>
+      <td>[0, 1, 0, 0, 2, 1, 0, 2]</td>
+      <td>0.221</td>
+      <td>0.494</td>
+      <td>0.527</td>
+      <td>221.432</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-8.436</td>
+      <td>log</td>
+      <td>[2, 2, 2, 1, 2, 0, 2, 0]</td>
+      <td>0.222</td>
+      <td>0.544</td>
+      <td>0.609</td>
+      <td>263.430</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.954</td>
+      <td>log</td>
+      <td>[0, 0, 1, 0, 0, 0, 0, 0]</td>
+      <td>0.038</td>
+      <td>0.075</td>
+      <td>0.187</td>
+      <td>0.290</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>8.739</td>
+      <td>log</td>
+      <td>[0, 2, 1, 0, 2, 1, 0, 2]</td>
+      <td>0.222</td>
+      <td>0.520</td>
+      <td>0.553</td>
+      <td>214.239</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>-53.078</td>
+      <td>intercept</td>
+      <td>---</td>
+      <td>1.325</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
 </section>
 <section id="Explaining-the-IT_regressor-expression-using-Partial-Effects">
 <h2>Explaining the <code class="docutils literal notranslate"><span class="pre">IT_regressor</span></code> expression using Partial Effects<a class="headerlink" href="#Explaining-the-IT_regressor-expression-using-Partial-Effects" title="Permalink to this heading"></a></h2>
 <p>We can obtain feature importances using the Partial Effects and the <code class="docutils literal notranslate"><span class="pre">ITExpr_explainer</span></code>.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">explainer</span> <span class="o">=</span> <span class="n">ITExpr_explainer</span><span class="p">(</span>
@@ -543,9 +692,16 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_regression_example_15_0.png" src="_images/_regression_example_15_0.png" />
+</div>
+</div>
 <p>The Partial Effects at the Means can help understand how the contribution of each variable changes according to its values when their covariables are fixed at the means.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -565,9 +721,16 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_regression_example_17_0.png" src="_images/_regression_example_17_0.png" />
+</div>
+</div>
 <p>Finally, we can also plot the mean relative importances of each feature by calculating the average Partial Effect for each interval when the output is discretized.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -579,6 +742,13 @@ gen | smallest fitness | mean fitness | highest fitness | remaining time
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/_regression_example_19_0.png" src="_images/_regression_example_19_0.png" />
 </div>
 </div>
 </section>

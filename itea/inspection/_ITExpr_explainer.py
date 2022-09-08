@@ -406,6 +406,7 @@ class ITExpr_explainer():
         grouping_threshold = 0.05,
         target             = None,
         importance_method  = 'pe',
+        show_avg_values    = True,
         show               = True,
     ):
         """Bar plot of the feature importance, that can be calculated with
@@ -451,6 +452,10 @@ class ITExpr_explainer():
         importance_method : string, default='pe'
             string specifying which method should be used to estimate feature
             importance. Available methods are: ``['pe', 'shapley', 'ig']``.
+
+        show_avg_values : bool, default=True
+            determines if the average feature value should be displayed 
+            left to the feature names in the y axis.
         
         show : bool, default=True
             boolean value indicating if the generated plot should be displayed
@@ -516,10 +521,12 @@ class ITExpr_explainer():
         # classifying the features importances
         mean_values = np.abs(np.mean(X, axis=0))
         if len(self.itexpr.labels) > 0:
-            y_ticks_labels = np.array([f'{round(m, 3)} = {l}'
+            y_ticks_labels = np.array([
+                f'{round(m, 3)} = {l}' if show_avg_values else f'{l}'
                 for m, l in zip(mean_values, self.itexpr.labels)])
         else:
-            y_ticks_labels = np.array([f'{round(m, 3)} = x_{i}'
+            y_ticks_labels = np.array([
+                f'{round(m, 3)} = x_{i}' if show_avg_values else f'x_{i}'
                 for i, m in enumerate(mean_values)])
         
         order = np.argsort(-np.sum(importances, axis=0))
@@ -826,7 +833,9 @@ class ITExpr_explainer():
             interval on the y axis.
 
         rug : bool, default True
-            whether to show the distribution as a rug
+            whether to show the distribution as a rug. The input data will be
+            divided into 10 deciles, which will be showed right above the x
+            axis line.
 
         show :  bool, default=True
             boolean value indicating if the generated plot should be displayed
