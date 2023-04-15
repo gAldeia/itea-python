@@ -25,6 +25,8 @@ This implementation is based on the scikit-learn package and the implementations
 of the estimators follow their guidelines.
 
 
+> **OBS:** There also exists a [high-performing Haskell implementation (that comes with a python wrapper)](https://github.com/folivetti/ITEA) by [@folivetti](https://github.com/folivetti/ITEA).
+
 ## Documentation
 
 Documentation is available at [readthedocs](https://itea-python.readthedocs.io/en/latest).
