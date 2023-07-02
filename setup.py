@@ -19,7 +19,6 @@ setup(
         "numpy>=1.18.2",
         "scikit-learn>=1.0.0",
         "jax[cpu]",
-        #"jaxlib",
         "scipy>=1.5.2",
 
         # ITEA summarizer
@@ -32,32 +31,13 @@ setup(
     python_requires = '>=3.7',
     setup_requires  = [
         "setuptools",
-        "wheel",
-
-        # #required to build the docs
-        # "sphinx",
-        # "Jinja2==2.11",  
-        # "markupsafe==2.0.1",
-        # "sphinx_rtd_theme==1.0.0",
-        # "ipython==8.5.0",
-        # "nbsphinx",
-        # "docutils==0.17.1"
+        "wheel"
     ],
 
     # Aditional packages not included in install requires
     tests_require   = [
-        # Testing
-        # "pytest-runner",
-        # "coverage",
-        # "coverage-badge",
-
-        "pytest",
-
-        # Used in profiling
-        "snakeviz",
-
-        # Used in benchmarking
-        "filelock"
-        ],
+        "pytest-runner",
+        "pytest"
+    ],
     test_suite = "tests",
 )

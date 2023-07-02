@@ -24,6 +24,12 @@ jobs:
       - name: Install module
         run: | 
           pip install .
+      - name: Build and install PyPI dist
+        run: |
+          rm -f ./dist/*
+          python setup.py develop
+          python setup.py sdist
+          python -m pip install ./dist/*.tar.gz
       - name: Test with pytest
         run: |
           python -m pytest tests/*.py
