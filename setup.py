@@ -17,7 +17,7 @@ setup(
     install_requires = [
         # ITEA core
         "numpy>=1.18.2",
-        "scikit-learn>=0.23.1",
+        "scikit-learn>=1.0.0",
         "jax[cpu]",
         #"jaxlib",
         "scipy>=1.5.2",
