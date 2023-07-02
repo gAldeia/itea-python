@@ -18,8 +18,8 @@ setup(
         # ITEA core
         "numpy>=1.18.2",
         "scikit-learn>=0.23.1",
-        "jax",
-        "jaxlib",
+        "jax[cpu]",
+        #"jaxlib",
         "scipy>=1.5.2",
 
         # ITEA summarizer
