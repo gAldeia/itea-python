@@ -35,6 +35,7 @@ jobs:
           python -m pytest tests/*.py
       - name: Build docs
         run: |
+          EXAMPLES := shell find "./examples/"  -maxdepth 1 -name '*.ipynb'
           foreach example, $(EXAMPLES), $(shell cp $(example) ./docsource/source/$(addprefix _, $(notdir $(example))))
           sphinx-build -b html ./docsource/source ./docs
           touch ./docs/.nojekyll
