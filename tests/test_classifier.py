@@ -132,7 +132,7 @@ def test_linear_ITExpr_equals_scikit_logisticRegression(
         solver='saga',
         max_iter=100,
         multi_class='multinomial',
-        penalty=None,
+        penalty='none',
         random_state=42
     ).fit(X, y)
 
