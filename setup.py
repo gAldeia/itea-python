@@ -52,7 +52,6 @@ setup(
         # "coverage-badge",
 
         "pytest",
-        "pytest-html",
 
         # Used in profiling
         "snakeviz",
