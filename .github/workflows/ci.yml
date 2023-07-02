@@ -39,4 +39,4 @@ jobs:
       - name: Build docs
         run: |
           sphinx-build -b html ./docsource/source ./docs
-        	touch ./docs/.nojekyll
+          touch ./docs/.nojekyll
