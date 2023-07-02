@@ -33,3 +33,13 @@ jobs:
       - name: Test with pytest
         run: |
           python -m pytest tests/*.py
+      - name: Generate explanation report
+        run: |
+          python ./examples/generate_report_example.py
+      - name: Copy notebooks and Build docs
+        run: |
+          cp ./examples/Report.pdf ./docsource/source/assets/files/Report.pdf)
+          EXAMPLES := $(shell find "./examples/"  -maxdepth 1 -name '*.ipynb')
+      	  foreach example, $(EXAMPLES), $(shell cp $(example) ./docsource/source/$(addprefix _, $(notdir $(example))))
+          sphinx-build -b html ./docsource/source ./docs
+        	touch ./docs/.nojekyll
