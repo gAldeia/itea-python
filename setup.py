@@ -31,7 +31,7 @@ setup(
     include_package_data = True,
     python_requires = '>=3.7',
     setup_requires  = [
-        "setuptools>=42",
+        "setuptools",
         "wheel",
 
         # #required to build the docs

@@ -1,7 +1,7 @@
 # This file specifies dependences for the whole project. Minimal dependences
 # for building the module are defined in '.setup.py`.
 
-# Build the python module
+# Build the python module. specifying minimum versions (as used in python 3.7)
 numpy>=1.18.2
 scikit-learn>=0.23.1
 matplotlib>=3.2.2
@@ -9,19 +9,21 @@ pandas>=1.1.0
 jax>=0.2.13
 jaxlib>=0.1.67
 scipy>=1.5.2
-pylatex==1.4.1
+pylatex>=1.4.1
 
 # Documentation
-# setuptools>=42
 # docutils==0.17.1
 
-# # setup requires
-# wheel
-# pytest-runner
+# setup requires
+wheel
+setuptools
+
 # coverage
 # coverage-badge
 
-# # Testing
+# Testing
+pytest
+pytest-runner
 
 # # Benchmarking
 
