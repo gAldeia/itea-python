@@ -148,7 +148,7 @@ class ITExpr_classifier(BaseITExpr, ClassifierMixin):
                     if i != class_id]],
                 axis=1)
 
-            V = np.diagflat(np.product([prob_class0, prob_class1], axis=0))
+            V = np.diagflat(np.prod([prob_class0, prob_class1], axis=0))
 
             try:
                 covars[class_id, :, :] = np.linalg.inv(
