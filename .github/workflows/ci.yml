@@ -23,7 +23,6 @@ jobs:
           pip install -r requirements.txt
       - name: Install module
         run: | 
-          micromamba env list
           pip install .
       - name: Test with pytest
         run: |
