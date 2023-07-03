@@ -140,7 +140,11 @@ reg.predict(X_reg)
 
 The ITEA Package also implements some classes focused on interpretability,
 providing mechanisms to inspect and better understand the returned symbolic
-expressions. We can obtain importance values ​​from expression attributes and
+expressions.
+
+> **NOTE:** in order to generate the reports, you'll need to have a \LaTeX compiler installed locally. You can go with `pdfLaTex` if you don't have any, since it is easy to install.
+
+We can obtain importance values ​​from expression attributes and
 even generate graphs:
 
 ```python
@@ -158,7 +162,9 @@ explainer.plot_feature_importances(
 ![feature importances plot](https://galdeia.github.io/itea-python/_images/_regression_example_17_0.png)
 
 Explainers do not inherit any scikit interfaces, but implements a similar usage.
-So, the steps to use the explainers are: 1. Instanciate the explainer; 2. Fit;
+So, the steps to use the explainers are:
+1. Instanciate the explainer;
+2. Fit;
 3. Generate the plots.
 
 That said, if you're familiar with scikit's ecosystem of regressors and
