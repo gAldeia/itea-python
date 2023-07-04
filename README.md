@@ -49,20 +49,27 @@ Alternatively, you can download the source code at the
 $ pip install .
 ```
 
-> As an alternative, you can install it inside a conda environment. First create the environment:
-> 
-> ```conda create --name itea-python python=3.10```
->
-> Then install following one of the alternatives.
->
-> **NOTE:** you may need to install some requirements if  `itea` is being installed via the github source code. This can be achieved by running:
+Additionally, you can install it inside a conda environment. First create the environment:
+
+```shell 
+conda create --name itea-python python=3.10
+```
+
+Then activate the environment:
+
+```shell
+conda activate itea-python
+```
+
+and install the `itea` by using one of the options above (`pip install itea` or `pip install .`).
+
+> **NOTE:** to run the **tests**, build **the documentation**, **profile** the code and execute a simple **benchmark**, you may need to install some requirements. If you want to do so, first you need to install itea in a conda environment. Then, inside the environment:
 >
 > ```pip install -r requirements.txt```
 >
 > You will also need to have a \LaTeX compiler and pandoc installed to build the docs.
 >
->
-> **NOTE:** If pip fails to install the latest version, you will need to update `pip` and `setuptools`, and install an older version of `docutils<0.18` (such as v0.17.1).
+> There is a `Makefile` at the root of this repository that contains simple macros to run these commands (or you can simply call `make`) and everything will be executed. There is a dedicated section for each additional highlighted resource at the end of this markdown. 
 
 ## Using the ITEA algorithm
 
