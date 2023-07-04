@@ -11,11 +11,11 @@
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -27,15 +27,19 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../index.html" class="icon icon-home"> ITEA: Interaction-Transformation Evolutionary Algorithm
-            <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ITEA: Interaction-Transformation Evolutionary Algorithm
+              <img src="../../../_static/itea-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
                 latest
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -76,9 +80,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-      <li>itea.classification._ITExpr_classifier</li>
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">itea.classification._ITExpr_classifier</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -115,14 +119,14 @@
 
 
 <div class="viewcode-block" id="ITExpr_classifier"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier">[docs]</a><span class="k">class</span> <span class="nc">ITExpr_classifier</span><span class="p">(</span><span class="n">BaseITExpr</span><span class="p">,</span> <span class="n">ClassifierMixin</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;ITExpr for the classification task. This will be the class </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ITExpr for the classification task. This will be the class </span>
 <span class="sd">    in ``ITEA_classifier.bestsol_``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="n">tfuncs</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">fitness_f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
         <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Constructor method.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -207,7 +211,7 @@
 
 
 <div class="viewcode-block" id="ITExpr_classifier.covariance_matrix"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.covariance_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">covariance_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Estimation of the covariance matrix of the coefficients.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimation of the covariance matrix of the coefficients.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -238,7 +242,7 @@
                     <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">class_id</span><span class="p">]],</span>
                 <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-            <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="n">prob_class0</span><span class="p">,</span> <span class="n">prob_class1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">([</span><span class="n">prob_class0</span><span class="p">,</span> <span class="n">prob_class1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">covars</span><span class="p">[</span><span class="n">class_id</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span>
@@ -252,7 +256,7 @@
 
 
 <div class="viewcode-block" id="ITExpr_classifier.fit"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Fits the logistic regression with the IT expression as the linear</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fits the logistic regression with the IT expression as the linear</span>
 <span class="sd">        method.</span>
 
 <span class="sd">        This method performs the transformation of the original data in X to </span>
@@ -455,7 +459,7 @@
 
 
 <div class="viewcode-block" id="ITExpr_classifier.predict"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Predict class target for each sample in X.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict class target for each sample in X.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -479,7 +483,7 @@
 
 
 <div class="viewcode-block" id="ITExpr_classifier.predict_proba"><a class="viewcode-back" href="../../../itea.classification.html#itea.classification.ITExpr_classifier.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Predict probabilities for each possible target for</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predict probabilities for each possible target for</span>
 <span class="sd">        each sample in X.</span>
 <span class="sd">        </span>
 <span class="sd">        If the expression fails to predict a finite value, then the default</span>
