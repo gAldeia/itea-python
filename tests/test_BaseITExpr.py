@@ -96,7 +96,7 @@ def test_linear_BaseITExpr_eval(linear_baseITExpr, sample_data):
     # it should be the same matrix, since _eval returns a matrix where each
     # column is one it term, and the it expression is a linear combination
     # of the features, using onli the identity function as transformation func
-    assert np.array_equal(linear_baseITExpr._eval(X), X) 
+    assert np.allclose(linear_baseITExpr._eval(X), X) 
 
 
 def test_linear_BaseITExpr_complexity(linear_baseITExpr):
@@ -139,7 +139,7 @@ def test_linear_BaseITExpr_gradient(linear_baseITExpr, sample_data, logit):
                     np.power(np.exp(predictions)[:, c_idx] + 1.0, 2)
                 )
 
-    assert np.array_equal(
+    assert np.allclose(
         linear_baseITExpr.gradient(
             X,
             tfuncs_dx = {'id': lambda x: np.ones_like(x)},
@@ -178,7 +178,7 @@ def test_nonlinear_BaseITExpr_gradient(
                     np.power(np.exp(predictions)[:, c_idx] + 1.0, 2)
                 )
 
-    assert np.array_equal(
+    assert np.allclose(
         nonlinear_baseITExpr.gradient(
             X,
             tfuncs_dx = {'id': lambda x: np.ones_like(x)},

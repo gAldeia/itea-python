@@ -11,9 +11,8 @@ profile:
 
 test:
 	# Create detailed html file. Ignore warnings
-	${PYTHON} -m pytest tests/*.py \
-		-ra --html=tests/tests-report.html --self-contained-html -p no:warnings
-
+	${PYTHON} -m pytest tests/*.py
+	
 build-dist: 
 	rm -f ./dist/*
 

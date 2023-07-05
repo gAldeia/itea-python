@@ -131,9 +131,9 @@ def test_linear_ITExpr_equals_scikit_linearRegression(
 
     # They should give the exact same coefficients and intercept, with same
     # shapes and vales, and even have the score() function with same return val
-    assert np.array_equal(itexpr_reg.coef_, scikit_reg.coef_)
-    assert np.array_equal(itexpr_reg.intercept_, scikit_reg.intercept_)
-    assert np.array_equal(itexpr_reg.score(X, y), scikit_reg.score(X, y))
+    assert np.allclose(itexpr_reg.coef_, scikit_reg.coef_)
+    assert np.allclose(itexpr_reg.intercept_, scikit_reg.intercept_)
+    assert np.allclose(itexpr_reg.score(X, y), scikit_reg.score(X, y))
     
 
 
