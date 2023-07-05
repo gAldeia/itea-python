@@ -5,7 +5,7 @@ description = open('README.md', encoding='utf-8').read()
 setup(
     name             = "itea",
     packages         = find_packages(),
-    version          = "1.1.2",
+    version          = "1.1.2b0",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
     # Only the "introduction" in README (text below the horizontal rule)
@@ -16,15 +16,15 @@ setup(
     license          = "BSD-3-Clause",
     install_requires = [
         # ITEA core
-        "numpy>=1.18.2",
-        "scikit-learn>=1.0.0",
+        "numpy",        # >=1.18.2
+        "scikit-learn", # >=1.0.0
         "jax[cpu]",
-        "scipy>=1.5.2",
+        "scipy",        # >=1.5.2
 
         # ITEA summarizer
-        "matplotlib>=3.2.2",
-        "pandas>=1.1.0",
-        "pylatex>=1.4.1"
+        "matplotlib",   # >=3.2.2
+        "pandas",       # >=1.1.0
+        "pylatex"       # >=1.4.1
     ],
     package_data = {'examples' : ['examples']},
     include_package_data = True,

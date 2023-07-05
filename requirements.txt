@@ -2,13 +2,13 @@
 # for building the module are defined in '.setup.py`.
 
 # Build the python module. specifying minimum versions (as used in python 3.7)
-numpy>=1.18.2
-scikit-learn>=1.0.0
-matplotlib>=3.2.2
-pandas>=1.1.0
+numpy
+scikit-learn
+matplotlib
+pandas
 jax[cpu]
-scipy>=1.5.2
-pylatex>=1.4.1
+scipy
+pylatex
 
 # setup requires
 wheel
@@ -32,3 +32,6 @@ markupsafe
 sphinx_rtd_theme
 ipython
 nbsphinx
+
+# Upload to PyPI
+twine

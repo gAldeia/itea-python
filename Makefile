@@ -51,3 +51,4 @@ clean:
 
 # Upload on test.py: (to upload on pypi remove '--repository testpypi')
 # python -m twine upload --repository testpypi dist/*
+# user should be __token__, and password is the pypi token (including `pypi-` prefix)
