@@ -5,7 +5,7 @@ description = open('README.md', encoding='utf-8').read()
 setup(
     name             = "itea",
     packages         = find_packages(),
-    version          = "1.1.2b0",
+    version          = "1.1.2",
     description      = ("Interaction-Transformation Evolutionary Algorithm "
                         "for Symbolic Regression."),
     # Only the "introduction" in README (text below the horizontal rule)
