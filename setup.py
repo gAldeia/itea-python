@@ -16,15 +16,15 @@ setup(
     license          = "BSD-3-Clause",
     install_requires = [
         # ITEA core
-        "numpy>=1.18.2",
-        "scikit-learn>=1.0.0",
+        "numpy",        # >=1.18.2
+        "scikit-learn", # >=1.0.0
         "jax[cpu]",
-        "scipy>=1.5.2",
+        "scipy",        # >=1.5.2
 
         # ITEA summarizer
-        "matplotlib>=3.2.2",
-        "pandas>=1.1.0",
-        "pylatex>=1.4.1"
+        "matplotlib",   # >=3.2.2
+        "pandas",       # >=1.1.0
+        "pylatex"       # >=1.4.1
     ],
     package_data = {'examples' : ['examples']},
     include_package_data = True,
